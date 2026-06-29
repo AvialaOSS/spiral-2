@@ -1,0 +1,32 @@
+:root {
+  --background: var(--normal-background-theme, #faf8f8);
+  --foreground: var(--text-text-theme-primary-black, #bf2300);
+  --primary: var(--control-control-theme-background, #ff5532);
+  --primary-foreground: #ffffff;
+  --secondary: var(--control-control-normal-lightbackground-deep, #fdfbfb);
+  --secondary-foreground: var(--text-text-theme-secondary-black, #ff8368);
+  --muted: var(--box-box-theme-lightbackground, #fff5f2);
+  --muted-foreground: var(--text-text-theme-light-black, #ffb9a9);
+  --accent: var(--control-control-theme-lightbackground, #fff5f2);
+  --accent-foreground: var(--text-text-theme-primary-black, #bf2300);
+  --destructive: var(--control-control-fail-background, #f41544);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-border-theme-light, #ffe8e2);
+  --input: var(--border-border-theme-light, #ffe8e2);
+  --ring: var(--border-border-theme-primary, #ff5532);
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --radius: var(--border-radius-middle, 10px);
+}
+
+[data-mode="dark"] {
+  --background: #1a1a1a;
+  --foreground: var(--text-text-theme-primary-black, #ff8f76);
+  --card: #242424;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --border: var(--border-border-theme-light, #3d3d3d);
+  --input: var(--border);
+}

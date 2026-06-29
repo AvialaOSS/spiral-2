@@ -1,0 +1,19 @@
+:root {
+  --button-height-md: var(--size-regular, 20px);
+  --button-radius: var(--border-radius-middle, 10px);
+  --button-padding-x: var(--padding-default, 8px);
+  --button-bg: var(--control-control-theme-background, var(--primary));
+  --button-bg-hover: var(--control-control-theme-lightbackground, var(--accent));
+  --button-fg: var(--primary-foreground, #ffffff);
+
+  --input-height-md: var(--size-regular, 20px);
+  --input-radius: var(--border-radius-small, 8px);
+  --input-border: var(--border-border-theme-light, var(--border));
+  --input-bg: var(--control-control-normal-lightbackground-whiteonly, #ffffff);
+  --input-fg: var(--foreground);
+
+  --checkbox-size: var(--size-small, 16px);
+  --checkbox-radius: var(--border-radius-extra-small-2, 6px);
+  --switch-width: var(--size-semilarge, 22px);
+  --switch-height: var(--size-regular, 20px);
+}

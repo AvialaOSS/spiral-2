@@ -1,0 +1,20 @@
+:root {
+  --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-weight-light: var(--font-weight-font-weight-light, 300);
+  --font-weight-regular: var(--font-weight-font-weight-regular, 400);
+  --font-weight-medium: var(--font-weight-font-weight-medium, 500);
+  --font-weight-semibold: var(--font-weight-font-weight-semibold, 600);
+  --font-weight-bold: var(--font-weight-font-weight-bold, 700);
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+
+  --line-height-xs: var(--line-height-tiny, 16px);
+  --line-height-sm: var(--line-height-small, 20px);
+  --line-height-base: var(--line-height-regular, 24px);
+  --line-height-lg: var(--line-height-middle, 28px);
+  --line-height-xl: var(--line-height-big, 32px);
+}

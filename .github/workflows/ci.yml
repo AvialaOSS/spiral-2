@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Sync ALD tokens
+        run: |
+          mkdir -p packages/tokens/source
+          if [ -d "${{ github.workspace }}/../ALD" ]; then
+            cp -r ../ALD packages/tokens/source/ald
+          else
+            echo "ALD not in CI; using committed source/ald if present"
+          fi
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm sync:ald || true
+      - run: pnpm build
+      - run: pnpm typecheck

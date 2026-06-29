@@ -1,0 +1,1360 @@
+{
+  "normal-background-theme": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9803921580314636,
+        0.9725490212440491,
+        0.9725490212440491
+      ],
+      "alpha": 1,
+      "hex": "#FAF8F8"
+    },
+    "$extensions": {
+      "com.figma.variableId": "VariableID:399:21209",
+      "com.figma.scopes": [
+        "ALL_SCOPES"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:0b028ae666bf2bd034bd31039d46ea4c25a930e3/247:52",
+        "targetVariableName": "neutral/neutral-4",
+        "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+        "targetVariableSetName": "Aviala Design Colors A"
+      }
+    }
+  },
+  "text": {
+    "text-theme-primary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7490196228027344,
+          0.13725490868091583,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#BF2300"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:815",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:2e87948659f8f1d6385367b1825b053125bd4ffa/247:27",
+          "targetVariableName": "primary/primary-10",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-theme-secondary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.5137255191802979,
+          0.40784314274787903
+        ],
+        "alpha": 1,
+        "hex": "#FF8368"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:819",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:7516461e3532d4249b7cef4c6fe76476fa52716f/247:31",
+          "targetVariableName": "primary/primary-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-theme-light-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.772549033164978,
+          0.7254902124404907
+        ],
+        "alpha": 1,
+        "hex": "#FFC5B9"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:184:1459",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:223a36c9446505787b3e56e3943090227511a32f/247:33",
+          "targetVariableName": "primary/primary-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-success-primary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.27843138575553894,
+          0.5176470875740051,
+          0.16862745583057404
+        ],
+        "alpha": 1,
+        "hex": "#47842B"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:826",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:2a90ea0da380283fccbbe2ea065e746b750e100c/247:9",
+          "targetVariableName": "success/success-10",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-success-secondary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5607843399047852,
+          0.7843137383460999,
+          0.4470588266849518
+        ],
+        "alpha": 1,
+        "hex": "#8FC872"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:825",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f14808338653bd0bba9d1a7d21c06f472315acda/247:6",
+          "targetVariableName": "success/success-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-success-light-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.800000011920929,
+          0.929411768913269,
+          0.7176470756530762
+        ],
+        "alpha": 1,
+        "hex": "#CCEDB7"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:184:1463",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c6ae016be1b77d243be9c3a38491a3c6cbf92f33/247:4",
+          "targetVariableName": "success/success-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-infomation-primary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20392157137393951,
+          0.5372549295425415,
+          0.7843137383460999
+        ],
+        "alpha": 1,
+        "hex": "#3489C8"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1556",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c2a2e756eb108bdf30db8dec5d0055869145ba29/247:59",
+          "targetVariableName": "info/info-10",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-infomation-secondary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5529412031173706,
+          0.7843137383460999,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#8DC8FF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1555",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:90518d396a528ba57f37df9b60b1b046d0408f24/247:62",
+          "targetVariableName": "info/info-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-infomation-light-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8509804010391235,
+          0.9176470637321472,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#D9EAFF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1554",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:82302296434f554cdc29b9d32b5d27aa5ab83080/247:64",
+          "targetVariableName": "info/info-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-fail-primary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5882353186607361,
+          0,
+          0.1411764770746231
+        ],
+        "alpha": 1,
+        "hex": "#960024"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:833",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:40dc1ba6b90c52c5ae23b4ff78f290069db71c4d/247:71",
+          "targetVariableName": "error/error-10",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-fail-secondary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.4117647111415863,
+          0.45098039507865906
+        ],
+        "alpha": 1,
+        "hex": "#FF6973"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:832",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e372ae198b542b582a4139e7cfe689f805d77802/247:74",
+          "targetVariableName": "error/error-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-fail-light-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.7921568751335144,
+          0.7921568751335144
+        ],
+        "alpha": 1,
+        "hex": "#FFCACA"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:184:1467",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:72fa63a2b15b2b97ec843fd50226c38ca77b3454/247:76",
+          "targetVariableName": "error/error-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-warning-primary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6705882549285889,
+          0.3843137323856354,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#AB6200"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:840",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:7a78185228b95b3bde7abec2c9cc1db0ac04f540/247:21",
+          "targetVariableName": "warning/warning-10",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-warning-secondary-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9921568632125854,
+          0.6431372761726379,
+          0.27843138575553894
+        ],
+        "alpha": 1,
+        "hex": "#FDA447"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:839",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:d0fa9f3a972b34e281da6178a6d9fccc562610f7/247:18",
+          "targetVariableName": "warning/warning-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-warning-light-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.8705882430076599,
+          0.7647058963775635
+        ],
+        "alpha": 1,
+        "hex": "#FFDEC3"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:184:1471",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:b0a955f179b9c6c14514f2c6ac370c210f1a8edb/247:16",
+          "targetVariableName": "warning/warning-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-title-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:847",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:0130661ad999b484751168041198871dba61d871/247:40",
+          "targetVariableName": "neutral/neutral-14",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-text-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20392157137393951,
+          0.20000000298023224,
+          0.20000000298023224
+        ],
+        "alpha": 1,
+        "hex": "#343333"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:846",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:ed19514672b7058cd22026b285c2ce434867cdf3/247:42",
+          "targetVariableName": "neutral/neutral-13",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-text-caption-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5215686559677124,
+          0.5176470875740051,
+          0.5176470875740051
+        ],
+        "alpha": 1,
+        "hex": "#858484"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:896",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:8a36bd2f81c0836b2b304dab55421b3889f500b4/247:44",
+          "targetVariableName": "neutral/neutral-11",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-title-white": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#FEFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:892",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c4265606b5eda6f1e05a55079d72026d749407b7/247:56",
+          "targetVariableName": "neutral/neutral-1",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-text-white": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#FEFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:891",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:345159b53b1db8ef9885000f3a380e7f0e100ab0/247:54",
+          "targetVariableName": "neutral/neutral-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "text-normal-text-caption-white": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#FEFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:900",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:345159b53b1db8ef9885000f3a380e7f0e100ab0/247:54",
+          "targetVariableName": "neutral/neutral-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    }
+  },
+  "box": {
+    "box-normal-lightBackground-black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20392157137393951,
+          0.20000000298023224,
+          0.20000000298023224
+        ],
+        "alpha": 1,
+        "hex": "#343333"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:901",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:ed19514672b7058cd22026b285c2ce434867cdf3/247:42",
+          "targetVariableName": "neutral/neutral-13",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-normal-lightBackground-white": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9921568632125854,
+          0.9843137264251709,
+          0.9843137264251709
+        ],
+        "alpha": 1,
+        "hex": "#FDFBFB"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:141:295",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:10df60e6ffa2ff4ffa1b3544690979ba40e08e08/247:53",
+          "targetVariableName": "neutral/neutral-3",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-normal-Background-blackOnly": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:141:303",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:0130661ad999b484751168041198871dba61d871/247:40",
+          "targetVariableName": "neutral/neutral-14",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-normal-Background-whiteOnly": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#FEFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:141:302",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c4265606b5eda6f1e05a55079d72026d749407b7/247:56",
+          "targetVariableName": "neutral/neutral-1",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-theme-primaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.3333333432674408,
+          0.19607843458652496
+        ],
+        "alpha": 1,
+        "hex": "#FF5532"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:903",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:db508825e4e0bcb696df4aa7efe62aed8d882e5f/247:30",
+          "targetVariableName": "primary/primary-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-theme-secondaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.8549019694328308,
+          0.8235294222831726
+        ],
+        "alpha": 1,
+        "hex": "#FFDAD2"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:140:907",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f5cdd191e3a8f85bc171a990882689336ce0fd5c/247:34",
+          "targetVariableName": "primary/primary-4",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-theme-lightBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.9529411792755127,
+          0.9411764740943909
+        ],
+        "alpha": 1,
+        "hex": "#FFF3F0"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:527:56693",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:861c748a9641db024a2f4b2cde39e75a4db983aa/247:38",
+          "targetVariableName": "primary/primary-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-success-primaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.43921568989753723,
+          0.7058823704719543,
+          0.3137255012989044
+        ],
+        "alpha": 1,
+        "hex": "#70B450"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1563",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1973bc3d21180f41ea851210ecbbf81ea5144044/247:7",
+          "targetVariableName": "success/success-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-success-secondaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8745098114013672,
+          0.9647058844566345,
+          0.8078431487083435
+        ],
+        "alpha": 1,
+        "hex": "#DFF6CE"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1562",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:5a0785188bf5846fbf9e9dda2f6952e0e0982c2f/247:3",
+          "targetVariableName": "success/success-4",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-success-lightBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.95686274766922,
+          0.9921568632125854,
+          0.9137254953384399
+        ],
+        "alpha": 1,
+        "hex": "#F4FDE9"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:527:56692",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:67e2f0a66aac1399a7dcef805d779a226215036d/247:1",
+          "targetVariableName": "success/success-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-infomation-primaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4000000059604645,
+          0.7137255072593689,
+          0.9803921580314636
+        ],
+        "alpha": 1,
+        "hex": "#66B6FA"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1570",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:3b9cb835ec4a812301a673f5eda4dc61ae5a071b/247:61",
+          "targetVariableName": "info/info-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-infomation-secondaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9176470637321472,
+          0.9529411792755127,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#EAF3FF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1569",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e2c5130bf5941726645451723c34f9b4e7269729/247:65",
+          "targetVariableName": "info/info-4",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-infomation-lightBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9803921580314636,
+          0.9843137264251709,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FAFBFF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:527:56691",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c14f7593df63ccd1722fa651d05c9282e891a150/247:67",
+          "targetVariableName": "info/info-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-warning-primaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9254902005195618,
+          0.545098066329956,
+          0.03529411926865578
+        ],
+        "alpha": 1,
+        "hex": "#EC8B09"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1577",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:584cff1720aa1caa90e09228b92209a7a3bd8161/247:19",
+          "targetVariableName": "warning/warning-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-warning-secondaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.9215686321258545,
+          0.8666666746139526
+        ],
+        "alpha": 1,
+        "hex": "#FFEBDD"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1576",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1a8d39e182b84d5a02de0ff4bd6ceca776f3663d/247:15",
+          "targetVariableName": "warning/warning-4",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-warning-lightBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.9725490212440491,
+          0.9607843160629272
+        ],
+        "alpha": 1,
+        "hex": "#FFF8F5"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:527:56689",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:17cdb898a231a3dbd0bd717f469e23a984f9d9ba/247:13",
+          "targetVariableName": "warning/warning-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-fail-primaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.95686274766922,
+          0.08235294371843338,
+          0.2666666805744171
+        ],
+        "alpha": 1,
+        "hex": "#F41544"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1584",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:be67ea2263d1b29c18c21b0e8963bedc7be2cd79/247:73",
+          "targetVariableName": "error/error-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-fail-secondaryBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.8745098114013672,
+          0.8745098114013672
+        ],
+        "alpha": 1,
+        "hex": "#FFDFDF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:186:1583",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e22637c256e5ffec790a30bd49e2d4b775c62d2e/247:77",
+          "targetVariableName": "error/error-4",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "box-fail-lightBackground": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.95686274766922,
+          0.9529411792755127
+        ],
+        "alpha": 1,
+        "hex": "#FFF4F3"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:527:56690",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:fc8b6ef65bd73fc89cc3b8d550a426493a912f19/247:79",
+          "targetVariableName": "error/error-2",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    }
+  },
+  "border": {
+    "border-theme-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.3333333432674408,
+          0.19607843458652496
+        ],
+        "alpha": 1,
+        "hex": "#FF5532"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:165:3063",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:db508825e4e0bcb696df4aa7efe62aed8d882e5f/247:30",
+          "targetVariableName": "primary/primary-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-infomation-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4000000059604645,
+          0.7137255072593689,
+          0.9803921580314636
+        ],
+        "alpha": 1,
+        "hex": "#66B6FA"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:553:58948",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:3b9cb835ec4a812301a673f5eda4dc61ae5a071b/247:61",
+          "targetVariableName": "info/info-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-warning-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9254902005195618,
+          0.545098066329956,
+          0.03529411926865578
+        ],
+        "alpha": 1,
+        "hex": "#EC8B09"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:553:58952",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:584cff1720aa1caa90e09228b92209a7a3bd8161/247:19",
+          "targetVariableName": "warning/warning-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-fail-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.95686274766922,
+          0.08235294371843338,
+          0.2666666805744171
+        ],
+        "alpha": 1,
+        "hex": "#F41544"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:553:58956",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:be67ea2263d1b29c18c21b0e8963bedc7be2cd79/247:73",
+          "targetVariableName": "error/error-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-success-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.43921568989753723,
+          0.7058823704719543,
+          0.3137255012989044
+        ],
+        "alpha": 1,
+        "hex": "#70B450"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:553:58960",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1973bc3d21180f41ea851210ecbbf81ea5144044/247:7",
+          "targetVariableName": "success/success-8",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-normal-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.886274516582489,
+          0.8784313797950745,
+          0.8784313797950745
+        ],
+        "alpha": 1,
+        "hex": "#E2E0E0"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:165:3067",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:68543eb128b74fb9e08f2b3c0f36233e3a30a037/247:49",
+          "targetVariableName": "neutral/neutral-7",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "border-normal-light": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843160629272,
+          0.9529411792755127,
+          0.9529411792755127
+        ],
+        "alpha": 1,
+        "hex": "#F5F3F3"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:276:5744",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:015698e7d4f394b8c0bd4149d76622ddc39b21e0/247:51",
+          "targetVariableName": "neutral/neutral-5",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    }
+  },
+  "special-effort": {
+    "se-light-effort-top": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.9098039269447327,
+          0.8941176533699036
+        ],
+        "alpha": 1,
+        "hex": "#FFE8E4"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:1580:16304",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:7360f96b3337c2d9dbaed01dd64c3d521b1f873b/247:35",
+          "targetVariableName": "primary/primary-3",
+          "targetVariableSetId": "VariableCollectionId:1bd48b52b5909ff259a92d782376db1a205ebea9/244:0",
+          "targetVariableSetName": "Aviala Design Colors A"
+        }
+      }
+    },
+    "se-light-effort-bottom": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 0,
+        "hex": "#FEFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:1580:20630",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ]
+      }
+    },
+    "se-lineShadow-bottom": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.03999999910593033,
+        "hex": "#000000"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:1580:20637",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ]
+      }
+    },
+    "se-lineShadow-bottomDeep": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.07999999821186066,
+        "hex": "#000000"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:1580:20635",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ]
+      }
+    },
+    "se-lineShadow-all": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.11999999731779099,
+        "hex": "#000000"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:1580:20636",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ]
+      }
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Default"
+  }
+}

@@ -1,0 +1,16 @@
+:root {
+  --radius-none: var(--border-radius-none, 0px);
+  --radius-xs: var(--border-radius-extra-small-2, 6px);
+  --radius-sm: var(--border-radius-small, 8px);
+  --radius-md: var(--border-radius-middle, 10px);
+  --radius-lg: var(--border-radius-big, 12px);
+  --radius-xl: var(--border-radius-large, 16px);
+  --radius-full: var(--border-radius-allround, 99px);
+
+  --gap-inside: var(--gap-inside, 4px);
+  --gap-component: var(--gap-component-space, 8px);
+  --gap-content: var(--gap-content-space, 10px);
+  --gap-block: var(--gap-block-space, 14px);
+  --padding-default: var(--padding-default, 8px);
+  --padding-md: var(--padding-middle, 10px);
+}

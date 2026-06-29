@@ -1,0 +1,40 @@
+{
+  "name": "@aviala/tokens",
+  "version": "0.0.1",
+  "description": "Aviala Design tokens and theme engine for Spiral 2",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js"
+    },
+    "./tailwind.preset": {
+      "types": "./dist/tailwind.preset.d.ts",
+      "import": "./dist/tailwind.preset.js"
+    }
+  },
+  "files": ["dist", "source"],
+  "scripts": {
+    "build": "tsup && node scripts/build-css.mjs",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@aviala-design/color": "^0.5.15"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.32",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.11",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  }
+}
