@@ -1,0 +1,166 @@
+/* List — Figma Structure Navigation → List / List item (738:148304, 647:87555) */
+
+.aviala-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--list-gap, 8px);
+  width: 100%;
+}
+
+.aviala-list-title {
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--list-title-px, 12px);
+  color: var(--list-title-fg);
+}
+
+.aviala-list-group {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--list-group-radius, 10px);
+  background-color: var(--list-bg);
+}
+
+.aviala-list-item {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background-color: var(--list-bg);
+  color: var(--list-item-fg);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.aviala-list-group > .aviala-list-item:first-child {
+  border-top-left-radius: var(--list-item-radius, 8px);
+  border-top-right-radius: var(--list-item-radius, 8px);
+}
+
+.aviala-list-group > .aviala-list-item:last-child {
+  border-bottom-left-radius: var(--list-item-radius, 8px);
+  border-bottom-right-radius: var(--list-item-radius, 8px);
+}
+
+.aviala-list-item[data-leading="shaped"],
+.aviala-list-item[data-leading="default"] {
+  gap: var(--list-item-block-gap, 14px);
+  padding-left: var(--list-item-pl, 14px);
+  padding-right: 0;
+}
+
+.aviala-list-item[data-leading="none"] {
+  gap: 0;
+  padding-inline: 0;
+}
+
+.aviala-list-item[data-interactive="true"]:not([data-disabled]):hover {
+  background-color: var(--list-item-highlight-bg);
+}
+
+.aviala-list-item[data-selected="true"] {
+  background-color: var(--list-item-selected-bg);
+  color: var(--list-item-selected-fg);
+}
+
+.aviala-list-item[data-disabled] {
+  cursor: not-allowed;
+  opacity: var(--list-item-disabled-opacity, 0.55);
+  pointer-events: none;
+}
+
+.aviala-list-item__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding-block: var(--list-item-icon-py, 8px);
+}
+
+.aviala-list-item__icon--shaped {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--list-item-icon-shaped-size, 36px);
+  height: var(--list-item-icon-shaped-size, 36px);
+  border-radius: var(--border-radius-allround, 99px);
+  background-color: var(--list-item-icon-shaped-bg);
+  color: var(--list-item-icon-shaped-fg);
+}
+
+.aviala-list-item__icon--default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--list-item-icon-default-size, 22px);
+  height: var(--list-item-icon-default-size, 22px);
+  color: var(--list-item-fg);
+}
+
+.aviala-list-item__body {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: stretch;
+}
+
+.aviala-list-item__content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--list-item-content-gap, 10px);
+  border-top: 1px solid var(--list-item-border);
+  padding-block: var(--list-item-content-py, 8px);
+  padding-right: var(--list-item-content-pr, 14px);
+}
+
+.aviala-list-item[data-leading="none"] .aviala-list-item__content {
+  padding-left: var(--list-item-pl, 14px);
+}
+
+.aviala-list-item__head {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.aviala-list-item__trailing {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--list-item-trailing-gap, 10px);
+}
+
+.aviala-list-item__more {
+  display: flex;
+  align-items: center;
+  gap: var(--list-item-trailing-gap, 10px);
+}
+
+.aviala-list-item__divider {
+  width: 1px;
+  height: var(--list-item-divider-height, 14px);
+  flex-shrink: 0;
+  background-color: var(--list-item-border);
+}
+
+.aviala-list-item__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--list-item-fg);
+}
+
+.aviala-list-item__select {
+  width: var(--list-item-select-width, 143px);
+  flex-shrink: 0;
+}
+
+.aviala-list-separator {
+  height: 1px;
+  width: 100%;
+  margin-block: var(--list-separator-my, 8px);
+  background-color: var(--list-item-border);
+}

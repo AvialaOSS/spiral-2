@@ -1,11 +1,15 @@
 import { palette } from "@aviala-design/color";
+import { tokenPathToCssVar } from "./parse-ald";
 import {
   COLOR_FAMILIES,
+  DEFAULT_PALETTE_CONFIG,
   DEFAULT_PRIMARY,
   DEFAULT_SEMANTIC_COLORS,
+  PALETTE_STEPS,
   SEMANTIC_STEP_MAP,
   aliasToCssVar,
   type ColorFamily,
+  type PaletteConfig,
 } from "./variable-map";
 
 export type ThemeMode = "light" | "dark";
@@ -14,18 +18,53 @@ export type ThemeInput = {
   mode?: ThemeMode;
   primary?: string;
   presetId?: string;
+  /** Customizable color generation config (curve, hue protection, blending). */
+  palette?: PaletteConfig;
 };
 
 export type ThemeVars = Record<string, string>;
 
+/** Merge a partial PaletteConfig with the Aviala design-spec defaults. */
+function resolvePaletteConfig(config?: PaletteConfig): Required<
+  Pick<PaletteConfig, "curveGamma" | "protectHues" | "protectHueFamilies" | "protectHueStrength" | "mixRatio">
+> & Pick<PaletteConfig, "mixColor"> {
+  return {
+    curveGamma: config?.curveGamma ?? DEFAULT_PALETTE_CONFIG.curveGamma,
+    protectHues: config?.protectHues ?? DEFAULT_PALETTE_CONFIG.protectHues,
+    protectHueFamilies:
+      config?.protectHueFamilies ?? DEFAULT_PALETTE_CONFIG.protectHueFamilies,
+    protectHueStrength:
+      config?.protectHueStrength ?? DEFAULT_PALETTE_CONFIG.protectHueStrength,
+    mixColor: config?.mixColor,
+    mixRatio: config?.mixRatio ?? DEFAULT_PALETTE_CONFIG.mixRatio,
+  };
+}
+
 function buildFamilyPalette(
   color: string,
-  mode: ThemeMode
+  mode: ThemeMode,
+  config: ReturnType<typeof resolvePaletteConfig>
 ): Record<number, string> {
-  const list = palette.generate(color, {
+  const hasMix = !!config.mixColor && config.mixRatio > 0;
+  const options: Record<string, unknown> = {
     list: true,
     dark: mode === "dark",
-  } as Parameters<typeof palette.generate>[1]) as string[];
+    steps: PALETTE_STEPS,
+    curveGamma: config.curveGamma,
+  };
+  if (config.protectHues) {
+    options.protectHueFamilies = [...config.protectHueFamilies];
+    options.protectHueStrength = config.protectHueStrength;
+  }
+  if (hasMix) {
+    options.mixColor = config.mixColor;
+    options.mixRatio = config.mixRatio;
+  }
+
+  const list = palette.generate(
+    color,
+    options as unknown as Parameters<typeof palette.generate>[1]
+  ) as string[];
 
   const map: Record<number, string> = {};
   list.forEach((hex, i) => {
@@ -43,9 +82,65 @@ function familyKey(family: ColorFamily, step: number): string {
   return `${family}/${family}-${step}`;
 }
 
+function setAldVar(vars: ThemeVars, path: string, value: string): void {
+  vars[tokenPathToCssVar(path)] = value;
+}
+
+/** Mode-specific ALD tokens that are not derived from the primary palette steps. */
+function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
+  setAldVar(
+    vars,
+    "control/control-normal-lightBackground-light",
+    mode === "dark" ? "#3d3d3d" : "#f5f3f3"
+  );
+  setAldVar(
+    vars,
+    "control/control-normal-lightBackground-deep",
+    mode === "dark" ? "#2a2a2a" : "#fdfbfb"
+  );
+  setAldVar(
+    vars,
+    "control/control-normal-lightBackground-whiteOnly",
+    mode === "dark" ? "#242424" : "#ffffff"
+  );
+  setAldVar(vars, "box/box-theme-primaryBackground", mode === "dark" ? "#242424" : "#ffffff");
+  setAldVar(vars, "text/text-normal-text-white", "#fefcfc");
+  setAldVar(vars, "text/text-normal-text-black", mode === "dark" ? "#e8e8e8" : "#343333");
+  setAldVar(vars, "text/text-normal-text-caption-black", mode === "dark" ? "#a8a8a8" : "#858484");
+  setAldVar(vars, "text/text-normal-text-caption-white", "#a8a8a8");
+  setAldVar(vars, "normal-background-theme", mode === "dark" ? "#1a1a1a" : "#FAF8F8");
+}
+
+/** Primary-tinted ALD semantic tokens — follow palette steps (Figma token-colors). */
+function syncPrimarySemanticTokens(vars: ThemeVars): void {
+  const step = (n: number) => vars[aliasToCssVar(`primary/primary-${n}`)]!;
+  setAldVar(vars, "text/text-theme-primary-black", step(SEMANTIC_STEP_MAP.textPrimary));
+  setAldVar(vars, "text/text-theme-secondary-black", step(SEMANTIC_STEP_MAP.textSecondary));
+  setAldVar(vars, "text/text-theme-light-black", step(SEMANTIC_STEP_MAP.textLight));
+  setAldVar(vars, "box/box-theme-secondarybackground", step(SEMANTIC_STEP_MAP.secondaryBackground));
+  setAldVar(vars, "box/box-theme-lightbackground", step(SEMANTIC_STEP_MAP.lightBackground));
+  setAldVar(vars, "control/control-theme-background", step(SEMANTIC_STEP_MAP.controlBackground));
+  setAldVar(vars, "border/border-theme-primary", step(SEMANTIC_STEP_MAP.primaryBorder));
+}
+
+/** Semantic status icon/text — palette step 10 per family (ALD text/*-primary-black). */
+function syncSemanticStatusTextTokens(vars: ThemeVars): void {
+  const families: Array<{ family: ColorFamily; textPath: string }> = [
+    { family: "info", textPath: "text/text-infomation-primary-black" },
+    { family: "success", textPath: "text/text-success-primary-black" },
+    { family: "warning", textPath: "text/text-warning-primary-black" },
+    { family: "error", textPath: "text/text-fail-primary-black" },
+  ];
+
+  for (const { family, textPath } of families) {
+    setAldVar(vars, textPath, vars[aliasToCssVar(`${family}/${family}-10`)]!);
+  }
+}
+
 export function generateTheme(input: ThemeInput = {}): ThemeVars {
   const mode: ThemeMode = input.mode ?? "light";
   const primary = input.primary ?? DEFAULT_PRIMARY;
+  const paletteConfig = resolvePaletteConfig(input.palette);
 
   const vars: ThemeVars = {};
   vars["--aviala-mode"] = mode;
@@ -55,12 +150,14 @@ export function generateTheme(input: ThemeInput = {}): ThemeVars {
     primary,
   };
 
-  const palettes: Record<string, Record<number, string>> = {};
-
   for (const family of COLOR_FAMILIES) {
     const color = familyColors[family];
-    const stepMap = buildFamilyPalette(color, mode);
-    palettes[family] = stepMap;
+    // Only the primary family blends toward the theme mix color.
+    const familyConfig =
+      family === "primary"
+        ? paletteConfig
+        : { ...paletteConfig, mixColor: undefined, mixRatio: 0 };
+    const stepMap = buildFamilyPalette(color, mode, familyConfig);
 
     for (let step = 1; step <= 12; step++) {
       const key = familyKey(family, step);
@@ -68,50 +165,14 @@ export function generateTheme(input: ThemeInput = {}): ThemeVars {
     }
   }
 
-  // Semantic assignments from designer step rules
-  vars["--primary"] = palettes.primary[SEMANTIC_STEP_MAP.primaryBackground]!;
-  vars["--primary-foreground"] = mode === "dark" ? "#ffffff" : "#ffffff";
-  vars["--secondary"] =
-    palettes.primary[SEMANTIC_STEP_MAP.secondaryBackground]!;
-  vars["--secondary-foreground"] =
-    palettes.primary[SEMANTIC_STEP_MAP.textSecondary]!;
-  vars["--accent"] = palettes.primary[SEMANTIC_STEP_MAP.lightBackground]!;
-  vars["--accent-foreground"] =
-    palettes.primary[SEMANTIC_STEP_MAP.textPrimary]!;
-  vars["--destructive"] = palettes.error[SEMANTIC_STEP_MAP.primaryBackground]!;
-  vars["--destructive-foreground"] = "#ffffff";
-  vars["--muted"] = palettes.primary[SEMANTIC_STEP_MAP.lightBackground]!;
-  vars["--muted-foreground"] = palettes.primary[SEMANTIC_STEP_MAP.textLight]!;
-  vars["--background"] = mode === "dark" ? "#1a1a1a" : "#FAF8F8";
-  vars["--foreground"] = palettes.primary[SEMANTIC_STEP_MAP.textPrimary]!;
-  vars["--border"] = palettes.primary[SEMANTIC_STEP_MAP.lightBackground]!;
-  vars["--input"] = vars["--border"];
-  vars["--ring"] = palettes.primary[SEMANTIC_STEP_MAP.primaryBackground]!;
-  vars["--card"] = mode === "dark" ? "#242424" : "#ffffff";
-  vars["--card-foreground"] = vars["--foreground"];
-  vars["--popover"] = vars["--card"];
-  vars["--popover-foreground"] = vars["--foreground"];
+  syncPrimarySemanticTokens(vars);
+  syncSemanticStatusTextTokens(vars);
+  syncAldModeTokens(vars, mode);
 
-  // Control tokens
-  vars["--control-theme-background"] =
-    palettes.primary[SEMANTIC_STEP_MAP.controlBackground]!;
-  vars["--control-theme-light-background"] =
-    palettes.primary[SEMANTIC_STEP_MAP.secondaryBackground]!;
-  vars["--control-success-background"] =
-    palettes.success[SEMANTIC_STEP_MAP.controlBackground]!;
-  vars["--control-fail-background"] =
-    palettes.error[SEMANTIC_STEP_MAP.controlBackground]!;
-  vars["--control-warning-background"] =
-    palettes.warning[SEMANTIC_STEP_MAP.controlBackground]!;
-  vars["--control-info-background"] =
-    palettes.info[SEMANTIC_STEP_MAP.controlBackground]!;
-
-  // Text semantic
-  vars["--text-theme-primary"] =
-    palettes.primary[SEMANTIC_STEP_MAP.textPrimary]!;
-  vars["--text-theme-secondary"] =
-    palettes.primary[SEMANTIC_STEP_MAP.textSecondary]!;
-  vars["--text-theme-light"] = palettes.primary[SEMANTIC_STEP_MAP.textLight]!;
+  // Line shadows for button depth (neutral, mode-independent).
+  setAldVar(vars, "special-effort/se-lineShadow-bottom", "rgba(0, 0, 0, 0.04)");
+  setAldVar(vars, "special-effort/se-lineShadow-bottomDeep", "rgba(0, 0, 0, 0.08)");
+  setAldVar(vars, "special-effort/se-lineShadow-all", "rgba(0, 0, 0, 0.12)");
 
   if (input.presetId) {
     vars["--aviala-theme-id"] = input.presetId;

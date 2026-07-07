@@ -1,23 +1,124 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { ArrowRight } from "@aviala/icons";
-import { forwardRef, type ComponentPropsWithoutRef } from "react";
+import { SymbolRight } from "@aviala/icons";
+import {
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  type ComponentPropsWithoutRef,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { cn } from "../lib/utils";
+import { TypefacePair } from "./typeface";
+
+/** Figma Components → Information Collect → Checkbox */
+export type CheckboxGroupDirection = "vertical" | "horizontal";
+
+export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
+  /** Figma Checkbox `Round` */
+  round?: boolean;
+};
 
 export const Checkbox = forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
+  CheckboxProps
+>(({ className, round = false, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={cn(
-      "peer h-[var(--checkbox-size,16px)] w-[var(--checkbox-size,16px)] shrink-0 rounded-[var(--checkbox-radius,var(--radius-xs))] border border-primary shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-55 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
-      className
-    )}
+    className={cn("aviala-checkbox", className)}
+    data-round={round ? "true" : undefined}
     {...props}
   >
-    <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-      <ArrowRight className="h-3 w-3 rotate-[-90deg]" />
+    <span aria-hidden className="aviala-checkbox__surface" />
+    <CheckboxPrimitive.Indicator className="aviala-checkbox__indicator">
+      <SymbolRight
+        className="aviala-checkbox__indicator-icon aviala-checkbox__indicator-icon--check"
+        thickness="Bold"
+        width={12}
+        height={12}
+        aria-hidden
+      />
+      <span
+        aria-hidden
+        className="aviala-checkbox__indeterminate-mark aviala-checkbox__indicator-icon--indeterminate"
+      />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+
+export type CheckboxGroupProps = ComponentPropsWithoutRef<"div"> & {
+  /** Figma Checkbox Input Group `Direction` */
+  direction?: CheckboxGroupDirection;
+};
+
+export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
+  ({ className, direction = "vertical", ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("aviala-checkbox-group", className)}
+      data-direction={direction}
+      {...props}
+    />
+  )
+);
+CheckboxGroup.displayName = "CheckboxGroup";
+
+function renderIcon(node: ReactNode): ReactNode {
+  if (!node) return null;
+  const icon = 18;
+  const content =
+    isValidElement(node) && typeof node.type !== "string"
+      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
+          width: icon,
+          height: icon,
+          className: cn(
+            (node as ReactElement<{ className?: string }>).props.className,
+            "shrink-0"
+          ),
+        })
+      : node;
+
+  return <span className="aviala-checkbox-input__icon">{content}</span>;
+}
+
+export type CheckboxInputProps = Omit<CheckboxProps, "children"> & {
+  /** Figma Typeface primary line */
+  title: ReactNode;
+  /** Figma Typeface caption line */
+  description?: ReactNode;
+  icon?: ReactNode;
+};
+
+export const CheckboxInput = forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  CheckboxInputProps
+>(
+  (
+    {
+      className,
+      title,
+      description,
+      icon,
+      disabled,
+      id,
+      ...props
+    },
+    ref
+  ) => (
+    <label
+      htmlFor={id}
+      className={cn("aviala-checkbox-input", className)}
+      data-disabled={disabled ? "true" : undefined}
+    >
+      <Checkbox ref={ref} id={id} disabled={disabled} {...props} />
+      {renderIcon(icon)}
+      <TypefacePair
+        className="aviala-checkbox-input__content min-w-0 flex-1"
+        title={title}
+        description={description}
+      />
+    </label>
+  )
+);
+CheckboxInput.displayName = "CheckboxInput";

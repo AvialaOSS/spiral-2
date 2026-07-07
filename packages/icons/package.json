@@ -14,11 +14,11 @@
   },
   "files": ["dist", "raw"],
   "scripts": {
-    "build": "pnpm run build:icons && tsup",
+    "build": "node scripts/build-icons.mjs && tsup",
     "build:icons": "node scripts/build-icons.mjs",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist src/components"
+    "clean": "rimraf dist src/components src/catalog.ts"
   },
   "peerDependencies": {
     "react": ">=18"

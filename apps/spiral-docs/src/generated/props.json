@@ -1,0 +1,1269 @@
+{
+  "Button": {
+    "displayName": "Button",
+    "description": "",
+    "props": [
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma `All-Round`"
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "required": false,
+        "description": "Figma `Mode` — preferred over legacy `variant`."
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "required": false,
+        "description": "Figma `Size` — preferred over legacy shadcn sizes."
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Figma `IconOnly`"
+      },
+      {
+        "name": "variant",
+        "type": "enum",
+        "required": false,
+        "description": "@deprecated Use `mode` instead."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "@deprecated Use `leftIcon`."
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Input": {
+    "displayName": "Input",
+    "description": "",
+    "props": [
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": "When false, input sizes to content (e.g. ColorPicker panel row)"
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": "Figma `Size`"
+      },
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma `All-Round`"
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftBadge",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma badge area — left slot inside BaseInput"
+      },
+      {
+        "name": "rightBadge",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma badge area — right slot inside BaseInput"
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Select": {
+    "displayName": "Select",
+    "description": "Radix Select closes on `window` blur (e.g. focusing DevTools). Suppress only\nblur-initiated closes; pointer-down (outside click, item select, trigger toggle)\nand Escape must still dismiss on the first interaction.",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "SegmentatorGroup": {
+    "displayName": "SegmentatorGroup",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "defaultValue": "nested",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "ThemeProvider": {
+    "displayName": "ThemeProvider",
+    "description": "",
+    "props": [
+      {
+        "name": "defaultMode",
+        "type": "ThemeMode",
+        "defaultValue": "light",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultPrimary",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultPresetId",
+        "type": "string",
+        "defaultValue": "ald",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultPaletteConfig",
+        "type": "PaletteConfig",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultDensity",
+        "type": "BaseNumbersDensity",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "storageKey",
+        "type": "string",
+        "defaultValue": "aviala-theme",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onThemeChange",
+        "type": "(vars: Record<string, string>) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Alert": {
+    "displayName": "Alert",
+    "description": "",
+    "props": [
+      {
+        "name": "type",
+        "type": "enum",
+        "defaultValue": "info",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "appearance",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Secondary caption line — default size only"
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Status icon override"
+      },
+      {
+        "name": "showIcon",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": "Show the leading status icon"
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": "Figma `Show Close Button`"
+      },
+      {
+        "name": "onDismiss",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string",
+        "defaultValue": "Dismiss alert",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "quickAction",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma `Show Quick Action` — inline link in body row"
+      },
+      {
+        "name": "onQuickAction",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma footer primary action"
+      },
+      {
+        "name": "onAction",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "secondaryAction",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma footer secondary action"
+      },
+      {
+        "name": "onSecondaryAction",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "showActions",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma `Show Action` — footer action row"
+      }
+    ]
+  },
+  "Feedback": {
+    "displayName": "Feedback",
+    "description": "",
+    "props": [
+      {
+        "name": "type",
+        "type": "enum",
+        "defaultValue": "information",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Secondary caption line — default size only"
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Status icon override"
+      },
+      {
+        "name": "showClose",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": "Figma `Show Close Button`"
+      },
+      {
+        "name": "onClose",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string",
+        "defaultValue": "Dismiss",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Figma `Show Quick Action` — inline link in body row"
+      },
+      {
+        "name": "onAction",
+        "type": "(event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "DatePickerField": {
+    "displayName": "DatePickerField",
+    "description": "Convenience field — trigger + calendar panel.",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "defaultValue": "YYYY/MM/DD",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rangePlaceholder",
+        "type": "string",
+        "defaultValue": "Start date - End date",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rangeSeparator",
+        "type": "string",
+        "defaultValue": "-",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "contentClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "calendarClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "defaultValue": "single",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "minDate",
+        "type": "Date",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "maxDate",
+        "type": "Date",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "Date | DateRange",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: Date) => void) | ((value: DateRange) => void)",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "enableTime",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "timeValue",
+        "type": "DatePickerTimeValue",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultTimeValue",
+        "type": "DatePickerTimeValue",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onTimeChange",
+        "type": "(value: DatePickerTimeValue) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "TimePickerField": {
+    "displayName": "TimePickerField",
+    "description": "Convenience field — trigger + time wheel panel.",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "defaultValue": "HH:mm",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "contentClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "panelClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "TimePickerValue",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: TimePickerValue) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Switch": {
+    "displayName": "Switch",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Link": {
+    "displayName": "Link",
+    "description": "",
+    "props": [
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "caption",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "defaultValue": "noBackground",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Textarea": {
+    "displayName": "Textarea",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": "Figma `Size`"
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "showController",
+        "type": "boolean",
+        "required": false,
+        "description": "Figma `Controller` — character counter + resize affordance"
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Checkbox": {
+    "displayName": "Checkbox",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "round",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma Checkbox `Round`"
+      }
+    ]
+  },
+  "RadioGroup": {
+    "displayName": "RadioGroup",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "direction",
+        "type": "enum",
+        "defaultValue": "vertical",
+        "required": false,
+        "description": "Figma Radio Input Group `Direction`"
+      }
+    ]
+  },
+  "CascaderField": {
+    "displayName": "CascaderField",
+    "description": "Convenience field — trigger + options-driven menu.",
+    "props": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string[] & (string | number | readonly string[])",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[] & (string | number | readonly string[])",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "regular",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "CascaderOption[]",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[], selectedOptions: CascaderOption[]) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "changeOnSelect",
+        "type": "boolean",
+        "required": false,
+        "description": "Select parent nodes — Figma allows any-level selection (default true)."
+      },
+      {
+        "name": "separator",
+        "type": "string",
+        "defaultValue": "/",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "allRound",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "expandIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "defaultValue": "Text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "contentClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "menuClassName",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "ColorPicker": {
+    "displayName": "ColorPicker",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string, meta?: ColorPickerChangeMeta) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "format",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultFormat",
+        "type": "enum",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onFormatChange",
+        "type": "(format: ColorFormat) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "presets",
+        "type": "string[]",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onPresetsChange",
+        "type": "(presets: string[]) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "maxPresets",
+        "type": "number",
+        "defaultValue": "8",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Navigation": {
+    "displayName": "Navigation",
+    "description": "",
+    "props": [
+      {
+        "name": "as",
+        "type": "enum",
+        "defaultValue": "nav",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "background",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "direction",
+        "type": "enum",
+        "defaultValue": "vertical",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "dividingLine",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma `Dividing line` variant"
+      }
+    ]
+  },
+  "List": {
+    "displayName": "List",
+    "description": "Figma Structure Navigation → List root",
+    "props": []
+  },
+  "Typography": {
+    "displayName": "Typography",
+    "description": "",
+    "props": [
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "tone",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": "Figma `White` — light text on dark surfaces"
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "as",
+        "type": "enum",
+        "defaultValue": "span",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Typeface": {
+    "displayName": "Typeface",
+    "description": "",
+    "props": [
+      {
+        "name": "content",
+        "type": "enum",
+        "defaultValue": "allCustom",
+        "required": false,
+        "description": "Figma `Content` preset"
+      },
+      {
+        "name": "primary",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Primary line — overrides preset first line"
+      },
+      {
+        "name": "secondary",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Secondary line — overrides preset second line"
+      },
+      {
+        "name": "tertiary",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Tertiary line — used by `textCaptionSubtitle`"
+      },
+      {
+        "name": "primaryContent",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": "Per-line content mode for numeric text"
+      },
+      {
+        "name": "secondaryContent",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "tertiaryContent",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "tone",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "FormField": {
+    "displayName": "FormField",
+    "description": "",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "htmlFor",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Anchor": {
+    "displayName": "Anchor",
+    "description": "",
+    "props": [
+      {
+        "name": "as",
+        "type": "enum",
+        "defaultValue": "nav",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Popover": {
+    "displayName": "Popover",
+    "description": "Radix Popover closes on `window` blur (e.g. focusing DevTools). Suppress only\nblur-initiated closes; pointer-down (outside click, trigger toggle) and Escape\nmust still dismiss on the first interaction.",
+    "props": []
+  },
+  "Modal": {
+    "displayName": "Modal",
+    "description": "",
+    "props": []
+  },
+  "Tooltip": {
+    "displayName": "Tooltip",
+    "description": "",
+    "props": []
+  },
+  "Loading": {
+    "displayName": "Loading",
+    "description": "",
+    "props": [
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "enum",
+        "defaultValue": "theme",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "lineHeightFix",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "defaultValue": "Loading",
+        "required": false,
+        "description": "Accessible name; omit when decorative (`aria-hidden`)."
+      }
+    ]
+  }
+}

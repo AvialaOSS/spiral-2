@@ -1,0 +1,450 @@
+/* ColorPicker — Figma Information Collect → ColorPicker */
+:root {
+  --color-picker-checkerboard: conic-gradient(
+      var(--color-picker-checkerboard-light, #e2e0e0) 90deg,
+      var(--color-picker-checkerboard-dark, #fefcfc) 90deg 180deg,
+      var(--color-picker-checkerboard-light, #e2e0e0) 180deg 270deg,
+      var(--color-picker-checkerboard-dark, #fefcfc) 270deg
+    )
+    0 0 / 8px 8px;
+}
+
+.aviala-color-picker-panel {
+  display: flex;
+  width: var(--color-picker-panel-width, 370px);
+  flex-direction: column;
+  gap: var(--color-picker-panel-gap, 10px);
+  overflow: hidden;
+  border: 1px solid var(--color-picker-panel-border, #f5f3f3);
+  border-radius: var(--color-picker-panel-radius, 10px);
+  background-color: var(--color-picker-panel-bg, #fefcfc);
+  box-shadow: var(--color-picker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
+  padding: var(--padding-none, 0) var(--padding-none, 0) var(--color-picker-panel-px, 8px);
+}
+
+.aviala-color-picker-area {
+  position: relative;
+  height: var(--color-picker-area-height, 160px);
+  width: 100%;
+  overflow: hidden;
+  padding: var(--gap-content-space, 10px) var(--color-picker-panel-px, 8px);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.aviala-color-picker-area__surface {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--border-radius-extra-small-2, 6px);
+}
+
+.aviala-color-picker-area__white {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.aviala-color-picker-area__black {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, #000);
+}
+
+.aviala-color-picker-area__thumb {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.aviala-color-picker-slider {
+  position: relative;
+  height: var(--color-picker-slider-height, 8px);
+  width: 100%;
+  border: 1px solid var(--color-picker-thumb-border, #e2e0e0);
+  border-radius: var(--border-radius-allround, 99px);
+  touch-action: none;
+  cursor: pointer;
+}
+
+.aviala-color-picker-slider__track {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.aviala-color-picker-slider__thumb {
+  position: absolute;
+  top: 50%;
+  width: var(--color-picker-slider-thumb, 10px);
+  height: var(--color-picker-slider-thumb, 10px);
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.aviala-color-picker-slider-row {
+  padding: 3px var(--color-picker-panel-px, 8px);
+}
+
+.aviala-color-picker-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-component-space, 8px);
+  padding: 0 var(--color-picker-panel-px, 8px);
+}
+
+/* Panel row fields — pure CSS (no Tailwind); mirrors BaseInput + Badge */
+.aviala-color-picker-field {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 0;
+  align-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--input-radius, 8px);
+  background-color: var(--input-bg-default, #f5f3f3);
+  box-shadow: var(--input-shell-shadow);
+  padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
+  gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
+  color: var(--input-fg, #343333);
+  --input-shell-px: var(--input-px-regular, 10px);
+  --input-shell-gap: var(--input-gap-regular, 6px);
+  --input-shell-field-py: var(--input-field-py-regular, 6px);
+  --input-shell-slot-py: var(--input-slot-py-regular, 6px);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.aviala-color-picker-field:focus-within {
+  background-color: var(--input-bg-activated, #fefcfc);
+  box-shadow: var(
+    --input-shell-focus-shadow,
+    inset 0 0 0 1px var(--input-border-activated, var(--primary)),
+    var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04))
+  );
+}
+
+.aviala-color-picker-field--alpha {
+  flex: 0 0 78px;
+  width: 78px;
+}
+
+.aviala-color-picker-field__badge-area {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--input-shell-slot-py) 0;
+}
+
+.aviala-color-picker-field__input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  padding: var(--input-shell-field-py) 0;
+  font-family: inherit;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+  color: var(--input-fg, #343333);
+  outline: none;
+}
+
+.aviala-color-picker-field__input:disabled {
+  cursor: not-allowed;
+}
+
+.aviala-color-picker-field:has(.aviala-color-picker-field__input:disabled) {
+  cursor: not-allowed;
+  opacity: var(--input-disabled-opacity, 0.55);
+}
+
+.aviala-color-picker-field:focus-within .aviala-color-picker-field__input::selection {
+  background-color: color-mix(in srgb, var(--input-border-activated, var(--primary)) 25%, transparent);
+}
+
+.aviala-color-picker-format-select {
+  flex: 0 0 76px;
+}
+
+.aviala-color-picker-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-component-space, 8px);
+  padding: 0 var(--color-picker-panel-px, 8px);
+}
+
+.aviala-color-pick-button {
+  display: inline-flex;
+  width: var(--color-picker-swatch-button-size, 32px);
+  height: var(--color-picker-swatch-button-size, 32px);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border-radius: var(--input-radius, 8px);
+  background-color: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  padding: var(--padding-min, 2px);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.aviala-color-pick-button:hover:not(:disabled) {
+  border-color: var(--border-border-normal-primary, #e2e0e0);
+}
+
+.aviala-color-pick-button:disabled {
+  cursor: not-allowed;
+  opacity: var(--input-disabled-opacity, 0.55);
+}
+
+.aviala-color-pick-button[data-selected="true"] {
+  border-color: var(--input-border-activated, var(--primary));
+}
+
+.aviala-color-pick-button__swatch {
+  width: var(--color-picker-swatch-button, 26px);
+  height: var(--color-picker-swatch-button, 26px);
+  border-radius: var(--border-radius-extra-small-2, 6px);
+}
+
+.aviala-color-picker-trigger {
+  display: inline-flex;
+  width: 100%;
+  min-width: var(--button-min-width, 46px);
+  cursor: pointer;
+  align-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--input-radius, 8px);
+  background-color: var(--input-bg-default, #f5f3f3);
+  box-shadow: var(--input-shell-shadow, var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04)));
+  padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
+  gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
+  font-family: inherit;
+  color: var(--input-fg, #343333);
+  --input-shell-px: var(--input-px-regular, 10px);
+  --input-shell-gap: var(--input-gap-regular, 6px);
+  --input-shell-field-py: var(--input-field-py-regular, 6px);
+  --input-shell-slot-py: var(--input-slot-py-regular, 6px);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.aviala-color-picker-trigger[data-size="big"] {
+  --input-shell-px: var(--input-px-big, 14px);
+  --input-shell-gap: var(--input-gap-big, 8px);
+  --input-shell-field-py: var(--padding-middle, 10px);
+  --input-shell-slot-py: var(--padding-middle, 10px);
+}
+
+.aviala-color-picker-trigger[data-size="regular"] {
+  --input-shell-px: var(--input-px-regular, 10px);
+  --input-shell-gap: var(--input-gap-regular, 6px);
+  --input-shell-field-py: var(--input-field-py-regular, 6px);
+  --input-shell-slot-py: var(--input-slot-py-regular, 6px);
+}
+
+.aviala-color-picker-trigger[data-all-round="true"] {
+  border-radius: var(--input-radius-allround, 99px);
+}
+
+.aviala-color-picker-trigger[data-open="true"],
+.aviala-color-picker-trigger:focus-visible {
+  background-color: var(--input-bg-activated, #fefcfc);
+  box-shadow: var(
+    --input-shell-focus-shadow,
+    inset 0 0 0 1px var(--input-border-activated, var(--primary)),
+    var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04))
+  );
+  outline: none;
+}
+
+.aviala-color-picker-trigger:disabled,
+.aviala-color-picker-trigger[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: var(--input-disabled-opacity, 0.55);
+}
+
+.aviala-color-picker-trigger__swatch {
+  display: inline-flex;
+  height: var(--input-icon-slot-height, var(--input-line-height, 18px));
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: var(--input-shell-slot-py) 0;
+}
+
+.aviala-color-picker-trigger__swatch-inner {
+  width: var(--color-picker-swatch-input, 18px);
+  height: var(--color-picker-swatch-input, 18px);
+  border-radius: var(--border-radius-extra-small-2, 6px);
+}
+
+.aviala-color-picker-trigger__value {
+  min-width: 0;
+  flex: 1;
+  padding: var(--input-shell-field-py) 0;
+  text-align: left;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.aviala-color-picker-trigger__placeholder {
+  opacity: var(--input-placeholder-opacity, 0.6);
+}
+
+.aviala-color-picker-content {
+  z-index: 50;
+  outline: none;
+}
+
+.aviala-color-picker-content[data-state="open"][data-side="bottom"] {
+  animation: aviala-color-picker-in-bottom 0.15s ease;
+}
+
+.aviala-color-picker-content[data-state="closed"][data-side="bottom"] {
+  animation: aviala-color-picker-out-bottom 0.15s ease forwards;
+}
+
+.aviala-color-picker-content[data-state="open"][data-side="top"] {
+  animation: aviala-color-picker-in-top 0.15s ease;
+}
+
+.aviala-color-picker-content[data-state="closed"][data-side="top"] {
+  animation: aviala-color-picker-out-top 0.15s ease forwards;
+}
+
+.aviala-color-picker-content[data-state="open"][data-side="left"] {
+  animation: aviala-color-picker-in-left 0.15s ease;
+}
+
+.aviala-color-picker-content[data-state="closed"][data-side="left"] {
+  animation: aviala-color-picker-out-left 0.15s ease forwards;
+}
+
+.aviala-color-picker-content[data-state="open"][data-side="right"] {
+  animation: aviala-color-picker-in-right 0.15s ease;
+}
+
+.aviala-color-picker-content[data-state="closed"][data-side="right"] {
+  animation: aviala-color-picker-out-right 0.15s ease forwards;
+}
+
+@keyframes aviala-color-picker-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-color-picker-out-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes aviala-color-picker-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-color-picker-out-top {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes aviala-color-picker-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-color-picker-out-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(4px);
+  }
+}
+
+@keyframes aviala-color-picker-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-color-picker-out-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-color-picker-content[data-state="open"],
+  .aviala-color-picker-content[data-state="closed"] {
+    animation: none;
+  }
+}

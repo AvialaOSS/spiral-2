@@ -1,0 +1,210 @@
+/* Modal — Figma Information Display → Modal (553:58593) */
+
+.aviala-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: var(--modal-overlay-bg, rgba(0, 0, 0, 0.45));
+}
+
+.aviala-modal-overlay[data-state="open"] {
+  animation: aviala-modal-overlay-in 0.2s ease;
+}
+
+.aviala-modal-overlay[data-state="closed"] {
+  animation: aviala-modal-overlay-out 0.15s ease forwards;
+}
+
+.aviala-modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 51;
+  display: flex;
+  max-height: calc(100vh - 32px);
+  width: min(var(--modal-content-width, 260px), var(--modal-content-max-width, calc(100vw - 32px)));
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
+.aviala-modal-content--size-large {
+  width: min(var(--modal-content-width-large, 480px), var(--modal-content-max-width, calc(100vw - 32px)));
+}
+
+.aviala-modal-content__surface {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--modal-content-border, var(--border-border-normal-light, #f5f3f3));
+  border-radius: var(--modal-content-radius, var(--border-radius-big, 12px));
+  background-color: var(--modal-content-bg, var(--box-box-normal-background-whiteonly, #fefcfc));
+  color: var(--modal-content-fg, var(--text-text-normal-text-black, #343333));
+  box-shadow: var(--modal-content-shadow, 0 8px 24px 2px rgba(0, 0, 0, 0.06));
+}
+
+.aviala-modal-content[data-state="open"] .aviala-modal-content__surface {
+  animation: aviala-modal-content-in 0.2s ease;
+}
+
+.aviala-modal-content[data-state="closed"] {
+  animation: aviala-modal-presence-out 0.15s ease forwards;
+}
+
+.aviala-modal-content[data-state="closed"] .aviala-modal-content__surface {
+  animation: aviala-modal-content-out 0.15s ease forwards;
+}
+
+.aviala-modal__header {
+  flex-shrink: 0;
+  background-color: var(--modal-header-bg, var(--modal-content-bg, #fefcfc));
+  padding-block: var(--modal-header-py, 0);
+  padding-inline: var(--modal-header-pl, var(--padding-big, 14px))
+    var(--modal-header-pr, var(--padding-small, 6px));
+}
+
+.aviala-modal__header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--modal-header-gap, var(--gap-content-space, 10px));
+}
+
+.aviala-modal__header-main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  padding-block: var(--modal-header-main-py, var(--padding-default, 8px));
+}
+
+.aviala-modal__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--modal-icon-slot-width, var(--modal-icon-slot-height, 22px));
+  height: var(--modal-icon-slot-height, 22px);
+  padding-block: var(--modal-icon-py, var(--padding-min, 2px));
+  color: var(--modal-icon-fg, var(--text-text-infomation-primary-black, #3489c8));
+}
+
+.aviala-modal__icon svg {
+  width: var(--modal-icon-size, var(--size-middle, 16px));
+  height: var(--modal-icon-size, var(--size-middle, 16px));
+}
+
+.aviala-modal__header-typeface {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside, 0);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-modal__title,
+.aviala-modal__description {
+  display: block;
+}
+
+.aviala-modal__description {
+  color: var(--modal-description-fg, var(--text-text-normal-text-caption-black, #858484));
+}
+
+.aviala-modal__close {
+  flex-shrink: 0;
+  align-self: stretch;
+  color: var(--modal-close-fg, var(--text-text-normal-text-caption-black, #858484));
+}
+
+.aviala-modal__close svg {
+  width: var(--modal-close-icon-size, var(--size-middle, 16px));
+  height: var(--modal-close-icon-size, var(--size-middle, 16px));
+}
+
+.aviala-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-light, #f5f3f3));
+  background-color: var(--modal-body-bg, var(--modal-content-bg, #fefcfc));
+  padding: var(--modal-section-py, var(--padding-default, 8px))
+    var(--modal-section-px, var(--padding-big, 14px));
+}
+
+.aviala-modal__body-typeface .aviala-typeface__line:first-child .aviala-typography {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.aviala-modal__footer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--modal-footer-actions-gap, var(--gap-component-space, 8px));
+  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-light, #f5f3f3));
+  background-color: var(--modal-footer-bg, var(--modal-content-bg, #fefcfc));
+  padding: var(--modal-section-py, var(--padding-default, 8px))
+    var(--modal-section-px, var(--padding-big, 14px));
+}
+
+@keyframes aviala-modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aviala-modal-overlay-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes aviala-modal-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aviala-modal-content-out {
+  from {
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@keyframes aviala-modal-presence-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-modal-overlay[data-state="open"],
+  .aviala-modal-overlay[data-state="closed"],
+  .aviala-modal-content[data-state="open"] .aviala-modal-content__surface,
+  .aviala-modal-content[data-state="closed"],
+  .aviala-modal-content[data-state="closed"] .aviala-modal-content__surface {
+    animation: none;
+  }
+}

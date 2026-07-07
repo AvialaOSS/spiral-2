@@ -1,10 +1,14 @@
+import { applyBaseNumbersDensity, type BaseNumbersDensity } from "./base-numbers";
 import type { ThemeVars } from "./generate-theme";
 
 export type ApplyThemeOptions = {
   target?: HTMLElement;
   mode?: "light" | "dark";
   themeId?: string;
+  density?: BaseNumbersDensity;
 };
+
+export type { BaseNumbersDensity } from "./base-numbers";
 
 export function applyTheme(
   vars: ThemeVars,
@@ -18,6 +22,12 @@ export function applyTheme(
 
   const mode = options.mode ?? vars["--aviala-mode"] ?? "light";
   target.setAttribute("data-mode", mode);
+
+  const density =
+    options.density ??
+    (vars["--aviala-density"] as BaseNumbersDensity | undefined) ??
+    "default";
+  applyBaseNumbersDensity(target, density);
 
   if (options.themeId || vars["--aviala-theme-id"]) {
     target.setAttribute(

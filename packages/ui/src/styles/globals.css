@@ -1,6 +1,8 @@
 @import "@aviala/tokens/styles.css";
 @import "tailwindcss";
 
+@source "../";
+
 @layer base {
   * {
     border-color: var(--border);

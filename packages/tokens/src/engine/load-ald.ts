@@ -2,6 +2,10 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  BASE_NUMBERS_FILES,
+  type BaseNumbersDensity,
+} from "./base-numbers";
+import {
   flattenTokens,
   resolveTokenHex,
   resolveTokenNumber,
@@ -9,6 +13,8 @@ import {
   type RawTokenTree,
 } from "./parse-ald";
 import type { ThemeMode, ThemeVars } from "./generate-theme";
+
+export type { BaseNumbersDensity } from "./base-numbers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ALD_ROOT = join(__dirname, "../../source/ald");
@@ -49,8 +55,11 @@ function loadSemanticColors(palette: Record<string, string>): ThemeVars {
 }
 
 function loadControlColors(palette: Record<string, string>): ThemeVars {
+  // The control export is flat (keys already start with "control-"); force the
+  // "control/" group so names match the semantic layer (--control-control-*).
   const tokens = flattenTokens(
-    readJson("Components/control/default.tokens.json")
+    readJson("Components/control/default.tokens.json"),
+    "control"
   );
   const vars: ThemeVars = {};
 
@@ -62,17 +71,26 @@ function loadControlColors(palette: Record<string, string>): ThemeVars {
   return vars;
 }
 
-function loadBaseNumbers(): ThemeVars {
-  const tokens = flattenTokens(
-    readJson("Components/base-numbers/Mode 1.tokens.json")
-  );
+function baseNumberToCssVar(path: string): string {
+  if (path.startsWith("transparency/transparency-")) {
+    return "--" + path.slice("transparency/".length).toLowerCase();
+  }
+  return tokenPathToCssVar(path);
+}
+
+function loadBaseNumbers(density: BaseNumbersDensity = "default"): ThemeVars {
+  const tokens = flattenTokens(readJson(BASE_NUMBERS_FILES[density]));
   const vars: ThemeVars = {};
 
   for (const [path, token] of Object.entries(tokens)) {
     const value = resolveTokenNumber(token);
     if (value !== undefined) {
-      vars[tokenPathToCssVar(path)] =
-        typeof value === "number" ? `${value}px` : String(value);
+      if (path.startsWith("transparency/") && typeof value === "number") {
+        vars[baseNumberToCssVar(path)] = String(value / 100);
+      } else {
+        vars[baseNumberToCssVar(path)] =
+          typeof value === "number" ? `${value}px` : String(value);
+      }
     }
   }
 
@@ -93,14 +111,18 @@ function loadFontWeights(): ThemeVars {
   return vars;
 }
 
-export function loadAldTheme(mode: ThemeMode = "light"): ThemeVars {
+export function loadAldTheme(
+  mode: ThemeMode = "light",
+  density: BaseNumbersDensity = "default"
+): ThemeVars {
   const palette = loadPrimitivePalette(mode);
   return {
     ...loadSemanticColors(palette),
     ...loadControlColors(palette),
-    ...loadBaseNumbers(),
+    ...loadBaseNumbers(density),
     ...loadFontWeights(),
     "--aviala-mode": mode,
+    "--aviala-density": density,
   };
 }
 

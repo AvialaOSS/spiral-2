@@ -1,1 +1,18 @@
+@import "@aviala/tokens/styles.css";
 @import "tailwindcss";
+
+@source "../../../packages/ui/src";
+@source "../**/*.{tsx,ts}";
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}

@@ -1,0 +1,162 @@
+/* Alert — Figma Response And Feedback → Alert (527:56855) */
+
+.aviala-alert {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-none, 0);
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--alert-radius);
+}
+
+.aviala-alert__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--alert-body-gap);
+  padding: var(--alert-body-py) var(--alert-body-px);
+  overflow: hidden;
+}
+
+.aviala-alert--size-small .aviala-alert__body {
+  align-items: center;
+}
+
+.aviala-alert__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--alert-icon-slot-height);
+  height: var(--alert-icon-slot-height);
+  color: var(--alert-icon-fg);
+}
+
+.aviala-alert__icon svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+}
+
+.aviala-alert__typeface {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-alert--size-default
+  .aviala-alert__typeface
+  .aviala-typeface__line:first-child
+  .aviala-typography {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.aviala-alert__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-alert__quick-action {
+  flex-shrink: 0;
+}
+
+.aviala-alert__close {
+  flex-shrink: 0;
+  color: var(--alert-close-fg);
+}
+
+.aviala-alert__close svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+}
+
+.aviala-alert__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--alert-actions-gap);
+  padding: 0 var(--alert-actions-pr) var(--alert-actions-pb) var(--alert-actions-pl);
+}
+
+.aviala-alert--size-small .aviala-alert__actions {
+  align-items: center;
+}
+
+.aviala-alert__action {
+  flex-shrink: 0;
+}
+
+.aviala-alert__action--secondary {
+  color: var(--alert-secondary-action-fg);
+}
+
+/* ---- Type × appearance surfaces ---- */
+
+.aviala-alert--type-info.aviala-alert--appearance-default {
+  background: var(--alert-info-bg-default);
+  border-color: var(--alert-info-border);
+  --alert-icon-fg: var(--alert-info-icon-fg);
+}
+
+.aviala-alert--type-info.aviala-alert--appearance-light {
+  background: var(--alert-info-bg-light);
+  border-color: transparent;
+  --alert-icon-fg: var(--alert-info-icon-fg);
+}
+
+.aviala-alert--type-warning.aviala-alert--appearance-default {
+  background: var(--alert-warning-bg-default);
+  border-color: var(--alert-warning-border);
+  --alert-icon-fg: var(--alert-warning-icon-fg);
+}
+
+.aviala-alert--type-warning.aviala-alert--appearance-light {
+  background: var(--alert-warning-bg-light);
+  border-color: transparent;
+  --alert-icon-fg: var(--alert-warning-icon-fg);
+}
+
+.aviala-alert--type-error.aviala-alert--appearance-default {
+  background: var(--alert-error-bg-default);
+  border-color: var(--alert-error-border);
+  --alert-icon-fg: var(--alert-error-icon-fg);
+}
+
+.aviala-alert--type-error.aviala-alert--appearance-light {
+  background: var(--alert-error-bg-light);
+  border-color: transparent;
+  --alert-icon-fg: var(--alert-error-icon-fg);
+}
+
+.aviala-alert--type-success.aviala-alert--appearance-default {
+  background: var(--alert-success-bg-default);
+  border-color: var(--alert-success-border);
+  --alert-icon-fg: var(--alert-success-icon-fg);
+}
+
+.aviala-alert--type-success.aviala-alert--appearance-light {
+  background: var(--alert-success-bg-light);
+  border-color: transparent;
+  --alert-icon-fg: var(--alert-success-icon-fg);
+}
+
+.aviala-alert--type-neutral.aviala-alert--appearance-default {
+  background: var(--alert-neutral-bg-default);
+  border-color: var(--alert-neutral-border);
+  --alert-icon-fg: var(--alert-neutral-icon-fg);
+}
+
+.aviala-alert--type-neutral.aviala-alert--appearance-light {
+  background: var(--alert-neutral-bg-light);
+  border-color: transparent;
+  --alert-icon-fg: var(--alert-neutral-icon-fg);
+}
+
+.aviala-alert .aviala-typography {
+  color: inherit;
+}
+
+.aviala-alert__typeface .aviala-typeface__line:first-child .aviala-typography,
+.aviala-alert__title {
+  color: var(--alert-title-fg);
+}
+
+.aviala-alert__typeface .aviala-typeface__line:last-child .aviala-typography {
+  color: var(--alert-description-fg);
+}

@@ -6,8 +6,14 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "icons:export": "node scripts/figma-export/export-icons.mjs",
+    "icons:export:dry": "node scripts/figma-export/export-icons.mjs --dry-run",
     "icons:build": "pnpm --filter @aviala/icons run build:icons",
+    "icons:sync": "node scripts/figma-export/export-icons.mjs && pnpm --filter @aviala/icons run build",
     "sync:ald": "node scripts/sync-ald.mjs",
+    "docs:dev": "pnpm --filter @aviala/tokens build && pnpm --filter @spiral/spiral-docs dev",
+    "docs:build": "pnpm --filter @aviala/tokens build && pnpm --filter @aviala/spiral build && pnpm --filter @spiral/spiral-docs build",
+    "docs:copy-hugo": "node scripts/copy-docs-to-hugo.mjs",
     "clean": "turbo run clean && rimraf node_modules"
   },
   "devDependencies": {

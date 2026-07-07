@@ -1,6 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { Label } from "./label";
+import { Typography } from "./typography";
 
 export type FormFieldProps = HTMLAttributes<HTMLDivElement> & {
   label?: string;
@@ -21,9 +22,15 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       ) : null}
       {children}
       {description && !error ? (
-        <p className="text-xs text-muted-foreground">{description}</p>
+        <Typography level="caption" as="p">
+          {description}
+        </Typography>
       ) : null}
-      {error ? <p className="text-xs text-destructive">{error}</p> : null}
+      {error ? (
+        <Typography level="caption" as="p" className="text-destructive">
+          {error}
+        </Typography>
+      ) : null}
     </div>
   )
 );

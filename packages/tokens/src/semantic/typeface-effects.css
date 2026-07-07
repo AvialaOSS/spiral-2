@@ -1,0 +1,168 @@
+/* Typography / Typeface — Figma System Composition → Typography (128:85) / Typeface (527:56311) */
+
+.aviala-typography {
+  font-family: var(--font-sans);
+  font-style: normal;
+  letter-spacing: 0;
+  word-break: break-word;
+}
+
+.aviala-typography--display {
+  font-size: var(--typography-display-size);
+  line-height: var(--typography-display-line-height);
+  color: var(--typography-title-fg);
+}
+
+.aviala-typography--headline1 {
+  font-size: var(--typography-headline1-size);
+  line-height: var(--typography-headline1-line-height);
+  color: var(--typography-title-fg);
+}
+
+.aviala-typography--headline2 {
+  font-size: var(--typography-headline2-size);
+  line-height: var(--typography-headline2-line-height);
+  color: var(--typography-title-fg);
+}
+
+.aviala-typography--title {
+  font-size: var(--typography-title-size);
+  line-height: var(--typography-title-line-height);
+  color: var(--typography-title-fg);
+}
+
+.aviala-typography--subtitle {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  color: var(--typography-body-fg);
+}
+
+.aviala-typography--text {
+  font-size: var(--typography-text-size);
+  line-height: var(--typography-text-line-height);
+  color: var(--typography-body-fg);
+}
+
+.aviala-typography--caption {
+  font-size: var(--typography-caption-size);
+  line-height: var(--typography-caption-line-height);
+  color: var(--typography-caption-fg);
+}
+
+.aviala-typography[data-content="text"].aviala-typography--display {
+  font-weight: var(--typography-display-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--display {
+  font-weight: var(--typography-display-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--headline1 {
+  font-weight: var(--typography-headline1-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--headline1 {
+  font-weight: var(--typography-headline1-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--headline2 {
+  font-weight: var(--typography-headline2-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--headline2 {
+  font-weight: var(--typography-headline2-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--title {
+  font-weight: var(--typography-title-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--title {
+  font-weight: var(--typography-title-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--subtitle {
+  font-weight: var(--typography-subtitle-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--subtitle {
+  font-weight: var(--typography-subtitle-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--text {
+  font-weight: var(--typography-text-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--text {
+  font-weight: var(--typography-text-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-content="text"].aviala-typography--caption {
+  font-weight: var(--typography-caption-weight-text);
+}
+
+.aviala-typography[data-content="number"].aviala-typography--caption {
+  font-weight: var(--typography-caption-weight-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.aviala-typography[data-tone="white"].aviala-typography--display,
+.aviala-typography[data-tone="white"].aviala-typography--headline1,
+.aviala-typography[data-tone="white"].aviala-typography--headline2,
+.aviala-typography[data-tone="white"].aviala-typography--title {
+  color: var(--typography-title-fg-white);
+}
+
+.aviala-typography[data-tone="white"].aviala-typography--subtitle,
+.aviala-typography[data-tone="white"].aviala-typography--text {
+  color: var(--typography-body-fg-white);
+}
+
+.aviala-typography[data-tone="white"].aviala-typography--caption {
+  color: var(--typography-caption-fg-white);
+}
+
+.aviala-typeface {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--typeface-gap);
+  overflow: hidden;
+}
+
+.aviala-typeface__line {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.aviala-typeface__line > .aviala-typography {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.aviala-badge .aviala-typography,
+.aviala-button .aviala-typography,
+.aviala-cascader-item .aviala-typography,
+.aviala-color-picker-field .aviala-typography,
+.aviala-feedback .aviala-typography,
+.aviala-popover-content__surface .aviala-typography,
+.aviala-segmentator-item .aviala-typography,
+.aviala-select-item .aviala-typography,
+.aviala-select-trigger .aviala-typography,
+.aviala-tooltip-content__surface .aviala-typography,
+.aviala-input .aviala-typography {
+  color: inherit;
+}
+
+/* Surface carries typography classes directly — caption fg would override tooltip token */
+.aviala-tooltip-content__surface.aviala-typography {
+  color: var(--tooltip-content-fg, #fefcfc);
+}

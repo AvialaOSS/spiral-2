@@ -2,25 +2,33 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
 import {
   applyTheme,
+  applyBaseNumbersDensity,
+  DEFAULT_PALETTE_CONFIG,
   generateTheme,
   getPreset,
   presetList,
+  removeTheme,
+  type BaseNumbersDensity,
+  type PaletteConfig,
   type ThemeMode,
   type ThemePreset,
 } from "@aviala/tokens";
+import { initKeyboardFocus } from "../lib/keyboard-focus";
 
 export type ThemeProviderProps = {
   children: ReactNode;
   defaultMode?: ThemeMode;
   defaultPrimary?: string;
   defaultPresetId?: string;
+  defaultPaletteConfig?: PaletteConfig;
+  defaultDensity?: BaseNumbersDensity;
   storageKey?: string;
   onThemeChange?: (vars: Record<string, string>) => void;
 };
@@ -33,6 +41,13 @@ type ThemeContextValue = {
   presetId: string | undefined;
   applyPreset: (id: string) => void;
   presets: ThemePreset[];
+  /** True when the active preset is a frozen ALD theme (palette engine bypassed). */
+  isStaticTheme: boolean;
+  density: BaseNumbersDensity;
+  setDensity: (density: BaseNumbersDensity) => void;
+  paletteConfig: PaletteConfig;
+  setPaletteConfig: (config: Partial<PaletteConfig>) => void;
+  resetPaletteConfig: () => void;
   themeVars: Record<string, string>;
 };
 
@@ -42,7 +57,9 @@ export function ThemeProvider({
   children,
   defaultMode = "light",
   defaultPrimary,
-  defaultPresetId = "default",
+  defaultPresetId = "ald",
+  defaultPaletteConfig,
+  defaultDensity = "default",
   storageKey = "aviala-theme",
   onThemeChange,
 }: ThemeProviderProps) {
@@ -64,22 +81,62 @@ export function ThemeProvider({
     );
   });
 
-  const [presetId, setPresetId] = useState<string | undefined>(defaultPresetId);
+  const [presetId, setPresetId] = useState<string | undefined>(() => {
+    if (typeof window === "undefined") return defaultPresetId;
+    return localStorage.getItem(`${storageKey}:preset`) ?? defaultPresetId;
+  });
+
+  const [paletteConfig, setPaletteConfigState] = useState<PaletteConfig>(() => {
+    const base: PaletteConfig = { ...DEFAULT_PALETTE_CONFIG, ...defaultPaletteConfig };
+    if (typeof window === "undefined") return base;
+    const stored = localStorage.getItem(`${storageKey}:palette`);
+    if (!stored) return base;
+    try {
+      return { ...base, ...(JSON.parse(stored) as PaletteConfig) };
+    } catch {
+      return base;
+    }
+  });
+
+  const [density, setDensityState] = useState<BaseNumbersDensity>(() => {
+    if (typeof window === "undefined") return defaultDensity;
+    const stored = localStorage.getItem(`${storageKey}:density`);
+    return stored === "mobile-friendly" ? "mobile-friendly" : defaultDensity;
+  });
+
+  const isStaticTheme = presetId ? getPreset(presetId)?.static === true : false;
 
   const themeVars = useMemo(
     () =>
-      generateTheme({
-        mode,
-        primary: primaryColor,
-        presetId,
-      }),
-    [mode, primaryColor, presetId]
+      isStaticTheme
+        ? {}
+        : generateTheme({
+            mode,
+            primary: primaryColor,
+            presetId,
+            palette: paletteConfig,
+          }),
+    [isStaticTheme, mode, primaryColor, presetId, paletteConfig]
   );
 
-  useEffect(() => {
-    applyTheme(themeVars, { mode, themeId: presetId });
+  useLayoutEffect(() => {
+    initKeyboardFocus();
+  }, []);
+
+  useLayoutEffect(() => {
+    applyBaseNumbersDensity(document.documentElement, density);
+
+    if (isStaticTheme) {
+      // Clear any inline palette vars so the frozen [data-theme="ald"] CSS wins.
+      removeTheme();
+      document.documentElement.setAttribute("data-theme", presetId ?? "ald");
+      document.documentElement.setAttribute("data-mode", mode);
+      onThemeChange?.(themeVars);
+      return;
+    }
+    applyTheme(themeVars, { mode, themeId: presetId, density });
     onThemeChange?.(themeVars);
-  }, [themeVars, mode, presetId, onThemeChange]);
+  }, [isStaticTheme, themeVars, mode, presetId, density, onThemeChange]);
 
   const setMode = useCallback(
     (next: ThemeMode) => {
@@ -94,6 +151,7 @@ export function ThemeProvider({
       setPrimaryColorState(color);
       setPresetId(undefined);
       localStorage.setItem(`${storageKey}:primary`, color);
+      localStorage.removeItem(`${storageKey}:preset`);
     },
     [storageKey]
   );
@@ -105,6 +163,36 @@ export function ThemeProvider({
       setPresetId(id);
       setPrimaryColorState(preset.primary);
       localStorage.setItem(`${storageKey}:primary`, preset.primary);
+      localStorage.setItem(`${storageKey}:preset`, id);
+    },
+    [storageKey]
+  );
+
+  const setPaletteConfig = useCallback(
+    (config: Partial<PaletteConfig>) => {
+      setPaletteConfigState((prev) => {
+        const next = { ...prev, ...config };
+        localStorage.setItem(`${storageKey}:palette`, JSON.stringify(next));
+        return next;
+      });
+    },
+    [storageKey]
+  );
+
+  const resetPaletteConfig = useCallback(() => {
+    const base: PaletteConfig = { ...DEFAULT_PALETTE_CONFIG, ...defaultPaletteConfig };
+    setPaletteConfigState(base);
+    localStorage.removeItem(`${storageKey}:palette`);
+  }, [storageKey, defaultPaletteConfig]);
+
+  const setDensity = useCallback(
+    (next: BaseNumbersDensity) => {
+      setDensityState(next);
+      if (next === "mobile-friendly") {
+        localStorage.setItem(`${storageKey}:density`, next);
+      } else {
+        localStorage.removeItem(`${storageKey}:density`);
+      }
     },
     [storageKey]
   );
@@ -118,9 +206,29 @@ export function ThemeProvider({
       presetId,
       applyPreset,
       presets: presetList,
+      isStaticTheme,
+      density,
+      setDensity,
+      paletteConfig,
+      setPaletteConfig,
+      resetPaletteConfig,
       themeVars,
     }),
-    [mode, setMode, primaryColor, setPrimaryColor, presetId, applyPreset, themeVars]
+    [
+      mode,
+      setMode,
+      primaryColor,
+      setPrimaryColor,
+      presetId,
+      applyPreset,
+      isStaticTheme,
+      density,
+      setDensity,
+      paletteConfig,
+      setPaletteConfig,
+      resetPaletteConfig,
+      themeVars,
+    ]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
@@ -134,21 +242,34 @@ export function useTheme(): ThemeContextValue {
   return ctx;
 }
 
+/** Layout key for remeasuring size-sensitive UI when theme density/mode changes. */
+export function useThemeLayoutKey(): string | null {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) return null;
+  return `${ctx.density}:${ctx.mode}`;
+}
+
 export function ThemeScript({
   storageKey = "aviala-theme",
   defaultMode = "light",
   defaultPrimary = "#FF5532",
+  defaultDensity = "default",
 }: {
   storageKey?: string;
   defaultMode?: ThemeMode;
   defaultPrimary?: string;
+  defaultDensity?: BaseNumbersDensity;
 }) {
   const script = `
 (function(){
   try {
     var mode = localStorage.getItem('${storageKey}:mode') || '${defaultMode}';
     var primary = localStorage.getItem('${storageKey}:primary') || '${defaultPrimary}';
+    var density = localStorage.getItem('${storageKey}:density') || '${defaultDensity}';
     document.documentElement.setAttribute('data-mode', mode);
+    if (density === 'mobile-friendly') {
+      document.documentElement.setAttribute('data-density', 'mobile-friendly');
+    }
   } catch(e) {}
 })();
 `;

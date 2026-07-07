@@ -1,0 +1,95 @@
+/* Icons wrapper — Figma Components → Icons (level × BiggerSize × lineHeightFix) */
+
+.aviala-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviala-icon__glyph {
+  width: var(--aviala-icon-size);
+  height: var(--aviala-icon-size);
+  flex-shrink: 0;
+}
+
+.aviala-icon--level-display {
+  --aviala-icon-size: var(--icon-size-display);
+}
+
+.aviala-icon--level-headline1 {
+  --aviala-icon-size: var(--icon-size-headline1);
+}
+
+.aviala-icon--level-headline2 {
+  --aviala-icon-size: var(--icon-size-headline2);
+}
+
+.aviala-icon--level-title {
+  --aviala-icon-size: var(--icon-size-title);
+}
+
+.aviala-icon--level-subtitle {
+  --aviala-icon-size: var(--icon-size-subtitle);
+}
+
+.aviala-icon--level-text {
+  --aviala-icon-size: var(--icon-size-text);
+}
+
+.aviala-icon--level-caption {
+  --aviala-icon-size: var(--icon-size-caption);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-display {
+  --aviala-icon-size: var(--icon-size-display-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-headline1 {
+  --aviala-icon-size: var(--icon-size-headline1-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-headline2 {
+  --aviala-icon-size: var(--icon-size-headline2-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-title {
+  --aviala-icon-size: var(--icon-size-title-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-subtitle {
+  --aviala-icon-size: var(--icon-size-subtitle-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-text {
+  --aviala-icon-size: var(--icon-size-text-bigger);
+}
+
+.aviala-icon--bigger-size.aviala-icon--level-caption {
+  --aviala-icon-size: var(--icon-size-caption-bigger);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-display {
+  height: var(--line-height-max, 44px);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-headline1 {
+  height: var(--line-height-semilarge, 34px);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-headline2 {
+  height: var(--line-height-big, 30px);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-title,
+.aviala-icon--line-height-fix.aviala-icon--level-subtitle {
+  height: var(--line-height-middle, 22px);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-text {
+  height: var(--line-height-regular, 18px);
+}
+
+.aviala-icon--line-height-fix.aviala-icon--level-caption {
+  height: var(--line-height-small, 16px);
+}

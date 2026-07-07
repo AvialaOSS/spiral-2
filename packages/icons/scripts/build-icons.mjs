@@ -1,70 +1,387 @@
 import { transform } from "@svgr/core";
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
+import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  iconNameToComponentName,
+  parseSvgVariantFileName,
+  toPascalCase,
+  variantInnerComponentName,
+} from "./icon-utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rawDir = join(__dirname, "../raw");
 const outDir = join(__dirname, "../src/components");
+const srcDir = join(__dirname, "../src");
+
+const SVGR_OPTIONS = {
+  plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+  typescript: true,
+  exportType: "named",
+  jsxRuntime: "automatic",
+  /** Drop Figma 120×120 dimensions; scale via viewBox + consumer width/height */
+  dimensions: false,
+  svgoConfig: {
+    plugins: [
+      { name: "removeViewBox", active: false },
+      { name: "removeDimensions", active: true },
+      {
+        name: "convertColors",
+        params: { currentColor: true },
+      },
+    ],
+  },
+};
+
+/** Ensure viewBox exists for 120×120 Figma artboards before SVGR. */
+function normalizeIconSvg(svg) {
+  if (/viewBox=/i.test(svg)) return svg;
+  const widthMatch = svg.match(/\bwidth="(\d+(?:\.\d+)?)/);
+  const heightMatch = svg.match(/\bheight="(\d+(?:\.\d+)?)/);
+  const w = widthMatch?.[1] ?? "120";
+  const h = heightMatch?.[1] ?? "120";
+  return svg.replace(/<svg\b/, `<svg viewBox="0 0 ${w} ${h}"`);
+}
 
 mkdirSync(outDir, { recursive: true });
 
-function toPascalCase(name) {
-  return name
-    .replace(/\.svg$/i, "")
-    .replace(/[-_]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
-    .replace(/^(.)/, (m) => m.toUpperCase());
+function collectSvgFiles(dir, relativeDir = "") {
+  if (!existsSync(dir)) return [];
+
+  const files = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const relativePath = relativeDir ? `${relativeDir}/${entry.name}` : entry.name;
+    const absolutePath = join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      files.push(...collectSvgFiles(absolutePath, relativePath));
+      continue;
+    }
+
+    if (entry.name.endsWith(".svg")) {
+      files.push({
+        absolutePath,
+        relativePath: relativePath.replace(/\.svg$/i, ""),
+      });
+    }
+  }
+
+  return files.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
 }
 
-const svgs = existsSync(rawDir)
-  ? readdirSync(rawDir).filter((f) => f.endsWith(".svg"))
-  : [];
-
-const exportLines = [];
-
-for (const file of svgs) {
-  const svg = readFileSync(join(rawDir, file), "utf8");
-  const componentName = toPascalCase(file);
+async function svgToInnerComponent(svg, innerName) {
   const tsx = await transform(
-    svg,
-    {
-      plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
-      typescript: true,
-      exportType: "named",
-      namedExport: componentName,
-      jsxRuntime: "automatic",
-      svgoConfig: {
-        plugins: [{ name: "removeViewBox", active: false }],
-      },
-    },
-    { componentName }
+    normalizeIconSvg(svg),
+    { ...SVGR_OPTIONS, namedExport: innerName },
+    { componentName: innerName }
   );
 
-  writeFileSync(join(outDir, `${componentName}.tsx`), tsx);
-  exportLines.push(`export { ${componentName} } from "./components/${componentName}";`);
+  return tsx
+    .replace(/^import type \{ SVGProps \} from "react";\n?/m, "")
+    .replace(new RegExp(`export \\{ ${innerName} \\};?\\n?`, "m"), "")
+    .trim();
+}
+
+function buildVariantsObjectLines(variantMap) {
+  const thicknesses = [...variantMap.keys()].sort();
+  const lines = ["const variants = {"];
+
+  for (const thickness of thicknesses) {
+    const modes = variantMap.get(thickness);
+    lines.push(`  ${thickness}: {`);
+    for (const [mode, innerName] of [...modes.entries()].sort()) {
+      lines.push(`    ${mode}: ${innerName},`);
+    }
+    lines.push("  },");
+  }
+
+  lines.push("} as const;");
+  return lines.join("\n");
+}
+
+function buildCatalogVariantFields(variantMap) {
+  const thicknesses = [...variantMap.keys()].sort();
+  const modes = [...new Set([...variantMap.values()].flatMap((m) => [...m.keys()]))].sort();
+  return {
+    thicknesses: JSON.stringify(thicknesses),
+    modes: JSON.stringify(modes),
+  };
+}
+
+function hasExportDedupeSuffix(relativePath) {
+  const base = basename(relativePath);
+  return /-\d+$/.test(base) && parseSvgVariantFileName(base) !== null;
+}
+
+function shouldReplaceVariantPath(currentPath, nextRelativePath) {
+  if (!currentPath) return true;
+  const currentDeduped = hasExportDedupeSuffix(currentPath);
+  const nextDeduped = hasExportDedupeSuffix(nextRelativePath);
+  if (currentDeduped && !nextDeduped) return true;
+  return false;
+}
+
+const svgs = collectSvgFiles(rawDir);
+
+/** @type {Map<string, { iconName: string, category?: string, fileStem: string, variants: Map<string, Map<string, string>> }>} */
+const iconGroups = new Map();
+/** @type {Array<{ absolutePath: string, relativePath: string }>} */
+const legacySvgs = [];
+
+for (const file of svgs) {
+  const fileBase = basename(file.relativePath);
+  const parsed = parseSvgVariantFileName(fileBase);
+
+  if (!parsed) {
+    legacySvgs.push(file);
+    continue;
+  }
+
+  const category = file.relativePath.includes("/") ? file.relativePath.split("/")[0] : undefined;
+  const groupKey = parsed.iconName;
+
+  if (!iconGroups.has(groupKey)) {
+    iconGroups.set(groupKey, {
+      iconName: parsed.iconName,
+      category,
+      fileStem: parsed.iconName,
+      variants: new Map(),
+    });
+  }
+
+  const group = iconGroups.get(groupKey);
+  if (!group.variants.has(parsed.thickness)) {
+    group.variants.set(parsed.thickness, new Map());
+  }
+
+  const modeMap = group.variants.get(parsed.thickness);
+  const existingPath = modeMap.get(parsed.mode);
+  if (shouldReplaceVariantPath(existingPath, file.relativePath)) {
+    modeMap.set(parsed.mode, file.absolutePath);
+  }
+}
+
+const exportLines = [];
+const catalogEntries = [];
+const componentNames = new Set();
+
+for (const group of iconGroups.values()) {
+  const componentName = iconNameToComponentName(group.iconName);
+  componentNames.add(componentName);
+
+  const innerComponents = [];
+  const innerNameByKey = new Map();
+
+  for (const [thickness, modes] of group.variants.entries()) {
+    for (const [mode, absolutePath] of modes.entries()) {
+      const innerName = variantInnerComponentName(thickness, mode);
+      innerNameByKey.set(`${thickness}:${mode}`, innerName);
+      const svg = readFileSync(absolutePath, "utf8");
+      innerComponents.push(await svgToInnerComponent(svg, innerName));
+    }
+  }
+
+  const variantMapForCodegen = new Map();
+  for (const [thickness, modes] of group.variants.entries()) {
+    const modeMap = new Map();
+    for (const mode of modes.keys()) {
+      modeMap.set(mode, innerNameByKey.get(`${thickness}:${mode}`));
+    }
+    variantMapForCodegen.set(thickness, modeMap);
+  }
+
+  const { thicknesses, modes } = buildCatalogVariantFields(group.variants);
+
+  const source = `/** Auto-generated by scripts/build-icons.mjs — do not edit manually */
+import type { SVGProps } from "react";
+import { applyAvialaIconProps } from "../icon-size";
+import { resolveIconVariant } from "../resolve-variant";
+import type { AvialaIconProps } from "../types";
+import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS } from "../types";
+
+${innerComponents.join("\n\n")}
+
+${buildVariantsObjectLines(variantMapForCodegen)}
+
+export type ${componentName}Props = AvialaIconProps;
+
+export function ${componentName}({
+  thickness = DEFAULT_ICON_THICKNESS,
+  mode = DEFAULT_ICON_MODE,
+  ...props
+}: ${componentName}Props) {
+  const Variant = resolveIconVariant(variants, thickness, mode);
+  return <Variant {...applyAvialaIconProps({ thickness, mode, ...props })} />;
+}
+`;
+
+  writeFileSync(join(outDir, `${componentName}.tsx`), source);
+  exportLines.push(`export { ${componentName}, type ${componentName}Props } from "./components/${componentName}";`);
+  catalogEntries.push({
+    name: componentName,
+    iconName: group.iconName,
+    category: group.category,
+    fileStem: group.fileStem,
+    thicknesses,
+    modes,
+  });
+}
+
+for (const file of legacySvgs) {
+  const componentName = toPascalCase(file.relativePath);
+  componentNames.add(componentName);
+  const svg = readFileSync(file.absolutePath, "utf8");
+  const innerName = `${componentName}Svg`;
+
+  const inner = await svgToInnerComponent(svg, innerName);
+  const source = `/** Auto-generated by scripts/build-icons.mjs — do not edit manually */
+import type { SVGProps } from "react";
+import { applyAvialaIconProps } from "../icon-size";
+import type { AvialaIconProps } from "../types";
+
+${inner}
+
+export type ${componentName}Props = AvialaIconProps;
+
+export function ${componentName}(props: ${componentName}Props) {
+  return <${innerName} {...applyAvialaIconProps(props)} />;
+}
+`;
+
+  writeFileSync(join(outDir, `${componentName}.tsx`), source);
+  exportLines.push(
+    `export { ${componentName}, type ${componentName}Props } from "./components/${componentName}";`
+  );
+  catalogEntries.push({
+    name: componentName,
+    iconName: basename(file.relativePath),
+    category: file.relativePath.includes("/") ? file.relativePath.split("/")[0] : undefined,
+    fileStem: file.relativePath,
+    thicknesses: "[]",
+    modes: "[]",
+    legacy: true,
+  });
+}
+
+/** Remove orphaned components and stale tsc artifacts that shadow .tsx during bundling. */
+const COMPONENT_ARTIFACT = /\.(tsx|js|d\.ts(?:\.map)?|js\.map)$/;
+
+for (const file of readdirSync(outDir)) {
+  if (!COMPONENT_ARTIFACT.test(file)) continue;
+  const name = file.replace(/\.(tsx|js|d\.ts(?:\.map)?|js\.map)$/, "");
+  if (!componentNames.has(name) && name !== "Placeholder") {
+    unlinkSync(join(outDir, file));
+  }
+}
+
+for (const file of readdirSync(outDir)) {
+  if (/\.(js|d\.ts(?:\.map)?|js\.map)$/.test(file)) {
+    unlinkSync(join(outDir, file));
+  }
+}
+
+for (const file of ["index.js", "index.d.ts", "index.d.ts.map", "catalog.js", "catalog.d.ts", "catalog.d.ts.map", "icon.js", "icon.d.ts", "icon.d.ts.map", "icon-size.js", "icon-size.d.ts", "icon-size.d.ts.map", "types.js", "types.d.ts", "types.d.ts.map", "resolve-variant.js", "resolve-variant.d.ts", "resolve-variant.d.ts.map"]) {
+  const artifact = join(srcDir, file);
+  if (existsSync(artifact)) unlinkSync(artifact);
 }
 
 if (exportLines.length === 0) {
   writeFileSync(
     join(outDir, "Placeholder.tsx"),
     `import type { SVGProps } from "react";
+import { applyAvialaIconProps } from "../icon-size";
+import type { AvialaIconProps } from "../types";
 
-export const Placeholder = (props: SVGProps<SVGSVGElement>) => (
+const PlaceholderSvg = (props: SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
     <circle cx="12" cy="12" r="10" />
   </svg>
 );
+
+export type PlaceholderProps = AvialaIconProps;
+
+export function Placeholder(props: PlaceholderProps) {
+  return <PlaceholderSvg {...applyAvialaIconProps(props)} />;
+}
 `
   );
-  exportLines.push('export { Placeholder } from "./components/Placeholder";');
+  exportLines.push('export { Placeholder, type PlaceholderProps } from "./components/Placeholder";');
+  catalogEntries.push({
+    name: "Placeholder",
+    iconName: "placeholder",
+    category: undefined,
+    fileStem: "placeholder",
+    thicknesses: "[]",
+    modes: "[]",
+    legacy: true,
+  });
 }
 
+const catalogImports = catalogEntries
+  .map(({ name }) => `import { ${name}, type ${name}Props } from "./components/${name}";`)
+  .join("\n");
+
+const catalogArray = catalogEntries
+  .map(({ name, iconName, category, fileStem, thicknesses, modes, legacy }) => {
+    const categoryField = category ? `, category: "${category}"` : "";
+    const legacyField = legacy ? `, legacy: true` : "";
+    return `  { name: "${name}", iconName: "${iconName}", file: "${fileStem}", thicknesses: ${thicknesses} as IconThickness[], modes: ${modes} as IconMode[]${categoryField}${legacyField}, component: ${name} },`;
+  })
+  .join("\n");
+
 writeFileSync(
-  join(__dirname, "../src/index.ts"),
+  join(srcDir, "catalog.ts"),
+  `/** Auto-generated by scripts/build-icons.mjs — do not edit manually */
+import type { AvialaIconProps, IconMode, IconThickness } from "./types";
+${catalogImports}
+
+export type IconCatalogEntry = {
+  name: string;
+  iconName: string;
+  file: string;
+  category?: string;
+  thicknesses: IconThickness[];
+  modes: IconMode[];
+  legacy?: boolean;
+  component: import("react").ComponentType<AvialaIconProps>;
+};
+
+export const iconCatalog = [
+${catalogArray}
+] as const;
+
+export type IconName = (typeof iconCatalog)[number]["name"];
+`
+);
+
+writeFileSync(
+  join(srcDir, "index.ts"),
   `export type { SVGProps } from "react";
 export { Icon, type IconProps } from "./icon";
+export {
+  DEFAULT_ICON_MODE,
+  DEFAULT_ICON_THICKNESS,
+  ICON_LEVELS,
+  ICON_MODES,
+  ICON_THICKNESSES,
+  type AvialaIconProps,
+  type IconLevel,
+  type IconMode,
+  type IconThickness,
+} from "./types";
+export { resolveIconSizeToken } from "./icon-size";
+export { iconCatalog, type IconCatalogEntry, type IconName } from "./catalog";
 ${exportLines.join("\n")}
 `
 );
 
-console.log(`Built ${svgs.length || 1} icon component(s)`);
+console.log(
+  `Built ${catalogEntries.length} icon component(s) from ${iconGroups.size} icon group(s) + ${legacySvgs.length} legacy SVG(s)`
+);

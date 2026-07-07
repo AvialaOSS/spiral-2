@@ -1,0 +1,350 @@
+/* Button gloss + line shadows — import outside Tailwind to preserve runtime var() chains */
+:root {
+  /* Hover surface tokens — mirrored from components.css so they resolve when this
+     file is imported outside the Tailwind pipeline (styles.css may omit unused :root vars). */
+  --button-primary-bg-hover: var(--aviala-primary-primary-7, #ffab98);
+  --button-primary-bg-active: var(--aviala-primary-primary-9, #e92d00);
+  --button-hover-brightness: 1.05;
+  --button-active-brightness: 0.95;
+  --button-second-bg-hover: var(--aviala-primary-primary-5, #ffc5b9);
+  --button-default-bg-hover: var(--aviala-neutral-neutral-6, #edebeb);
+  --button-no-bg-hover: var(
+    --control-control-theme-lightbackground,
+    var(--aviala-primary-primary-2, #fff9f8)
+  );
+  --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
+  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
+  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
+
+  /* Button size — padding / line-height / radius (height is content-driven) */
+  --button-tiny-padding-x: var(--padding-tiny, 4px);
+  --button-tiny-padding-y: var(--padding-min, 2px);
+  --button-tiny-radius: var(--border-radius-extra-small-2, 6px);
+  --button-tiny-line-height: var(--line-height-small, 16px);
+  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 14px));
+  --button-tiny-icon-slot-height: var(--line-height-small, 16px);
+
+  --button-small-padding-x: var(--padding-small, 6px);
+  --button-small-padding-y: var(--padding-min, 2px);
+  --button-small-radius: var(--border-radius-extra-small-2, 6px);
+  --button-small-line-height: var(--line-height-regular, 18px);
+  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  --button-small-icon-slot-height: var(--line-height-regular, 18px);
+
+  --button-regular-padding-x: var(--padding-middle, 10px);
+  --button-regular-padding-y: var(--padding-small, 6px);
+  --button-regular-radius: var(--border-radius-small, 8px);
+  --button-regular-line-height: var(--line-height-regular, 18px);
+  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  --button-regular-icon-slot-height: var(--line-height-regular, 18px);
+
+  --button-big-padding-x: var(--padding-big, 14px);
+  --button-big-padding-y: var(--padding-default, 8px);
+  --button-big-radius: var(--border-radius-small, 8px);
+  --button-big-line-height: var(--line-height-regular, 18px);
+  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  --button-big-icon-slot-height: var(--line-height-regular, 18px);
+
+  --button-tiny-height: calc(
+    2 * var(--button-tiny-padding-y) + var(--button-tiny-line-height)
+  );
+  --button-small-height: calc(
+    2 * var(--button-small-padding-y) + var(--button-small-line-height)
+  );
+  --button-regular-height: calc(
+    2 * var(--button-regular-padding-y) + var(--button-regular-line-height)
+  );
+  --button-big-height: calc(
+    2 * var(--button-big-padding-y) + var(--button-big-line-height)
+  );
+
+  /* Gloss = primary-3 at 20% opacity — follows generated / ALD palette step 3 */
+  --button-gloss-color: var(--aviala-primary-primary-3);
+  --button-primary-gradient: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--button-gloss-color) 20%, transparent) 0%,
+    transparent 36%
+  );
+  --button-shadow-basic:
+    0 0 1px var(--special-effort-se-lineshadow-all, rgba(0, 0, 0, 0.12)),
+    inset 0 -1px 0 var(--special-effort-se-lineshadow-bottomdeep, rgba(0, 0, 0, 0.08));
+  --button-shadow-light: inset 0 -0.5px 0
+    var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
+
+  --switch-checked-surface: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--button-gloss-color) 20%, transparent) 0%,
+      transparent 36%
+    ),
+    linear-gradient(90deg, var(--switch-checked-bg) 0%, var(--switch-checked-bg) 100%);
+}
+
+/* ---- Layout (padding + line-height; no fixed height) ---- */
+.aviala-button {
+  box-sizing: border-box;
+  --button-padding-x: var(--button-regular-padding-x);
+  --button-padding-y: var(--button-regular-padding-y);
+  --button-radius: var(--button-regular-radius);
+  --button-icon-size: var(--button-regular-icon-size);
+  --button-icon-slot-height: var(--button-regular-icon-slot-height);
+  --button-height: var(--button-regular-height);
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: var(--button-radius);
+  gap: var(--button-gap, var(--gap-inside-space, 6px));
+}
+
+/* Icon-only: 1:1 square, height matches text button at the same size. */
+.aviala-button[data-icon-only="true"] {
+  min-width: 0;
+  width: var(--button-height);
+  height: var(--button-height);
+  padding: 0;
+  gap: 0;
+}
+
+.aviala-button[data-size="tiny"] {
+  --button-padding-x: var(--button-tiny-padding-x);
+  --button-padding-y: var(--button-tiny-padding-y);
+  --button-radius: var(--button-tiny-radius);
+  --button-icon-size: var(--button-tiny-icon-size);
+  --button-icon-slot-height: var(--button-tiny-icon-slot-height);
+  --button-height: var(--button-tiny-height);
+}
+
+.aviala-button[data-size="small"] {
+  --button-padding-x: var(--button-small-padding-x);
+  --button-padding-y: var(--button-small-padding-y);
+  --button-radius: var(--button-small-radius);
+  --button-icon-size: var(--button-small-icon-size);
+  --button-icon-slot-height: var(--button-small-icon-slot-height);
+  --button-height: var(--button-small-height);
+}
+
+.aviala-button[data-size="regular"] {
+  --button-padding-x: var(--button-regular-padding-x);
+  --button-padding-y: var(--button-regular-padding-y);
+  --button-radius: var(--button-regular-radius);
+  --button-icon-size: var(--button-regular-icon-size);
+  --button-icon-slot-height: var(--button-regular-icon-slot-height);
+  --button-height: var(--button-regular-height);
+}
+
+.aviala-button[data-size="big"] {
+  --button-padding-x: var(--button-big-padding-x);
+  --button-padding-y: var(--button-big-padding-y);
+  --button-radius: var(--button-big-radius);
+  --button-icon-size: var(--button-big-icon-size);
+  --button-icon-slot-height: var(--button-big-icon-slot-height);
+  --button-height: var(--button-big-height);
+}
+
+.aviala-button .aviala-typography {
+  line-height: var(--button-label-line-height, var(--button-regular-line-height));
+}
+
+.aviala-button[data-size="tiny"] .aviala-typography {
+  --button-label-line-height: var(--button-tiny-line-height);
+}
+
+.aviala-button[data-size="small"] .aviala-typography {
+  --button-label-line-height: var(--button-small-line-height);
+}
+
+.aviala-button[data-size="regular"] .aviala-typography {
+  --button-label-line-height: var(--button-regular-line-height);
+}
+
+.aviala-button[data-size="big"] .aviala-typography {
+  --button-label-line-height: var(--button-big-line-height);
+}
+
+/* ---- Surface layer (primary / second / default / destructive) ---- */
+.aviala-button-surface {
+  transition:
+    filter 250ms ease,
+    background-color 250ms ease,
+    background-image 250ms ease;
+}
+
+.aviala-button--mode-primary {
+  --button-surface-bg: var(--button-primary-bg);
+  color: var(--button-primary-fg);
+}
+
+.aviala-button--mode-primary .aviala-button-surface {
+  background-color: var(--button-surface-bg);
+  background-image: var(--button-primary-gradient);
+  box-shadow: var(--button-shadow-basic);
+}
+
+.aviala-button--mode-destructive {
+  --button-surface-bg: var(--button-destructive-bg);
+  color: var(--button-destructive-fg);
+}
+
+.aviala-button--mode-destructive .aviala-button-surface {
+  background-image: var(--button-primary-gradient),
+    linear-gradient(90deg, var(--button-surface-bg) 0%, var(--button-surface-bg) 100%);
+  box-shadow: var(--button-shadow-basic);
+}
+
+.aviala-button--mode-second {
+  --button-surface-bg: var(--button-second-bg);
+  color: var(--button-second-fg);
+}
+
+.aviala-button--mode-second .aviala-button-surface {
+  background-color: var(--button-surface-bg);
+  box-shadow: var(--button-shadow-light);
+}
+
+.aviala-button--mode-default {
+  --button-surface-bg: var(--button-default-bg);
+  color: var(--button-default-fg);
+}
+
+.aviala-button--mode-defaultCustom {
+  --button-surface-bg: var(--button-default-bg);
+  color: var(--button-default-custom-fg);
+}
+
+.aviala-button--mode-default .aviala-button-surface,
+.aviala-button--mode-defaultCustom .aviala-button-surface {
+  background-color: var(--button-surface-bg);
+  box-shadow: var(--button-shadow-light);
+}
+
+/* ---- Hover (exclude disabled + loading) ---- */
+.aviala-button--mode-primary:hover:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-primary-bg-hover);
+}
+
+.aviala-button--mode-destructive:hover:not(:disabled):not([aria-busy="true"])
+  .aviala-button-surface {
+  filter: brightness(var(--button-hover-brightness, 1.05));
+}
+
+.aviala-button--mode-second:hover:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-second-bg-hover);
+}
+
+.aviala-button--mode-default:hover:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-defaultCustom:hover:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-default-bg-hover);
+}
+
+.aviala-button--mode-noBackground {
+  background-color: transparent;
+  color: var(--button-no-bg-fg);
+  transition: background-color 250ms ease;
+}
+
+.aviala-button--mode-noBackgroundCustom {
+  background-color: transparent;
+  color: var(--button-default-custom-fg);
+  transition: background-color 250ms ease;
+}
+
+.aviala-button--mode-noBackground:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-hover);
+}
+
+.aviala-button--mode-noBackgroundCustom:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-custom-hover);
+}
+
+.aviala-button--mode-noBackground:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-noBackground:hover:active:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-active);
+}
+
+.aviala-button--mode-noBackgroundCustom:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-noBackgroundCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-custom-active);
+}
+
+/* Pressed: primary uses p-9 surface; other modes darken via brightness filter */
+.aviala-button--mode-primary:active:not(:disabled),
+.aviala-button--mode-primary:hover:active:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-primary-bg-active);
+}
+
+.aviala-button--mode-destructive:active:not(:disabled) .aviala-button-surface,
+.aviala-button--mode-second:active:not(:disabled) .aviala-button-surface,
+.aviala-button--mode-default:active:not(:disabled) .aviala-button-surface,
+.aviala-button--mode-defaultCustom:active:not(:disabled) .aviala-button-surface {
+  filter: brightness(var(--button-active-brightness, 0.95));
+}
+
+.aviala-button--mode-destructive:hover:active:not(:disabled):not([aria-busy="true"])
+  .aviala-button-surface {
+  filter: brightness(var(--button-hover-brightness, 1.05))
+    brightness(var(--button-active-brightness, 0.95));
+}
+
+/* Icon slot — Figma Basic Input → Button (aligns with input-slot / select-item-function) */
+.aviala-button__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  height: var(--button-icon-slot-height, var(--line-height-regular, 18px));
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.aviala-button__icon svg {
+  height: var(--button-icon-size, var(--size-regular, 14px));
+  width: auto;
+  flex-shrink: 0;
+}
+
+.aviala-button[data-icon-only="true"] .aviala-button__icon svg {
+  width: var(--button-icon-size, var(--size-regular, 14px));
+}
+
+/* Keep icon SVG visible when disabled — override UA graying of currentColor */
+.aviala-button:disabled {
+  -webkit-text-fill-color: currentColor;
+}
+
+.aviala-button:disabled svg {
+  fill: currentColor;
+}
+
+/* Typography level tokens use neutral fg — override with per-mode button fg (primary-10 for second). */
+.aviala-button--mode-primary .aviala-typography.aviala-typography--text,
+.aviala-button--mode-primary .aviala-typography.aviala-typography--caption {
+  color: var(--button-primary-fg);
+}
+
+.aviala-button--mode-second .aviala-typography.aviala-typography--text,
+.aviala-button--mode-second .aviala-typography.aviala-typography--caption {
+  color: var(--button-second-fg);
+}
+
+.aviala-button--mode-default .aviala-typography.aviala-typography--text,
+.aviala-button--mode-default .aviala-typography.aviala-typography--caption {
+  color: var(--button-default-fg);
+}
+
+.aviala-button--mode-defaultCustom .aviala-typography.aviala-typography--text,
+.aviala-button--mode-defaultCustom .aviala-typography.aviala-typography--caption {
+  color: var(--button-default-custom-fg);
+}
+
+.aviala-button--mode-noBackground .aviala-typography.aviala-typography--text,
+.aviala-button--mode-noBackground .aviala-typography.aviala-typography--caption {
+  color: var(--button-no-bg-fg);
+}
+
+.aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--text,
+.aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--caption {
+  color: var(--button-default-custom-fg);
+}
+
+.aviala-button--mode-destructive .aviala-typography.aviala-typography--text,
+.aviala-button--mode-destructive .aviala-typography.aviala-typography--caption {
+  color: var(--button-destructive-fg);
+}

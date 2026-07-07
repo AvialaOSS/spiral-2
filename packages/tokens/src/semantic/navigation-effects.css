@@ -1,0 +1,316 @@
+/* Navigation — Figma Structure Navigation (624:61777, 624:92194, 624:61632) */
+
+.aviala-navigation {
+  display: flex;
+  width: 100%;
+  gap: var(--navigation-gap, 10px);
+}
+
+.aviala-navigation[data-direction="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+  padding-block: var(--navigation-py, 14px);
+}
+
+.aviala-navigation[data-direction="vertical"][data-dividing-line="true"] {
+  border-right: 1px solid var(--navigation-divider);
+}
+
+.aviala-navigation[data-direction="horizontal"] {
+  flex-direction: row;
+  align-items: center;
+  height: var(--navigation-height-horizontal, 48px);
+  padding-inline: var(--navigation-px-horizontal, 18px);
+}
+
+.aviala-navigation[data-direction="horizontal"][data-dividing-line="true"] {
+  border-bottom: 1px solid var(--navigation-divider);
+}
+
+.aviala-navigation[data-background="default"] {
+  background-color: var(--navigation-bg);
+}
+
+.aviala-navigation-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside, 4px);
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-brand {
+  padding-inline: var(--navigation-brand-px, 14px);
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-brand {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: 0;
+  padding-block: var(--navigation-item-py-horizontal, 8px);
+}
+
+.aviala-navigation-brand__title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--navigation-brand-title-height, 26px);
+  padding: var(--padding-tiny, 4px);
+  border-radius: var(--border-radius-small, 8px);
+  color: var(--navigation-brand-fg);
+  text-decoration: none;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.aviala-navigation-brand__title .aviala-typography.aviala-typography--text {
+  color: var(--navigation-brand-fg);
+}
+
+.aviala-navigation-section {
+  padding: 0 var(--navigation-section-px, 6px);
+  margin-block: var(--navigation-section-my, 0);
+  color: var(--navigation-section-fg);
+}
+
+.aviala-navigation-section + .aviala-navigation-item,
+.aviala-navigation-section + .aviala-navigation-item-group {
+  margin-top: var(--gap-component-space, 8px);
+}
+
+.aviala-navigation-group {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  width: 100%;
+}
+
+.aviala-navigation-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--navigation-item-rail);
+  opacity: 0;
+  will-change: transform, width, height;
+  transition:
+    transform var(--navigation-transition-duration, 0.3s)
+      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    width var(--navigation-transition-duration, 0.3s)
+      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    height var(--navigation-transition-duration, 0.3s)
+      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    opacity 120ms ease;
+}
+
+.aviala-navigation-indicator[data-visible="true"] {
+  opacity: 1;
+}
+
+.aviala-navigation-indicator[data-instant="true"] {
+  transition: none;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-indicator {
+  border-radius: var(--border-radius-allround, 999px);
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-indicator {
+  border-radius: var(--border-radius-extra-small-2, 6px)
+    var(--border-radius-extra-small-2, 6px) 0 0;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-group {
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--navigation-group-gap, 6px);
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-group {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--navigation-group-gap-horizontal, 6px);
+  flex-shrink: 0;
+}
+
+.aviala-navigation-item-group {
+  width: 100%;
+}
+
+.aviala-navigation-item-group:not([data-expanded]) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--navigation-group-gap, 6px);
+}
+
+.aviala-navigation-item-group[data-expanded] {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--navigation-transition-duration, 0.3s)
+      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    opacity 0.2s ease;
+}
+
+.aviala-navigation-item-group[data-expanded="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.aviala-navigation-item-group__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--navigation-group-gap, 6px);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.aviala-navigation-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-item[data-item-type="default"] {
+  padding-inline: var(--navigation-item-px, 8px);
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-item[data-item-type="child"] {
+  padding-left: var(--navigation-item-child-pl, 26px);
+  padding-right: var(--navigation-item-px, 8px);
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-item {
+  width: auto;
+  padding-inline: 0;
+  padding-block: var(--navigation-item-py-horizontal, 8px);
+}
+
+.aviala-navigation-item__control {
+  position: relative;
+  gap: var(--gap-inside, 4px);
+  width: 100%;
+  text-decoration: none;
+  text-align: left;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-item__control {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-item__control {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+/* Active tab — Button `second` surface (works with asChild where DOM surface span is omitted) */
+.aviala-navigation-item__control.aviala-button--mode-second::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--button-surface-bg, var(--button-second-bg));
+  box-shadow: var(--button-shadow-light);
+  pointer-events: none;
+  transition:
+    filter 250ms ease,
+    background-color 250ms ease;
+}
+
+.aviala-navigation-item__control.aviala-button--mode-second:active:not(:disabled)::before {
+  filter: brightness(var(--button-active-brightness, 0.95));
+}
+
+.aviala-navigation-item__icon,
+.aviala-navigation-item__chevron {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--navigation-icon-box, 18px);
+  height: var(--navigation-icon-box, 18px);
+  color: inherit;
+}
+
+.aviala-navigation-item__icon svg,
+.aviala-navigation-item__chevron svg {
+  width: var(--navigation-icon-size, 14px);
+  height: var(--navigation-icon-size, 14px);
+}
+
+/* Parent expand chevron — rotate when immediately followed by collapsible group */
+.aviala-navigation-item:has(+ .aviala-navigation-item-group[data-expanded])
+  .aviala-navigation-item__chevron
+  svg {
+  transform-origin: center;
+  transition: transform var(--navigation-transition-duration, 0.3s)
+    var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
+}
+
+.aviala-navigation-item:has(+ .aviala-navigation-item-group[data-expanded="true"])
+  .aviala-navigation-item__chevron
+  svg {
+  transform: rotate(180deg);
+}
+
+.aviala-navigation-item__label {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-item__label {
+  flex: 0 1 auto;
+}
+
+.aviala-navigation-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.aviala-navigation[data-direction="vertical"] .aviala-navigation-actions {
+  justify-content: space-between;
+  gap: var(--gap-component-space, 8px);
+  padding-inline: var(--padding-middle, 10px);
+}
+
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-actions {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: flex-end;
+  gap: var(--gap-inside, 4px);
+  padding-inline: 0;
+  padding-block: var(--navigation-item-py-horizontal, 8px);
+}
+
+.aviala-navigation-actions__slot {
+  display: flex;
+  align-items: center;
+  gap: var(--navigation-actions-slot-gap, 2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-navigation-indicator {
+    transition: none;
+  }
+
+  .aviala-navigation-item-group[data-expanded] {
+    transition: none;
+  }
+
+  .aviala-navigation-item:has(+ .aviala-navigation-item-group[data-expanded])
+    .aviala-navigation-item__chevron
+    svg {
+    transition: none;
+  }
+}

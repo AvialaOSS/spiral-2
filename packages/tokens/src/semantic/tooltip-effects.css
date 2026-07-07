@@ -1,0 +1,98 @@
+/* Tooltip — Figma System Composition → Tooltip (inverted neutral surface, caption text) */
+
+.aviala-tooltip-content {
+  z-index: 50;
+  outline: none;
+}
+
+.aviala-tooltip-content__surface {
+  max-width: var(--tooltip-content-max-width, 240px);
+  border-radius: var(--tooltip-content-radius, 8px);
+  background-color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-fg, #fefcfc);
+  box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
+  padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
+}
+
+/* Radix Popper arrow host — don't clip caret */
+.aviala-tooltip-content > span:has(> .aviala-tooltip-content__arrow) {
+  pointer-events: none;
+  overflow: visible;
+  min-width: 14px;
+  min-height: 5px;
+}
+
+.aviala-tooltip-content__arrow,
+.aviala-tooltip-content__arrow svg {
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+  width: 14px;
+  height: 5px;
+  min-width: 14px;
+  min-height: 5px;
+  color: var(--tooltip-content-bg, #343333);
+}
+
+/* Root fade — Radix Presence waits for animationend on Content, not child surface */
+.aviala-tooltip-content[data-state="closed"] {
+  animation: aviala-tooltip-presence-out 0.1s ease forwards;
+}
+
+.aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__surface,
+.aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__surface {
+  animation: aviala-tooltip-in 0.15s ease;
+}
+
+.aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__surface {
+  animation: aviala-tooltip-out 0.1s ease forwards;
+}
+
+/* Pointer — enter only; exit fade is on root for Radix Presence */
+.aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
+.aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
+  animation: aviala-tooltip-in 0.15s ease;
+}
+
+@keyframes aviala-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-tooltip-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes aviala-tooltip-presence-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-tooltip-content[data-state="closed"],
+  .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__surface,
+  .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__surface,
+  .aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__surface,
+  .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
+  .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
+    animation: none;
+  }
+}

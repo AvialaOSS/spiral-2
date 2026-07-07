@@ -1,0 +1,170 @@
+/* Keyboard focus ring — only when `html[data-aviala-keyboard-focus]` is set
+   (see initKeyboardFocus in @aviala/spiral). 250ms settle: 12px → 3px flush border. */
+
+:root {
+  --focus-ring-width-start: var(--size-small, 12px);
+  --focus-ring-width-end: var(--border-thickness-large, 3px);
+  --focus-ring-color: var(--ring, var(--border-border-theme-primary, #ff5532));
+  --focus-transition-duration: 250ms;
+  --focus-transition-easing: ease;
+}
+
+/* Positioning for pseudo-element ring */
+.aviala-link,
+.aviala-input,
+.aviala-textarea,
+.aviala-color-picker-field,
+.aviala-color-picker-trigger,
+.aviala-color-pick-button,
+.aviala-color-picker-area__surface,
+.aviala-color-picker-slider,
+.aviala-datepicker-calendar__nav,
+.aviala-datepicker-day,
+.aviala-datepicker-time__close,
+.aviala-datepicker-time__wheel-scroll,
+.aviala-navigation-brand__title,
+.aviala-navigation-item__control,
+.aviala-anchor-item__label {
+  position: relative;
+}
+
+/* Suppress native outline on all focus; custom ring only in keyboard mode below */
+.aviala-button:focus,
+.aviala-link:focus,
+.aviala-radio:focus,
+.aviala-checkbox:focus,
+.aviala-switch:focus,
+.aviala-segmentator-item:focus,
+.aviala-select-trigger:focus,
+.aviala-select-item:focus,
+.aviala-cascader-trigger:focus,
+.aviala-cascader-item:focus,
+.aviala-datepicker-trigger:focus,
+.aviala-timepicker-trigger:focus,
+.aviala-color-picker-trigger:focus,
+.aviala-color-pick-button:focus,
+.aviala-color-picker-area__surface:focus,
+.aviala-color-picker-slider:focus,
+.aviala-navigation-brand__title:focus,
+.aviala-navigation-item__control:focus,
+.aviala-datepicker-calendar__nav:focus,
+.aviala-datepicker-day:focus,
+.aviala-datepicker-time__close:focus,
+.aviala-datepicker-time__wheel-scroll:focus,
+.aviala-input:focus-within,
+.aviala-textarea:focus-within,
+.aviala-color-picker-field:focus-within,
+.aviala-anchor-item:focus .aviala-anchor-item__label,
+.aviala-focus-ring:focus {
+  outline: none;
+}
+
+html[data-aviala-keyboard-focus] .aviala-button:focus,
+html[data-aviala-keyboard-focus] .aviala-link:focus,
+html[data-aviala-keyboard-focus] .aviala-switch:focus,
+html[data-aviala-keyboard-focus] .aviala-segmentator-item:focus,
+html[data-aviala-keyboard-focus] .aviala-select-trigger:focus,
+html[data-aviala-keyboard-focus] .aviala-select-item:focus,
+html[data-aviala-keyboard-focus] .aviala-cascader-trigger:focus,
+html[data-aviala-keyboard-focus] .aviala-cascader-item:focus,
+html[data-aviala-keyboard-focus] .aviala-datepicker-trigger:focus,
+html[data-aviala-keyboard-focus] .aviala-timepicker-trigger:focus,
+html[data-aviala-keyboard-focus] .aviala-color-picker-trigger:focus,
+html[data-aviala-keyboard-focus] .aviala-color-pick-button:focus,
+html[data-aviala-keyboard-focus] .aviala-input:focus-within,
+html[data-aviala-keyboard-focus] .aviala-textarea:focus-within,
+html[data-aviala-keyboard-focus] .aviala-color-picker-field:focus-within,
+html[data-aviala-keyboard-focus] .aviala-color-picker-area__surface:focus,
+html[data-aviala-keyboard-focus] .aviala-color-picker-slider:focus,
+html[data-aviala-keyboard-focus] .aviala-navigation-brand__title:focus,
+html[data-aviala-keyboard-focus] .aviala-navigation-item__control:focus,
+html[data-aviala-keyboard-focus] .aviala-datepicker-time__wheel-scroll:focus {
+  overflow: visible;
+}
+
+html[data-aviala-keyboard-focus] .aviala-datepicker-day:focus {
+  z-index: 1;
+}
+
+/* Animated ring via ::after — keyboard navigation only */
+html[data-aviala-keyboard-focus] .aviala-button:focus::after,
+html[data-aviala-keyboard-focus] .aviala-link:focus::after,
+html[data-aviala-keyboard-focus] .aviala-radio:focus::after,
+html[data-aviala-keyboard-focus] .aviala-checkbox:focus::after,
+html[data-aviala-keyboard-focus] .aviala-switch:focus::after,
+html[data-aviala-keyboard-focus] .aviala-segmentator-item:focus::after,
+html[data-aviala-keyboard-focus] .aviala-select-trigger:focus::after,
+html[data-aviala-keyboard-focus] .aviala-select-item:focus::after,
+html[data-aviala-keyboard-focus] .aviala-cascader-trigger:focus::after,
+html[data-aviala-keyboard-focus] .aviala-cascader-item:focus::after,
+html[data-aviala-keyboard-focus] .aviala-datepicker-trigger:focus::after,
+html[data-aviala-keyboard-focus] .aviala-timepicker-trigger:focus::after,
+html[data-aviala-keyboard-focus] .aviala-color-picker-trigger:focus::after,
+html[data-aviala-keyboard-focus] .aviala-color-pick-button:focus::after,
+html[data-aviala-keyboard-focus] .aviala-color-picker-area__surface:focus::after,
+html[data-aviala-keyboard-focus] .aviala-color-picker-slider:focus::after,
+html[data-aviala-keyboard-focus] .aviala-navigation-brand__title:focus::after,
+html[data-aviala-keyboard-focus] .aviala-navigation-item__control:focus::after,
+html[data-aviala-keyboard-focus] .aviala-datepicker-calendar__nav:focus::after,
+html[data-aviala-keyboard-focus] .aviala-datepicker-day:focus::after,
+html[data-aviala-keyboard-focus] .aviala-datepicker-time__close:focus::after,
+html[data-aviala-keyboard-focus] .aviala-datepicker-time__wheel-scroll:focus::after,
+html[data-aviala-keyboard-focus] .aviala-input:focus-within::after,
+html[data-aviala-keyboard-focus] .aviala-textarea:focus-within::after,
+html[data-aviala-keyboard-focus] .aviala-color-picker-field:focus-within::after,
+html[data-aviala-keyboard-focus] .aviala-anchor-item:focus .aviala-anchor-item__label::after,
+html[data-aviala-keyboard-focus] .aviala-focus-ring:focus::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  border-radius: inherit;
+  border-style: solid;
+  border-color: var(--focus-ring-color);
+  border-width: var(--focus-ring-width-start);
+  inset: calc(-1 * var(--focus-ring-width-start));
+  animation: aviala-focus-ring-settle var(--focus-transition-duration)
+    var(--focus-transition-easing) forwards;
+}
+
+@keyframes aviala-focus-ring-settle {
+  to {
+    border-width: var(--focus-ring-width-end);
+    inset: calc(-1 * var(--focus-ring-width-end));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-aviala-keyboard-focus] .aviala-button:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-link:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-radio:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-checkbox:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-switch:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-segmentator-item:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-select-trigger:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-select-item:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-cascader-trigger:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-cascader-item:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-datepicker-trigger:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-timepicker-trigger:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-color-picker-trigger:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-color-pick-button:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-color-picker-area__surface:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-color-picker-slider:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-navigation-brand__title:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-navigation-item__control:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-datepicker-calendar__nav:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-datepicker-day:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-datepicker-time__close:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-datepicker-time__wheel-scroll:focus::after,
+  html[data-aviala-keyboard-focus] .aviala-input:focus-within::after,
+  html[data-aviala-keyboard-focus] .aviala-textarea:focus-within::after,
+  html[data-aviala-keyboard-focus] .aviala-color-picker-field:focus-within::after,
+  html[data-aviala-keyboard-focus] .aviala-anchor-item:focus .aviala-anchor-item__label::after,
+  html[data-aviala-keyboard-focus] .aviala-focus-ring:focus::after {
+    animation: none;
+    border-width: var(--focus-ring-width-end);
+    inset: calc(-1 * var(--focus-ring-width-end));
+  }
+}

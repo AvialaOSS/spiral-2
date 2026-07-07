@@ -1,0 +1,94 @@
+/* Loading Icon — conic ring spinner (Figma Components → Loading Icon) */
+
+@keyframes aviala-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.aviala-loading {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviala-loading__icon {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--loading-icon-size);
+  height: var(--loading-icon-size);
+}
+
+.aviala-loading__ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: aviala-loading-spin 0.8s linear infinite;
+  /* Ring mask — inner hole to 50% − stroke, outer edge at 50% */
+  -webkit-mask: radial-gradient(
+    transparent calc(50% - var(--loading-ring-stroke, 2px)),
+    #fff 50%
+  );
+  mask: radial-gradient(
+    transparent calc(50% - var(--loading-ring-stroke, 2px)),
+    #fff 50%
+  );
+}
+
+/* Level → icon size + optional line-height box */
+.aviala-loading--level-display {
+  --loading-icon-size: var(--size-huge, 30px);
+}
+
+.aviala-loading--level-headline1 {
+  --loading-icon-size: var(--size-large, 26px);
+}
+
+.aviala-loading--level-headline2 {
+  --loading-icon-size: var(--size-semilarge, 22px);
+}
+
+.aviala-loading--level-title,
+.aviala-loading--level-subtitle {
+  --loading-icon-size: var(--size-middle, 16px);
+}
+
+.aviala-loading--level-text {
+  --loading-icon-size: var(--size-regular, 14px);
+}
+
+.aviala-loading--level-caption {
+  --loading-icon-size: var(--size-small, 12px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-display {
+  height: var(--line-height-max, 44px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-headline1 {
+  height: var(--line-height-large, 46px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-headline2 {
+  height: var(--line-height-semilarge, 38px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-title {
+  height: var(--line-height-big, 32px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-subtitle {
+  height: var(--line-height-middle, 22px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-text {
+  height: var(--line-height-regular, 18px);
+}
+
+.aviala-loading--line-height-fix.aviala-loading--level-caption {
+  height: var(--line-height-small, 16px);
+}
+
+/* Mode classes retained for Storybook matrix / future hooks; ring colors set in loading.tsx */

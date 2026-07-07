@@ -1,0 +1,96 @@
+/*
+ * Monaco overlay widgets (context menu, suggest, hover) mount on document.body.
+ * Colors come from defineTheme; radius, shadow, and typography use Spiral tokens here.
+ */
+
+.context-view .monaco-menu,
+.monaco-menu-container .monaco-menu {
+  border: 1px solid var(--select-menu-border);
+  border-radius: var(--select-menu-radius, 10px);
+  box-shadow: var(--select-menu-shadow);
+  padding: var(--select-menu-py, 6px) var(--select-group-px, 6px);
+  font-family: var(--font-sans);
+}
+
+.monaco-menu .monaco-action-bar.vertical {
+  padding: 0;
+}
+
+.monaco-menu .monaco-action-bar .action-item {
+  margin: 0;
+}
+
+.monaco-menu .monaco-action-bar .action-label {
+  border-radius: var(--border-radius-extra-small-2, 6px);
+  font-size: var(--select-item-font-size, 14px);
+  line-height: var(--select-item-line-height, 18px);
+  padding: var(--select-item-py, 4px) var(--select-item-px, 8px);
+}
+
+.monaco-menu .monaco-action-bar .action-item.focused .action-label,
+.monaco-menu .monaco-action-bar .action-item:hover .action-label {
+  background-color: var(--select-item-highlight-bg);
+}
+
+.monaco-menu .monaco-action-bar .action-item.disabled .action-label.separator {
+  height: 1px;
+  margin-block: var(--gap-inside, 4px);
+  background-color: var(--select-menu-border);
+  opacity: 1;
+}
+
+.monaco-editor .suggest-widget,
+.monaco-editor .monaco-hover,
+.monaco-editor .parameter-hints-widget {
+  border: 1px solid var(--select-menu-border) !important;
+  border-radius: var(--select-menu-radius, 10px) !important;
+  box-shadow: var(--select-menu-shadow) !important;
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+
+.monaco-editor .suggest-widget .monaco-list,
+.monaco-editor .monaco-hover .monaco-scrollable-element {
+  padding: var(--select-menu-py, 6px) var(--select-group-px, 6px);
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row,
+.monaco-editor .monaco-list .monaco-list-row {
+  border-radius: var(--border-radius-extra-small-2, 6px);
+  font-size: var(--select-item-font-size, 14px);
+  line-height: var(--select-item-line-height, 18px);
+  padding-inline: var(--select-item-px, 8px);
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row.focused,
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row:hover,
+.monaco-editor .monaco-list .monaco-list-row.focused,
+.monaco-editor .monaco-list .monaco-list-row:hover {
+  background-color: var(--select-item-highlight-bg) !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label,
+.monaco-editor .suggest-widget .details-label {
+  font-size: var(--select-item-font-size, 14px);
+  line-height: var(--select-item-line-height, 18px);
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row .highlight {
+  color: var(--primary);
+}
+
+.monaco-editor .monaco-hover-content {
+  font-size: var(--select-item-font-size, 14px);
+  line-height: var(--select-item-line-height, 18px);
+  padding: var(--select-item-py, 4px) var(--select-item-px, 8px);
+}
+
+.monaco-editor .find-widget {
+  border: 1px solid var(--select-menu-border);
+  border-radius: var(--select-menu-radius, 10px);
+  box-shadow: var(--select-menu-shadow);
+}
+
+.monaco-editor .find-widget .monaco-inputbox {
+  border-radius: var(--border-radius-extra-small-2, 6px);
+}

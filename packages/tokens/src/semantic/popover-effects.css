@@ -1,0 +1,239 @@
+/* Popover — Figma System Composition → Popover (overlay surface aligned with Select menu) */
+
+.aviala-popover-content {
+  position: relative;
+  z-index: 50;
+  overflow: visible;
+  outline: none;
+}
+
+.aviala-popover-content__surface {
+  position: relative;
+  overflow: visible;
+  max-width: var(--popover-content-max-width, 320px);
+  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f5f3f3));
+  border-radius: var(--popover-content-radius, var(--select-menu-radius, 10px));
+  background-color: var(--popover-content-bg, var(--select-menu-bg, #fefcfc));
+  color: var(--popover-content-fg, var(--select-item-fg, #343333));
+  box-shadow: var(--popover-content-shadow, var(--select-menu-shadow, 0 5px 20px rgba(0, 0, 0, 0.06)));
+  padding: var(--popover-content-py, 8px) var(--popover-content-px, 8px);
+}
+
+/* Radix Popper arrow host — overlap panel edge; Radix positions host via transform */
+.aviala-popover-content > span:has(> .aviala-popover-content__arrow) {
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+  min-width: 16px;
+  min-height: 5px;
+}
+
+/* Nudge host toward panel — flat edge is y=0 in SVG; Radix rotates the host per side */
+.aviala-popover-content[data-side="bottom"] > span:has(> .aviala-popover-content__arrow) {
+  margin-top: 1px;
+}
+
+.aviala-popover-content[data-side="top"] > span:has(> .aviala-popover-content__arrow) {
+  margin-bottom: 1px;
+}
+
+.aviala-popover-content[data-side="left"] > span:has(> .aviala-popover-content__arrow) {
+  margin-right: 1px;
+}
+
+.aviala-popover-content[data-side="right"] > span:has(> .aviala-popover-content__arrow) {
+  margin-left: 1px;
+}
+
+/* Figma 16×5 caret — fill matches panel; stroked outline reads on light page bg */
+.aviala-popover-content__arrow,
+.aviala-popover-content__arrow svg {
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+  width: 16px;
+  height: 5px;
+  min-width: 16px;
+  min-height: 5px;
+  color: var(--popover-content-bg, var(--select-menu-bg, #fefcfc));
+}
+
+.aviala-popover-content__arrow-outline {
+  fill: none;
+  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-primary, #e2e0e0));
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.aviala-popover-content__arrow-fill {
+  fill: currentColor;
+}
+
+/* Flat edge is y=0 in SVG coords — clip junction stroke; nudge fill toward panel via local Y */
+.aviala-popover-content:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-outline {
+  clip-path: inset(1px 0 0 0);
+}
+
+.aviala-popover-content:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-fill {
+  transform: translateY(-1px);
+}
+
+/* Root fade — Radix Presence waits for animationend on Content, not child surface */
+.aviala-popover-content[data-state="closed"] {
+  animation: aviala-popover-presence-out 0.15s ease forwards;
+}
+
+.aviala-popover-content[data-state="open"][data-side="bottom"] .aviala-popover-content__surface {
+  animation: aviala-popover-in-bottom 0.15s ease;
+}
+
+.aviala-popover-content[data-state="closed"][data-side="bottom"] .aviala-popover-content__surface {
+  animation: aviala-popover-out-bottom 0.15s ease forwards;
+}
+
+.aviala-popover-content[data-state="open"][data-side="top"] .aviala-popover-content__surface {
+  animation: aviala-popover-in-top 0.15s ease;
+}
+
+.aviala-popover-content[data-state="closed"][data-side="top"] .aviala-popover-content__surface {
+  animation: aviala-popover-out-top 0.15s ease forwards;
+}
+
+.aviala-popover-content[data-state="open"][data-side="left"] .aviala-popover-content__surface {
+  animation: aviala-popover-in-left 0.15s ease;
+}
+
+.aviala-popover-content[data-state="closed"][data-side="left"] .aviala-popover-content__surface {
+  animation: aviala-popover-out-left 0.15s ease forwards;
+}
+
+.aviala-popover-content[data-state="open"][data-side="right"] .aviala-popover-content__surface {
+  animation: aviala-popover-in-right 0.15s ease;
+}
+
+.aviala-popover-content[data-state="closed"][data-side="right"] .aviala-popover-content__surface {
+  animation: aviala-popover-out-right 0.15s ease forwards;
+}
+
+/* Pointer — opacity only; Radix rotates the host so translate on the svg desyncs from the panel */
+/* Pointer — opacity only on enter; exit fade is on root for Radix Presence */
+.aviala-popover-content[data-state="open"] .aviala-popover-content__arrow {
+  animation: aviala-popover-arrow-in 0.15s ease;
+}
+
+@keyframes aviala-popover-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-popover-out-bottom {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes aviala-popover-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-popover-out-top {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes aviala-popover-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-popover-out-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes aviala-popover-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-popover-out-right {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-4px);
+  }
+}
+
+@keyframes aviala-popover-arrow-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aviala-popover-presence-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-popover-content[data-state="closed"],
+  .aviala-popover-content[data-state="open"] .aviala-popover-content__surface,
+  .aviala-popover-content[data-state="closed"] .aviala-popover-content__surface,
+  .aviala-popover-content[data-state="open"] .aviala-popover-content__arrow {
+    animation: none;
+  }
+}

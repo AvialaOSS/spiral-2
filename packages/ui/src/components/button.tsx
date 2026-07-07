@@ -1,76 +1,306 @@
-import { cva, type VariantProps } from "class-variance-authority";
+import { Loading, loadingLevelForButtonSize } from "./loading";
+import { typographyVariants } from "./typography";
 import { Slot } from "@radix-ui/react-slot";
-import { Loader } from "@aviala/icons";
-import { forwardRef, type ButtonHTMLAttributes } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import {
+  forwardRef,
+  isValidElement,
+  type ButtonHTMLAttributes,
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import type { IconLevel } from "@aviala/icons";
+import { resolveIconSizeToken } from "@aviala/icons";
+import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
+import { resolveIconSlotSizing } from "../lib/icon-slot-sizing";
 import { cn } from "../lib/utils";
+import { spiralDebugId } from "../lib/spiral-debug";
+
+/** Figma Components → Basic Input → Button */
+export type ButtonMode =
+  | "primary"
+  | "second"
+  | "default"
+  | "defaultCustom"
+  | "noBackground"
+  | "noBackgroundCustom"
+  | "destructive";
+
+export type ButtonSize = "tiny" | "small" | "regular" | "big";
+
+const sizeLabelLevels = {
+  tiny: "caption" as const,
+  small: "text" as const,
+  regular: "text" as const,
+  big: "text" as const,
+} as const;
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[var(--button-radius,var(--radius-md))] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-55",
+  "aviala-button relative inline-flex shrink-0 cursor-pointer items-center justify-center overflow-hidden border-0 bg-transparent font-sans whitespace-nowrap focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--button-disabled-opacity,0.55)]",
   {
     variants: {
-      variant: {
-        default:
-          "bg-[var(--button-bg,var(--primary))] text-[var(--button-fg,var(--primary-foreground))] hover:opacity-90",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        link: "text-primary underline-offset-4 hover:underline",
+      mode: {
+        primary: "aviala-button--mode-primary",
+        second: "aviala-button--mode-second",
+        default: "aviala-button--mode-default",
+        defaultCustom: "aviala-button--mode-defaultCustom",
+        noBackground: "aviala-button--mode-noBackground",
+        noBackgroundCustom: "aviala-button--mode-noBackgroundCustom",
+        destructive: "aviala-button--mode-destructive",
       },
-      size: {
-        default: "h-[var(--button-height-md,36px)] px-[var(--button-padding-x,12px)] py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+      allRound: {
+        true: "min-w-[var(--button-min-width-allround,48px)] !rounded-[var(--border-radius-allround,99px)]",
+        false: "min-w-[var(--button-min-width,46px)]",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      mode: "primary",
+      allRound: false,
     },
   }
 );
 
+function resolveMode(
+  mode?: ButtonMode | null,
+  variant?: LegacyVariant | null
+): ButtonMode {
+  if (mode) return mode;
+  switch (variant) {
+    case "secondary":
+      return "second";
+    case "outline":
+      return "default";
+    case "ghost":
+      return "noBackground";
+    case "destructive":
+      return "destructive";
+    case "link":
+      return "noBackground";
+    default:
+      return "primary";
+  }
+}
+
+function resolveSize(
+  size?: ButtonSize | LegacySize | null,
+  iconOnly?: boolean,
+  variant?: LegacyVariant | null
+): ButtonSize {
+  if (size === "tiny" || size === "small" || size === "regular" || size === "big") {
+    return size;
+  }
+  switch (size) {
+    case "sm":
+      return "small";
+    case "lg":
+      return "big";
+    case "icon":
+      return "regular";
+    default:
+      break;
+  }
+  if (variant === "link" || iconOnly) return "regular";
+  return "regular";
+}
+
+type LegacyVariant =
+  | "default"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "destructive"
+  | "link";
+
+type LegacySize = "default" | "sm" | "lg" | "icon";
+
+function hasSurface(mode: ButtonMode): boolean {
+  return (
+    mode !== "noBackground" &&
+    mode !== "noBackgroundCustom"
+  );
+}
+
+function renderIcon(
+  node: ReactNode,
+  iconLevel: IconLevel,
+  dimmed?: boolean,
+  debugId?: string
+): ReactNode {
+  if (!node) return null;
+
+  const slotSizing = resolveIconSlotSizing(node, iconLevel, true);
+  const content = cloneAvialaIconElement(node, {
+    level: iconLevel,
+    biggerSize: true,
+  });
+
+  return (
+    <span
+      className={cn(
+        "aviala-button__icon",
+        dimmed && "opacity-[var(--button-disabled-opacity,0.55)]"
+      )}
+      style={
+        {
+          "--button-icon-size": resolveIconSizeToken(
+            slotSizing.level,
+            slotSizing.biggerSize
+          ),
+        } as CSSProperties
+      }
+      {...(debugId ? spiralDebugId(debugId) : undefined)}
+    >
+      {content}
+    </span>
+  );
+}
+
+function resolveIconOnlyIcon(
+  leftIcon?: ReactNode,
+  icon?: ReactNode,
+  children?: ReactNode,
+  iconOnly?: boolean
+): ReactNode {
+  const fromProp = leftIcon ?? icon;
+  if (fromProp) return fromProp;
+  if (!iconOnly || children == null || children === false) return undefined;
+  if (isValidElement(children) && typeof children.type !== "string") return children;
+  return undefined;
+}
+
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
+  Omit<VariantProps<typeof buttonVariants>, "mode"> & {
+    /** Figma `Mode` — preferred over legacy `variant`. */
+    mode?: ButtonMode;
+    /** Figma `Size` — preferred over legacy shadcn sizes. */
+    size?: ButtonSize | LegacySize;
+    /** Figma `All-Round` */
+    allRound?: boolean;
+    /** Figma `IconOnly` */
+    iconOnly?: boolean;
+    /** @deprecated Use `mode` instead. */
+    variant?: LegacyVariant;
     loading?: boolean;
-    icon?: React.ReactNode;
+    /** @deprecated Use `leftIcon`. */
+    icon?: ReactNode;
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
+    asChild?: boolean;
   };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
+      mode: modeProp,
       variant,
-      size,
+      size: sizeProp,
+      allRound = false,
+      iconOnly: iconOnlyProp,
       asChild = false,
-      loading,
-      icon,
+      loading = false,
       disabled,
+      icon,
+      leftIcon,
+      rightIcon,
       children,
       ...props
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const mode = resolveMode(modeProp, variant);
+    const iconOnly =
+      iconOnlyProp ??
+      (sizeProp === "icon" ||
+        ((!!(leftIcon ?? icon) ||
+          (isValidElement(children) && typeof children.type !== "string")) &&
+          !rightIcon &&
+          (leftIcon ?? icon ? !children : true)));
+    const size = resolveSize(sizeProp, iconOnly, variant);
+    const isDisabled = disabled || loading;
+    const showSurface = hasSurface(mode);
+
+    const contentOpacity = loading
+      ? "opacity-[var(--button-loading-opacity,0.6)]"
+      : undefined;
+
+    const resolvedLeft = iconOnly
+      ? resolveIconOnlyIcon(leftIcon, icon, children, true)
+      : leftIcon ?? icon;
+    const label = iconOnly ? null : children;
+    const iconLevel = sizeLabelLevels[size];
+
+    const inner = (
+      <>
+        {showSurface && (
+          <span
+            aria-hidden
+            className="aviala-button-surface pointer-events-none absolute inset-0 rounded-[inherit]"
+            {...spiralDebugId("button.surface")}
+          />
+        )}
+        {loading && (
+          <Loading
+            level={loadingLevelForButtonSize(size)}
+            mode="inherit"
+            lineHeightFix={false}
+            className="relative z-[1] shrink-0 text-inherit"
+            aria-hidden
+          />
+        )}
+        {!iconOnly && renderIcon(resolvedLeft, iconLevel, undefined, "button.icon-left")}
+        {iconOnly
+          ? renderIcon(resolvedLeft, iconLevel, undefined, "button.icon-left")
+          : label !== null && label !== undefined && (
+              <span
+                className={cn(
+                  typographyVariants({ level: sizeLabelLevels[size] }),
+                  "relative z-[1] shrink-0",
+                  contentOpacity
+                )}
+                {...spiralDebugId("button.label")}
+              >
+                {label}
+              </span>
+            )}
+        {!iconOnly && renderIcon(rightIcon, iconLevel, undefined, "button.icon-right")}
+      </>
+    );
+
+    const classes = cn(
+      buttonVariants({ mode, ...(iconOnly ? {} : { allRound }) }),
+      iconOnly && "min-w-0",
+      iconOnly && allRound && "!rounded-[var(--border-radius-allround,99px)]",
+      className
+    );
+
+    if (asChild) {
+      return (
+        <Slot
+          className={classes}
+          ref={ref}
+          aria-disabled={isDisabled || undefined}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+      <button
+        className={classes}
         ref={ref}
-        disabled={disabled || loading}
+        data-size={size}
+        data-icon-only={iconOnly || undefined}
+        disabled={isDisabled}
+        aria-busy={loading || undefined}
+        {...spiralDebugId("button")}
         {...props}
       >
-        {loading ? (
-          <Loader className="h-4 w-4 animate-spin" aria-hidden />
-        ) : (
-          icon
-        )}
-        {children}
-      </Comp>
+        {inner}
+      </button>
     );
   }
 );

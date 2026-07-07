@@ -12,6 +12,9 @@ export type RawToken = {
   $type?: string;
   $value?: TokenColorValue | number | string | RawTokenTree;
   $extensions?: {
+    // Figma exports alias data under a flat dotted key.
+    "com.figma.aliasData"?: FigmaAlias;
+    // Older/nested export shape, kept for backwards compatibility.
     "com.figma"?: {
       aliasData?: FigmaAlias;
       modeName?: string;
@@ -48,26 +51,26 @@ export function flattenTokens(
   return result;
 }
 
+/** ALD paths use camelCase segments; CSS vars are slash → hyphen + lowercase only. */
 export function tokenPathToCssVar(path: string): string {
-  return (
-    "--" +
-    path
-      .replace(/\//g, "-")
-      .replace(/([a-z])([A-Z])/g, "$1-$2")
-      .toLowerCase()
-  );
+  return "--" + path.replace(/\//g, "-").toLowerCase();
 }
 
 export function resolveTokenHex(
   token: RawToken,
   palette: Record<string, string>
 ): string | undefined {
-  if (isColorValue(token.$value)) {
-    return token.$value.hex;
-  }
-  const alias = token.$extensions?.["com.figma"]?.aliasData?.targetVariableName;
+  // Semantic tokens bake the light hex into $value but also alias the primitive
+  // ramp. Prefer the alias so dark mode resolves against the dark palette; the
+  // primitive ramps themselves have no alias and fall through to the literal hex.
+  const alias =
+    token.$extensions?.["com.figma.aliasData"]?.targetVariableName ??
+    token.$extensions?.["com.figma"]?.aliasData?.targetVariableName;
   if (alias && palette[alias]) {
     return palette[alias];
+  }
+  if (isColorValue(token.$value)) {
+    return token.$value.hex;
   }
   return undefined;
 }

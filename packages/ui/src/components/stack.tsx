@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
+import { typographyVariants } from "./typography";
 
 export type StackProps = HTMLAttributes<HTMLDivElement> & {
   gap?: "inside" | "component" | "content" | "block" | "page";
@@ -39,7 +40,7 @@ export const Fieldset = forwardRef<
     {...props}
   >
     {legend ? (
-      <legend className="px-1 text-sm font-medium text-foreground">{legend}</legend>
+      <legend className={cn("px-1", typographyVariants({ level: "text" }))}>{legend}</legend>
     ) : null}
     {children}
   </fieldset>

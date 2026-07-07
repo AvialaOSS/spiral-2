@@ -1,0 +1,169 @@
+/* Feedback — Figma Components → Response And Feedback → Feedback (553:58620) */
+
+.aviala-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-none, 0);
+  overflow: hidden;
+  border: 1px solid transparent;
+  box-shadow: var(--feedback-shadow);
+}
+
+.aviala-feedback--size-default {
+  border-radius: var(--feedback-radius-default);
+}
+
+.aviala-feedback--size-small {
+  border-radius: var(--feedback-radius-small);
+}
+
+.aviala-feedback__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--feedback-body-gap);
+  padding: var(--feedback-body-py) var(--feedback-body-px);
+  overflow: hidden;
+}
+
+.aviala-feedback--size-default .aviala-feedback__body {
+  width: 100%;
+}
+
+.aviala-feedback--size-small .aviala-feedback__body {
+  align-items: center;
+}
+
+.aviala-feedback__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--feedback-icon-slot-height);
+  height: var(--feedback-icon-slot-height);
+  color: var(--feedback-icon-fg);
+}
+
+.aviala-feedback__icon svg {
+  width: var(--feedback-icon-size);
+  height: var(--feedback-icon-size);
+}
+
+.aviala-feedback__typeface {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: var(--feedback-content-max-width);
+}
+
+.aviala-feedback--size-default
+  .aviala-feedback__typeface
+  .aviala-typeface__line:first-child
+  .aviala-typography {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.aviala-feedback__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-feedback__action {
+  flex-shrink: 0;
+}
+
+.aviala-feedback__close {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  color: var(--feedback-close-fg);
+}
+
+.aviala-feedback__close svg {
+  width: var(--feedback-close-icon-size);
+  height: var(--feedback-close-icon-size);
+}
+
+.aviala-feedback--mode-primary .aviala-feedback__close {
+  color: var(--feedback-close-fg-on-primary);
+}
+
+.aviala-feedback--mode-primary .aviala-feedback__close svg {
+  width: var(--feedback-close-icon-size-primary);
+  height: var(--feedback-close-icon-size-primary);
+}
+
+/* ---- Type × mode surfaces ---- */
+
+.aviala-feedback--type-information.aviala-feedback--mode-default {
+  background: var(--feedback-information-bg-default);
+  border-color: var(--feedback-information-border);
+  --feedback-icon-fg: var(--feedback-information-icon-fg);
+}
+
+.aviala-feedback--type-information.aviala-feedback--mode-primary {
+  background: var(--feedback-information-bg-primary);
+  border-color: var(--feedback-information-border);
+  --feedback-icon-fg: var(--feedback-icon-fg-primary);
+}
+
+.aviala-feedback--type-warning.aviala-feedback--mode-default {
+  background: var(--feedback-warning-bg-default);
+  border-color: var(--feedback-warning-border);
+  --feedback-icon-fg: var(--feedback-warning-icon-fg);
+}
+
+.aviala-feedback--type-warning.aviala-feedback--mode-primary {
+  background: var(--feedback-warning-bg-primary);
+  border-color: var(--feedback-warning-border);
+  --feedback-icon-fg: var(--feedback-icon-fg-primary);
+}
+
+.aviala-feedback--type-wrong.aviala-feedback--mode-default {
+  background: var(--feedback-wrong-bg-default);
+  border-color: var(--feedback-wrong-border);
+  --feedback-icon-fg: var(--feedback-wrong-icon-fg);
+}
+
+.aviala-feedback--type-wrong.aviala-feedback--mode-primary {
+  background: var(--feedback-wrong-bg-primary);
+  border-color: var(--feedback-wrong-border);
+  --feedback-icon-fg: var(--feedback-icon-fg-primary);
+}
+
+.aviala-feedback--type-success.aviala-feedback--mode-default {
+  background: var(--feedback-success-bg-default);
+  border-color: var(--feedback-success-border);
+  --feedback-icon-fg: var(--feedback-success-icon-fg);
+}
+
+.aviala-feedback--type-success.aviala-feedback--mode-primary {
+  background: var(--feedback-success-bg-primary);
+  border-color: var(--feedback-success-border);
+  --feedback-icon-fg: var(--feedback-icon-fg-primary);
+}
+
+.aviala-feedback--type-normal.aviala-feedback--mode-default {
+  background: var(--feedback-normal-bg-default);
+  border-color: var(--feedback-normal-border);
+  --feedback-icon-fg: var(--feedback-normal-icon-fg);
+}
+
+.aviala-feedback .aviala-typography {
+  color: inherit;
+}
+
+.aviala-feedback--mode-default .aviala-feedback__typeface .aviala-typeface__line:first-child .aviala-typography,
+.aviala-feedback--mode-default .aviala-feedback__title {
+  color: var(--feedback-title-fg-default);
+}
+
+.aviala-feedback--mode-default .aviala-feedback__typeface .aviala-typeface__line:last-child .aviala-typography {
+  color: var(--feedback-description-fg-default);
+}
+
+.aviala-feedback--mode-primary .aviala-feedback__typeface .aviala-typeface__line:first-child .aviala-typography,
+.aviala-feedback--mode-primary .aviala-feedback__title {
+  color: var(--feedback-title-fg-primary);
+}
+
+.aviala-feedback--mode-primary .aviala-feedback__typeface .aviala-typeface__line:last-child .aviala-typography {
+  color: var(--feedback-description-fg-primary);
+}

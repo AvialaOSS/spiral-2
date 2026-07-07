@@ -1,10 +1,11 @@
 :root {
   --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-weight-light: var(--font-weight-font-weight-light, 300);
-  --font-weight-regular: var(--font-weight-font-weight-regular, 400);
-  --font-weight-medium: var(--font-weight-font-weight-medium, 500);
-  --font-weight-semibold: var(--font-weight-font-weight-semibold, 600);
-  --font-weight-bold: var(--font-weight-font-weight-bold, 700);
+  --font-weight-light: 300;
+  --font-weight-semilight: 350;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   --font-size-xs: 12px;
   --font-size-sm: 14px;
@@ -12,9 +13,54 @@
   --font-size-lg: 18px;
   --font-size-xl: 20px;
 
-  --line-height-xs: var(--line-height-tiny, 16px);
-  --line-height-sm: var(--line-height-small, 20px);
-  --line-height-base: var(--line-height-regular, 24px);
-  --line-height-lg: var(--line-height-middle, 28px);
-  --line-height-xl: var(--line-height-big, 32px);
+  --line-height-xs: var(--line-height-tiny, 12px);
+  --line-height-sm: var(--line-height-small, 16px);
+  --line-height-base: var(--line-height-regular, 18px);
+  --line-height-lg: var(--line-height-middle, 22px);
+  --line-height-xl: var(--line-height-big, 30px);
+
+  /* Typography levels — Figma System Composition → Typography (128:85) */
+  --typography-display-size: var(--size-huge, 30px);
+  --typography-display-line-height: var(--line-height-max, 44px);
+  --typography-display-weight-text: var(--font-weight-medium, 500);
+  --typography-display-weight-number: var(--font-weight-medium, 500);
+
+  --typography-headline1-size: var(--size-large, 26px);
+  --typography-headline1-line-height: var(--line-height-large, 46px);
+  --typography-headline1-weight-text: var(--font-weight-medium, 500);
+  --typography-headline1-weight-number: var(--font-weight-medium, 500);
+
+  --typography-headline2-size: var(--size-semilarge, 22px);
+  --typography-headline2-line-height: var(--line-height-semilarge, 34px);
+  --typography-headline2-weight-text: var(--font-weight-medium, 500);
+  --typography-headline2-weight-number: var(--font-weight-medium, 500);
+
+  --typography-title-size: var(--size-big, 20px);
+  --typography-title-line-height: var(--line-height-big, 30px);
+  --typography-title-weight-text: var(--font-weight-semibold, 600);
+  --typography-title-weight-number: var(--font-weight-bold, 700);
+
+  --typography-subtitle-size: var(--size-middle, 16px);
+  --typography-subtitle-line-height: var(--line-height-middle, 22px);
+  --typography-subtitle-weight-text: var(--font-weight-medium, 500);
+  --typography-subtitle-weight-number: var(--font-weight-medium, 500);
+
+  --typography-text-size: var(--size-regular, 14px);
+  --typography-text-line-height: var(--line-height-regular, 18px);
+  --typography-text-weight-text: var(--font-weight-regular, 400);
+  --typography-text-weight-number: var(--font-weight-light, 300);
+
+  --typography-caption-size: var(--size-small, 12px);
+  --typography-caption-line-height: var(--line-height-small, 16px);
+  --typography-caption-weight-text: var(--font-weight-regular, 400);
+  --typography-caption-weight-number: var(--font-weight-light, 300);
+
+  --typography-title-fg: var(--text-text-normal-title-black, #000000);
+  --typography-title-fg-white: var(--text-text-normal-title-white, #fefcfc);
+  --typography-body-fg: var(--text-text-normal-text-black, #343333);
+  --typography-body-fg-white: var(--text-text-normal-text-white, #fefcfc);
+  --typography-caption-fg: var(--text-text-normal-text-caption-black, #858484);
+  --typography-caption-fg-white: var(--text-text-normal-text-caption-white, #fefcfc);
+
+  --typeface-gap: var(--gap-inside, 4px);
 }

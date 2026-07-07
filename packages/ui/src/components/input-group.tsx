@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
+import { typographyVariants } from "./typography";
 
 export type InputGroupProps = HTMLAttributes<HTMLDivElement> & {
   orientation?: "horizontal" | "vertical";
@@ -29,7 +30,8 @@ export const InputGroupAddon = forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex items-center text-sm text-muted-foreground shrink-0",
+      "flex items-center shrink-0",
+      typographyVariants({ level: "caption" }),
       className
     )}
     {...props}

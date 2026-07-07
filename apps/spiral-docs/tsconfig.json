@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "outDir": "./node_modules/.tmp",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo"
+  },
+  "include": ["src", "src/generated/props.json"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
