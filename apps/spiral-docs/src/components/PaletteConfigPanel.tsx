@@ -3,7 +3,7 @@ import {
   PALETTE_HUE_FAMILIES,
   useTheme,
   type HueFamily,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 export function PaletteConfigPanel() {
   const { paletteConfig, setPaletteConfig, resetPaletteConfig } = useTheme();

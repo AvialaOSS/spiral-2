@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@aviala/spiral";
+import { ThemeProvider } from "@aviala-design/spiral";
 import { App } from "./App";
 import { IconGalleryPage } from "./pages/IconGalleryPage";
 import { IconSyncPage } from "./pages/IconSyncPage";

@@ -1,4 +1,4 @@
-import type { IconCatalogEntry, IconMode, IconThickness } from "@aviala/icons";
+import type { IconCatalogEntry, IconMode, IconThickness } from "@aviala-design/icons";
 
 export type CategoryGroup = {
   id: string;
@@ -68,7 +68,7 @@ export function buildImportSnippet(
     .filter(Boolean)
     .join(" ");
 
-  return `import { ${entry.name} } from "@aviala/icons";
+  return `import { ${entry.name} } from "@aviala-design/icons";
 
 <${entry.name} ${props} />`;
 }

@@ -1,4 +1,4 @@
-import { Checkbox, Typography } from "@aviala/spiral";
+import { Checkbox, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

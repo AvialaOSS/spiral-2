@@ -1,4 +1,4 @@
-import { DEFAULT_SEMANTIC_COLORS } from "@aviala/tokens";
+import { DEFAULT_SEMANTIC_COLORS } from "@aviala-design/tokens";
 import type { ColorEntry } from "./types";
 
 /** Default semantic color families shown on first load. */

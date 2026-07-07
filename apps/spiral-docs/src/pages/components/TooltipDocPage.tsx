@@ -5,7 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
   Typography,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

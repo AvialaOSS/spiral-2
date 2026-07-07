@@ -1,5 +1,5 @@
-/* Keyboard focus ring â€” only when `html[data-aviala-keyboard-focus]` is set
-   (see initKeyboardFocus in @aviala/spiral). 250ms settle: 12px â†’ 3px flush border. */
+/* Keyboard focus ring â€?only when `html[data-aviala-keyboard-focus]` is set
+   (see initKeyboardFocus in @aviala-design/spiral). 250ms settle: 12px â†?3px flush border. */
 
 :root {
   --focus-ring-width-start: var(--size-small, 12px);
@@ -86,7 +86,7 @@ html[data-aviala-keyboard-focus] .aviala-datepicker-day:focus {
   z-index: 1;
 }
 
-/* Animated ring via ::after â€” keyboard navigation only */
+/* Animated ring via ::after â€?keyboard navigation only */
 html[data-aviala-keyboard-focus] .aviala-button:focus::after,
 html[data-aviala-keyboard-focus] .aviala-link:focus::after,
 html[data-aviala-keyboard-focus] .aviala-radio:focus::after,

@@ -1,8 +1,16 @@
 {
-  "name": "@aviala/spiral",
-  "version": "0.0.1",
-  "description": "Spiral 2 — Aviala Design React component library",
+  "name": "@aviala-design/spiral",
+  "version": "0.0.2",
+  "description": "Spiral 2 ? Aviala Design React component library",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AvialaOSS/spiral-2.git",
+    "directory": "packages/ui"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -26,8 +34,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@aviala/icons": "workspace:*",
-    "@aviala/tokens": "workspace:*",
+    "@aviala-design/icons": "workspace:*",
+    "@aviala-design/tokens": "workspace:*",
     "@radix-ui/react-checkbox": "^1.3.2",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",

@@ -1,6 +1,6 @@
 ---
 name: spiral-icons
-description: Aviala Design Icons pipeline for @aviala/icons — SVG export, SVGR build, naming. Use when adding or updating icons.
+description: Aviala Design Icons pipeline for @aviala-design/icons — SVG export, SVGR build, naming. Use when adding or updating icons.
 ---
 
 # Spiral Icons
@@ -22,7 +22,7 @@ Export defaults to **all variants** (no filter unless `ICONS_THICKNESS` / `ICONS
 One React component per icon **name** — switch variants via props:
 
 ```tsx
-import { DirectionArrowLeft, Icon } from "@aviala/icons";
+import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 
 <DirectionArrowLeft thickness="Bold" mode="fill" width={20} />
 <Icon icon={DirectionArrowLeft} size={20} thickness="Light" mode="default" />

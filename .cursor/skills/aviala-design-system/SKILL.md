@@ -24,12 +24,12 @@ Semantic step mapping (designer-defined):
 
 ## Packages
 
-- `@aviala/tokens` — theme engine + CSS variables
-- `@aviala/icons` — SVG icons (no lucide-react)
-- `@aviala/spiral` — React components + ThemeProvider
+- `@aviala-design/tokens` — theme engine + CSS variables
+- `@aviala-design/icons` — SVG icons (no lucide-react)
+- `@aviala-design/spiral` — React components + ThemeProvider
 
 ## Rules
 
-- Never hardcode colors; use CSS variables from `@aviala/tokens`
+- Never hardcode colors; use CSS variables from `@aviala-design/tokens`
 - Never import `lucide-react`
 - MVP order: **Basic Input** → **System Composition** (Components Figma)

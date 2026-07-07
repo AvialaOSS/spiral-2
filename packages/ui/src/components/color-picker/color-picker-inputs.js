@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { EditColorPicker } from "@aviala/icons";
+import { EditColorPicker } from "@aviala-design/icons";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "../badge";
 import { Button } from "../button";

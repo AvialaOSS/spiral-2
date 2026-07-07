@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { DirectionArrowRightLight, GeneralSetting, } from "@aviala/icons";
+import { DirectionArrowRightLight, GeneralSetting, } from "@aviala-design/icons";
 import { cloneElement, forwardRef, isValidElement, } from "react";
 import { Button } from "./button";
 import { Switch } from "./switch";

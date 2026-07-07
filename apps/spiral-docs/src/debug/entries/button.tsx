@@ -4,8 +4,8 @@ import {
   type IconLevel,
   type IconMode,
   type IconThickness,
-} from "@aviala/icons";
-import { Button, type ButtonMode, type ButtonSize } from "@aviala/spiral";
+} from "@aviala-design/icons";
+import { Button, type ButtonMode, type ButtonSize } from "@aviala-design/spiral";
 import { createElement } from "react";
 
 import type { KnobDef, KnobValues } from "../../components/DemoKnobs";

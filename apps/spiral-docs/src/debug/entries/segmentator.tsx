@@ -2,7 +2,7 @@ import {
   SegmentatorGroup,
   SegmentatorItem,
   type SegmentatorMode,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import type { IconLevel } from "@aviala/icons";
+import type { IconLevel } from "@aviala-design/icons";
 import {
   forwardRef,
   type AnchorHTMLAttributes,

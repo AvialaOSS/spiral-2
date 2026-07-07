@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { SymbolAdd } from "@aviala/icons";
+import { SymbolAdd } from "@aviala-design/icons";
 import { Button } from "../button";
 import { cn } from "../../lib/utils";
 import { parseColor } from "./color-utils";

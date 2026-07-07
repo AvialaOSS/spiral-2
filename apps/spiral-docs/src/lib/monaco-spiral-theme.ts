@@ -1,5 +1,5 @@
 import type { Monaco } from "@monaco-editor/react";
-import type { ThemeMode } from "@aviala/tokens";
+import type { ThemeMode } from "@aviala-design/tokens";
 
 function readCssVar(name: string, fallback: string): string {
   if (typeof document === "undefined") return fallback;

@@ -1,6 +1,6 @@
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 
-import { Textarea, Typography } from "@aviala/spiral";
+import { Textarea, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

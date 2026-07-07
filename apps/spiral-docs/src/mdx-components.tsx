@@ -1,4 +1,4 @@
-import { Typography } from "@aviala/spiral";
+import { Typography } from "@aviala-design/spiral";
 import type { ComponentPropsWithoutRef } from "react";
 import { Link as RouterLink } from "react-router-dom";
 

@@ -11,9 +11,9 @@
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
-    "@aviala/icons": "workspace:*",
-    "@aviala/spiral": "workspace:*",
-    "@aviala/tokens": "workspace:*",
+    "@aviala-design/icons": "workspace:*",
+    "@aviala-design/spiral": "workspace:*",
+    "@aviala-design/tokens": "workspace:*",
     "@babel/standalone": "^8.0.3",
     "@mdx-js/react": "^3.1.0",
     "@monaco-editor/react": "^4.7.0",

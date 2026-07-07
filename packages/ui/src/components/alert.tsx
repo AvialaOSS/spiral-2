@@ -4,7 +4,7 @@ import {
   SymbolWarningCircle,
   SymbolWrong,
   SymbolWrongCircle,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   cloneElement,

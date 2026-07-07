@@ -9,7 +9,7 @@ import {
   SelectValue,
   Stack,
   Switch,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useId } from "react";
 import { IconPickerKnob } from "./IconPickerKnob";
 

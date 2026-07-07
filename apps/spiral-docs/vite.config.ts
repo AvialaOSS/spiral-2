@@ -220,35 +220,35 @@ export default defineConfig({
     // Prefer .tsx/.ts over stale compiled .js siblings under packages/ui/src
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
     alias: {
-      "@aviala/spiral": path.resolve(dirname, "../../packages/ui/src/index.ts"),
-      "@aviala/icons": path.resolve(dirname, "../../packages/icons/src/index.ts"),
-      "@aviala/tokens/styles.css": path.resolve(tokensDist, "styles.css"),
-      "@aviala/tokens/ald-theme.css": path.resolve(tokensDist, "ald-theme.css"),
-      "@aviala/tokens/input-effects.css": path.resolve(tokensSemantic, "input-effects.css"),
-      "@aviala/tokens/basic-input-effects.css": path.resolve(
+      "@aviala-design/spiral": path.resolve(dirname, "../../packages/ui/src/index.ts"),
+      "@aviala-design/icons": path.resolve(dirname, "../../packages/icons/src/index.ts"),
+      "@aviala-design/tokens/styles.css": path.resolve(tokensDist, "styles.css"),
+      "@aviala-design/tokens/ald-theme.css": path.resolve(tokensDist, "ald-theme.css"),
+      "@aviala-design/tokens/input-effects.css": path.resolve(tokensSemantic, "input-effects.css"),
+      "@aviala-design/tokens/basic-input-effects.css": path.resolve(
         tokensSemantic,
         "basic-input-effects.css"
       ),
-      "@aviala/tokens/cascader-effects.css": path.resolve(tokensSemantic, "cascader-effects.css"),
-      "@aviala/tokens/popover-effects.css": path.resolve(tokensSemantic, "popover-effects.css"),
-      "@aviala/tokens/modal-effects.css": path.resolve(tokensSemantic, "modal-effects.css"),
-      "@aviala/tokens/tooltip-effects.css": path.resolve(tokensSemantic, "tooltip-effects.css"),
-      "@aviala/tokens/color-picker-effects.css": path.resolve(
+      "@aviala-design/tokens/cascader-effects.css": path.resolve(tokensSemantic, "cascader-effects.css"),
+      "@aviala-design/tokens/popover-effects.css": path.resolve(tokensSemantic, "popover-effects.css"),
+      "@aviala-design/tokens/modal-effects.css": path.resolve(tokensSemantic, "modal-effects.css"),
+      "@aviala-design/tokens/tooltip-effects.css": path.resolve(tokensSemantic, "tooltip-effects.css"),
+      "@aviala-design/tokens/color-picker-effects.css": path.resolve(
         tokensSemantic,
         "color-picker-effects.css"
       ),
-      "@aviala/tokens/loading-effects.css": path.resolve(tokensSemantic, "loading-effects.css"),
-      "@aviala/tokens/typeface-effects.css": path.resolve(tokensSemantic, "typeface-effects.css"),
-      "@aviala/tokens/button-effects.css": path.resolve(tokensSemantic, "button-effects.css"),
-      "@aviala/tokens/focus-effects.css": path.resolve(tokensSemantic, "focus-effects.css"),
-      "@aviala/tokens/list-effects.css": path.resolve(tokensSemantic, "list-effects.css"),
-      "@aviala/tokens/navigation-effects.css": path.resolve(
+      "@aviala-design/tokens/loading-effects.css": path.resolve(tokensSemantic, "loading-effects.css"),
+      "@aviala-design/tokens/typeface-effects.css": path.resolve(tokensSemantic, "typeface-effects.css"),
+      "@aviala-design/tokens/button-effects.css": path.resolve(tokensSemantic, "button-effects.css"),
+      "@aviala-design/tokens/focus-effects.css": path.resolve(tokensSemantic, "focus-effects.css"),
+      "@aviala-design/tokens/list-effects.css": path.resolve(tokensSemantic, "list-effects.css"),
+      "@aviala-design/tokens/navigation-effects.css": path.resolve(
         tokensSemantic,
         "navigation-effects.css"
       ),
-      "@aviala/tokens/feedback-effects.css": path.resolve(tokensSemantic, "feedback-effects.css"),
-      "@aviala/tokens/alert-effects.css": path.resolve(tokensSemantic, "alert-effects.css"),
-      "@aviala/tokens/datepicker-effects.css": path.resolve(
+      "@aviala-design/tokens/feedback-effects.css": path.resolve(tokensSemantic, "feedback-effects.css"),
+      "@aviala-design/tokens/alert-effects.css": path.resolve(tokensSemantic, "alert-effects.css"),
+      "@aviala-design/tokens/datepicker-effects.css": path.resolve(
         tokensSemantic,
         "datepicker-effects.css"
       ),

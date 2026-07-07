@@ -22,7 +22,7 @@ import {
 
   type IconThickness,
 
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 
 import {
 
@@ -40,7 +40,7 @@ import {
 
   Typography,
 
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import { useCallback, useMemo, useState } from "react";
 

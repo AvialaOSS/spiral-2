@@ -5,7 +5,7 @@ import {
   SymbolRight,
   type AvialaIconProps,
   type IconLevel,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   cloneElement,
   createContext,

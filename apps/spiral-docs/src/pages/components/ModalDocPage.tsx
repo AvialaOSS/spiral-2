@@ -7,8 +7,8 @@ import {
   ModalHeaderText,
   ModalTrigger,
   Typography,
-} from "@aviala/spiral";
-import { SymbolInformationCircle } from "@aviala/icons";
+} from "@aviala-design/spiral";
+import { SymbolInformationCircle } from "@aviala-design/icons";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

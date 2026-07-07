@@ -1,5 +1,5 @@
-import { GeneralSearch, GeneralSetting } from "@aviala/icons";
-import type { IconCatalogEntry } from "@aviala/icons";
+import { GeneralSearch, GeneralSetting } from "@aviala-design/icons";
+import type { IconCatalogEntry } from "@aviala-design/icons";
 
 /** Fallback icons available before the full catalog lazy-loads. */
 const FALLBACK_ICON_COMPONENTS = {
@@ -17,7 +17,7 @@ const componentByName = new Map<string, IconCatalogEntry["component"]>(
 export async function loadIconCatalog(): Promise<readonly IconCatalogEntry[]> {
   if (catalogEntries) return catalogEntries;
 
-  const { iconCatalog } = await import("@aviala/icons");
+  const { iconCatalog } = await import("@aviala-design/icons");
   catalogEntries = iconCatalog;
   for (const entry of iconCatalog) {
     componentByName.set(entry.name, entry.component);

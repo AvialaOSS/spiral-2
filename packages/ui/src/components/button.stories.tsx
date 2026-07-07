@@ -1,4 +1,4 @@
-import { DirectionArrowRight, GeneralSetting } from "@aviala/icons";
+import { DirectionArrowRight, GeneralSetting } from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button, type ButtonMode, type ButtonSize } from "./button";
 

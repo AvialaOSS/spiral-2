@@ -1,4 +1,4 @@
-import { Typography } from "@aviala/spiral";
+import { Typography } from "@aviala-design/spiral";
 
 export type PropItem = {
   name: string;

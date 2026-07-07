@@ -6,9 +6,9 @@ Aviala Design aligned React component library built on shadcn/ui, Radix UI, and 
 
 | Package | Description |
 |---|---|
-| `@aviala/tokens` | Theme engine + design tokens (ALD + `@aviala-design/color`) |
-| `@aviala/icons` | Aviala Design Icons as React SVG components |
-| `@aviala/spiral` | React components + `ThemeProvider` |
+| `@aviala-design/tokens` | Theme engine + design tokens (ALD + `@aviala-design/color`) |
+| `@aviala-design/icons` | Aviala Design Icons as React SVG components |
+| `@aviala-design/spiral` | React components + `ThemeProvider` |
 
 ## Quick start
 

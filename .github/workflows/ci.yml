@@ -31,6 +31,12 @@ jobs:
           fi
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Export icons from Figma
+        run: pnpm icons:export
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+
       - run: pnpm sync:ald || true
       - run: pnpm build
       - run: pnpm typecheck

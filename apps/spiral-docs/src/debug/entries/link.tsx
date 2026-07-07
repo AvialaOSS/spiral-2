@@ -1,4 +1,4 @@
-import { Link, type LinkLevel, type LinkMode } from "@aviala/spiral";
+import { Link, type LinkLevel, type LinkMode } from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

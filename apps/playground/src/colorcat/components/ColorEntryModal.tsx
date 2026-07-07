@@ -10,7 +10,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeaderText,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useEffect, useState } from "react";
 import type { ColorEntry } from "../lib/types";
 

@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+  id-token: write # npm Trusted Publishing (OIDC)
+
 concurrency: release
 
 jobs:
@@ -19,12 +23,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest
+
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+
+      - name: Export icons from Figma
+        run: pnpm icons:export
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+
+      - run: pnpm --filter @aviala-design/tokens --filter @aviala-design/icons --filter @aviala-design/spiral build
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
@@ -35,4 +48,5 @@ jobs:
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # No NPM_TOKEN — authenticate via npm Trusted Publisher (OIDC).
+          # Configure each package on npmjs.com → Settings → Trusted publishing.

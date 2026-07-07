@@ -5,7 +5,7 @@ export default defineConfig({
   format: ["esm", "cjs"],
   dts: true,
   clean: true,
-  external: ["react", "react-dom", "@aviala/icons", "@aviala/tokens"],
+  external: ["react", "react-dom", "@aviala-design/icons", "@aviala-design/tokens"],
   splitting: false,
   sourcemap: true,
   banner: {

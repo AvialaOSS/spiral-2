@@ -8,7 +8,7 @@ import {
   type IconCatalogEntry,
   type IconMode,
   type IconThickness,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   Button,
   cn,
@@ -18,7 +18,7 @@ import {
   SegmentatorItem,
   Stack,
   useTheme,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useEffect, useMemo, useState } from "react";
 
 type PreviewColorMode = "theme" | "black" | "white" | "inherit";
@@ -107,7 +107,7 @@ function buildImportSnippet(
   thickness: IconThickness,
   mode: IconMode
 ): string {
-  return `import { ${entry.name} } from "@aviala/icons";
+  return `import { ${entry.name} } from "@aviala-design/icons";
 
 <${entry.name} thickness="${thickness}" mode="${mode}" width={24} height={24} />`;
 }

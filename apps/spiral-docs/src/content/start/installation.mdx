@@ -10,7 +10,7 @@
 Spiral 2 当前以 workspace 包形式发布：
 
 ```bash
-pnpm add @aviala/spiral @aviala/tokens @aviala/icons
+pnpm add @aviala-design/spiral @aviala-design/tokens @aviala-design/icons
 ```
 
 ## 引入样式
@@ -18,11 +18,11 @@ pnpm add @aviala/spiral @aviala/tokens @aviala/icons
 在应用入口引入 Spiral 样式与 ALD 主题：
 
 ```tsx
-import "@aviala/spiral/styles.css";
-import "@aviala/tokens/ald-theme.css";
-import "@aviala/tokens/input-effects.css";
-import "@aviala/tokens/basic-input-effects.css";
-import "@aviala/tokens/button-effects.css";
+import "@aviala-design/spiral/styles.css";
+import "@aviala-design/tokens/ald-theme.css";
+import "@aviala-design/tokens/input-effects.css";
+import "@aviala-design/tokens/basic-input-effects.css";
+import "@aviala-design/tokens/button-effects.css";
 ```
 
 按需引入其他组件的效果样式（如 `popover-effects.css`、`cascader-effects.css` 等）。
@@ -30,7 +30,7 @@ import "@aviala/tokens/button-effects.css";
 ## 挂载 ThemeProvider
 
 ```tsx
-import { ThemeProvider, Button } from "@aviala/spiral";
+import { ThemeProvider, Button } from "@aviala-design/spiral";
 
 export function App() {
   return (
@@ -48,7 +48,7 @@ export function App() {
 ```bash
 pnpm install
 pnpm sync:ald
-pnpm --filter @aviala/tokens build
+pnpm --filter @aviala-design/tokens build
 pnpm --filter @spiral/spiral-docs dev
 ```
 

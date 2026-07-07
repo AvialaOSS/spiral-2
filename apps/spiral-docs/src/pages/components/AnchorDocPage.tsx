@@ -1,4 +1,4 @@
-import { Anchor, AnchorItem, Typography } from "@aviala/spiral";
+import { Anchor, AnchorItem, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

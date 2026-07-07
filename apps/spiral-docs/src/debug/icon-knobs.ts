@@ -4,7 +4,7 @@ import {
   type IconLevel,
   type IconMode,
   type IconThickness,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import { createElement } from "react";
 
 import type { KnobDef, KnobValues } from "../components/DemoKnobs";

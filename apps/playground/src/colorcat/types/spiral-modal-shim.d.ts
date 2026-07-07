@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, HTMLAttributes, ReactNode } from "react";
 
-declare module "@aviala/spiral" {
+declare module "@aviala-design/spiral" {
   export const Modal: React.FC<{
     open?: boolean;
     defaultOpen?: boolean;

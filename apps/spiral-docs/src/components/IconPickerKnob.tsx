@@ -1,5 +1,5 @@
-import type { IconCatalogEntry } from "@aviala/icons";
-import { DirectionArrowDownLight, GeneralSearch, Icon } from "@aviala/icons";
+import type { IconCatalogEntry } from "@aviala-design/icons";
+import { DirectionArrowDownLight, GeneralSearch, Icon } from "@aviala-design/icons";
 import {
   cn,
   FormField,
@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
   Typography,
   typographyVariants,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useEffect, useMemo, useState } from "react";
 import {
   DEFAULT_ICON_NAME,

@@ -6,7 +6,7 @@ import {
   GeneralJumpOut,
   GeneralSetting,
   SymbolApps,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "./button";

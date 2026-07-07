@@ -1,4 +1,4 @@
-import { Textarea, type TextareaSize } from "@aviala/spiral";
+import { Textarea, type TextareaSize } from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

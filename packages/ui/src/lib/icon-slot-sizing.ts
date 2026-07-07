@@ -1,5 +1,5 @@
-import type { AvialaIconProps, IconLevel } from "@aviala/icons";
-import { resolveIconSizeToken } from "@aviala/icons";
+import type { AvialaIconProps, IconLevel } from "@aviala-design/icons";
+import { resolveIconSizeToken } from "@aviala-design/icons";
 import { isValidElement, type CSSProperties, type ReactElement, type ReactNode } from "react";
 
 export function resolveIconSlotSizing(

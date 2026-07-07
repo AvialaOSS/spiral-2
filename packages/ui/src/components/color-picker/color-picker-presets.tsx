@@ -1,4 +1,4 @@
-import { SymbolAdd } from "@aviala/icons";
+import { SymbolAdd } from "@aviala-design/icons";
 import { Button } from "../button";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";

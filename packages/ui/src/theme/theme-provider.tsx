@@ -19,7 +19,7 @@ import {
   type PaletteConfig,
   type ThemeMode,
   type ThemePreset,
-} from "@aviala/tokens";
+} from "@aviala-design/tokens";
 import { initKeyboardFocus } from "../lib/keyboard-focus";
 
 export type ThemeProviderProps = {

@@ -1,4 +1,4 @@
-import { GeneralCollapseSidebar, GeneralSetting } from "@aviala/icons";
+import { GeneralCollapseSidebar, GeneralSetting } from "@aviala-design/icons";
 
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   NavigationItem,
   NavigationItemGroup,
   Typography,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

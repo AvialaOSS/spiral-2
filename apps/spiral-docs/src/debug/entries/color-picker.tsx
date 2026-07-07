@@ -4,7 +4,7 @@ import {
   ColorPickerContent,
   ColorPickerTrigger,
   type ColorFormat,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import type { KnobValues } from "../../components/DemoKnobs";
 import type { DebugComponentEntry } from "../types";
 

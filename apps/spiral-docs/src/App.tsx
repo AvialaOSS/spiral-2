@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Typography } from "@aviala/spiral";
+import { Typography } from "@aviala-design/spiral";
 import { DocLayout } from "./components/DocLayout";
 import { AlertDocPage } from "./pages/components/AlertDocPage";
 import { AnchorDocPage } from "./pages/components/AnchorDocPage";

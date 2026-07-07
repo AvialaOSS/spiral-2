@@ -1,4 +1,4 @@
-import { EditAddMore, GeneralDownload } from "@aviala/icons";
+import { EditAddMore, GeneralDownload } from "@aviala-design/icons";
 import {
   Button,
   Link,
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   Typography,
   useTheme,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useEffect, useMemo, useState } from "react";
 import {
   buildExportPayload,

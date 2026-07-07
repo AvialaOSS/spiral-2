@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { SymbolRightBold } from "@aviala/icons";
+import { SymbolRightBold } from "@aviala-design/icons";
 import { cloneElement, forwardRef, isValidElement, } from "react";
 import { cn } from "../lib/utils";
 import { TypefacePair } from "./typeface";

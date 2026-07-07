@@ -1,4 +1,4 @@
-import { DatePickerField, type DatePickerSize } from "@aviala/spiral";
+import { DatePickerField, type DatePickerSize } from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

@@ -1,4 +1,4 @@
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 
 import {
   List,
@@ -9,7 +9,7 @@ import {
   SelectItemGroup,
   SelectTrigger,
   Typography,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

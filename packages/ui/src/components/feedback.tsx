@@ -6,7 +6,7 @@ import {
   SymbolWarningCircle,
   SymbolWrong,
   SymbolWrongCircle,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,

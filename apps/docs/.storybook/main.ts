@@ -19,7 +19,11 @@ const config: StorybookConfig = {
       ...config.resolve,
       alias: {
         ...config.resolve?.alias,
-        "@aviala/spiral": path.resolve(dirname, "../../../packages/ui/src/index.ts"),
+        "@aviala-design/spiral/styles.css": path.resolve(
+          dirname,
+          "../../../packages/ui/dist/styles.css"
+        ),
+        "@aviala-design/spiral": path.resolve(dirname, "../../../packages/ui/src/index.ts"),
       },
     };
     return config;

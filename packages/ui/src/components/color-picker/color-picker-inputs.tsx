@@ -1,4 +1,4 @@
-import { EditColorPicker } from "@aviala/icons";
+import { EditColorPicker } from "@aviala-design/icons";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "../badge";
 import { Button } from "../button";

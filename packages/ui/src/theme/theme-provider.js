@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, } from "react";
-import { applyTheme, applyBaseNumbersDensity, DEFAULT_PALETTE_CONFIG, generateTheme, getPreset, presetList, removeTheme, } from "@aviala/tokens";
+import { applyTheme, applyBaseNumbersDensity, DEFAULT_PALETTE_CONFIG, generateTheme, getPreset, presetList, removeTheme, } from "@aviala-design/tokens";
 const ThemeContext = createContext(null);
 export function ThemeProvider({ children, defaultMode = "light", defaultPrimary, defaultPresetId = "default", defaultPaletteConfig, defaultDensity = "default", storageKey = "aviala-theme", onThemeChange, }) {
     const [mode, setModeState] = useState(() => {

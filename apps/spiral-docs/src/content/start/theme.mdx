@@ -1,11 +1,11 @@
 # 主题
 
-Spiral 2 通过 `ThemeProvider` 与 `@aviala/tokens` 主题引擎管理亮色/暗色模式、品牌主色与 **base-numbers 密度**。
+Spiral 2 通过 `ThemeProvider` 与 `@aviala-design/tokens` 主题引擎管理亮色/暗色模式、品牌主色与 **base-numbers 密度**。
 
 ## ThemeProvider
 
 ```tsx
-import { ThemeProvider } from "@aviala/spiral";
+import { ThemeProvider } from "@aviala-design/spiral";
 
 <ThemeProvider
   defaultMode="light"
@@ -28,7 +28,7 @@ ALD `base-numbers` 提供两套尺寸令牌：
 切换方式：
 
 ```tsx
-import { useTheme } from "@aviala/spiral";
+import { useTheme } from "@aviala-design/spiral";
 
 function DensitySwitch() {
   const { density, setDensity } = useTheme();

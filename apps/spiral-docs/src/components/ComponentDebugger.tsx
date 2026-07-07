@@ -20,7 +20,7 @@ import {
 
   Typography,
 
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import { useCallback, useMemo, useState } from "react";
 

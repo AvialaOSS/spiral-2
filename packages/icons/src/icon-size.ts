@@ -1,7 +1,7 @@
 import type { SVGProps } from "react";
 import type { AvialaIconProps, IconLevel } from "./types";
 
-/** Semantic CSS vars from @aviala/tokens components.css — level × BiggerSize */
+/** Semantic CSS vars from @aviala-design/tokens components.css �?level × BiggerSize */
 const ICON_LEVEL_SIZE: Record<IconLevel, { default: string; bigger: string }> = {
   display: {
     default: "var(--icon-size-display, var(--size-max, 38px))",
@@ -38,7 +38,7 @@ export function resolveIconSizeToken(level: IconLevel, biggerSize = false): stri
 }
 
 type IconSizingProps = AvialaIconProps & {
-  /** Icon wrapper convenience prop — maps to width/height when both omitted */
+  /** Icon wrapper convenience prop �?maps to width/height when both omitted */
   size?: number | string;
 };
 

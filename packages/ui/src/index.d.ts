@@ -1,5 +1,5 @@
 export { ThemeProvider, useTheme, ThemeScript, type ThemeProviderProps } from "./theme/theme-provider";
-export { DEFAULT_PALETTE_CONFIG, PALETTE_HUE_FAMILIES, type BaseNumbersDensity, type PaletteConfig, type HueFamily, } from "@aviala/tokens";
+export { DEFAULT_PALETTE_CONFIG, PALETTE_HUE_FAMILIES, type BaseNumbersDensity, type PaletteConfig, type HueFamily, } from "@aviala-design/tokens";
 export { Button, buttonVariants, type ButtonProps, type ButtonMode, type ButtonSize } from "./components/button";
 export { Input, inputRootVariants, type InputProps, type InputSize } from "./components/input";
 export { Textarea, type TextareaProps, type TextareaSize } from "./components/textarea";

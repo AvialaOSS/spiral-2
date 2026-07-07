@@ -1,4 +1,4 @@
-import { DirectionArrowRight, GeneralSetting, iconCatalog } from "@aviala/icons";
+import { DirectionArrowRight, GeneralSetting, iconCatalog } from "@aviala-design/icons";
 import {
   Button,
   Checkbox,
@@ -49,7 +49,7 @@ import {
   ListItem,
   useTheme,
   type HueFamily,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useId, useState } from "react";
 import { categoryCascaderOptions, regionCascaderOptions } from "./cascader-demo-data";
 

@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   type SelectItemFunction,
   type SelectSize,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

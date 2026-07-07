@@ -23,13 +23,13 @@ importers:
 
   apps/docs:
     dependencies:
-      '@aviala/icons':
+      '@aviala-design/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@aviala/spiral':
+      '@aviala-design/spiral':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@aviala/tokens':
+      '@aviala-design/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       react:
@@ -78,21 +78,15 @@ importers:
 
   apps/playground:
     dependencies:
-      '@aviala-design/color':
-        specifier: ^0.5.15
-        version: 0.5.15
-      '@aviala/icons':
+      '@aviala-design/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@aviala/spiral':
+      '@aviala-design/spiral':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@aviala/tokens':
+      '@aviala-design/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      colord:
-        specifier: ^2.9.3
-        version: 2.9.3
       react:
         specifier: ^19.1.0
         version: 19.2.7
@@ -124,13 +118,13 @@ importers:
 
   apps/spiral-docs:
     dependencies:
-      '@aviala/icons':
+      '@aviala-design/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@aviala/spiral':
+      '@aviala-design/spiral':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@aviala/tokens':
+      '@aviala-design/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       '@babel/standalone':
@@ -241,10 +235,10 @@ importers:
 
   packages/ui:
     dependencies:
-      '@aviala/icons':
+      '@aviala-design/icons':
         specifier: workspace:*
         version: link:../icons
-      '@aviala/tokens':
+      '@aviala-design/tokens':
         specifier: workspace:*
         version: link:../tokens
       '@radix-ui/react-checkbox':

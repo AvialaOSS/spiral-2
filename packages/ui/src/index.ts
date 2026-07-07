@@ -1,12 +1,11 @@
 export { ThemeProvider, useTheme, useThemeLayoutKey, ThemeScript, type ThemeProviderProps } from "./theme/theme-provider";
-export { initKeyboardFocus } from "./lib/keyboard-focus";
 export {
   DEFAULT_PALETTE_CONFIG,
   PALETTE_HUE_FAMILIES,
   type BaseNumbersDensity,
   type PaletteConfig,
   type HueFamily,
-} from "@aviala/tokens";
+} from "@aviala-design/tokens";
 
 export { Button, buttonVariants, type ButtonProps, type ButtonMode, type ButtonSize } from "./components/button";
 export { Input, inputRootVariants, type InputProps, type InputSize } from "./components/input";
@@ -289,3 +288,4 @@ export {
 } from "./components/navigation";
 
 export { cn } from "./lib/utils";
+export { initKeyboardFocus } from "./lib/keyboard-focus";

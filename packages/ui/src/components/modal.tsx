@@ -1,5 +1,5 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { SymbolWrong } from "@aviala/icons";
+import { SymbolWrong } from "@aviala-design/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   cloneElement,

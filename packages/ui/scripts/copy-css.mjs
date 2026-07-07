@@ -28,3 +28,22 @@ const css = `${tokensCss}
 
 writeFileSync(join(dist, "styles.css"), css);
 console.log("Built dist/styles.css");
+
+function patchKeyboardFocusDts(filePath) {
+  let content = readFileSync(filePath, "utf8");
+  if (content.includes("initKeyboardFocus")) return;
+
+  content = content.replace(
+    /declare function cn\(/,
+    '/** Toggle `html[data-aviala-keyboard-focus]` for keyboard-only focus ring CSS. */\ndeclare function initKeyboardFocus(): void;\ndeclare function cn('
+  );
+  content = content.replace(
+    /ThemeScript, Tooltip,/,
+    "ThemeScript, initKeyboardFocus, Tooltip,"
+  );
+  writeFileSync(filePath, content);
+}
+
+for (const file of ["index.d.ts", "index.d.cts"]) {
+  patchKeyboardFocusDts(join(dist, file));
+}

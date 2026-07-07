@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { DirectionArrowDownLight, DirectionArrowRightLight, SymbolRight, SymbolRightBold, } from "@aviala/icons";
+import { DirectionArrowDownLight, DirectionArrowRightLight, SymbolRight, SymbolRightBold, } from "@aviala-design/icons";
 import { cloneElement, createContext, forwardRef, isValidElement, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, } from "react";
 import { Badge } from "./badge";
 import { typographyVariants } from "./typography";

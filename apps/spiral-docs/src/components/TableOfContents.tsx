@@ -1,4 +1,4 @@
-import { Anchor, AnchorItem, Typography } from "@aviala/spiral";
+import { Anchor, AnchorItem, Typography } from "@aviala-design/spiral";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 

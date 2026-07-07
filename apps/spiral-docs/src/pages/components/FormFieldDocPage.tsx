@@ -1,4 +1,4 @@
-import { FormField, Input, Typography } from "@aviala/spiral";
+import { FormField, Input, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

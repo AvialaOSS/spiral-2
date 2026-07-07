@@ -9,7 +9,7 @@ import {
   SymbolMindmap,
   SymbolWarningCircle,
   type AvialaIconProps,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   Button,
   Navigation,
@@ -21,7 +21,7 @@ import {
   NavigationItem,
   NavigationItemGroup,
   Typography,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { type ComponentType, useCallback, useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { flattenNavItems, nav, navPathToHref, type NavSection } from "../nav";

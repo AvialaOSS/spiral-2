@@ -7,7 +7,7 @@ import {
   ICON_MODES,
   ICON_THICKNESSES,
   type IconLevel,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 

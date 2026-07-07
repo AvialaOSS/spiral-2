@@ -1,7 +1,7 @@
 import {
   DirectionArrowRightLight,
   GeneralSetting,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,

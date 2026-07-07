@@ -1,8 +1,16 @@
 {
-  "name": "@aviala/icons",
-  "version": "0.0.1",
+  "name": "@aviala-design/icons",
+  "version": "2.0.0",
   "description": "Aviala Design Icons for Spiral 2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AvialaOSS/spiral-2.git",
+    "directory": "packages/icons"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -12,7 +20,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist", "raw"],
+  "files": [
+    "dist",
+    "raw"
+  ],
   "scripts": {
     "build": "node scripts/build-icons.mjs && tsup",
     "build:icons": "node scripts/build-icons.mjs",

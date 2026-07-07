@@ -9,8 +9,8 @@ import {
   type IconCatalogEntry,
   type IconMode,
   type IconThickness,
-} from "@aviala/icons";
-import { Button, cn, Input, Link, SegmentatorGroup, SegmentatorItem, Stack } from "@aviala/spiral";
+} from "@aviala-design/icons";
+import { Button, cn, Input, Link, SegmentatorGroup, SegmentatorItem, Stack } from "@aviala-design/spiral";
 import { useMemo, useState } from "react";
 
 type VariantKey = `${IconThickness}:${IconMode}`;

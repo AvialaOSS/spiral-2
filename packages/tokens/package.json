@@ -1,10 +1,20 @@
 {
-  "name": "@aviala/tokens",
-  "version": "0.0.1",
+  "name": "@aviala-design/tokens",
+  "version": "0.0.2",
   "description": "Aviala Design tokens and theme engine for Spiral 2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AvialaOSS/spiral-2.git",
+    "directory": "packages/tokens"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
-  "sideEffects": ["**/*.css"],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -38,7 +48,10 @@
       "import": "./dist/tailwind.preset.js"
     }
   },
-  "files": ["dist", "source"],
+  "files": [
+    "dist",
+    "source"
+  ],
   "scripts": {
     "build": "tsup && node scripts/build-css.mjs",
     "dev": "tsup --watch",

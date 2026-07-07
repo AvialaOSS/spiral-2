@@ -5,7 +5,7 @@ import {
   TimeAndDateClock,
   TimeAndDateDate,
   type AvialaIconProps,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,

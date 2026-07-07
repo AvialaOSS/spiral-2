@@ -1,4 +1,4 @@
-import type { CascaderOption } from "@aviala/spiral";
+import type { CascaderOption } from "@aviala-design/spiral";
 
 /** Region / location tree — 6 countries, up to 4 levels, mixed EN/ZH labels. */
 export const regionCascaderOptions: CascaderOption[] = [

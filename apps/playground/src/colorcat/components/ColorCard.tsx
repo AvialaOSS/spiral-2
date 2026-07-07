@@ -1,5 +1,5 @@
-import { EditNormalEdit, GeneralDelete } from "@aviala/icons";
-import { Button, Typeface } from "@aviala/spiral";
+import { EditNormalEdit, GeneralDelete } from "@aviala-design/icons";
+import { Button, Typeface } from "@aviala-design/spiral";
 import { useMemo } from "react";
 import { generatePaletteSteps } from "../lib/palette";
 import type { ColorEntry, ColorFormat } from "../lib/types";

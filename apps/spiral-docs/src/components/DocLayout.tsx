@@ -1,5 +1,5 @@
-import { GeneralExpandSidebar } from "@aviala/icons";
-import { Button, Typography } from "@aviala/spiral";
+import { GeneralExpandSidebar } from "@aviala-design/icons";
+import { Button, Typography } from "@aviala-design/spiral";
 import { useRef, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { flattenNavItems, navPathToHref } from "../nav";

@@ -1,4 +1,4 @@
-import { Input, type InputSize } from "@aviala/spiral";
+import { Input, type InputSize } from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 import { Button } from "./button";
 import {
   Tooltip,

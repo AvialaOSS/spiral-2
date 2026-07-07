@@ -1,4 +1,4 @@
-import { Input, Typography } from "@aviala/spiral";
+import { Input, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 

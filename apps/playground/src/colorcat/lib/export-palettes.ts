@@ -1,4 +1,4 @@
-import { aliasToCssVar } from "@aviala/tokens";
+import { aliasToCssVar } from "@aviala-design/tokens";
 import type { ColorEntry, ColorEntryPalettes } from "./types";
 
 export type ExportPayload = Record<

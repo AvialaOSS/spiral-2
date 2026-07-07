@@ -1,7 +1,7 @@
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 import { useState } from "react";
 
-import { CascaderField, Typography } from "@aviala/spiral";
+import { CascaderField, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

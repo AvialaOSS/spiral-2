@@ -8,7 +8,7 @@ import {
   type IconCatalogEntry,
   type IconMode,
   type IconThickness,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   Button,
   cn,
@@ -18,7 +18,7 @@ import {
   SegmentatorItem,
   Stack,
   Typography,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { DocPageHeader } from "../../components/TableOfContents";

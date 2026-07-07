@@ -4,7 +4,7 @@ import {
   NavigationItemGroup,
   type NavigationBackground,
   type NavigationDirection,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

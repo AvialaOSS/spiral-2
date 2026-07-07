@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { FormField, TimePicker, TimePickerContent, TimePickerField, TimePickerPanel, TimePickerTrigger, Typography } from "@aviala/spiral";
+import { FormField, TimePicker, TimePickerContent, TimePickerField, TimePickerPanel, TimePickerTrigger, Typography } from "@aviala-design/spiral";
 
 import { DemoBlock } from "../../components/DemoBlock";
 import { PropsTable } from "../../components/PropsTable";

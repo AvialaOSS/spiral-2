@@ -1,6 +1,6 @@
 ---
 name: spiral-theme
-description: Spiral 2 theme engine — generateTheme, applyTheme, ThemeProvider, ALD alias rules. Use when working on theming or @aviala/tokens.
+description: Spiral 2 theme engine — generateTheme, applyTheme, ThemeProvider, ALD alias rules. Use when working on theming or @aviala-design/tokens.
 ---
 
 # Spiral Theme
@@ -8,8 +8,8 @@ description: Spiral 2 theme engine — generateTheme, applyTheme, ThemeProvider,
 ## API
 
 ```tsx
-import { generateTheme, applyTheme, presets } from "@aviala/tokens";
-import { ThemeProvider, useTheme } from "@aviala/spiral";
+import { generateTheme, applyTheme, presets } from "@aviala-design/tokens";
+import { ThemeProvider, useTheme } from "@aviala-design/spiral";
 
 const vars = generateTheme({ mode: "dark", primary: "#165DFF" });
 applyTheme(vars);
@@ -26,7 +26,7 @@ Uses `@aviala-design/color` `palette.generate()` with **designer step map** (8/1
 ## Static ALD theme
 
 ```ts
-import { loadAldTheme } from "@aviala/tokens";
+import { loadAldTheme } from "@aviala-design/tokens";
 const vars = loadAldTheme("light");
 ```
 
@@ -34,4 +34,4 @@ const vars = loadAldTheme("light");
 
 - Hardcoded colors in components
 - Bypassing ThemeProvider in apps
-- Mixing shadcn default `:root` colors without `@aviala/tokens`
+- Mixing shadcn default `:root` colors without `@aviala-design/tokens`

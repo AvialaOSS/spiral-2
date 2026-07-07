@@ -1,4 +1,4 @@
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 import {
   Button,
   ColorPicker,
@@ -12,7 +12,7 @@ import {
   Stack,
   Typography,
   useTheme,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import { PaletteConfigPanel } from "./PaletteConfigPanel";
 
 export function ThemeToolbar() {

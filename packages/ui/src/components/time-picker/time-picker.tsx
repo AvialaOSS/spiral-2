@@ -1,5 +1,5 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { TimeAndDateClock } from "@aviala/icons";
+import { TimeAndDateClock } from "@aviala-design/icons";
 import {
   forwardRef,
   useCallback,

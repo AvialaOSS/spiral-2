@@ -1,4 +1,4 @@
-import { GeneralSetting } from "@aviala/icons";
+import { GeneralSetting } from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { SegmentatorGroup, SegmentatorItem, type SegmentatorMode } from "./segmentator";

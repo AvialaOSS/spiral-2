@@ -3,7 +3,7 @@ import {
   DEFAULT_PALETTE_CONFIG,
   PALETTE_STEPS,
   type PaletteConfig,
-} from "@aviala/tokens";
+} from "@aviala-design/tokens";
 import { colord } from "colord";
 import type { ColorFormat, PaletteStep } from "./types";
 

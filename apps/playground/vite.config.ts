@@ -11,8 +11,8 @@ export default defineConfig({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
     alias: {
-      "@aviala/spiral": path.resolve(dirname, "../../packages/ui/src/index.ts"),
-      "@aviala/tokens/basic-input-effects.css": path.resolve(
+      "@aviala-design/spiral": path.resolve(dirname, "../../packages/ui/src/index.ts"),
+      "@aviala-design/tokens/basic-input-effects.css": path.resolve(
         dirname,
         "../../packages/tokens/src/semantic/basic-input-effects.css"
       ),

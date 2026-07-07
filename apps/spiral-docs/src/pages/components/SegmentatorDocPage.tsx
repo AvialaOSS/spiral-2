@@ -1,4 +1,4 @@
-import { SegmentatorGroup, SegmentatorItem, Typography } from "@aviala/spiral";
+import { SegmentatorGroup, SegmentatorItem, Typography } from "@aviala-design/spiral";
 
 import { useState } from "react";
 

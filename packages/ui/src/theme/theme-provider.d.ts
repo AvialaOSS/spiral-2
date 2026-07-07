@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { type BaseNumbersDensity, type PaletteConfig, type ThemeMode, type ThemePreset } from "@aviala/tokens";
+import { type BaseNumbersDensity, type PaletteConfig, type ThemeMode, type ThemePreset } from "@aviala-design/tokens";
 export type ThemeProviderProps = {
     children: ReactNode;
     defaultMode?: ThemeMode;

@@ -1,4 +1,4 @@
-import type { AvialaIconProps, IconLevel } from "@aviala/icons";
+import type { AvialaIconProps, IconLevel } from "@aviala-design/icons";
 import {
   cloneElement,
   isValidElement,

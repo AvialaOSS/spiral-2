@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { SymbolRight } from "@aviala/icons";
+import { SymbolRight } from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,

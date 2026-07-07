@@ -2,7 +2,7 @@ import {
   CascaderField,
   type CascaderItemFunction,
   type CascaderSize,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 
 import type { KnobValues } from "../../components/DemoKnobs";
 import {

@@ -10,8 +10,8 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import type { IconLevel } from "@aviala/icons";
-import { resolveIconSizeToken } from "@aviala/icons";
+import type { IconLevel } from "@aviala-design/icons";
+import { resolveIconSizeToken } from "@aviala-design/icons";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { resolveIconSlotSizing } from "../lib/icon-slot-sizing";
 import { cn } from "../lib/utils";

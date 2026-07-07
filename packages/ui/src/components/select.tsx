@@ -6,7 +6,7 @@ import {
   SymbolRight,
   UsersUserCircle,
   type IconLevel,
-} from "@aviala/icons";
+} from "@aviala-design/icons";
 import {
   Children,
   createContext,

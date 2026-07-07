@@ -1,4 +1,4 @@
-import { GeneralCollapseSidebar, GeneralExpandSidebar, SymbolInformationCircle } from "@aviala/icons";
+import { GeneralCollapseSidebar, GeneralExpandSidebar, SymbolInformationCircle } from "@aviala-design/icons";
 import Editor, { type Monaco } from "@monaco-editor/react";
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
   Typography,
   useTheme,
-} from "@aviala/spiral";
+} from "@aviala-design/spiral";
 import {
   Component,
   useCallback,

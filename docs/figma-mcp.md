@@ -48,7 +48,7 @@ pnpm icons:export:dry          # preview export plan
 
 pnpm icons:build               # SVGR → React components
 
-pnpm icons:sync                # export + build @aviala/icons
+pnpm icons:sync                # export + build @aviala-design/icons
 
 
 

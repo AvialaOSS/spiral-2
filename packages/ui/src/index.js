@@ -1,5 +1,5 @@
 export { ThemeProvider, useTheme, ThemeScript } from "./theme/theme-provider";
-export { DEFAULT_PALETTE_CONFIG, PALETTE_HUE_FAMILIES, } from "@aviala/tokens";
+export { DEFAULT_PALETTE_CONFIG, PALETTE_HUE_FAMILIES, } from "@aviala-design/tokens";
 export { Button, buttonVariants } from "./components/button";
 export { Input, inputRootVariants } from "./components/input";
 export { Textarea } from "./components/textarea";
