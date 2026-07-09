@@ -29,11 +29,14 @@ export function applyTheme(
     "default";
   applyBaseNumbersDensity(target, density);
 
-  if (options.themeId || vars["--aviala-theme-id"]) {
-    target.setAttribute(
-      "data-theme",
-      options.themeId ?? vars["--aviala-theme-id"] ?? "default"
-    );
+  const themeId = options.themeId ?? vars["--aviala-theme-id"];
+  if (themeId) {
+    target.setAttribute("data-theme", themeId);
+  } else {
+    // Leaving a static preset (e.g. ald) must drop data-theme so frozen
+    // [data-theme="ald"] CSS no longer overrides dynamic inline vars.
+    target.removeAttribute("data-theme");
+    target.style.removeProperty("--aviala-theme-id");
   }
 
   for (const [key, value] of Object.entries(vars)) {

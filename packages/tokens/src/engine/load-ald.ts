@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -17,7 +17,20 @@ import type { ThemeMode, ThemeVars } from "./generate-theme";
 export type { BaseNumbersDensity } from "./base-numbers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ALD_ROOT = join(__dirname, "../../source/ald");
+
+/** Resolve ALD root for both src/engine (dev) and dist (published) layouts. */
+function resolveAldRoot(): string {
+  const candidates = [
+    join(__dirname, "../../source/ald"), // packages/tokens/src/engine
+    join(__dirname, "../source/ald"), // packages/tokens/dist
+  ];
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return candidate;
+  }
+  return candidates[0]!;
+}
+
+const ALD_ROOT = resolveAldRoot();
 
 function readJson(relativePath: string): RawTokenTree {
   const full = join(ALD_ROOT, relativePath);
@@ -71,11 +84,15 @@ function loadControlColors(palette: Record<string, string>): ThemeVars {
   return vars;
 }
 
+/**
+ * Match build-css.mjs `leafToVar`: emit the leaf key only (e.g. size/size-regular
+ * → --size-regular), not the duplicated group prefix (--size-size-regular).
+ */
 function baseNumberToCssVar(path: string): string {
-  if (path.startsWith("transparency/transparency-")) {
-    return "--" + path.slice("transparency/".length).toLowerCase();
-  }
-  return tokenPathToCssVar(path);
+  const slash = path.indexOf("/");
+  if (slash === -1) return tokenPathToCssVar(path);
+  const leaf = path.slice(slash + 1);
+  return "--" + leaf.replace(/\s+/g, "-").toLowerCase();
 }
 
 function loadBaseNumbers(density: BaseNumbersDensity = "default"): ThemeVars {

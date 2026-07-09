@@ -51,7 +51,11 @@
   --card: #242424;
   --card-foreground: var(--foreground);
   --popover: var(--card);
-  --border: var(--border-border-normal-light, #3d3d3d);
+  /* Override light :root neutrals — fallbacks alone never win once :root defines the var */
+  --border-border-normal-light: #3d3d3d;
+  --border-border-normal-primary: #2c2c2c;
+  --border-border-theme-light: var(--border-border-normal-light);
+  --border: var(--border-border-normal-light);
   --input: var(--border);
   --muted: var(--control-control-normal-lightbackground-light, #2a2a2a);
   --accent: var(--control-control-normal-lightbackground-light, #2a2a2a);

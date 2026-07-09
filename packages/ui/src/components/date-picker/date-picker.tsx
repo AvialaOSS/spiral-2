@@ -36,6 +36,7 @@ import {
 } from "./date-picker-context";
 import {
   addMonths,
+  applyTimeToDate,
   formatDisplayDate,
   formatDisplayDateTime,
   formatIsoDate,
@@ -171,8 +172,52 @@ export function DatePicker(props: DatePickerProps) {
         setInternalTime(next);
       }
       onTimeChange?.(next);
+
+      // Keep committed Date in sync with the time wheels when a day is selected.
+      if (!enableTime) return;
+      if (mode === "single") {
+        const current =
+          (props as DatePickerSingleProps).value !== undefined
+            ? (props as DatePickerSingleProps).value
+            : internalSingle;
+        if (!current) return;
+        const controlled = (props as DatePickerSingleProps).value !== undefined;
+        const merged = applyTimeToDate(current, next.hours, next.minutes);
+        if (!controlled) {
+          setInternalSingle(merged);
+        }
+        (props as DatePickerSingleProps).onValueChange?.(merged);
+        return;
+      }
+
+      const currentRange =
+        (props as DatePickerRangeProps).value !== undefined
+          ? ((props as DatePickerRangeProps).value ?? {})
+          : internalRange;
+      if (!currentRange.from && !currentRange.to) return;
+      const controlled = (props as DatePickerRangeProps).value !== undefined;
+      const merged: DateRange = {
+        from: currentRange.from
+          ? applyTimeToDate(currentRange.from, next.hours, next.minutes)
+          : undefined,
+        to: currentRange.to
+          ? applyTimeToDate(currentRange.to, next.hours, next.minutes)
+          : undefined,
+      };
+      if (!controlled) {
+        setInternalRange(merged);
+      }
+      (props as DatePickerRangeProps).onValueChange?.(merged);
     },
-    [onTimeChange, timeValueProp]
+    [
+      enableTime,
+      internalRange,
+      internalSingle,
+      mode,
+      onTimeChange,
+      props,
+      timeValueProp,
+    ]
   );
 
   const singleValue =
@@ -271,36 +316,57 @@ export function DatePicker(props: DatePickerProps) {
       }
 
       if (mode === "single") {
-        commitSingle(day);
-        handleOpenChange(false);
+        const next = enableTime
+          ? applyTimeToDate(day, timeValue.hours, timeValue.minutes)
+          : day;
+        commitSingle(next);
+        if (enableTime) {
+          setActivePanel("time");
+        } else {
+          handleOpenChange(false);
+        }
         return;
       }
 
       const currentFrom = rangeDraftFrom ?? rangeValue.from;
       const currentTo = rangeValue.to;
+      const withTime = (d: Date) =>
+        enableTime ? applyTimeToDate(d, timeValue.hours, timeValue.minutes) : d;
 
       if (!currentFrom || (currentFrom && currentTo)) {
         setRangeDraftFrom(day);
-        commitRange({ from: day, to: undefined });
+        commitRange({ from: withTime(day), to: undefined });
         return;
       }
 
       if (isSameDay(day, currentFrom)) {
-        commitRange({ from: day, to: day });
+        commitRange({ from: withTime(day), to: withTime(day) });
         setRangeDraftFrom(undefined);
-        handleOpenChange(false);
+        if (enableTime) {
+          setActivePanel("time");
+        } else {
+          handleOpenChange(false);
+        }
         return;
       }
 
       const normalized = normalizeRange(currentFrom, day);
-      commitRange(normalized);
+      commitRange({
+        from: normalized.from ? withTime(normalized.from) : undefined,
+        to: normalized.to ? withTime(normalized.to) : undefined,
+      });
       setRangeDraftFrom(undefined);
-      handleOpenChange(false);
+      if (enableTime) {
+        setActivePanel("time");
+      } else {
+        handleOpenChange(false);
+      }
     },
     [
       commitRange,
       commitSingle,
       disabled,
+      enableTime,
       handleOpenChange,
       maxDate,
       minDate,
@@ -308,6 +374,8 @@ export function DatePicker(props: DatePickerProps) {
       rangeDraftFrom,
       rangeValue.from,
       rangeValue.to,
+      timeValue.hours,
+      timeValue.minutes,
       viewMonth,
     ]
   );

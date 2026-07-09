@@ -36,6 +36,16 @@ const SVGR_OPTIONS = {
         name: "convertColors",
         params: { currentColor: true },
       },
+      // Unique clipPath/mask IDs per SVG so multiple instances don't collide in the DOM.
+      {
+        name: "prefixIds",
+        params: {
+          prefix: false,
+          delim: "-",
+          prefixIds: true,
+          prefixClassNames: false,
+        },
+      },
     ],
   },
 };
@@ -79,7 +89,26 @@ function collectSvgFiles(dir, relativeDir = "") {
 async function svgToInnerComponent(svg, innerName) {
   const tsx = await transform(
     normalizeIconSvg(svg),
-    { ...SVGR_OPTIONS, namedExport: innerName },
+    {
+      ...SVGR_OPTIONS,
+      namedExport: innerName,
+      svgoConfig: {
+        ...SVGR_OPTIONS.svgoConfig,
+        plugins: SVGR_OPTIONS.svgoConfig.plugins.map((plugin) => {
+          if (typeof plugin === "object" && plugin.name === "prefixIds") {
+            return {
+              ...plugin,
+              params: {
+                ...plugin.params,
+                // Stable per-variant prefix so multiple icon instances don't share clipPath IDs.
+                prefix: `${innerName}-`,
+              },
+            };
+          }
+          return plugin;
+        }),
+      },
+    },
     { componentName: innerName }
   );
 
