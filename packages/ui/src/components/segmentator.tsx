@@ -647,7 +647,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
             if (typeof ref === "function") ref(node);
             else if (ref) ref.current = node;
           }}
-          role="group"
+          role="radiogroup"
           {...props}
           className={cn("aviala-segmentator-group", className)}
           data-all-round={allRound ? "true" : "false"}

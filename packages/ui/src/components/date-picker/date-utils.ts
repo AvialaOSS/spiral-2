@@ -15,6 +15,17 @@ export function startOfDay(date: Date): Date {
   return copy;
 }
 
+/** Merge calendar day with hours/minutes into a single Date. */
+export function applyTimeToDate(
+  date: Date,
+  hours: number,
+  minutes: number
+): Date {
+  const next = startOfDay(date);
+  next.setHours(hours, minutes, 0, 0);
+  return next;
+}
+
 export function isSameDay(a: Date, b: Date): boolean {
   return (
     a.getFullYear() === b.getFullYear() &&

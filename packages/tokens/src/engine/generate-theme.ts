@@ -1,6 +1,7 @@
 import { palette } from "@aviala-design/color";
 import { tokenPathToCssVar } from "./parse-ald";
 import {
+  ALD_NEUTRAL_RAMP,
   COLOR_FAMILIES,
   DEFAULT_PALETTE_CONFIG,
   DEFAULT_PRIMARY,
@@ -86,8 +87,19 @@ function setAldVar(vars: ThemeVars, path: string, value: string): void {
   vars[tokenPathToCssVar(path)] = value;
 }
 
+/** Emit ALD neutral ramp as --aviala-neutral-neutral-N for component CSS. */
+function syncNeutralPalette(vars: ThemeVars, mode: ThemeMode): void {
+  const ramp = ALD_NEUTRAL_RAMP[mode];
+  for (const [step, hex] of Object.entries(ramp)) {
+    vars[aliasToCssVar(`neutral/neutral-${step}`)] = hex;
+  }
+}
+
 /** Mode-specific ALD tokens that are not derived from the primary palette steps. */
 function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
+  const neutral = (step: number) =>
+    vars[aliasToCssVar(`neutral/neutral-${step}`)] ?? ALD_NEUTRAL_RAMP[mode][step]!;
+
   setAldVar(
     vars,
     "control/control-normal-lightBackground-light",
@@ -103,6 +115,10 @@ function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
     "control/control-normal-lightBackground-whiteOnly",
     mode === "dark" ? "#242424" : "#ffffff"
   );
+  // ALD aliases control-normal-Background-deep → neutral-7
+  setAldVar(vars, "control/control-normal-Background-deep", neutral(7));
+  setAldVar(vars, "border/border-normal-light", mode === "dark" ? "#3d3d3d" : neutral(5));
+  setAldVar(vars, "border/border-normal-primary", mode === "dark" ? "#2c2c2c" : neutral(7));
   setAldVar(vars, "box/box-theme-primaryBackground", mode === "dark" ? "#242424" : "#ffffff");
   setAldVar(vars, "text/text-normal-text-white", "#fefcfc");
   setAldVar(vars, "text/text-normal-text-black", mode === "dark" ? "#e8e8e8" : "#343333");
@@ -165,6 +181,7 @@ export function generateTheme(input: ThemeInput = {}): ThemeVars {
     }
   }
 
+  syncNeutralPalette(vars, mode);
   syncPrimarySemanticTokens(vars);
   syncSemanticStatusTextTokens(vars);
   syncAldModeTokens(vars, mode);

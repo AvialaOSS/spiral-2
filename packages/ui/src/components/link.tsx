@@ -85,12 +85,14 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       iconOnly ? "aviala-link--icon-only" : undefined,
       className
     );
-    const disabledProps = disabled
-      ? {
-          tabIndex: -1 as const,
-          onClick: (e: MouseEvent<HTMLAnchorElement>) => e.preventDefault(),
-        }
-      : {};
+    const { href, onClick, tabIndex, ...restProps } = props;
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.(e);
+    };
 
     if (asChild) {
       return (
@@ -100,8 +102,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
           data-disabled={disabled ? "true" : undefined}
           ref={ref}
           aria-disabled={disabled || undefined}
-          {...disabledProps}
-          {...props}
+          {...restProps}
+          href={disabled ? undefined : href}
+          tabIndex={disabled ? -1 : tabIndex}
+          onClick={handleClick}
         >
           {children}
         </Comp>
@@ -115,8 +119,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         data-disabled={disabled ? "true" : undefined}
         ref={ref}
         aria-disabled={disabled || undefined}
-        {...disabledProps}
-        {...props}
+        {...restProps}
+        href={disabled ? undefined : href}
+        tabIndex={disabled ? -1 : tabIndex}
+        onClick={handleClick}
       >
         {renderIcon(leftIcon ?? (iconOnly ? rightIcon : undefined), resolvedLevel)}
         {!iconOnly && children !== undefined && children !== null && (

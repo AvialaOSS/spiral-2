@@ -31,7 +31,7 @@ export type ListProps = HTMLAttributes<HTMLDivElement> & {
 /** Figma Structure Navigation → List root */
 export const List = forwardRef<HTMLDivElement, ListProps>(
   ({ className, title, children, ...props }, ref) => (
-    <div ref={ref} className={cn("aviala-list", className)} role="list" {...props}>
+    <div ref={ref} className={cn("aviala-list", className)} {...props}>
       {title != null ? <ListTitle>{title}</ListTitle> : null}
       <ListGroup>{children}</ListGroup>
     </div>
@@ -56,7 +56,7 @@ export type ListGroupProps = HTMLAttributes<HTMLDivElement>;
 /** Figma List card container — rounded white surface for items */
 export const ListGroup = forwardRef<HTMLDivElement, ListGroupProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn("aviala-list-group", className)} {...props}>
+    <div ref={ref} className={cn("aviala-list-group", className)} role="list" {...props}>
       {children}
     </div>
   )
@@ -236,7 +236,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
             <div className="aviala-list-item__trailing">
               {primaryAction}
               <ListDivider />
-              <Switch defaultChecked {...switchProps} />
+              <Switch {...switchProps} />
             </div>
           );
         case "select":

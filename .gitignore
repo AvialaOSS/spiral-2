@@ -10,3 +10,9 @@ coverage
 storybook-static
 packages/icons/raw/
 *.log
+
+# Accidental tsc emit next to packages/ui sources (publish uses dist/ only)
+packages/ui/src/**/*.js
+packages/ui/src/**/*.d.ts
+packages/ui/src/**/*.d.ts.map
+packages/ui/src/**/*.js.map
