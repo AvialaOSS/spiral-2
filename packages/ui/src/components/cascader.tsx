@@ -495,7 +495,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
         <button
           ref={ref}
           type="button"
-          className={cn("aviala-cascader-trigger", className)}
+          className={cn("aviala-cascader-trigger aviala-focus-ring", className)}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
@@ -756,7 +756,7 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
         aria-selected={isSelected}
         aria-expanded={hasChildren ? isExpanded : undefined}
         disabled={isDisabled}
-        className={cn("aviala-cascader-item", className)}
+        className={cn("aviala-cascader-item aviala-focus-ring", className)}
         data-layout={layout !== "default" ? layout : undefined}
         data-function={itemFunction !== "simple" ? itemFunction : undefined}
         data-selected={isSelected ? "true" : undefined}

@@ -1,0 +1,44 @@
+/* Scroll — Figma System Composition → Scroll (301:6312) */
+
+.aviala-scroll {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb-bg, var(--control-control-normal-background-deep, #e2e0e0))
+    transparent;
+}
+
+.aviala-scroll--orientation-vertical {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.aviala-scroll--orientation-horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.aviala-scroll::-webkit-scrollbar {
+  width: var(--scroll-size, 10px);
+  height: var(--scroll-size, 10px);
+}
+
+.aviala-scroll--size-small::-webkit-scrollbar {
+  width: var(--scroll-size-small, 8px);
+  height: var(--scroll-size-small, 8px);
+}
+
+.aviala-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  padding: var(--scroll-track-padding-y, 4px) var(--scroll-track-padding-x, 2px);
+}
+
+.aviala-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg, var(--control-control-normal-background-deep, #e2e0e0));
+  border-radius: var(--border-radius-allround, 99px);
+  border: var(--scroll-thumb-inset, 2px) solid transparent;
+  background-clip: content-box;
+}
+
+.aviala-scroll--size-small::-webkit-scrollbar-thumb {
+  border-width: var(--scroll-thumb-inset-small, 1px);
+}

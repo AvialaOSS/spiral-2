@@ -95,6 +95,23 @@ function baseNumberToCssVar(path: string): string {
   return "--" + leaf.replace(/\s+/g, "-").toLowerCase();
 }
 
+/** Convert a design px number to rem (16px = 1rem). Matches build-css.mjs. */
+function pxToRem(value: number): string {
+  const rem = value / 16;
+  const formatted = Number.isInteger(rem)
+    ? String(rem)
+    : rem.toFixed(4).replace(/\.?0+$/, "");
+  return `${formatted}rem`;
+}
+
+function formatBaseNumber(path: string, value: number): string {
+  if (path.startsWith("transparency/")) return String(value / 100);
+  if (path.startsWith("size/") || path.startsWith("line-height/")) {
+    return pxToRem(value);
+  }
+  return `${value}px`;
+}
+
 function loadBaseNumbers(density: BaseNumbersDensity = "default"): ThemeVars {
   const tokens = flattenTokens(readJson(BASE_NUMBERS_FILES[density]));
   const vars: ThemeVars = {};
@@ -102,12 +119,8 @@ function loadBaseNumbers(density: BaseNumbersDensity = "default"): ThemeVars {
   for (const [path, token] of Object.entries(tokens)) {
     const value = resolveTokenNumber(token);
     if (value !== undefined) {
-      if (path.startsWith("transparency/") && typeof value === "number") {
-        vars[baseNumberToCssVar(path)] = String(value / 100);
-      } else {
-        vars[baseNumberToCssVar(path)] =
-          typeof value === "number" ? `${value}px` : String(value);
-      }
+      vars[baseNumberToCssVar(path)] =
+        typeof value === "number" ? formatBaseNumber(path, value) : String(value);
     }
   }
 

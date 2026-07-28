@@ -185,7 +185,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
         <button
           ref={ref}
           type="button"
-          className={cn("aviala-timepicker-trigger", className)}
+          className={cn("aviala-timepicker-trigger aviala-focus-ring", className)}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}

@@ -32,15 +32,32 @@ import {
 function collectIconKnobNames(knobs: KnobDef[], values: KnobValues): string[] {
   const names: string[] = [];
   for (const knob of knobs) {
-    if (knob.kind !== "icon") continue;
-    const name = String(values[knob.name] ?? knob.defaultValue);
-    if (name) names.push(name);
+    if (knob.kind === "icon") {
+      const name = String(values[knob.name] ?? knob.defaultValue);
+      if (name) names.push(name);
+      continue;
+    }
+    if (knob.kind !== "items") continue;
+    const items = Array.isArray(values[knob.name])
+      ? (values[knob.name] as Array<Record<string, string | boolean>>)
+      : knob.defaultValue;
+    for (const field of knob.fields) {
+      if (field.kind !== "icon") continue;
+      for (const item of items) {
+        const name = String(item[field.name] ?? field.defaultValue);
+        if (name) names.push(name);
+      }
+    }
   }
   return names;
 }
 
 function hasIconKnobs(knobs: KnobDef[]): boolean {
-  return knobs.some((knob) => knob.kind === "icon");
+  return knobs.some(
+    (knob) =>
+      knob.kind === "icon" ||
+      (knob.kind === "items" && knob.fields.some((field) => field.kind === "icon"))
+  );
 }
 
 /** Stable fallback — inline `[]` defaults recreate every render and retrigger sync effects. */

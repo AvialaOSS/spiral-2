@@ -79,7 +79,7 @@ export function ColorPickerSlider({
     >
       <div
         ref={ref}
-        className="aviala-color-picker-slider"
+        className="aviala-color-picker-slider aviala-focus-ring"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         role="slider"

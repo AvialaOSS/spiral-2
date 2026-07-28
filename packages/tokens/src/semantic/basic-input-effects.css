@@ -73,8 +73,8 @@
   --segmentator-group-gap: var(--gap-inside, 4px);
   --segmentator-group-radius: var(--border-radius-small, 8px);
   --segmentator-item-gap: var(--gap-inside-space, 6px);
-  --segmentator-item-line-height: var(--line-height-regular, 18px);
-  --segmentator-icon-slot-height: var(--line-height-regular, 18px);
+  --segmentator-item-line-height: var(--line-height-regular, 1.125rem);
+  --segmentator-icon-slot-height: var(--line-height-regular, 1.125rem);
   --segmentator-item-nested-padding-y: var(--padding-tiny, 4px);
   --segmentator-item-nested-padding-x: var(--padding-small, 6px);
   --segmentator-item-nested-radius: var(--border-radius-extra-small-2, 6px);
@@ -482,7 +482,7 @@
 }
 
 .aviala-segmentator-item__icon svg {
-  height: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  height: var(--icon-size-text-bigger, var(--size-middle, 1rem));
   width: auto;
   flex-shrink: 0;
 }

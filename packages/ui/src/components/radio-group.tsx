@@ -40,7 +40,7 @@ export const RadioGroupItem = forwardRef<
 >(({ className, ...props }, ref) => (
   <RadioGroupPrimitive.Item
     ref={ref}
-    className={cn("aviala-radio", className)}
+    className={cn("aviala-radio aviala-focus-ring", className)}
     {...props}
   >
     <span aria-hidden className="aviala-radio__surface" />

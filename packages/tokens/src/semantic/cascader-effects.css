@@ -43,10 +43,14 @@
   border-radius: var(--input-radius-allround, 99px);
 }
 
-.aviala-cascader-trigger[data-state="open"],
-.aviala-cascader-trigger:focus-visible {
+.aviala-cascader-trigger[data-state="open"] {
   background-color: var(--input-bg-activated);
   border-color: var(--input-border-activated);
+}
+
+.aviala-cascader-trigger:focus-visible {
+  background-color: var(--input-bg-activated);
+  outline: none;
 }
 
 .aviala-cascader-trigger[data-error="true"] {
@@ -62,7 +66,7 @@
   position: relative;
   z-index: 1;
   display: inline-flex;
-  height: var(--input-icon-slot-height, var(--input-line-height, 18px));
+  height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -71,8 +75,8 @@
 }
 
 .aviala-cascader-trigger__slot svg {
-  width: var(--input-slot-icon-size, var(--size-regular, 14px));
-  height: var(--input-slot-icon-size, var(--size-regular, 14px));
+  width: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
+  height: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
 }
 
 .aviala-cascader-trigger__field {
@@ -111,7 +115,7 @@
   position: relative;
   z-index: 1;
   display: inline-flex;
-  height: var(--input-icon-slot-height, var(--input-line-height, 18px));
+  height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -121,8 +125,8 @@
 }
 
 .aviala-cascader-trigger__expand svg {
-  width: var(--input-slot-icon-size, var(--size-regular, 14px));
-  height: var(--input-slot-icon-size, var(--size-regular, 14px));
+  width: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
+  height: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
 }
 
 .aviala-cascader-trigger[data-state="open"] .aviala-cascader-trigger__expand {
@@ -295,8 +299,8 @@
 }
 
 .aviala-cascader-item__icon svg {
-  width: var(--cascader-item-icon-size, var(--size-regular, 14px));
-  height: var(--cascader-item-icon-size, var(--size-regular, 14px));
+  width: var(--cascader-item-icon-size, var(--size-regular, 0.875rem));
+  height: var(--cascader-item-icon-size, var(--size-regular, 0.875rem));
 }
 
 .aviala-cascader-item__icon--sm {
@@ -323,7 +327,7 @@
 
 .aviala-cascader-item__function {
   display: inline-flex;
-  height: var(--cascader-item-function-height, var(--select-item-function-height, var(--line-height-regular, 18px)));
+  height: var(--cascader-item-function-height, var(--select-item-function-height, var(--line-height-regular, 1.125rem)));
   flex-shrink: 0;
   align-items: center;
   margin-left: auto;
@@ -333,8 +337,8 @@
 }
 
 .aviala-cascader-item__function svg {
-  width: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 14px)));
-  height: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 14px)));
+  width: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 0.875rem)));
+  height: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 0.875rem)));
 }
 
 /* Leading form radio — Figma Form-Radio (circular 20px control) */
@@ -364,8 +368,8 @@
   position: relative;
   z-index: 1;
   display: block;
-  width: var(--radio-indicator-size, 8px);
-  height: var(--radio-indicator-size, 8px);
+  width: var(--radio-indicator-size, 0.5rem);
+  height: var(--radio-indicator-size, 0.5rem);
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--radio-indicator-bg);
   transform: scale(0);

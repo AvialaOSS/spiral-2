@@ -37,7 +37,7 @@ const sizeLabelLevels = {
 } as const;
 
 const buttonVariants = cva(
-  "aviala-button relative inline-flex shrink-0 cursor-pointer items-center justify-center overflow-hidden border-0 bg-transparent font-sans whitespace-nowrap focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--button-disabled-opacity,0.55)]",
+  "aviala-button aviala-focus-ring relative inline-flex shrink-0 cursor-pointer items-center justify-center overflow-hidden border-0 bg-transparent font-sans whitespace-nowrap focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--button-disabled-opacity,0.55)]",
   {
     variants: {
       mode: {

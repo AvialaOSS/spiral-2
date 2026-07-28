@@ -506,7 +506,7 @@ export const DatePickerTrigger = forwardRef<HTMLButtonElement, DatePickerTrigger
         <button
           ref={ref}
           type="button"
-          className={cn("aviala-datepicker-trigger", className)}
+          className={cn("aviala-datepicker-trigger aviala-focus-ring", className)}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
@@ -732,7 +732,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           <div className="aviala-datepicker-calendar__header">
             <button
               type="button"
-              className="aviala-datepicker-calendar__nav"
+              className="aviala-datepicker-calendar__nav aviala-focus-ring"
               aria-label="Previous month"
               onClick={() => setViewMonth(addMonths(viewMonth, -1))}
             >
@@ -749,7 +749,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
             </div>
             <button
               type="button"
-              className="aviala-datepicker-calendar__nav"
+              className="aviala-datepicker-calendar__nav aviala-focus-ring"
               aria-label="Next month"
               onClick={() => setViewMonth(addMonths(viewMonth, 1))}
             >
@@ -797,7 +797,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
                   type="button"
                   role="gridcell"
                   tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
-                  className="aviala-datepicker-day"
+                  className="aviala-datepicker-day aviala-focus-ring"
                   data-outside={outside ? "true" : undefined}
                   data-selected={selected ? "true" : undefined}
                   data-in-range={inRange && !selected ? "true" : undefined}

@@ -81,7 +81,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     const Comp = asChild ? Slot : "a";
 
     const sharedClassName = cn(
-      "aviala-link",
+      "aviala-link aviala-focus-ring",
       iconOnly ? "aviala-link--icon-only" : undefined,
       className
     );

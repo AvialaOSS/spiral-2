@@ -252,7 +252,40 @@ export default defineConfig({
         tokensSemantic,
         "datepicker-effects.css"
       ),
+      "@aviala-design/tokens/badge-effects.css": path.resolve(tokensSemantic, "badge-effects.css"),
+      "@aviala-design/tokens/progress-effects.css": path.resolve(
+        tokensSemantic,
+        "progress-effects.css"
+      ),
+      "@aviala-design/tokens/layout-effects.css": path.resolve(tokensSemantic, "layout-effects.css"),
+      "@aviala-design/tokens/information-display-extras.css": path.resolve(
+        tokensSemantic,
+        "information-display-extras.css"
+      ),
+      "@aviala-design/tokens/information-collect-extras.css": path.resolve(
+        tokensSemantic,
+        "information-collect-extras.css"
+      ),
+      "@aviala-design/tokens/structure-navigation-extras.css": path.resolve(
+        tokensSemantic,
+        "structure-navigation-extras.css"
+      ),
     },
   },
   server: { port: 5175 },
+  build: {
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/spiral-docs.js",
+        chunkFileNames: "assets/[name].js",
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith(".css")) {
+            return "assets/spiral-docs.css";
+          }
+          return "assets/[name][extname]";
+        },
+      },
+    },
+  },
 });

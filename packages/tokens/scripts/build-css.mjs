@@ -20,19 +20,30 @@ const BASE_NUMBERS_FILES = {
   "mobile-friendly": "base-numbers/Mobile Friendly.tokens.json",
 };
 
+/** Convert a design px number to rem (16px = 1rem), trimming trailing zeros. */
+function pxToRem(value) {
+  const rem = value / 16;
+  const formatted = Number.isInteger(rem)
+    ? String(rem)
+    : rem.toFixed(4).replace(/\.?0+$/, "");
+  return `${formatted}rem`;
+}
+
 /**
  * Emit ALD numeric tokens (size / gap / radius / thickness / line-height / padding)
  * as real CSS variables so components stop relying on hardcoded fallbacks.
+ *
+ * Size + line-height use rem so type and related chrome scale with root font-size;
+ * gap / padding / radius / thickness stay px.
  */
 function buildNumberTokensBlock(selector, relativePath) {
   const json = JSON.parse(readFileSync(join(aldRoot, relativePath), "utf8"));
 
-  const lengthGroups = new Set([
-    "size",
+  const remGroups = new Set(["size", "line-height"]);
+  const pxGroups = new Set([
     "gap",
     "border-radius",
     "border-thickness",
-    "line-height",
     "padding",
   ]);
   const opacityGroups = new Set(["transparency"]);
@@ -44,9 +55,16 @@ function buildNumberTokensBlock(selector, relativePath) {
     for (const [leaf, token] of Object.entries(tokens)) {
       if (!token || typeof token !== "object" || token.$type !== "number") continue;
       const value = token.$value;
-      const cssValue = opacityGroups.has(group)
-        ? value / 100
-        : `${value}${lengthGroups.has(group) ? "px" : ""}`;
+      let cssValue;
+      if (opacityGroups.has(group)) {
+        cssValue = value / 100;
+      } else if (remGroups.has(group)) {
+        cssValue = pxToRem(value);
+      } else if (pxGroups.has(group)) {
+        cssValue = `${value}px`;
+      } else {
+        cssValue = value;
+      }
       lines.push(`  ${leafToVar(leaf)}: ${cssValue};`);
     }
   }
@@ -307,11 +325,43 @@ const focusEffectsCss = readFileSync(
   "utf8"
 );
 
+const badgeEffectsCss = readFileSync(
+  join(root, "src/semantic/badge-effects.css"),
+  "utf8"
+);
+
+const progressEffectsCss = readFileSync(
+  join(root, "src/semantic/progress-effects.css"),
+  "utf8"
+);
+
+const layoutEffectsCss = readFileSync(
+  join(root, "src/semantic/layout-effects.css"),
+  "utf8"
+);
+
+const informationDisplayExtrasCss = readFileSync(
+  join(root, "src/semantic/information-display-extras.css"),
+  "utf8"
+);
+
+const informationCollectExtrasCss = readFileSync(
+  join(root, "src/semantic/information-collect-extras.css"),
+  "utf8"
+);
+
+const structureNavigationExtrasCss = readFileSync(
+  join(root, "src/semantic/structure-navigation-extras.css"),
+  "utf8"
+);
+
 const combined =
   "/* Generated from ALD base-numbers — do not edit by hand */\n" +
   numberTokensCss +
   "\n" +
   cssFiles.map((f) => readFileSync(join(root, f), "utf8")).join("\n") +
+  "\n" +
+  focusEffectsCss +
   "\n";
 
 writeFileSync(join(distDir, "styles.css"), combined);
@@ -333,4 +383,12 @@ writeFileSync(join(distDir, "feedback-effects.css"), feedbackEffectsCss);
 writeFileSync(join(distDir, "alert-effects.css"), alertEffectsCss);
 writeFileSync(join(distDir, "navigation-effects.css"), navigationEffectsCss);
 writeFileSync(join(distDir, "focus-effects.css"), focusEffectsCss);
-console.log("Built dist/styles.css + dist/ald-theme.css + dist/button-effects.css + dist/input-effects.css + dist/basic-input-effects.css + dist/color-picker-effects.css + dist/loading-effects.css + dist/icon-effects.css + dist/typeface-effects.css + dist/cascader-effects.css + dist/popover-effects.css + dist/modal-effects.css + dist/tooltip-effects.css + dist/list-effects.css + dist/datepicker-effects.css + dist/feedback-effects.css + dist/alert-effects.css + dist/navigation-effects.css + dist/focus-effects.css");
+writeFileSync(join(distDir, "badge-effects.css"), badgeEffectsCss);
+writeFileSync(join(distDir, "progress-effects.css"), progressEffectsCss);
+writeFileSync(join(distDir, "layout-effects.css"), layoutEffectsCss);
+writeFileSync(join(distDir, "information-display-extras.css"), informationDisplayExtrasCss);
+writeFileSync(join(distDir, "information-collect-extras.css"), informationCollectExtrasCss);
+writeFileSync(join(distDir, "structure-navigation-extras.css"), structureNavigationExtrasCss);
+console.log(
+  "Built dist/styles.css + dist/ald-theme.css + component effects (including badge/progress/layout/information-*/structure-navigation-extras)"
+);

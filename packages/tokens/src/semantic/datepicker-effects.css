@@ -48,11 +48,15 @@
 }
 
 .aviala-datepicker-trigger[data-state="open"],
-.aviala-datepicker-trigger:focus-visible,
-.aviala-timepicker-trigger[data-state="open"],
-.aviala-timepicker-trigger:focus-visible {
+.aviala-timepicker-trigger[data-state="open"] {
   background-color: var(--input-bg-activated);
   border-color: var(--input-border-activated);
+  outline: none;
+}
+
+.aviala-datepicker-trigger:focus-visible,
+.aviala-timepicker-trigger:focus-visible {
+  background-color: var(--input-bg-activated);
   outline: none;
 }
 
@@ -72,7 +76,7 @@
   position: relative;
   z-index: 1;
   display: inline-flex;
-  height: var(--input-icon-slot-height, var(--input-line-height, 18px));
+  height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -82,8 +86,8 @@
 
 .aviala-datepicker-trigger__slot svg,
 .aviala-timepicker-trigger__slot svg {
-  width: var(--input-slot-icon-size, var(--size-regular, 14px));
-  height: var(--input-slot-icon-size, var(--size-regular, 14px));
+  width: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
+  height: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
 }
 
 .aviala-datepicker-trigger__field,
@@ -242,7 +246,7 @@
 
 .aviala-datepicker-day__label {
   pointer-events: none;
-  line-height: var(--line-height-line-height-regular, 18px);
+  line-height: var(--line-height-line-height-regular, 1.125rem);
 }
 
 .aviala-datepicker-day[data-outside="true"] .aviala-datepicker-day__label {
@@ -480,7 +484,7 @@
   color: var(--datepicker-day-fg, #343333);
   padding: 0 var(--padding-small, 6px);
   font: inherit;
-  line-height: var(--line-height-line-height-regular, 18px);
+  line-height: var(--line-height-line-height-regular, 1.125rem);
   opacity: var(--transparency-placeholder, 0.6);
   transition:
     color 0.12s ease,

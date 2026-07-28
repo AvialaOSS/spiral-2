@@ -46,7 +46,7 @@ export const AnchorItem = forwardRef<HTMLAnchorElement, AnchorItemProps>(
     return (
       <Comp
         ref={ref}
-        className={cn("aviala-anchor-item", className)}
+        className={cn("aviala-anchor-item aviala-focus-ring", className)}
         data-activated={activated ? "true" : "false"}
         data-indent={String(indentLevel)}
         {...props}

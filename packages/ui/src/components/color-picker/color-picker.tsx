@@ -112,7 +112,7 @@ export const ColorPickerTrigger = forwardRef<
       <button
         ref={ref}
         type="button"
-        className={cn("aviala-color-picker-trigger", className)}
+        className={cn("aviala-color-picker-trigger aviala-focus-ring", className)}
         {...spiralDebugId("color-picker.trigger")}
         data-size={size}
         data-all-round={allRound ? "true" : "false"}

@@ -264,14 +264,18 @@
   border-radius: var(--input-radius-allround, 99px);
 }
 
-.aviala-color-picker-trigger[data-open="true"],
-.aviala-color-picker-trigger:focus-visible {
+.aviala-color-picker-trigger[data-open="true"] {
   background-color: var(--input-bg-activated, #fefcfc);
   box-shadow: var(
     --input-shell-focus-shadow,
     inset 0 0 0 1px var(--input-border-activated, var(--primary)),
     var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04))
   );
+  outline: none;
+}
+
+.aviala-color-picker-trigger:focus-visible {
+  background-color: var(--input-bg-activated, #fefcfc);
   outline: none;
 }
 
@@ -283,7 +287,7 @@
 
 .aviala-color-picker-trigger__swatch {
   display: inline-flex;
-  height: var(--input-icon-slot-height, var(--input-line-height, 18px));
+  height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));
   flex-shrink: 0;
   align-items: center;
   justify-content: center;

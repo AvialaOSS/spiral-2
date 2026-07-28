@@ -1,4 +1,4 @@
-import { Typography } from "@aviala-design/spiral";
+import { Table, TableCell, TableHead, TableRow, Typography } from "@aviala-design/spiral";
 
 export type PropItem = {
   name: string;
@@ -22,55 +22,27 @@ export function PropsTable({ title = "API", props }: PropsTableProps) {
         {title}
       </Typography>
       <div className="docs-props-table-wrap">
-        <table className="docs-props-table">
-          <thead>
-            <tr>
-              <th>
-                <Typography level="caption" as="span">
-                  属性
-                </Typography>
-              </th>
-              <th>
-                <Typography level="caption" as="span">
-                  说明
-                </Typography>
-              </th>
-              <th>
-                <Typography level="caption" as="span">
-                  类型
-                </Typography>
-              </th>
-              <th>
-                <Typography level="caption" as="span">
-                  默认值
-                </Typography>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.map((prop) => (
-              <tr key={prop.name}>
-                <td>
-                  <code>{prop.name}</code>
-                  {prop.required ? <span className="docs-props-required">*</span> : null}
-                </td>
-                <td>
-                  <Typography level="text" as="span">
-                    {prop.description ?? "—"}
-                  </Typography>
-                </td>
-                <td>
-                  <code className="docs-props-type">{prop.type}</code>
-                </td>
-                <td>
-                  <Typography level="caption" as="span">
-                    {prop.defaultValue ?? "—"}
-                  </Typography>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table className="docs-props-table" aria-label={title}>
+          <TableRow header>
+            <TableHead>属性</TableHead>
+            <TableHead>说明</TableHead>
+            <TableHead>类型</TableHead>
+            <TableHead>默认值</TableHead>
+          </TableRow>
+          {props.map((prop) => (
+            <TableRow key={prop.name}>
+              <TableCell>
+                <code>{prop.name}</code>
+                {prop.required ? <span className="docs-props-required">*</span> : null}
+              </TableCell>
+              <TableCell text={prop.description ?? "—"} />
+              <TableCell>
+                <code className="docs-props-type">{prop.type}</code>
+              </TableCell>
+              <TableCell text={prop.defaultValue ?? "—"} />
+            </TableRow>
+          ))}
+        </Table>
       </div>
     </section>
   );

@@ -48,7 +48,9 @@ export function NavigationDocPage() {
       />
       <div className="docs-prose">
         <Typography level="text" as="p">
-          支持 vertical / horizontal 方向、default / none 背景，以及 dividingLine 分隔线。
+          支持 vertical / horizontal、default / none 背景与 dividingLine。调参可编辑 Brand、Group
+          items（vertical 下连续 child 会包进 NavigationItemGroup；horizontal 会展平为顶栏
+          Tab）与 Actions。
         </Typography>
       </div>
       <DemoBlock

@@ -39,7 +39,41 @@ export {
   type SelectTriggerProps,
 } from "./components/select";
 export { Label } from "./components/label";
-export { Badge, type BadgeProps } from "./components/badge";
+export {
+  Badge,
+  type BadgeProps,
+  type BadgeStyle,
+  type BadgeLevel,
+  type BadgeLineHeightFix,
+} from "./components/badge";
+export {
+  Avatar,
+  type AvatarProps,
+  type AvatarLevel,
+  type AvatarContent,
+} from "./components/avatar";
+export {
+  Tag,
+  TagClose,
+  type TagProps,
+  type TagCloseProps,
+  type TagLevel,
+  type TagContent,
+  type TagLineHeightFix,
+} from "./components/tag";
+export {
+  Progress,
+  type ProgressProps,
+  type ProgressType,
+  type ProgressSize,
+  type ProgressShape,
+} from "./components/progress";
+export {
+  Scroll,
+  type ScrollProps,
+  type ScrollSize,
+  type ScrollOrientation,
+} from "./components/scroll";
 export {
   Loading,
   loadingLevelForButtonSize,
@@ -286,6 +320,63 @@ export {
   type NavigationActionsProps,
   type NavigationActionsSlotProps,
 } from "./components/navigation";
+export { Slider, type SliderProps, type SliderSize, type SliderType } from "./components/slider";
+export { Upload, type UploadProps, type UploadStyle } from "./components/upload";
+export {
+  ScrollPicker,
+  ScrollPickerColumn,
+  ScrollPickerItem,
+  type ScrollPickerProps,
+  type ScrollPickerColumnProps,
+  type ScrollPickerItemProps,
+} from "./components/scroll-picker";
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+  BreadcrumbEllipsisItem,
+  type BreadcrumbProps,
+  type BreadcrumbItemProps,
+  type BreadcrumbSeparatorProps,
+  type BreadcrumbEllipsisProps,
+  type BreadcrumbEllipsisItemProps,
+  type BreadcrumbSize,
+} from "./components/breadcrumb";
+export { Pagehead, type PageheadProps } from "./components/pagehead";
+export {
+  Steps,
+  StepsItem,
+  StepsIcon,
+  type StepsProps,
+  type StepsItemProps,
+  type StepsIconProps,
+  type StepsDirection,
+  type StepsState,
+} from "./components/steps";
+export { Pagination, type PaginationProps } from "./components/pagination";
+export {
+  Card,
+  CardHead,
+  CardBody,
+  CardBottom,
+  type CardProps,
+  type CardHeadProps,
+  type CardBodyProps,
+  type CardBottomProps,
+  type CardSlotType,
+} from "./components/card";
+export {
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  type TableProps,
+  type TableRowProps,
+  type TableHeadProps,
+  type TableCellProps,
+  type TableCellContent,
+} from "./components/table";
 
 export { cn } from "./lib/utils";
 export { initKeyboardFocus } from "./lib/keyboard-focus";

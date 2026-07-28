@@ -45,6 +45,7 @@
 
 .aviala-navigation[data-direction="horizontal"] .aviala-navigation-brand {
   flex: 1 1 0;
+  width: auto;
   min-width: 0;
   padding-inline: 0;
   padding-block: var(--navigation-item-py-horizontal, 8px);
@@ -131,17 +132,31 @@
   flex-direction: row;
   align-items: center;
   gap: var(--navigation-group-gap-horizontal, 6px);
-  flex-shrink: 0;
+  width: auto;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .aviala-navigation-item-group {
   width: 100%;
 }
 
+.aviala-navigation[data-direction="horizontal"] .aviala-navigation-item-group {
+  width: auto;
+  flex-shrink: 0;
+}
+
 .aviala-navigation-item-group:not([data-expanded]) {
   display: flex;
   flex-direction: column;
   gap: var(--navigation-group-gap, 6px);
+}
+
+.aviala-navigation[data-direction="horizontal"]
+  .aviala-navigation-item-group:not([data-expanded]) {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--navigation-group-gap-horizontal, 6px);
 }
 
 .aviala-navigation-item-group[data-expanded] {
@@ -286,6 +301,7 @@
 
 .aviala-navigation[data-direction="horizontal"] .aviala-navigation-actions {
   flex: 1 1 0;
+  width: auto;
   min-width: 0;
   justify-content: flex-end;
   gap: var(--gap-inside, 4px);

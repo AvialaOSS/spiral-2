@@ -1,0 +1,118 @@
+/* Badge — Figma Information Display → Badge (166:137) */
+
+.aviala-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--badge-gap, 2px);
+  border-radius: var(--badge-radius, 6px);
+  padding: 0 var(--badge-px, 4px);
+  white-space: nowrap;
+  color: var(--badge-fg);
+  background-color: var(--badge-bg);
+}
+
+.aviala-badge__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: var(--badge-icon-slot-height, 1rem);
+  color: inherit;
+}
+
+.aviala-badge__text {
+  display: inline-flex;
+  align-items: center;
+  word-break: break-word;
+  color: inherit;
+}
+
+.aviala-badge--level-caption {
+  --badge-icon-slot-height: var(--line-height-small, 1rem);
+  --badge-icon-size: var(--icon-size-caption, 0.75rem);
+}
+
+.aviala-badge--level-text {
+  --badge-icon-slot-height: var(--line-height-regular, 1.125rem);
+  --badge-icon-size: var(--icon-size-text, 0.875rem);
+}
+
+.aviala-badge__icon svg {
+  width: var(--badge-icon-size, 0.75rem);
+  height: var(--badge-icon-size, 0.75rem);
+}
+
+.aviala-badge--lhf-text {
+  padding-block: 1px;
+  min-height: var(--line-height-regular, 1.125rem);
+}
+
+.aviala-badge--lhf-subtitle {
+  padding-block: 1px;
+  min-height: var(--line-height-middle, 1.375rem);
+}
+
+.aviala-badge--lhf-off {
+  padding-block: 0;
+}
+
+/* Style × Primary */
+.aviala-badge--style-theme.aviala-badge--secondary {
+  --badge-bg: var(--box-box-theme-secondarybackground, #ffdad2);
+  --badge-fg: var(--text-text-theme-primary-black, #bf2300);
+}
+
+.aviala-badge--style-theme.aviala-badge--primary {
+  --badge-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+}
+
+.aviala-badge--style-info.aviala-badge--secondary {
+  --badge-bg: var(--box-box-infomation-secondarybackground, #eaf3ff);
+  --badge-fg: var(--text-text-infomation-primary-black, #3489c8);
+}
+
+.aviala-badge--style-info.aviala-badge--primary {
+  --badge-bg: var(--box-box-infomation-primarybackground, #66b6fa);
+  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+}
+
+.aviala-badge--style-fail.aviala-badge--secondary {
+  --badge-bg: var(--box-box-fail-secondarybackground, #ffdfdf);
+  --badge-fg: var(--text-text-fail-primary-black, #960024);
+}
+
+.aviala-badge--style-fail.aviala-badge--primary {
+  --badge-bg: var(--box-box-fail-primarybackground, #f41544);
+  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+}
+
+.aviala-badge--style-warning.aviala-badge--secondary {
+  --badge-bg: var(--box-box-warning-secondarybackground, #ffebdd);
+  --badge-fg: var(--text-text-warning-primary-black, #ab6200);
+}
+
+.aviala-badge--style-warning.aviala-badge--primary {
+  --badge-bg: var(--box-box-warning-primarybackground, #ec8b09);
+  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+}
+
+.aviala-badge--style-success.aviala-badge--secondary {
+  --badge-bg: var(--box-box-success-secondarybackground, #dff6ce);
+  --badge-fg: var(--text-text-success-primary-black, #47842b);
+}
+
+.aviala-badge--style-success.aviala-badge--primary {
+  --badge-bg: var(--box-box-success-primarybackground, #70b450);
+  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+}
+
+.aviala-badge--style-normal.aviala-badge--secondary {
+  --badge-bg: var(--control-control-normal-lightbackground-deep, #fdfbfb);
+  --badge-fg: var(--text-text-normal-text-black, #343333);
+}
+
+.aviala-badge--style-normal.aviala-badge--primary {
+  --badge-bg: var(--control-control-normal-background-deep, #e2e0e0);
+  --badge-fg: var(--text-text-normal-text-black, #343333);
+}

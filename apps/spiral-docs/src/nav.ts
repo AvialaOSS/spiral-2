@@ -24,6 +24,7 @@ export const nav: NavSection[] = [
     items: [
       { label: "Icons 图标", path: "/reference/icons" },
       { label: "Icons Playground", path: "/reference/icons/playground" },
+      { label: "Rem 字号调试", path: "/reference/rem-scale" },
       { label: "组件调试器", path: "/reference/debugger" },
       { label: "图标同步", path: "/icon-sync" },
     ],
@@ -81,6 +82,13 @@ export const nav: NavSection[] = [
         path: "/components/information-collect/color-picker",
         component: "ColorPicker",
       },
+      { label: "Slider 滑块", path: "/components/information-collect/slider", component: "Slider" },
+      { label: "Upload 上传", path: "/components/information-collect/upload", component: "Upload" },
+      {
+        label: "ScrollPicker 滚轮选择",
+        path: "/components/information-collect/scroll-picker",
+        component: "ScrollPicker",
+      },
     ],
   },
   {
@@ -92,6 +100,23 @@ export const nav: NavSection[] = [
         component: "Navigation",
       },
       { label: "List 列表", path: "/components/structure-navigation/list", component: "List" },
+      {
+        label: "Breadcrumb 面包屑",
+        path: "/components/structure-navigation/breadcrumb",
+        component: "Breadcrumb",
+      },
+      {
+        label: "Pagehead 页头",
+        path: "/components/structure-navigation/pagehead",
+        component: "Pagehead",
+      },
+      { label: "Steps 步骤条", path: "/components/structure-navigation/steps", component: "Steps" },
+      {
+        label: "Pagination 分页",
+        path: "/components/structure-navigation/pagination",
+        component: "Pagination",
+      },
+      { label: "Card 卡片", path: "/components/structure-navigation/card", component: "Card" },
     ],
   },
   {
@@ -102,6 +127,10 @@ export const nav: NavSection[] = [
         path: "/components/information-display/modal",
         component: "Modal",
       },
+      { label: "Badge 徽章", path: "/components/information-display/badge", component: "Badge" },
+      { label: "Tag 标签", path: "/components/information-display/tag", component: "Tag" },
+      { label: "Avatar 头像", path: "/components/information-display/avatar", component: "Avatar" },
+      { label: "Table 表格", path: "/components/information-display/table", component: "Table" },
     ],
   },
   {
@@ -134,6 +163,7 @@ export const nav: NavSection[] = [
         component: "Tooltip",
       },
       { label: "Loading 加载", path: "/components/system-composition/loading", component: "Loading" },
+      { label: "Scroll 滚动条", path: "/components/system-composition/scroll", component: "Scroll" },
     ],
   },
   {
@@ -148,6 +178,11 @@ export const nav: NavSection[] = [
         label: "Feedback 反馈",
         path: "/components/feedback/feedback",
         component: "Feedback",
+      },
+      {
+        label: "Progress 进度",
+        path: "/components/feedback/progress",
+        component: "Progress",
       },
     ],
   },

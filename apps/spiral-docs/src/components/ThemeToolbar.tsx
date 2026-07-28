@@ -13,6 +13,12 @@ import {
   Typography,
   useTheme,
 } from "@aviala-design/spiral";
+import {
+  ROOT_FONT_SIZE_DEFAULT,
+  ROOT_FONT_SIZE_MAX,
+  ROOT_FONT_SIZE_MIN,
+  useRootFontSize,
+} from "../hooks/useRootFontSize";
 import { PaletteConfigPanel } from "./PaletteConfigPanel";
 
 export function ThemeToolbar() {
@@ -28,6 +34,8 @@ export function ThemeToolbar() {
     density,
     setDensity,
   } = useTheme();
+  const { rootFontSize, setRootFontSize, resetRootFontSize, isDefault } =
+    useRootFontSize();
 
   return (
     <Stack direction="row" gap="component" className="docs-theme-toolbar">
@@ -54,6 +62,31 @@ export function ThemeToolbar() {
         <SegmentatorItem value="default">Default</SegmentatorItem>
         <SegmentatorItem value="mobile-friendly">Mobile Friendly</SegmentatorItem>
       </SegmentatorGroup>
+
+      <label className="docs-theme-root-font" title="html font-size — rem type scale">
+        <Typography level="caption" as="span" className="docs-theme-toolbar-label">
+          Rem {rootFontSize}px
+        </Typography>
+        <input
+          type="range"
+          min={ROOT_FONT_SIZE_MIN}
+          max={ROOT_FONT_SIZE_MAX}
+          step={1}
+          value={rootFontSize}
+          onChange={(e) => setRootFontSize(Number(e.target.value))}
+          aria-label="Root font size"
+        />
+        {!isDefault ? (
+          <Button
+            mode="noBackgroundCustom"
+            size="tiny"
+            onClick={resetRootFontSize}
+            aria-label={`Reset root font size to ${ROOT_FONT_SIZE_DEFAULT}px`}
+          >
+            重置
+          </Button>
+        ) : null}
+      </label>
 
       <Popover>
         <PopoverTrigger asChild>

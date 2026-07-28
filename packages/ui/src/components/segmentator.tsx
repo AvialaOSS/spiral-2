@@ -721,7 +721,7 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
         }
         data-all-round={ctx.allRound ? "true" : "false"}
         disabled={isDisabled}
-        className={cn("aviala-segmentator-item", iconOnly && "min-w-0", className)}
+        className={cn("aviala-segmentator-item aviala-focus-ring", iconOnly && "min-w-0", className)}
         onClick={(e) => {
           if (ctx.consumeClickRef.current) {
             ctx.consumeClickRef.current = false;

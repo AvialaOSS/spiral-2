@@ -1,7 +1,11 @@
-import { GeneralExpandSidebar } from "@aviala-design/icons";
-import { Button, Typography } from "@aviala-design/spiral";
+import {
+  DirectionArrowLeftLight,
+  DirectionArrowRightLight,
+  GeneralExpandSidebar,
+} from "@aviala-design/icons";
+import { Button } from "@aviala-design/spiral";
 import { useRef, useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { flattenNavItems, navPathToHref } from "../nav";
 import { getAdjacentPages, Sidebar } from "./Sidebar";
 import { TableOfContents } from "./TableOfContents";
@@ -10,6 +14,7 @@ import { ThemeToolbar } from "./ThemeToolbar";
 export function DocLayout() {
   const contentRef = useRef<HTMLElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -66,22 +71,30 @@ export function DocLayout() {
         <div className="docs-body">
           <article ref={contentRef} className="docs-content">
             <Outlet key={location.pathname} context={{ contentRef }} />
-            <footer className="docs-pager">
+            <footer className="docs-pager" aria-label="相邻文档">
               {prev ? (
-                <NavLink to={navPathToHref(prev.path)} className="docs-nav-link">
-                  <Typography level="text" as="span">
-                    ← {prev.label}
-                  </Typography>
-                </NavLink>
+                <Button
+                  type="button"
+                  mode="secondary"
+                  size="regular"
+                  leftIcon={<DirectionArrowLeftLight aria-hidden />}
+                  onClick={() => navigate(navPathToHref(prev.path))}
+                >
+                  {prev.label}
+                </Button>
               ) : (
                 <span />
               )}
               {next ? (
-                <NavLink to={navPathToHref(next.path)} className="docs-nav-link">
-                  <Typography level="text" as="span">
-                    {next.label} →
-                  </Typography>
-                </NavLink>
+                <Button
+                  type="button"
+                  mode="secondary"
+                  size="regular"
+                  rightIcon={<DirectionArrowRightLight aria-hidden />}
+                  onClick={() => navigate(navPathToHref(next.path))}
+                >
+                  {next.label}
+                </Button>
               ) : (
                 <span />
               )}

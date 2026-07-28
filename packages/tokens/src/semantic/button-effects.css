@@ -20,30 +20,30 @@
   --button-tiny-padding-x: var(--padding-tiny, 4px);
   --button-tiny-padding-y: var(--padding-min, 2px);
   --button-tiny-radius: var(--border-radius-extra-small-2, 6px);
-  --button-tiny-line-height: var(--line-height-small, 16px);
-  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 14px));
-  --button-tiny-icon-slot-height: var(--line-height-small, 16px);
+  --button-tiny-line-height: var(--line-height-small, 1rem);
+  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 0.875rem));
+  --button-tiny-icon-slot-height: var(--line-height-small, 1rem);
 
   --button-small-padding-x: var(--padding-small, 6px);
   --button-small-padding-y: var(--padding-min, 2px);
   --button-small-radius: var(--border-radius-extra-small-2, 6px);
-  --button-small-line-height: var(--line-height-regular, 18px);
-  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-small-icon-slot-height: var(--line-height-regular, 18px);
+  --button-small-line-height: var(--line-height-regular, 1.125rem);
+  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-small-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-regular-padding-x: var(--padding-middle, 10px);
   --button-regular-padding-y: var(--padding-small, 6px);
   --button-regular-radius: var(--border-radius-small, 8px);
-  --button-regular-line-height: var(--line-height-regular, 18px);
-  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-regular-icon-slot-height: var(--line-height-regular, 18px);
+  --button-regular-line-height: var(--line-height-regular, 1.125rem);
+  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-regular-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-big-padding-x: var(--padding-big, 14px);
   --button-big-padding-y: var(--padding-default, 8px);
   --button-big-radius: var(--border-radius-small, 8px);
-  --button-big-line-height: var(--line-height-regular, 18px);
-  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-big-icon-slot-height: var(--line-height-regular, 18px);
+  --button-big-line-height: var(--line-height-regular, 1.125rem);
+  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-big-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-tiny-height: calc(
     2 * var(--button-tiny-padding-y) + var(--button-tiny-line-height)
@@ -287,7 +287,7 @@
   position: relative;
   z-index: 1;
   display: inline-flex;
-  height: var(--button-icon-slot-height, var(--line-height-regular, 18px));
+  height: var(--button-icon-slot-height, var(--line-height-regular, 1.125rem));
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -295,13 +295,13 @@
 }
 
 .aviala-button__icon svg {
-  height: var(--button-icon-size, var(--size-regular, 14px));
+  height: var(--button-icon-size, var(--size-regular, 0.875rem));
   width: auto;
   flex-shrink: 0;
 }
 
 .aviala-button[data-icon-only="true"] .aviala-button__icon svg {
-  width: var(--button-icon-size, var(--size-regular, 14px));
+  width: var(--button-icon-size, var(--size-regular, 0.875rem));
 }
 
 /* Keep icon SVG visible when disabled — override UA graying of currentColor */

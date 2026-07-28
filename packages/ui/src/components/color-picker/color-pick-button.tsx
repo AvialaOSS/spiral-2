@@ -15,7 +15,7 @@ export const ColorPickButton = forwardRef<HTMLButtonElement, ColorPickButtonProp
       <button
         ref={ref}
         type="button"
-        className={cn("aviala-color-pick-button", className)}
+        className={cn("aviala-color-pick-button aviala-focus-ring", className)}
         data-selected={selected ? "true" : undefined}
         style={style}
         {...props}

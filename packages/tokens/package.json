@@ -39,6 +39,12 @@
     "./focus-effects.css": "./dist/focus-effects.css",
     "./feedback-effects.css": "./dist/feedback-effects.css",
     "./alert-effects.css": "./dist/alert-effects.css",
+    "./badge-effects.css": "./dist/badge-effects.css",
+    "./progress-effects.css": "./dist/progress-effects.css",
+    "./layout-effects.css": "./dist/layout-effects.css",
+    "./information-display-extras.css": "./dist/information-display-extras.css",
+    "./information-collect-extras.css": "./dist/information-collect-extras.css",
+    "./structure-navigation-extras.css": "./dist/structure-navigation-extras.css",
     "./node": {
       "types": "./dist/node.d.ts",
       "import": "./dist/node.js"

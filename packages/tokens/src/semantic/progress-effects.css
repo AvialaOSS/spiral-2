@@ -1,0 +1,77 @@
+/* Progress — Figma Response And Feedback → Progress (589:55818) */
+
+.aviala-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--progress-gap, var(--gap-inside-space, 6px));
+}
+
+.aviala-progress--shape-bar {
+  width: var(--progress-bar-width, 80px);
+}
+
+.aviala-progress__track {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: var(--progress-bar-height, 4px);
+  overflow: hidden;
+  border-radius: var(--border-radius-allround, 99px);
+  background-color: var(--progress-track-bg, var(--box-box-normal-background-whiteonly, #fefcfc));
+  border: 1px solid var(--progress-track-border, var(--border-border-normal-light, #f5f3f3));
+}
+
+.aviala-progress--size-big .aviala-progress__track {
+  height: var(--progress-bar-height-big, 6px);
+}
+
+.aviala-progress__fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  border-radius: inherit;
+  background-color: var(--progress-fill-bg);
+  transition: width 0.2s ease;
+}
+
+.aviala-progress__label {
+  flex-shrink: 0;
+  min-width: var(--progress-label-width, 22px);
+  color: var(--progress-label-fg, var(--text-text-normal-text-caption-black, #858484));
+}
+
+.aviala-progress--shape-ring {
+  width: var(--progress-ring-size, 16px);
+  height: var(--progress-ring-size, 16px);
+}
+
+.aviala-progress--shape-ring.aviala-progress--size-big {
+  --progress-ring-size: 24px;
+}
+
+.aviala-progress__ring {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.aviala-progress__ring-track {
+  stroke: var(--progress-track-border, var(--border-border-normal-light, #f5f3f3));
+}
+
+.aviala-progress__ring-fill {
+  stroke: var(--progress-fill-bg);
+  transition: stroke-dashoffset 0.2s ease;
+}
+
+.aviala-progress--type-default {
+  --progress-fill-bg: var(--box-box-theme-primarybackground, #ff5532);
+}
+
+.aviala-progress--type-success {
+  --progress-fill-bg: var(--box-box-success-primarybackground, #70b450);
+}
+
+.aviala-progress--type-fail {
+  --progress-fill-bg: var(--box-box-fail-primarybackground, #f41544);
+}

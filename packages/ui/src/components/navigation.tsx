@@ -98,26 +98,26 @@ function readIndicatorToken(el: HTMLElement, name: string, fallback: number) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-function findActiveNavigationItem(group: HTMLElement): HTMLElement | null {
-  const activeItems = group.querySelectorAll<HTMLElement>(
-    '.aviala-navigation-item[data-active="true"]'
+function isInsideCollapsedGroup(item: HTMLElement): boolean {
+  return (
+    item.closest('.aviala-navigation-item-group[data-expanded="false"]') !== null
   );
+}
+
+function findActiveNavigationItem(group: HTMLElement): HTMLElement | null {
+  const activeItems = Array.from(
+    group.querySelectorAll<HTMLElement>(
+      '.aviala-navigation-item[data-active="true"]'
+    )
+  ).filter((item) => !isInsideCollapsedGroup(item));
 
   if (activeItems.length === 0) return null;
 
-  for (const item of activeItems) {
-    if (item.getAttribute("data-item-type") === "child") {
-      const collapsedGroup = item.closest(
-        '.aviala-navigation-item-group[data-expanded="false"]'
-      );
+  const activeChild = activeItems.find(
+    (item) => item.getAttribute("data-item-type") === "child"
+  );
 
-      if (collapsedGroup) continue;
-
-      return item;
-    }
-  }
-
-  return activeItems[0] ?? null;
+  return activeChild ?? activeItems[0]!;
 }
 
 function measureNavigationIndicator(
@@ -714,7 +714,7 @@ export const NavigationBrandTitle = forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn("aviala-navigation-brand__title", className)}
+      className={cn("aviala-navigation-brand__title aviala-focus-ring", className)}
       {...props}
     >
       {asChild ? (
@@ -818,6 +818,20 @@ export const NavigationItemGroup = forwardRef<
   NavigationItemGroupProps
 >(({ className, expanded, children, ...props }, ref) => {
   const isCollapsible = expanded !== undefined;
+  const isCollapsed = isCollapsible && !expanded;
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  // Collapsed children stay in the DOM for the height transition, so `inert`
+  // is what keeps them out of the tab order and the accessibility tree. Set it
+  // imperatively: React 18 and 19 disagree on the JSX prop type.
+  useLayoutEffect(() => {
+    const inner = innerRef.current;
+
+    if (!inner) return;
+
+    if (isCollapsed) inner.setAttribute("inert", "");
+    else inner.removeAttribute("inert");
+  }, [isCollapsed]);
 
   return (
     <div
@@ -826,11 +840,13 @@ export const NavigationItemGroup = forwardRef<
       data-expanded={
         isCollapsible ? (expanded ? "true" : "false") : undefined
       }
-      aria-hidden={isCollapsible && !expanded ? true : undefined}
+      aria-hidden={isCollapsed ? true : undefined}
       {...props}
     >
       {isCollapsible ? (
-        <div className="aviala-navigation-item-group__inner">{children}</div>
+        <div ref={innerRef} className="aviala-navigation-item-group__inner">
+          {children}
+        </div>
       ) : (
         children
       )}

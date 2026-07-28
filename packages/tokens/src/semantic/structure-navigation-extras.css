@@ -1,0 +1,496 @@
+/* Breadcrumb / Pagehead / Steps / Pagination / Card — Figma Structure Navigation */
+
+/* —— Breadcrumb (622:7883) —— */
+.aviala-breadcrumb,
+.aviala-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--breadcrumb-gap, 2px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aviala-breadcrumb-item-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.aviala-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--breadcrumb-item-gap, 4px);
+  padding: var(--padding-min, 2px) var(--breadcrumb-item-px, 4px);
+  border-radius: var(--breadcrumb-item-radius, 6px);
+  color: var(--breadcrumb-fg);
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+.aviala-breadcrumb-item[data-current="true"] {
+  color: var(--breadcrumb-fg);
+}
+
+.aviala-breadcrumb-item:not([data-current="true"]) {
+  opacity: var(--breadcrumb-separator-opacity, 0.6);
+}
+
+a.aviala-breadcrumb-item,
+button.aviala-breadcrumb-item {
+  cursor: pointer;
+}
+
+a.aviala-breadcrumb-item:hover,
+button.aviala-breadcrumb-item:hover {
+  opacity: 1;
+}
+
+.aviala-breadcrumb-item__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--breadcrumb-icon-size, 0.875rem);
+  height: var(--breadcrumb-icon-size, 0.875rem);
+  color: inherit;
+}
+
+.aviala-breadcrumb--size-small .aviala-breadcrumb-item__icon {
+  width: var(--breadcrumb-icon-size-small, 0.75rem);
+  height: var(--breadcrumb-icon-size-small, 0.75rem);
+}
+
+.aviala-breadcrumb-item__label {
+  color: inherit;
+}
+
+.aviala-breadcrumb-separator {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--breadcrumb-item-px, 4px);
+  color: var(--breadcrumb-fg);
+  opacity: var(--breadcrumb-separator-opacity, 0.6);
+  user-select: none;
+}
+
+.aviala-breadcrumb--size-small .aviala-breadcrumb-separator,
+.aviala-breadcrumb--size-small .aviala-breadcrumb-item__label {
+  color: var(--breadcrumb-fg-muted);
+}
+
+.aviala-breadcrumb-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-tinyer, 3px) var(--padding-min, 2px);
+  border: 0;
+  background: transparent;
+  color: var(--breadcrumb-fg);
+  /* Figma Storage item button activated=OFF */
+  opacity: var(--breadcrumb-separator-opacity, 0.6);
+  cursor: pointer;
+  border-radius: var(--breadcrumb-item-radius, 6px);
+}
+
+.aviala-breadcrumb-ellipsis-wrap {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+}
+
+.aviala-breadcrumb-ellipsis:hover,
+.aviala-breadcrumb-ellipsis[data-activated="true"],
+.aviala-breadcrumb-ellipsis[data-state="open"] {
+  /* Figma Storage item button activated=ON — full opacity */
+  opacity: 1;
+}
+
+.aviala-breadcrumb-ellipsis-menu.aviala-popover-content {
+  width: var(--breadcrumb-ellipsis-menu-width, 120px);
+  min-width: var(--breadcrumb-ellipsis-menu-width, 120px);
+  padding: 0;
+}
+
+.aviala-breadcrumb-ellipsis-menu .aviala-popover-content__surface {
+  padding: var(--select-menu-py, 6px) 0;
+}
+
+.aviala-breadcrumb-ellipsis-menu__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside, 4px);
+  width: 100%;
+  padding-inline: var(--gap-inside-space, 6px);
+}
+
+.aviala-breadcrumb-ellipsis-item {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--gap-component-space, 8px);
+  padding: var(--padding-tiny, 4px) var(--padding-default, 8px);
+  border: 0;
+  border-radius: var(--breadcrumb-item-radius, 6px);
+  background: transparent;
+  color: var(--breadcrumb-fg);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: start;
+}
+
+.aviala-breadcrumb-ellipsis-item:hover {
+  background-color: var(
+    --control-control-normal-lightbackground-light,
+    #f5f3f3
+  );
+}
+
+.aviala-breadcrumb-ellipsis-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: inherit;
+}
+
+.aviala-breadcrumb-ellipsis-item__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--line-height-regular, 1.125rem);
+  height: var(--line-height-regular, 1.125rem);
+  color: inherit;
+}
+
+/* —— Pagehead (643:172156) —— */
+.aviala-pagehead {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--pagehead-gap, 10px);
+  padding-inline: var(--pagehead-px, 18px);
+  background-color: var(--pagehead-bg);
+  border-bottom: 1px solid var(--pagehead-border);
+}
+
+.aviala-pagehead__main {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--gap-inside, 4px);
+  padding-block: var(--pagehead-main-py, 4px);
+}
+
+.aviala-pagehead__back {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.aviala-pagehead__title-block {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--pagehead-title-gap, 6px);
+  justify-content: center;
+}
+
+.aviala-pagehead__breadcrumb {
+  display: flex;
+  min-width: 0;
+}
+
+.aviala-pagehead__title {
+  display: flex;
+  min-width: 0;
+  padding-left: var(--pagehead-title-pl, 6px);
+}
+
+.aviala-pagehead__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--pagehead-actions-gap, 4px);
+  align-self: stretch;
+  padding-block: var(--pagehead-actions-py, 8px);
+}
+
+/* —— Steps (791:143425) —— */
+.aviala-steps {
+  display: flex;
+  gap: var(--steps-gap, 14px);
+}
+
+.aviala-steps--direction-horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.aviala-steps--direction-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.aviala-steps-item {
+  display: flex;
+  gap: var(--steps-item-gap, 8px);
+  align-items: flex-start;
+  min-width: var(--steps-item-min-width, 120px);
+}
+
+.aviala-steps--direction-vertical .aviala-steps-item {
+  min-width: 0;
+  width: 100%;
+}
+
+.aviala-steps-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--steps-icon-size, 1.375rem);
+  height: var(--steps-icon-size, 1.375rem);
+  border-radius: var(--border-radius-allround, 99px);
+  overflow: hidden;
+}
+
+.aviala-steps-icon[data-state="done"] {
+  background-color: var(--steps-done-bg);
+  color: var(--steps-done-fg);
+}
+
+.aviala-steps-icon[data-state="fail"] {
+  background-color: var(--steps-fail-bg);
+  color: var(--steps-fail-fg);
+}
+
+.aviala-steps-icon[data-state="warning"] {
+  background-color: var(--steps-warning-bg);
+  color: var(--steps-warning-fg);
+}
+
+.aviala-steps-icon[data-state="waiting"] {
+  background-color: var(--steps-waiting-bg);
+  color: var(--steps-waiting-fg);
+}
+
+.aviala-steps-icon[data-state="inProgress"] {
+  background-color: var(--steps-in-progress-bg);
+  color: var(--steps-in-progress-icon-fg);
+}
+
+.aviala-steps-icon[data-state="default"] {
+  background-color: var(--steps-default-bg);
+  color: var(--steps-default-fg);
+  border: 1px solid var(--steps-default-border);
+}
+
+.aviala-steps-icon__index {
+  color: inherit;
+}
+
+.aviala-steps-item__body {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.aviala-steps-item__title {
+  color: var(--steps-title-fg);
+}
+
+.aviala-steps-item[data-state="done"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="done"] .aviala-steps-item__title.aviala-typography {
+  color: var(--steps-done-fg);
+}
+
+.aviala-steps-item[data-state="fail"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="fail"] .aviala-steps-item__title.aviala-typography {
+  color: var(--steps-fail-fg);
+}
+
+.aviala-steps-item[data-state="warning"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="warning"] .aviala-steps-item__title.aviala-typography {
+  color: var(--steps-warning-fg);
+}
+
+.aviala-steps-item[data-state="waiting"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="waiting"] .aviala-steps-item__title.aviala-typography {
+  color: var(--steps-waiting-fg);
+}
+
+.aviala-steps-item[data-state="inProgress"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="inProgress"] .aviala-steps-item__title.aviala-typography {
+  color: var(--steps-in-progress-fg);
+}
+
+.aviala-steps-item[data-state="default"] .aviala-steps-item__title,
+.aviala-steps-item[data-state="default"] .aviala-steps-item__title.aviala-typography {
+  /* Figma default title uses Typography Subtitle / text-normal — not caption gray */
+  color: var(--steps-title-fg);
+}
+
+.aviala-steps-item__description,
+.aviala-steps-item__description.aviala-typography {
+  color: var(--steps-description-fg);
+}
+
+.aviala-steps-icon__index.aviala-typography {
+  color: inherit;
+}
+
+/* —— Pagination (791:146366) —— */
+.aviala-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap, 10px);
+}
+
+.aviala-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--pagination-controls-gap, 4px);
+}
+
+.aviala-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--pagination-page-gap, 6px);
+}
+
+.aviala-pagination__page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: var(--pagination-page-py, 4px) var(--pagination-page-px, 8px);
+  border: 0;
+  border-radius: var(--pagination-page-radius, 8px);
+  background: transparent;
+  color: var(--pagination-page-fg);
+  cursor: pointer;
+}
+
+.aviala-pagination__page[data-active="true"] {
+  padding: var(--pagination-page-active-py, 6px) var(--pagination-page-active-px, 10px);
+  background-color: var(--pagination-page-active-bg);
+  color: var(--pagination-page-active-fg);
+  box-shadow: inset 0 -0.5px 0 var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
+}
+
+.aviala-pagination__page[data-active="true"] .aviala-typography {
+  color: inherit;
+}
+
+.aviala-pagination__page:disabled {
+  opacity: var(--transparency-disable, 0.55);
+  cursor: not-allowed;
+}
+
+.aviala-pagination__jump,
+.aviala-pagination__size {
+  display: flex;
+  align-items: center;
+  gap: var(--pagination-jump-gap, 4px);
+}
+
+.aviala-pagination__jump-input {
+  width: var(--pagination-jump-input-width, 65px);
+}
+
+.aviala-pagination__size-select {
+  width: var(--pagination-size-select-width, 77px);
+  min-width: var(--pagination-size-select-width, 77px);
+}
+
+/* —— Card (738:145715) —— */
+.aviala-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--card-radius, 10px);
+  background-color: var(--card-bg);
+  color: var(--card-fg);
+}
+
+.aviala-card-head,
+.aviala-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: var(--card-gap, 10px);
+  padding-inline: var(--card-px, 14px);
+  background-color: var(--card-bg);
+}
+
+.aviala-card-head {
+  padding-top: var(--card-head-pt, 8px);
+  padding-bottom: var(--card-head-pb, 4px);
+}
+
+.aviala-card-bottom {
+  justify-content: flex-end;
+  padding-top: var(--card-bottom-pt, 4px);
+  padding-bottom: var(--card-bottom-pb, 8px);
+}
+
+.aviala-card-head__main {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--card-gap, 10px);
+}
+
+.aviala-card-head__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: inherit;
+}
+
+.aviala-card-head__title {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-card-head__trailing,
+.aviala-card-bottom__trailing {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--card-trailing-gap, 10px);
+}
+
+.aviala-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap, 10px);
+  padding-inline: var(--card-px, 14px);
+  background-color: var(--card-bg);
+}
+
+.aviala-card-body__content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding-block: var(--card-body-py, 8px);
+}
+
+.aviala-card__divider {
+  display: inline-block;
+  width: 0;
+  height: var(--card-divider-height, 14px);
+  border-left: 1px solid var(--border-border-normal-light, #f5f3f3);
+}

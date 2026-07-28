@@ -82,15 +82,15 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: var(--modal-icon-slot-width, var(--modal-icon-slot-height, 22px));
-  height: var(--modal-icon-slot-height, 22px);
+  width: var(--modal-icon-slot-width, var(--modal-icon-slot-height, 1.375rem));
+  height: var(--modal-icon-slot-height, 1.375rem);
   padding-block: var(--modal-icon-py, var(--padding-min, 2px));
   color: var(--modal-icon-fg, var(--text-text-infomation-primary-black, #3489c8));
 }
 
 .aviala-modal__icon svg {
-  width: var(--modal-icon-size, var(--size-middle, 16px));
-  height: var(--modal-icon-size, var(--size-middle, 16px));
+  width: var(--modal-icon-size, var(--size-middle, 1rem));
+  height: var(--modal-icon-size, var(--size-middle, 1rem));
 }
 
 .aviala-modal__header-typeface {
@@ -117,8 +117,8 @@
 }
 
 .aviala-modal__close svg {
-  width: var(--modal-close-icon-size, var(--size-middle, 16px));
-  height: var(--modal-close-icon-size, var(--size-middle, 16px));
+  width: var(--modal-close-icon-size, var(--size-middle, 1rem));
+  height: var(--modal-close-icon-size, var(--size-middle, 1rem));
 }
 
 .aviala-modal__body {

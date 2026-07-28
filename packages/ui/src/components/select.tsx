@@ -683,7 +683,7 @@ export const SelectTrigger = forwardRef<
           ref.current = node;
         }
       }}
-      className={cn("aviala-select-trigger", className)}
+      className={cn("aviala-select-trigger aviala-focus-ring", className)}
       data-size={size}
       data-all-round={allRound ? "true" : "false"}
       data-error={error ? "true" : undefined}
@@ -896,7 +896,7 @@ export const SelectItem = forwardRef<
     return (
       <SelectPrimitive.Item
         ref={ref}
-        className={cn("aviala-select-item", className)}
+        className={cn("aviala-select-item aviala-focus-ring", className)}
         data-layout={layout !== "default" ? layout : undefined}
         data-function={itemFunction !== "action" ? itemFunction : undefined}
         {...spiralDebugId("select.content.item")}
@@ -1097,7 +1097,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
       <button
         type="button"
         disabled={disabled}
-        className={cn("aviala-select-item aviala-select-sub-item", className)}
+        className={cn("aviala-select-item aviala-select-sub-item aviala-focus-ring", className)}
         data-layout={layout !== "default" ? layout : undefined}
         data-function={itemFunction !== "action" ? itemFunction : undefined}
         data-state={open ? "open" : undefined}

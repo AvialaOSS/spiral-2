@@ -238,7 +238,7 @@ export function DatePickerTimeWheelColumn({
       />
       <div
         ref={scrollRef}
-        className="aviala-datepicker-time__wheel-scroll"
+        className="aviala-datepicker-time__wheel-scroll aviala-focus-ring"
         onScroll={handleScroll}
         role="listbox"
         aria-label={ariaLabel}

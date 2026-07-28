@@ -25,7 +25,7 @@ export const Checkbox = forwardRef<
 >(({ className, round = false, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={cn("aviala-checkbox", className)}
+    className={cn("aviala-checkbox aviala-focus-ring", className)}
     data-round={round ? "true" : undefined}
     {...props}
   >

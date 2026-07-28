@@ -1265,5 +1265,490 @@
         "description": "Accessible name; omit when decorative (`aria-hidden`)."
       }
     ]
+  },
+  "Badge": {
+    "displayName": "Badge",
+    "description": "",
+    "props": [
+      {
+        "name": "style",
+        "type": "enum",
+        "defaultValue": "theme",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "caption",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "primary",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": "Figma `Primary` — filled primary surface vs secondary surface"
+      },
+      {
+        "name": "lineHeightFix",
+        "type": "boolean | BadgeLineHeightFix",
+        "required": false,
+        "description": "Figma `LineHeightFix`.\n- `true` / omitted: Caption → AlignToTextLevel, Text → AlignToSubtitleLevel\n- `false` / `\"off\"`: OFF"
+      }
+    ]
+  },
+  "Avatar": {
+    "displayName": "Avatar",
+    "description": "",
+    "props": [
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "text",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "lineHeightFix",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "src",
+        "type": "string",
+        "required": false,
+        "description": "Image URL when `content=\"picture\"`"
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "defaultValue": "",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Icon node when `content=\"icon\"`"
+      },
+      {
+        "name": "imgProps",
+        "type": "Omit<ImgHTMLAttributes<HTMLImageElement>, \"src\" | \"alt\">",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Tag": {
+    "displayName": "Tag",
+    "description": "",
+    "props": [
+      {
+        "name": "level",
+        "type": "enum",
+        "defaultValue": "caption",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "leftIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "rightIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "avatar",
+        "type": "ReactNode",
+        "required": false,
+        "description": "People content — avatar image or initials"
+      },
+      {
+        "name": "avatarSrc",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "avatarText",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "closable",
+        "type": "boolean",
+        "defaultValue": "false",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onClose",
+        "type": "(event: MouseEvent<HTMLButtonElement, MouseEvent>) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string",
+        "defaultValue": "Remove",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "lineHeightFix",
+        "type": "boolean | TagLineHeightFix",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Progress": {
+    "displayName": "Progress",
+    "description": "",
+    "props": [
+      {
+        "name": "type",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "shape",
+        "type": "enum",
+        "defaultValue": "bar",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "defaultValue": "0",
+        "required": false,
+        "description": "0–100"
+      },
+      {
+        "name": "showLabel",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": "Show percent label (bar shape only)"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Scroll": {
+    "displayName": "Scroll",
+    "description": "Scrollable region with Aviala-styled scrollbar (track + thumb).\nFigma documents the thumb/track chrome; this wraps content with that chrome.",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "orientation",
+        "type": "enum",
+        "defaultValue": "vertical",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Slider": {
+    "displayName": "Slider",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": "Figma `Type` — single thumb vs range (two thumbs)"
+      }
+    ]
+  },
+  "Upload": {
+    "displayName": "Upload",
+    "description": "",
+    "props": [
+      {
+        "name": "style",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "defaultValue": "Or click here to upload",
+        "required": false,
+        "description": "Secondary line — Large style"
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "defaultValue": "Upload",
+        "required": false,
+        "description": "Default style button label"
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "dragAndDrop",
+        "type": "boolean",
+        "required": false,
+        "description": "Enable drag-and-drop (Large style defaults to true)"
+      },
+      {
+        "name": "onChange",
+        "type": "(files: FileList) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "inputProps",
+        "type": "Omit<InputHTMLAttributes<HTMLInputElement>, \"onChange\" | \"accept\" | \"multiple\" | \"disabled\" | \"type\">",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "ScrollPicker": {
+    "displayName": "ScrollPicker",
+    "description": "",
+    "props": []
+  },
+  "Breadcrumb": {
+    "displayName": "Breadcrumb",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "enum",
+        "defaultValue": "default",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Pagehead": {
+    "displayName": "Pagehead",
+    "description": "",
+    "props": [
+      {
+        "name": "back",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional leading control (typically back button)"
+      },
+      {
+        "name": "breadcrumb",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional breadcrumb above the title"
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Secondary caption under title"
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Trailing actions slot"
+      }
+    ]
+  },
+  "Steps": {
+    "displayName": "Steps",
+    "description": "",
+    "props": [
+      {
+        "name": "direction",
+        "type": "enum",
+        "defaultValue": "horizontal",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Pagination": {
+    "displayName": "Pagination",
+    "description": "",
+    "props": [
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultPage",
+        "type": "number",
+        "defaultValue": "1",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "pageCount",
+        "type": "number",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "onPageChange",
+        "type": "(page: number) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "showJump",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "showSizeChanger",
+        "type": "boolean",
+        "defaultValue": "true",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "defaultPageSize",
+        "type": "number",
+        "defaultValue": "10",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "pageSizeOptions",
+        "type": "number[]",
+        "defaultValue": "[10, 20, 50]",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onPageSizeChange",
+        "type": "(pageSize: number) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "jumpLabel",
+        "type": "ReactNode",
+        "defaultValue": "跳转至",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "sizeLabel",
+        "type": "ReactNode",
+        "defaultValue": "每页",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "sizeOptionLabel",
+        "type": "(size: number) => ReactNode",
+        "defaultValue": "(size) => `${size} 项`",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  "Card": {
+    "displayName": "Card",
+    "description": "",
+    "props": []
+  },
+  "Table": {
+    "displayName": "Table",
+    "description": "",
+    "props": []
   }
 }

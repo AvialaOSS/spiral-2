@@ -15,7 +15,7 @@ export const Switch = forwardRef<
 >(({ className, size = "regular", ...props }, ref) => (
   <SwitchPrimitive.Root
     className={cn(
-      "aviala-switch",
+      "aviala-switch aviala-focus-ring",
       size === "small" && "aviala-switch--small",
       className
     )}

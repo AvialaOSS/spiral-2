@@ -29,7 +29,7 @@ export function Icon({
   const svgProps = applyAvialaIconProps({
     biggerSize,
     level,
-    size: level ? size : (size ?? "var(--icon-size-text, var(--size-regular, 14px))"),
+    size: level ? size : (size ?? "var(--icon-size-text, var(--size-regular, 0.875rem))"),
     width,
     height,
     className,

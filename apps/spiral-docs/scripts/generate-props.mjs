@@ -71,6 +71,20 @@ const components = [
   { key: "Modal", file: "components/modal.tsx", exportName: "Modal" },
   { key: "Tooltip", file: "components/tooltip.tsx", exportName: "Tooltip" },
   { key: "Loading", file: "components/loading.tsx", exportName: "Loading" },
+  { key: "Badge", file: "components/badge.tsx", exportName: "Badge" },
+  { key: "Avatar", file: "components/avatar.tsx", exportName: "Avatar" },
+  { key: "Tag", file: "components/tag.tsx", exportName: "Tag" },
+  { key: "Progress", file: "components/progress.tsx", exportName: "Progress" },
+  { key: "Scroll", file: "components/scroll.tsx", exportName: "Scroll" },
+  { key: "Slider", file: "components/slider.tsx", exportName: "Slider" },
+  { key: "Upload", file: "components/upload.tsx", exportName: "Upload" },
+  { key: "ScrollPicker", file: "components/scroll-picker.tsx", exportName: "ScrollPicker" },
+  { key: "Breadcrumb", file: "components/breadcrumb.tsx", exportName: "Breadcrumb" },
+  { key: "Pagehead", file: "components/pagehead.tsx", exportName: "Pagehead" },
+  { key: "Steps", file: "components/steps.tsx", exportName: "Steps" },
+  { key: "Pagination", file: "components/pagination.tsx", exportName: "Pagination" },
+  { key: "Card", file: "components/card.tsx", exportName: "Card" },
+  { key: "Table", file: "components/table.tsx", exportName: "Table" },
 ];
 
 const registry = {};

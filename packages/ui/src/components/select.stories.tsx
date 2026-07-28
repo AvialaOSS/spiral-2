@@ -162,7 +162,7 @@ export const ActionItemVariants: Story = {
             showBadge
             badge="New"
             showMoreFunction
-            moreAction={<span className="text-[length:var(--size-regular,18px)] text-[var(--select-item-selected-fg)]">More</span>}
+            moreAction={<span className="text-[length:var(--size-regular, 1.125rem)] text-[var(--select-item-selected-fg)]">More</span>}
           >
             With slots
           </SelectItem>

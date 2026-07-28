@@ -50,45 +50,45 @@
   /* noBackgroundCustom — neutral-4 hover, neutral-5 press */
   --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
   --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
-  --button-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-icon-slot-height: var(--line-height-regular, 18px);
+  --button-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   /* Button size — padding / line-height / radius (height is content-driven) */
   --button-tiny-padding-x: var(--padding-tiny, 4px);
   --button-tiny-padding-y: var(--padding-min, 2px);
   --button-tiny-radius: var(--border-radius-extra-small-2, 6px);
-  --button-tiny-line-height: var(--line-height-small, 16px);
-  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 14px));
-  --button-tiny-icon-slot-height: var(--line-height-small, 16px);
+  --button-tiny-line-height: var(--line-height-small, 1rem);
+  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 0.875rem));
+  --button-tiny-icon-slot-height: var(--line-height-small, 1rem);
 
   --button-small-padding-x: var(--padding-small, 6px);
   --button-small-padding-y: var(--padding-min, 2px);
   --button-small-radius: var(--border-radius-extra-small-2, 6px);
-  --button-small-line-height: var(--line-height-regular, 18px);
-  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-small-icon-slot-height: var(--line-height-regular, 18px);
+  --button-small-line-height: var(--line-height-regular, 1.125rem);
+  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-small-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-regular-padding-x: var(--padding-middle, 10px);
   --button-regular-padding-y: var(--padding-small, 6px);
   --button-regular-radius: var(--border-radius-small, 8px);
-  --button-regular-line-height: var(--line-height-regular, 18px);
-  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-regular-icon-slot-height: var(--line-height-regular, 18px);
+  --button-regular-line-height: var(--line-height-regular, 1.125rem);
+  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-regular-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-big-padding-x: var(--padding-big, 14px);
   --button-big-padding-y: var(--padding-default, 8px);
   --button-big-radius: var(--border-radius-small, 8px);
-  --button-big-line-height: var(--line-height-regular, 18px);
-  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --button-big-icon-slot-height: var(--line-height-regular, 18px);
+  --button-big-line-height: var(--line-height-regular, 1.125rem);
+  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-big-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   /* Segmentator — padding / line-height (height is content-driven) */
   --segmentator-group-padding: var(--padding-min, 2px);
   --segmentator-group-gap: var(--gap-inside, 4px);
   --segmentator-group-radius: var(--border-radius-small, 8px);
   --segmentator-item-gap: var(--gap-inside-space, 6px);
-  --segmentator-item-line-height: var(--line-height-regular, 18px);
-  --segmentator-icon-slot-height: var(--line-height-regular, 18px);
+  --segmentator-item-line-height: var(--line-height-regular, 1.125rem);
+  --segmentator-icon-slot-height: var(--line-height-regular, 1.125rem);
   --segmentator-item-nested-padding-y: var(--padding-tiny, 4px);
   --segmentator-item-nested-padding-x: var(--padding-small, 6px);
   --segmentator-item-nested-radius: var(--border-radius-extra-small-2, 6px);
@@ -97,20 +97,20 @@
   --segmentator-item-tiled-radius: var(--border-radius-small, 8px);
 
   /* Icons component — Figma Components → Icons (level × BiggerSize) */
-  --icon-size-display: var(--size-max, 38px);
-  --icon-size-display-bigger: var(--size-max, 38px);
-  --icon-size-headline1: var(--size-huge, 30px);
-  --icon-size-headline1-bigger: var(--size-huger, 34px);
-  --icon-size-headline2: var(--size-large, 26px);
-  --icon-size-headline2-bigger: var(--size-huge, 30px);
-  --icon-size-title: var(--size-semilarge, 22px);
-  --icon-size-title-bigger: var(--size-semilarger, 24px);
-  --icon-size-subtitle: var(--size-middle, 16px);
-  --icon-size-subtitle-bigger: var(--size-big, 20px);
-  --icon-size-text: var(--size-regular, 14px);
-  --icon-size-text-bigger: var(--size-middle, 16px);
-  --icon-size-caption: var(--size-small, 12px);
-  --icon-size-caption-bigger: var(--size-regular, 14px);
+  --icon-size-display: var(--size-max, 2.375rem);
+  --icon-size-display-bigger: var(--size-max, 2.375rem);
+  --icon-size-headline1: var(--size-huge, 1.875rem);
+  --icon-size-headline1-bigger: var(--size-huger, 2.125rem);
+  --icon-size-headline2: var(--size-large, 1.625rem);
+  --icon-size-headline2-bigger: var(--size-huge, 1.875rem);
+  --icon-size-title: var(--size-semilarge, 1.375rem);
+  --icon-size-title-bigger: var(--size-semilarger, 1.5rem);
+  --icon-size-subtitle: var(--size-middle, 1rem);
+  --icon-size-subtitle-bigger: var(--size-big, 1.25rem);
+  --icon-size-text: var(--size-regular, 0.875rem);
+  --icon-size-text-bigger: var(--size-middle, 1rem);
+  --icon-size-caption: var(--size-small, 0.75rem);
+  --icon-size-caption-bigger: var(--size-regular, 0.875rem);
 
   --input-bg-default: var(--control-control-normal-lightbackground-light, #f5f3f3);
   --input-bg-hover: var(--control-control-normal-background-deep, #e2e0e0);
@@ -135,7 +135,7 @@
   --input-font-size: var(--typography-text-size);
   --input-line-height: var(--typography-text-line-height);
   --input-icon-slot-height: var(--input-line-height);
-  --input-slot-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  --input-slot-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
 
   --textarea-min-height-regular: 70px;
   --textarea-min-height-big: 70px;
@@ -144,8 +144,8 @@
   --textarea-controller-bg: var(--control-control-normal-lightbackground-light, #f5f3f3);
   --textarea-counter-fg: var(--text-text-normal-text-caption-black, #858484);
 
-  --radio-size: var(--size-big, 20px);
-  --radio-indicator-size: 8px;
+  --radio-size: var(--size-big, 1.25rem);
+  --radio-indicator-size: 0.5rem;
   --radio-bg-unchecked: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
   --radio-border-unchecked: var(--border-border-normal-light, #e8e6e6);
   --radio-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
@@ -166,8 +166,8 @@
   --select-item-selected-bg: var(--box-box-theme-secondarybackground, #ffdad2);
   --select-item-selected-fg: var(--text-text-theme-primary-black, #bf2300);
   --select-item-checked-bg: var(--box-box-theme-lightbackground, #fff3f0);
-  --select-item-avatar-size: 26px;
-  --select-item-form-control-size: 20px;
+  --select-item-avatar-size: 1.625rem;
+  --select-item-form-control-size: 1.25rem;
   --select-item-subtitle-fg: var(--select-label-fg);
   --select-item-subtitle-font-size: var(--select-label-font-size);
   --select-item-subtitle-line-height: var(--select-label-line-height);
@@ -182,8 +182,8 @@
   --select-item-gap: var(--gap-component-space, 8px);
   --select-item-px: var(--padding-default, 8px);
   --select-item-py: var(--padding-tiny, 4px);
-  --select-item-function-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
-  --select-item-function-height: var(--line-height-regular, 18px);
+  --select-item-function-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --select-item-function-height: var(--line-height-regular, 1.125rem);
   --select-label-font-size: var(--typography-caption-size);
   --select-label-line-height: var(--typography-caption-line-height);
   --select-label-pt: var(--padding-tiny, 4px);
@@ -231,11 +231,11 @@
   --input-border: var(--input-border-activated);
   --input-bg: var(--input-bg-activated);
 
-  --checkbox-size: var(--size-big, 20px);
+  --checkbox-size: var(--size-big, 1.25rem);
   --checkbox-radius: var(--border-radius-small, 8px);
   --checkbox-radius-round: var(--border-radius-allround, 99px);
-  --checkbox-icon-size: 12px;
-  --checkbox-indeterminate-mark-size: 12px;
+  --checkbox-icon-size: 0.75rem;
+  --checkbox-indeterminate-mark-size: 0.75rem;
   --checkbox-indeterminate-mark-radius: var(--border-radius-extra-small-2, 6px);
   --checkbox-bg-unchecked: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
   --checkbox-border-unchecked: var(--border-border-normal-primary, #e2e0e0);
@@ -296,6 +296,50 @@
   --badge-px: var(--padding-tiny, 4px);
   --badge-radius: var(--border-radius-extra-small-2, 6px);
   --badge-fg: var(--text-text-normal-text-black, #343333);
+  --badge-icon-slot-height: var(--line-height-small, 1rem);
+  --badge-icon-size: var(--icon-size-caption, 0.75rem);
+
+  --avatar-bg: var(--text-text-theme-secondary-black, #ff8368);
+  --avatar-fg: var(--text-text-normal-text-black, #343333);
+
+  --tag-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --tag-border: var(--border-border-normal-light, #f5f3f3);
+  --tag-fg: var(--text-text-normal-text-caption-black, #858484);
+  --tag-gap: var(--padding-tiny, 4px);
+  --tag-px: var(--padding-min, 2px);
+  --tag-radius: var(--border-radius-extra-small-2, 6px);
+  --tag-disabled-opacity: var(--transparency-disable, 0.55);
+
+  --progress-gap: var(--gap-inside-space, 6px);
+  --progress-bar-width: 80px;
+  --progress-bar-height: 4px;
+  --progress-bar-height-big: 6px;
+  --progress-label-width: 22px;
+  --progress-label-fg: var(--text-text-normal-text-caption-black, #858484);
+  --progress-track-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --progress-track-border: var(--border-border-normal-light, #f5f3f3);
+  --progress-ring-size: 16px;
+
+  --scroll-size: 10px;
+  --scroll-size-small: 8px;
+  --scroll-thumb-bg: var(--control-control-normal-background-deep, #e2e0e0);
+  --scroll-track-padding-y: var(--padding-tiny, 4px);
+  --scroll-track-padding-x: var(--padding-min, 2px);
+  --scroll-thumb-inset: 2px;
+  --scroll-thumb-inset-small: 1px;
+
+  --table-bg: var(--box-box-normal-lightbackground-white, #fdfbfb);
+  --table-border: var(--border-border-normal-light, #f5f3f3);
+  --table-radius: var(--border-radius-middle, 10px);
+  --table-head-height: 38px;
+  --table-cell-height: 50px;
+  --table-cell-px: var(--padding-big, 14px);
+  --table-cell-py: var(--padding-default, 8px);
+  --table-cell-gap: var(--gap-component-space, 8px);
+  --table-checkbox-col-width: 40px;
+  --table-cell-icon-size: var(--icon-size-text-bigger, 1rem);
+  --table-head-fg: var(--text-text-normal-text-caption-black, #858484);
+  --table-cell-fg: var(--text-text-normal-text-black, #343333);
 
   --color-picker-panel-width: 370px;
   --color-picker-area-height: 160px;
@@ -340,10 +384,10 @@
   --datepicker-footer-bg: var(--control-normal-lightbackground-light, #f5f3f3);
   --datepicker-grid-rows: 6;
   --datepicker-day-height: calc(
-    var(--padding-min, 2px) * 2 + var(--line-height-line-height-regular, 18px)
+    var(--padding-min, 2px) * 2 + var(--line-height-line-height-regular, 1.125rem)
   );
   --datepicker-header-height: calc(
-    var(--padding-tiny, 4px) * 4 + var(--icon-size-text-bigger, var(--size-middle, 16px))
+    var(--padding-tiny, 4px) * 4 + var(--icon-size-text-bigger, var(--size-middle, 1rem))
   );
   --datepicker-grid-height: calc(
     var(--datepicker-grid-rows) * var(--datepicker-day-height) +
@@ -393,11 +437,11 @@
   --modal-footer-bg: var(--modal-content-bg);
   --modal-footer-gap: var(--gap-content-space, 10px);
   --modal-footer-actions-gap: var(--gap-component-space, 8px);
-  --modal-icon-size: var(--size-middle, 16px);
-  --modal-icon-slot-height: var(--size-semilarge, 22px);
+  --modal-icon-size: var(--size-middle, 1rem);
+  --modal-icon-slot-height: var(--size-semilarge, 1.375rem);
   --modal-icon-py: var(--padding-min, 2px);
   --modal-icon-fg: var(--text-text-infomation-primary-black, #3489c8);
-  --modal-close-icon-size: var(--size-middle, 16px);
+  --modal-close-icon-size: var(--size-middle, 1rem);
   --modal-close-fg: var(--text-text-normal-text-caption-black, #858484);
   --modal-description-fg: var(--text-text-normal-text-caption-black, #858484);
 
@@ -469,8 +513,8 @@
   --navigation-indicator-width-horizontal: 50px;
   --navigation-transition-duration: var(--switch-transition-duration, 0.3s);
   --navigation-transition-easing: cubic-bezier(0.33, 1, 0.68, 1);
-  --navigation-icon-box: var(--line-height-regular, 18px);
-  --navigation-icon-size: var(--icon-size-text-bigger, var(--size-middle, 16px));
+  --navigation-icon-box: var(--line-height-regular, 1.125rem);
+  --navigation-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
   --navigation-item-hover-bg: var(--button-no-bg-custom-hover);
   --navigation-actions-slot-gap: 2px;
 
@@ -494,10 +538,10 @@
   --feedback-body-gap: var(--gap-component-space, 8px);
   --feedback-body-px: var(--padding-middle, 10px);
   --feedback-body-py: var(--padding-default, 8px);
-  --feedback-icon-size: var(--size-semilarge, 22px);
+  --feedback-icon-size: var(--size-semilarge, 1.375rem);
   --feedback-icon-slot-height: var(--feedback-icon-size);
-  --feedback-close-icon-size: var(--size-middle, 16px);
-  --feedback-close-icon-size-primary: var(--size-regular, 14px);
+  --feedback-close-icon-size: var(--size-middle, 1rem);
+  --feedback-close-icon-size-primary: var(--size-regular, 0.875rem);
   --feedback-content-max-width: 480px;
   --feedback-title-fg-default: var(--text-text-normal-text-black, #343333);
   --feedback-description-fg-default: var(--text-text-normal-text-caption-black, #858484);
@@ -531,8 +575,8 @@
   --alert-body-gap: var(--gap-component-space, 8px);
   --alert-body-px: var(--padding-default, 8px);
   --alert-body-py: var(--padding-small, 6px);
-  --alert-icon-size: var(--size-middle, 16px);
-  --alert-icon-slot-height: var(--line-height-regular, 18px);
+  --alert-icon-size: var(--size-middle, 1rem);
+  --alert-icon-slot-height: var(--line-height-regular, 1.125rem);
   --alert-title-fg: var(--text-text-normal-text-black, #343333);
   --alert-description-fg: var(--text-text-normal-text-caption-black, #858484);
   --alert-close-fg: var(--text-text-normal-text-caption-black, #858484);
@@ -563,9 +607,130 @@
   --alert-neutral-icon-fg: var(--text-text-normal-text-caption-black, #858484);
 
   /* Keyboard focus ring — Tab focus: ring 12px→3px, flush outer border, 250ms */
-  --focus-ring-width-start: var(--size-small, 12px);
+  --focus-ring-width-start: var(--size-small, 0.75rem);
   --focus-ring-width-end: var(--border-thickness-large, 3px);
   --focus-ring-color: var(--ring, var(--border-border-theme-primary, #ff5532));
   --focus-transition-duration: 250ms;
   --focus-transition-easing: ease;
+
+  /* Slider — Figma Information Collect → Slider (384:21584) */
+  --slider-width: 70px;
+  --slider-track-height: 4px;
+  --slider-track-height-big: 6px;
+  --slider-thumb-size: 8px;
+  --slider-thumb-size-big: 12px;
+  --slider-track-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --slider-track-border: var(--border-border-normal-primary, #e2e0e0);
+  --slider-range-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --slider-thumb-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --slider-thumb-border: var(--border-border-theme-primary, #ff5532);
+  --slider-disabled-opacity: var(--transparency-disable, 0.55);
+
+  /* Upload — Figma Information Collect → Upload (527:56238 / 527:56237) */
+  --upload-radius: var(--border-radius-small, 8px);
+  --upload-gap: var(--gap-inside, 4px);
+  --upload-large-gap: var(--gap-content-space, 10px);
+  --upload-large-px: var(--padding-big, 14px);
+  --upload-large-py: var(--padding-default, 8px);
+  --upload-large-bg: var(--control-control-normal-lightbackground-light, #f5f3f3);
+  --upload-large-fg: var(--text-text-normal-text-black, #343333);
+  --upload-large-caption-fg: var(--text-text-normal-text-caption-black, #858484);
+  --upload-drag-border: var(--border-border-theme-primary, #ff5532);
+  --upload-drag-bg: var(--box-box-theme-secondarybackground, #ffdad2);
+  --upload-disabled-opacity: var(--transparency-disable, 0.55);
+
+  /* ScrollPicker — Figma Information Collect → ScrollPicker (579:88681) */
+  --scroll-picker-width: 200px;
+  --scroll-picker-height: 230px;
+  --scroll-picker-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --scroll-picker-border: var(--border-border-normal-light, #f5f3f3);
+  --scroll-picker-radius: var(--border-radius-middle, 10px);
+  --scroll-picker-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
+  --scroll-picker-column-px: var(--gap-inside-space, 6px);
+  --scroll-picker-item-height: 26px;
+  --scroll-picker-item-gap: var(--gap-inside, 4px);
+  --scroll-picker-item-px: var(--padding-default, 8px);
+  --scroll-picker-item-py: var(--padding-tiny, 4px);
+  --scroll-picker-item-radius: var(--border-radius-extra-small-2, 6px);
+  --scroll-picker-item-fg: var(--text-text-normal-text-black, #343333);
+  --scroll-picker-item-fg-selected: var(--text-text-theme-primary-black, #bf2300);
+  --scroll-picker-item-bg-selected: var(--control-control-theme-lightbackground, #ffdad2);
+  --scroll-picker-item-opacity: var(--transparency-placeholder, 0.6);
+  --scroll-picker-visible-count: 9;
+
+  /* Breadcrumb — Figma Structure Navigation → Breadcrumb (622:7883) */
+  --breadcrumb-gap: 2px;
+  --breadcrumb-item-gap: var(--gap-inside, 4px);
+  --breadcrumb-item-px: var(--padding-tiny, 4px);
+  --breadcrumb-item-radius: var(--border-radius-extra-small-2, 6px);
+  --breadcrumb-fg: var(--text-text-normal-text-black, #343333);
+  --breadcrumb-fg-muted: var(--text-text-normal-text-caption-black, #858484);
+  --breadcrumb-separator-opacity: var(--transparency-placeholder, 0.6);
+  --breadcrumb-icon-size: 0.875rem;
+  --breadcrumb-icon-size-small: 0.75rem;
+  --breadcrumb-ellipsis-menu-width: 120px;
+
+  /* Pagehead — Figma Structure Navigation → Pagehead (643:172156) */
+  --pagehead-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --pagehead-border: var(--border-border-normal-light, #f5f3f3);
+  --pagehead-gap: var(--gap-content-space, 10px);
+  --pagehead-px: var(--padding-large, 18px);
+  --pagehead-title-gap: var(--gap-inside-space, 6px);
+  --pagehead-actions-gap: var(--gap-inside, 4px);
+  --pagehead-actions-py: var(--padding-default, 8px);
+  --pagehead-main-py: var(--padding-tiny, 4px);
+  --pagehead-title-pl: var(--gap-inside-space, 6px);
+
+  /* Steps — Figma Structure Navigation → Steps (791:143425) */
+  --steps-gap: var(--gap-block-space, 14px);
+  --steps-item-gap: var(--gap-component-space, 8px);
+  --steps-item-min-width: 120px;
+  --steps-icon-size: var(--size-semilarge, 1.375rem);
+  --steps-title-fg: var(--text-text-normal-text-black, #343333);
+  /* Figma StepsItem description uses Typography Text (not Caption) */
+  --steps-description-fg: var(--text-text-normal-text-black, #343333);
+  --steps-done-bg: var(--box-box-success-secondarybackground, #dff6ce);
+  --steps-done-fg: var(--text-text-success-primary-black, #47842b);
+  --steps-fail-bg: var(--box-box-fail-secondarybackground, #ffdfdf);
+  --steps-fail-fg: var(--text-text-fail-primary-black, #960024);
+  --steps-warning-bg: var(--box-box-warning-secondarybackground, #ffebdd);
+  --steps-warning-fg: var(--text-text-warning-primary-black, #ab6200);
+  --steps-waiting-bg: var(--box-box-infomation-secondarybackground, #eaf3ff);
+  --steps-waiting-fg: var(--text-text-infomation-primary-black, #3489c8);
+  --steps-in-progress-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --steps-in-progress-fg: var(--text-text-theme-primary-black, #bf2300);
+  --steps-in-progress-icon-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --steps-default-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --steps-default-border: var(--border-border-normal-light, #f5f3f3);
+  --steps-default-fg: var(--text-text-normal-text-caption-black, #858484);
+
+  /* Pagination — Figma Structure Navigation → Pagination (791:146366) */
+  --pagination-gap: var(--gap-content-space, 10px);
+  --pagination-controls-gap: 4px;
+  --pagination-page-gap: var(--gap-inside-space, 6px);
+  --pagination-page-px: var(--padding-default, 8px);
+  --pagination-page-py: var(--padding-tiny, 4px);
+  --pagination-page-active-px: var(--padding-middle, 10px);
+  --pagination-page-active-py: var(--padding-small, 6px);
+  --pagination-page-radius: var(--border-radius-small, 8px);
+  --pagination-page-fg: var(--text-text-normal-text-black, #343333);
+  --pagination-page-active-bg: var(--box-box-theme-secondarybackground, #ffdad2);
+  --pagination-page-active-fg: var(--text-text-theme-primary-black, #bf2300);
+  --pagination-jump-gap: 4px;
+  --pagination-jump-input-width: 65px;
+  --pagination-size-select-width: 77px;
+
+  /* Card — Figma Structure Navigation → Card (738:145715) */
+  --card-bg: var(--box-box-normal-lightbackground-white, #fdfbfb);
+  --card-radius: var(--border-radius-middle, 10px);
+  --card-px: var(--padding-big, 14px);
+  --card-gap: var(--gap-content-space, 10px);
+  --card-head-pt: var(--padding-default, 8px);
+  --card-head-pb: var(--padding-tiny, 4px);
+  --card-bottom-pt: var(--padding-tiny, 4px);
+  --card-bottom-pb: var(--padding-default, 8px);
+  --card-body-py: var(--padding-default, 8px);
+  --card-fg: var(--text-text-normal-text-black, #343333);
+  --card-divider-height: 14px;
+  --card-trailing-gap: 10px;
 }

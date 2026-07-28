@@ -72,3 +72,57 @@ export function buildImportSnippet(
 
 <${entry.name} ${props} />`;
 }
+
+const PREVIEW_ATTRS_TO_STRIP = new Set([
+  "width",
+  "height",
+  "class",
+  "style",
+  "aria-hidden",
+  "aria-label",
+  "role",
+  "focusable",
+  "tabindex",
+]);
+
+/** Serialize a rendered preview `<svg>` into standalone markup (no fixed size / React attrs). */
+export function serializePreviewSvg(svg: SVGSVGElement): string {
+  const clone = svg.cloneNode(true) as SVGSVGElement;
+
+  for (const attr of [...clone.attributes]) {
+    const name = attr.name.toLowerCase();
+    if (PREVIEW_ATTRS_TO_STRIP.has(name) || name.startsWith("data-")) {
+      clone.removeAttribute(attr.name);
+    }
+  }
+
+  if (!clone.getAttribute("xmlns")) {
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  }
+
+  return new XMLSerializer().serializeToString(clone);
+}
+
+export function buildSvgFilename(
+  entry: IconCatalogEntry,
+  thickness: IconThickness,
+  mode: IconMode
+): string {
+  return `${entry.iconName}-${thickness.toLowerCase()}-${mode.toLowerCase()}.svg`;
+}
+
+export function downloadSvgFile(markup: string, filename: string): void {
+  const blob = new Blob([markup], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+export function readPreviewSvgMarkup(stage: HTMLElement | null): string | null {
+  const svg = stage?.querySelector("svg");
+  if (!svg) return null;
+  return serializePreviewSvg(svg);
+}

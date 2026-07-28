@@ -1,9 +1,6 @@
 import React from "react";
 import type { Preview } from "@storybook/react";
-import { initKeyboardFocus } from "@aviala-design/spiral";
 import "@aviala-design/spiral/styles.css";
-
-initKeyboardFocus();
 import "@aviala-design/tokens/ald-theme.css";
 import "@aviala-design/tokens/input-effects.css";
 import "@aviala-design/tokens/basic-input-effects.css";
@@ -19,7 +16,12 @@ import "@aviala-design/tokens/datepicker-effects.css";
 import "@aviala-design/tokens/feedback-effects.css";
 import "@aviala-design/tokens/alert-effects.css";
 import "@aviala-design/tokens/button-effects.css";
-import "@aviala-design/tokens/focus-effects.css";
+import "@aviala-design/tokens/badge-effects.css";
+import "@aviala-design/tokens/progress-effects.css";
+import "@aviala-design/tokens/layout-effects.css";
+import "@aviala-design/tokens/information-display-extras.css";
+import "@aviala-design/tokens/information-collect-extras.css";
+import "@aviala-design/tokens/structure-navigation-extras.css";
 import "tailwindcss";
 import "./preview.css";
 

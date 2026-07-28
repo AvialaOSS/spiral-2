@@ -39,56 +39,56 @@
 
 /* Level → icon size + optional line-height box */
 .aviala-loading--level-display {
-  --loading-icon-size: var(--size-huge, 30px);
+  --loading-icon-size: var(--size-huge, 1.875rem);
 }
 
 .aviala-loading--level-headline1 {
-  --loading-icon-size: var(--size-large, 26px);
+  --loading-icon-size: var(--size-large, 1.625rem);
 }
 
 .aviala-loading--level-headline2 {
-  --loading-icon-size: var(--size-semilarge, 22px);
+  --loading-icon-size: var(--size-semilarge, 1.375rem);
 }
 
 .aviala-loading--level-title,
 .aviala-loading--level-subtitle {
-  --loading-icon-size: var(--size-middle, 16px);
+  --loading-icon-size: var(--size-middle, 1rem);
 }
 
 .aviala-loading--level-text {
-  --loading-icon-size: var(--size-regular, 14px);
+  --loading-icon-size: var(--size-regular, 0.875rem);
 }
 
 .aviala-loading--level-caption {
-  --loading-icon-size: var(--size-small, 12px);
+  --loading-icon-size: var(--size-small, 0.75rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-display {
-  height: var(--line-height-max, 44px);
+  height: var(--line-height-max, 2.75rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-headline1 {
-  height: var(--line-height-large, 46px);
+  height: var(--line-height-large, 2.875rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-headline2 {
-  height: var(--line-height-semilarge, 38px);
+  height: var(--line-height-semilarge, 2.375rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-title {
-  height: var(--line-height-big, 32px);
+  height: var(--line-height-big, 2rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-subtitle {
-  height: var(--line-height-middle, 22px);
+  height: var(--line-height-middle, 1.375rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-text {
-  height: var(--line-height-regular, 18px);
+  height: var(--line-height-regular, 1.125rem);
 }
 
 .aviala-loading--line-height-fix.aviala-loading--level-caption {
-  height: var(--line-height-small, 16px);
+  height: var(--line-height-small, 1rem);
 }
 
 /* Mode classes retained for Storybook matrix / future hooks; ring colors set in loading.tsx */

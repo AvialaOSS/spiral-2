@@ -12,25 +12,31 @@ import {
 import {
   Button,
   cn,
+  Feedback,
   Input,
-  Link,
   SegmentatorGroup,
   SegmentatorItem,
   Stack,
   Typography,
+  type FeedbackType,
 } from "@aviala-design/spiral";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { DocsLink } from "../../components/DocsLink";
 import { DocPageHeader } from "../../components/TableOfContents";
 import {
   buildImportSnippet,
+  buildSvgFilename,
+  downloadSvgFile,
   groupIconsByCategory,
   iconShortLabel,
+  readPreviewSvgMarkup,
   type CategoryGroup,
 } from "../../lib/icon-gallery";
 
 type CopyToast = {
   message: string;
+  type: FeedbackType;
   key: number;
 };
 
@@ -124,6 +130,9 @@ function PreviewPanel({
   onModeChange,
   onCopy,
   copied,
+  svgCopied,
+  onCopySvg,
+  onDownloadSvg,
 }: {
   entry: IconCatalogEntry;
   thickness: IconThickness;
@@ -132,7 +141,11 @@ function PreviewPanel({
   onModeChange: (value: IconMode) => void;
   onCopy: () => void;
   copied: boolean;
+  svgCopied: boolean;
+  onCopySvg: (stage: HTMLElement | null) => void;
+  onDownloadSvg: (stage: HTMLElement | null) => void;
 }) {
+  const stageRef = useRef<HTMLDivElement>(null);
   const snippet = buildImportSnippet(entry, thickness, mode);
 
   return (
@@ -150,8 +163,17 @@ function PreviewPanel({
           </Typography>
         </div>
 
-        <div className="docs-icons-preview-stage">
+        <div ref={stageRef} className="docs-icons-preview-stage">
           <Icon icon={entry.component} size={64} thickness={thickness} mode={mode} />
+        </div>
+
+        <div className="docs-icons-preview-actions">
+          <Button mode="second" size="small" onClick={() => onCopySvg(stageRef.current)}>
+            {svgCopied ? "已复制 SVG" : "复制 SVG"}
+          </Button>
+          <Button mode="second" size="small" onClick={() => onDownloadSvg(stageRef.current)}>
+            下载 SVG
+          </Button>
         </div>
 
         <div>
@@ -201,9 +223,9 @@ function PreviewPanel({
 
         <Typography level="caption" as="p" className="text-[var(--muted-foreground)]">
           需要预览 level / BiggerSize 尺寸？请前往{" "}
-          <Link href="/reference/icons/playground" level="caption" mode="noBackgroundCustom">
+          <DocsLink to="/reference/icons/playground" level="caption" mode="noBackgroundCustom">
             Icons Playground
-          </Link>
+          </DocsLink>
           。
         </Typography>
       </Stack>
@@ -219,7 +241,13 @@ export function IconsDocPage() {
   const [mode, setMode] = useState<IconMode>("default");
   const [copiedName, setCopiedName] = useState<string>();
   const [panelCopied, setPanelCopied] = useState(false);
+  const [svgCopied, setSvgCopied] = useState(false);
   const [toast, setToast] = useState<CopyToast | null>(null);
+
+  const showToast = useCallback((message: string, type: FeedbackType = "success") => {
+    setToast({ message, type, key: Date.now() });
+    window.setTimeout(() => setToast(null), 2000);
+  }, []);
 
   const categories = useMemo(
     () => groupIconsByCategory(iconCatalog, search, thicknessFilter),
@@ -236,11 +264,10 @@ export function IconsDocPage() {
       const snippet = buildImportSnippet(entry, copyThickness, copyMode);
       await navigator.clipboard.writeText(snippet);
       setCopiedName(entry.name);
-      setToast({ message: `已复制 ${entry.name}`, key: Date.now() });
+      showToast(`已复制 ${entry.name}`);
       window.setTimeout(() => setCopiedName(undefined), 1500);
-      window.setTimeout(() => setToast(null), 2000);
     },
-    []
+    [showToast]
   );
 
   const selectIcon = useCallback(
@@ -272,11 +299,40 @@ export function IconsDocPage() {
     window.setTimeout(() => setPanelCopied(false), 1500);
   }, [copySnippet, mode, selected, thickness]);
 
+  const copySvgFromPanel = useCallback(
+    async (stage: HTMLElement | null) => {
+      const markup = readPreviewSvgMarkup(stage);
+      if (!markup) {
+        showToast("未找到可复制的 SVG", "wrong");
+        return;
+      }
+      await navigator.clipboard.writeText(markup);
+      setSvgCopied(true);
+      showToast("已复制 SVG");
+      window.setTimeout(() => setSvgCopied(false), 1500);
+    },
+    [showToast]
+  );
+
+  const downloadSvgFromPanel = useCallback(
+    (stage: HTMLElement | null) => {
+      const markup = readPreviewSvgMarkup(stage);
+      if (!markup) {
+        showToast("未找到可下载的 SVG", "wrong");
+        return;
+      }
+      const filename = buildSvgFilename(selected, thickness, mode);
+      downloadSvgFile(markup, filename);
+      showToast(`已下载 ${filename}`);
+    },
+    [mode, selected, showToast, thickness]
+  );
+
   return (
     <div className="docs-icons-page">
       <DocPageHeader
         title="Icons 图标"
-        description={`浏览 ${iconCatalog.length} 个 Aviala 图标，按分类搜索并一键复制导入代码。`}
+        description={`浏览 ${iconCatalog.length} 个 Aviala 图标，按分类搜索、复制导入代码，或复制/下载纯 SVG。`}
       />
 
       <div className="docs-icons-layout">
@@ -345,15 +401,22 @@ export function IconsDocPage() {
           onModeChange={setMode}
           onCopy={() => void copyFromPanel()}
           copied={panelCopied}
+          svgCopied={svgCopied}
+          onCopySvg={(stage) => void copySvgFromPanel(stage)}
+          onDownloadSvg={downloadSvgFromPanel}
         />
       </div>
 
       {toast ? (
-        <div key={toast.key} className="docs-icons-toast" role="status" aria-live="polite">
-          <Typography level="text" as="span">
-            {toast.message}
-          </Typography>
-        </div>
+        <Feedback
+          key={toast.key}
+          className="docs-icons-toast"
+          type={toast.type}
+          size="small"
+          mode="primary"
+          title={toast.message}
+          showClose={false}
+        />
       ) : null}
     </div>
   );

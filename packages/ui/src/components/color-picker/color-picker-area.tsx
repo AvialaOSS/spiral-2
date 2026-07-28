@@ -52,7 +52,7 @@ export function ColorPickerArea({
     <div className={cn("aviala-color-picker-area", className)} {...spiralDebugId("color-picker.content.area")}>
       <div
         ref={ref}
-        className="aviala-color-picker-area__surface"
+        className="aviala-color-picker-area__surface aviala-focus-ring"
         style={{ backgroundColor: hueColor }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}

@@ -1,6 +1,4 @@
-import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Typography } from "@aviala-design/spiral";
 import { DocLayout } from "./components/DocLayout";
 import { AlertDocPage } from "./pages/components/AlertDocPage";
 import { AnchorDocPage } from "./pages/components/AnchorDocPage";
@@ -27,29 +25,30 @@ import { TextareaDocPage } from "./pages/components/TextareaDocPage";
 import { TooltipDocPage } from "./pages/components/TooltipDocPage";
 import { TypefaceDocPage } from "./pages/components/TypefaceDocPage";
 import { TypographyDocPage } from "./pages/components/TypographyDocPage";
+import {
+  AvatarDocPage,
+  BadgeDocPage,
+  BreadcrumbDocPage,
+  CardDocPage,
+  PageheadDocPage,
+  PaginationDocPage,
+  ProgressDocPage,
+  ScrollDocPage,
+  SliderDocPage,
+  StepsDocPage,
+  TableDocPage,
+  TagDocPage,
+  UploadDocPage,
+  ScrollPickerDocPage,
+} from "./pages/components/RemainingComponentsDocPages";
 import { InstallationPage } from "./pages/guides/InstallationPage";
 import { IntroductionPage } from "./pages/guides/IntroductionPage";
 import { ThemePage } from "./pages/guides/ThemePage";
 import { DebuggerPage } from "./pages/reference/DebuggerPage";
 import { IconSyncDocPage } from "./pages/reference/IconSyncDocPage";
-
-const IconsDocPage = lazy(() =>
-  import("./pages/reference/IconsDocPage").then((module) => ({ default: module.IconsDocPage }))
-);
-
-const IconsPlaygroundPage = lazy(() =>
-  import("./pages/reference/IconsPlaygroundPage").then((module) => ({
-    default: module.IconsPlaygroundPage,
-  }))
-);
-
-function IconsPageFallback() {
-  return (
-    <Typography level="text" as="p" className="docs-page-description">
-      加载图标库…
-    </Typography>
-  );
-}
+import { IconsDocPage } from "./pages/reference/IconsDocPage";
+import { IconsPlaygroundPage } from "./pages/reference/IconsPlaygroundPage";
+import { RemScalePage } from "./pages/reference/RemScalePage";
 
 export function AppRoutes() {
   return (
@@ -59,25 +58,12 @@ export function AppRoutes() {
         <Route path="start/introduction" element={<IntroductionPage />} />
         <Route path="start/installation" element={<InstallationPage />} />
         <Route path="start/theme" element={<ThemePage />} />
-        <Route
-          path="reference/icons"
-          element={
-            <Suspense fallback={<IconsPageFallback />}>
-              <IconsDocPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="reference/icons/playground"
-          element={
-            <Suspense fallback={<IconsPageFallback />}>
-              <IconsPlaygroundPage />
-            </Suspense>
-          }
-        />
+        <Route path="reference/icons" element={<IconsDocPage />} />
+        <Route path="reference/icons/playground" element={<IconsPlaygroundPage />} />
         <Route path="icon-sync" element={<IconSyncDocPage />} />
         <Route path="reference/icon-sync" element={<IconSyncDocPage />} />
         <Route path="reference/debugger" element={<DebuggerPage />} />
+        <Route path="reference/rem-scale" element={<RemScalePage />} />
         <Route path="components/basic-input/button" element={<ButtonDocPage />} />
         <Route path="components/basic-input/input" element={<InputDocPage />} />
         <Route path="components/basic-input/segmentator" element={<SegmentatorDocPage />} />
@@ -91,9 +77,21 @@ export function AppRoutes() {
         <Route path="components/information-collect/radio" element={<RadioDocPage />} />
         <Route path="components/information-collect/cascader" element={<CascaderDocPage />} />
         <Route path="components/information-collect/color-picker" element={<ColorPickerDocPage />} />
+        <Route path="components/information-collect/slider" element={<SliderDocPage />} />
+        <Route path="components/information-collect/upload" element={<UploadDocPage />} />
+        <Route path="components/information-collect/scroll-picker" element={<ScrollPickerDocPage />} />
         <Route path="components/structure-navigation/navigation" element={<NavigationDocPage />} />
         <Route path="components/structure-navigation/list" element={<ListDocPage />} />
+        <Route path="components/structure-navigation/breadcrumb" element={<BreadcrumbDocPage />} />
+        <Route path="components/structure-navigation/pagehead" element={<PageheadDocPage />} />
+        <Route path="components/structure-navigation/steps" element={<StepsDocPage />} />
+        <Route path="components/structure-navigation/pagination" element={<PaginationDocPage />} />
+        <Route path="components/structure-navigation/card" element={<CardDocPage />} />
         <Route path="components/information-display/modal" element={<ModalDocPage />} />
+        <Route path="components/information-display/badge" element={<BadgeDocPage />} />
+        <Route path="components/information-display/tag" element={<TagDocPage />} />
+        <Route path="components/information-display/avatar" element={<AvatarDocPage />} />
+        <Route path="components/information-display/table" element={<TableDocPage />} />
         <Route path="components/system-composition/typography" element={<TypographyDocPage />} />
         <Route path="components/system-composition/typeface" element={<TypefaceDocPage />} />
         <Route path="components/system-composition/form-field" element={<FormFieldDocPage />} />
@@ -101,8 +99,10 @@ export function AppRoutes() {
         <Route path="components/system-composition/popover" element={<PopoverDocPage />} />
         <Route path="components/system-composition/tooltip" element={<TooltipDocPage />} />
         <Route path="components/system-composition/loading" element={<LoadingDocPage />} />
+        <Route path="components/system-composition/scroll" element={<ScrollDocPage />} />
         <Route path="components/feedback/alert" element={<AlertDocPage />} />
         <Route path="components/feedback/feedback" element={<FeedbackDocPage />} />
+        <Route path="components/feedback/progress" element={<ProgressDocPage />} />
         <Route path="*" element={<Navigate to="/start/introduction" replace />} />
       </Route>
     </Routes>
