@@ -1,190 +1,188 @@
-# Monorepo ????
+# Monorepo 命令参考
 
-Spiral 2 ?? **pnpm workspace** + **Turborepo** ?? monorepo??????????? workspace ???? npm scripts????? CLI ??? CI ???
+Spiral 2 使用 **pnpm workspace** + **Turborepo** 管理 monorepo。本文档汇总根目录与各 workspace 包的全部 npm scripts，以及独立 CLI 脚本与 CI 流程。
 
-> Figma ???MCP ????????? [figma-mcp.md](./figma-mcp.md)?
+> Figma 导出、MCP 配置等设计侧细节见 [figma-mcp.md](./figma-mcp.md)。
 
-## ???????
+## 概述与前置条件
 
-| ? | ?? |
+| 项 | 要求 |
 |---|---|
-| Node.js | `>= 20`??? `package.json` `engines`? |
-| ???? | `pnpm@9.15.4`??? `packageManager`??? Corepack? |
-| ??? | `apps/*`?`packages/*`?? `pnpm-workspace.yaml`? |
+| Node.js | `>= 20`（见根 `package.json` `engines`） |
+| 包管理器 | `pnpm@9.15.4`（见根 `packageManager`，推荐 Corepack） |
+| 工作区 | `apps/*`、`packages/*`（见 `pnpm-workspace.yaml`） |
 
-**??????**
+**首次克隆后：**
 
 ```bash
 pnpm install
-pnpm sync:ald          # ?? ALD ?? token ? packages/tokens/source/ald
-pnpm build             # ???? workspace?Turbo ?????
+pnpm sync:ald          # 同步 ALD 设计 token 到 packages/tokens/source/ald
+pnpm build             # 构建全部 workspace（Turbo 拓扑排序）
 ```
 
-**Workspace ????7 ? `package.json`??**
+**Workspace 包一览（6 个 `package.json`）：**
 
-| ?? | ?? | ?? |
+| 路径 | 包名 | 说明 |
 |---|---|---|
-| `/` | `spiral2` | ? monorepo?Turbo ??????? |
-| `apps/spiral-docs` | `@spiral/spiral-docs` | ????????Vite + MDX? |
-| `apps/docs` | `@spiral/docs` | Storybook ???? |
-| `apps/playground` | `@spiral/playground` | ???? playground |
-| `packages/ui` | `@aviala-design/spiral` | React ??? |
-| `packages/tokens` | `@aviala-design/tokens` | ?? token ????? |
-| `packages/icons` | `@aviala-design/icons` | ?? React ?? |
+| `/` | `spiral2` | 根 monorepo，Turbo 编排与跨包脚本 |
+| `apps/docs` | `@spiral/docs` | Storybook 组件预览 |
+| `apps/playground` | `@spiral/playground` | 本地开发 playground |
+| `packages/ui` | `@aviala-design/spiral` | React 组件库 |
+| `packages/tokens` | `@aviala-design/tokens` | 设计 token 与主题引擎 |
+| `packages/icons` | `@aviala-design/icons` | 图标 React 组件 |
 
-**??? workspace ?????**
+**在任意 workspace 运行脚本：**
 
 ```bash
-pnpm --filter <??> <script>
-# ??pnpm --filter @aviala-design/spiral dev
+pnpm --filter <包名> <script>
+# 例：pnpm --filter @aviala-design/spiral dev
 ```
 
 ---
 
-## ??? Monorepo ??
+## 根目录 Monorepo 命令
 
-???????? `pnpm <script>`?
+在仓库根目录执行 `pnpm <script>`。
 
-| ?? | ?? |
+| 命令 | 说明 |
 |---|---|
-| `pnpm build` | Turbo ?????? workspace?`dependsOn: ^build`? |
-| `pnpm dev` | Turbo ???? `dev`?????????? |
-| `pnpm lint` | Turbo ???? `lint`?**??????? `lint` script**? |
-| `pnpm typecheck` | Turbo ???? `typecheck`????? `build`? |
-| `pnpm clean` | Turbo ??????????? `node_modules` |
-| `pnpm sync:ald` | ??? ALD ???? token ? `packages/tokens/source/ald` |
-| `pnpm docs:dev` | ?? `@spiral/spiral-docs` ????? |
-| `pnpm docs:build` | ???? tokens ? spiral ? spiral-docs??????? |
-| `pnpm docs:copy-hugo` | ? spiral-docs ??????? Hugo ???? |
-| `pnpm icons:export` | ? Figma ?? SVG ? `packages/icons/raw/` |
-| `pnpm icons:export:dry` | ????????????? |
-| `pnpm icons:build` | ??? `@aviala-design/icons` ? SVGR ?? |
-| `pnpm icons:sync` | ???? + `@aviala-design/icons` ???? |
+| `pnpm build` | Turbo 并行构建全部 workspace（`dependsOn: ^build`） |
+| `pnpm dev` | Turbo 启动各包 `dev`（持久任务，不缓存） |
+| `pnpm lint` | Turbo 运行各包 `lint`（**当前无子包定义 `lint` script**） |
+| `pnpm typecheck` | Turbo 运行各包 `typecheck`（依赖上游 `build`） |
+| `pnpm clean` | Turbo 清理各包产物，并删除根 `node_modules` |
+| `pnpm sync:ald` | 从本地 ALD 仓库复制 token 到 `packages/tokens/source/ald` |
+| `pnpm icons:export` | 从 Figma 导出 SVG 到 `packages/icons/raw/` |
+| `pnpm icons:export:dry` | 图标导出预检（不写入文件） |
+| `pnpm icons:build` | 仅运行 `@aviala-design/icons` 的 SVGR 构建 |
+| `pnpm icons:sync` | 图标导出 + `@aviala-design/icons` 完整构建 |
 
 ---
 
 ## Apps
 
-### `@spiral/spiral-docs`?`apps/spiral-docs`?
+### Spiral Docs（已迁出本仓库）
 
-???????????? `/docs/spiral/`?
+公开文档站源码现位于 `avialaWebsite/apps/spiral-docs`，通过 npm 上已发布的 `@aviala-design/*` 消费本库，并随 Hugo 站部署到 `/docs/spiral/`。
 
-| ?? | ?? |
+在 `avialaWebsite` 仓库运行：
+
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @spiral/spiral-docs dev` | Vite ??????**http://localhost:5175/docs/spiral/** |
-| `pnpm --filter @spiral/spiral-docs build` | ?? props ??? + Vite ???? |
-| `pnpm --filter @spiral/spiral-docs preview` | ?????? |
-| `pnpm --filter @spiral/spiral-docs typecheck` | TypeScript ?????? |
-| `pnpm --filter @spiral/spiral-docs generate:props` | ? `@aviala-design/spiral` ???? `props-registry`?build ?????? |
+| `npm run dev:spiral-docs` | Vite 开发服务器，**http://localhost:5175/docs/spiral/** |
+| `npm run build:spiral-docs` | 构建到 `static/docs/spiral/` 并写入 `data/spiraldocs.json` |
 
-??????????? API?`/__spiral/icon-sync/*`????????? Figma ????????? `icons:export` + `icons:build`?
+原先的 dev-only 图标同步 API（`/__spiral/icon-sync/*`）已移除，改用本仓库的 `pnpm icons:export` + `pnpm icons:build`。
 
-**????????** `pnpm docs:dev`?`pnpm docs:build`?`pnpm docs:copy-hugo`
+### `@spiral/docs`（`apps/docs`）
 
-### `@spiral/docs`?`apps/docs`?
+Storybook 8 组件预览。
 
-Storybook 8 ?????
-
-| ?? | ?? |
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @spiral/docs dev` | Storybook ???**http://localhost:6006** |
-| `pnpm --filter @spiral/docs build` | ???? Storybook?`storybook-static/`? |
-| `pnpm --filter @spiral/docs typecheck` | TypeScript ?? |
+| `pnpm --filter @spiral/docs dev` | Storybook 开发，**http://localhost:6006** |
+| `pnpm --filter @spiral/docs build` | 构建静态 Storybook（`storybook-static/`） |
+| `pnpm --filter @spiral/docs typecheck` | TypeScript 检查 |
 
-### `@spiral/playground`?`apps/playground`?
+### `@spiral/playground`（`apps/playground`）
 
-????????? playground?
+本地组件与主题调试 playground。
 
-| ?? | ?? |
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @spiral/playground dev` | Vite ??????**http://localhost:5173** |
-| `pnpm --filter @spiral/playground build` | `tsc -b` + Vite ???? |
-| `pnpm --filter @spiral/playground preview` | ?????? |
-| `pnpm --filter @spiral/playground typecheck` | TypeScript ?????? |
+| `pnpm --filter @spiral/playground dev` | Vite 开发服务器，**http://localhost:5173** |
+| `pnpm --filter @spiral/playground build` | `tsc -b` + Vite 生产构建 |
+| `pnpm --filter @spiral/playground preview` | 预览生产构建 |
+| `pnpm --filter @spiral/playground typecheck` | TypeScript 项目引用检查 |
 
 ---
 
 ## Packages
 
-### `@aviala-design/spiral`?`packages/ui`?
+### `@aviala-design/spiral`（`packages/ui`）
 
-React ??????? `packages/ui`??? `@aviala-design/spiral`??
+React 组件库（源码在 `packages/ui`，包名 `@aviala-design/spiral`）。
 
-| ?? | ?? |
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @aviala-design/spiral build` | tsup ?? + ?? CSS ? `dist/` |
-| `pnpm --filter @aviala-design/spiral dev` | tsup watch ?? |
-| `pnpm --filter @aviala-design/spiral typecheck` | TypeScript ?? |
-| `pnpm --filter @aviala-design/spiral clean` | ?? `dist/` |
+| `pnpm --filter @aviala-design/spiral build` | tsup 打包 + 复制 CSS 到 `dist/` + 生成 `dist/props.json` |
+| `pnpm --filter @aviala-design/spiral dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/spiral typecheck` | TypeScript 检查 |
+| `pnpm --filter @aviala-design/spiral clean` | 删除 `dist/` |
 
-### `@aviala-design/tokens`?`packages/tokens`?
+`dist/props.json` 通过 `./props.json` 导出随包发布，供文档站渲染组件 API 表格。
 
-ALD ?? token ??????
+### `@aviala-design/tokens`（`packages/tokens`）
 
-| ?? | ?? |
+ALD 设计 token 与主题引擎。
+
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @aviala-design/tokens build` | tsup ?? + ?? CSS ???`build-css.mjs`? |
-| `pnpm --filter @aviala-design/tokens dev` | tsup watch ?? |
-| `pnpm --filter @aviala-design/tokens typecheck` | TypeScript ?? |
-| `pnpm --filter @aviala-design/tokens clean` | ?? `dist/` |
+| `pnpm --filter @aviala-design/tokens build` | tsup 打包 + 生成 CSS 产物（`build-css.mjs`） |
+| `pnpm --filter @aviala-design/tokens dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/tokens typecheck` | TypeScript 检查 |
+| `pnpm --filter @aviala-design/tokens clean` | 删除 `dist/` |
 
-?????? `source/ald` ???`pnpm sync:ald` ? CI ??????
+构建前需确保 `source/ald` 存在（`pnpm sync:ald` 或 CI 中已提交）。
 
-### `@aviala-design/icons`?`packages/icons`?
+新增 `*-effects.css` 时，除了 `build-css.mjs` 的产物，还需在 `package.json` 的 `exports` 里补上对应子路径，否则下游（如文档站）无法 `import`。
 
-Figma ?? ? SVGR ? React ???
+### `@aviala-design/icons`（`packages/icons`）
 
-| ?? | ?? |
+Figma 图标 → SVGR → React 组件。
+
+| 命令 | 说明 |
 |---|---|
-| `pnpm --filter @aviala-design/icons build` | SVGR ???? + tsup ?? |
-| `pnpm --filter @aviala-design/icons build:icons` | ? SVGR ???? `icons:build` ?????? |
-| `pnpm --filter @aviala-design/icons dev` | tsup watch ?? |
-| `pnpm --filter @aviala-design/icons typecheck` | TypeScript ?? |
-| `pnpm --filter @aviala-design/icons clean` | ?? `dist/`?`src/components/`?`src/catalog.ts` |
+| `pnpm --filter @aviala-design/icons build` | SVGR 生成组件 + tsup 打包 |
+| `pnpm --filter @aviala-design/icons build:icons` | 仅 SVGR 步骤（根 `icons:build` 调用此命令） |
+| `pnpm --filter @aviala-design/icons dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/icons typecheck` | TypeScript 检查 |
+| `pnpm --filter @aviala-design/icons clean` | 删除 `dist/`、`src/components/`、`src/catalog.ts` |
 
-???? workflow ?? [figma-mcp.md](./figma-mcp.md#icons-export-workflow)?
+图标导出 workflow 详见 [figma-mcp.md](./figma-mcp.md#icons-export-workflow)。
 
 ---
 
-## ?????
+## 常用工作流
 
-### ??????
+### 日常组件开发
 
 ```bash
-pnpm sync:ald                    # token ????
+pnpm sync:ald                    # token 有更新时
 pnpm --filter @aviala-design/tokens build
-pnpm --filter @aviala-design/spiral dev # ? build ????
+pnpm --filter @aviala-design/spiral dev # 或 build 一次后：
 pnpm --filter @spiral/playground dev
 ```
 
-### Storybook ??
+### Storybook 预览
 
 ```bash
-pnpm build                       # ????????
+pnpm build                       # 确保依赖包已构建
 pnpm --filter @spiral/docs dev
 ```
 
-### ????????
+### 公开文档站
+
+组件改动需要先发版，文档站才会更新：
 
 ```bash
-pnpm docs:dev                    # ?? http://localhost:5175/docs/spiral/
-pnpm docs:build                  # ????
-pnpm docs:copy-hugo              # ??? ../avialaWebsite/static/docs/spiral/
+pnpm changeset                   # 记录版本变更
+# 合并到 main 后由 release.yml 发布到 npm
 ```
 
-Hugo ???? `/docs/spiral/*` ?? SPA fallback???? `index.html`??
+随后在 `avialaWebsite` 仓库执行 `npm update @aviala-design/spiral` 并推送即可。
 
-### ?????Figma ? ???
+### 图标同步（Figma → 代码）
 
 ```bash
-pnpm icons:export:dry            # ??
-pnpm icons:sync                  # ?? + ?? @aviala-design/icons
-pnpm build                       # ????????
+pnpm icons:export:dry            # 预检
+pnpm icons:sync                  # 导出 + 构建 @aviala-design/icons
+pnpm build                       # 刷新依赖图标的包
 ```
 
-?????? CLI ??? [figma-mcp.md](./figma-mcp.md#icons-export-workflow)?
+可选过滤器与 CLI 参数见 [figma-mcp.md](./figma-mcp.md#icons-export-workflow)。
 
-### ALD token ??
+### ALD token 更新
 
 ```bash
 pnpm sync:ald
@@ -192,96 +190,99 @@ pnpm --filter @aviala-design/tokens build
 pnpm build
 ```
 
-### ?????? CI ???
+### 全量验证（与 CI 一致）
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm sync:ald || true            # CI ? ALD ???
+pnpm sync:ald || true            # CI 无 ALD 时跳过
 pnpm build
 pnpm typecheck
 ```
 
 ---
 
-## ?? CLI ??
+## 独立 CLI 脚本
 
-????**?**???? `package.json` script????? `node` ???
+以下脚本**未**注册为根 `package.json` script，需直接用 `node` 调用。
 
-| ?? | ?? | ?? |
+| 脚本 | 用法 | 说明 |
 |---|---|---|
-| `scripts/sync-ald.mjs` | `pnpm sync:ald` | ?? ALD ? `packages/tokens/source/ald` |
-| `scripts/copy-docs-to-hugo.mjs` | `pnpm docs:copy-hugo` | ?? spiral-docs ????? Hugo |
-| `scripts/figma-export/export-icons.mjs` | `pnpm icons:export` / `:dry` | Figma ?? SVG ?? |
-| `scripts/figma-export/export-icons-audit.mjs` | `node scripts/figma-export/export-icons-audit.mjs --out=<dir>` | ????????????????? |
-| `scripts/figma-export/analyze-icons-metadata.mjs` | `node scripts/figma-export/analyze-icons-metadata.mjs <file>` | ?? Figma ??? XML ????? |
-| `scripts/figma-export/test-icon-utils.mjs` | `node scripts/figma-export/test-icon-utils.mjs` | `icon-utils` ???? |
-| `packages/icons/scripts/build-icons.mjs` | ? `icons:build` / `icons:sync` ?? | SVGR ? `src/components/` + `catalog.ts` |
-| `packages/tokens/scripts/build-css.mjs` | ? `@aviala-design/tokens build` ?? | ??? `*-effects.css` ? CSS ?? |
-| `packages/ui/scripts/copy-css.mjs` | ? `@aviala-design/spiral build` ?? | ????? `dist/styles.css` |
-| `apps/spiral-docs/scripts/generate-props.mjs` | ? spiral-docs `build` ?? | react-docgen-typescript ?? props ? |
+| `scripts/sync-ald.mjs` | `pnpm sync:ald` | 复制 ALD → `packages/tokens/source/ald` |
+| `scripts/figma-export/export-icons.mjs` | `pnpm icons:export` / `:dry` | Figma 图标 SVG 导出 |
+| `scripts/figma-export/export-icons-audit.mjs` | `node scripts/figma-export/export-icons-audit.mjs --out=<dir>` | 导出到自定义目录并生成同步问题报告 |
+| `scripts/figma-export/analyze-icons-metadata.mjs` | `node scripts/figma-export/analyze-icons-metadata.mjs <file>` | 分析 Figma 元数据 XML 中的图标帧 |
+| `scripts/figma-export/test-icon-utils.mjs` | `node scripts/figma-export/test-icon-utils.mjs` | `icon-utils` 单元断言 |
+| `packages/icons/scripts/build-icons.mjs` | 经 `icons:build` / `icons:sync` 调用 | SVGR → `src/components/` + `catalog.ts` |
+| `packages/tokens/scripts/build-css.mjs` | 经 `@aviala-design/tokens build` 调用 | 生成各 `*-effects.css` 等 CSS 产物 |
+| `packages/ui/scripts/copy-css.mjs` | 经 `@aviala-design/spiral build` 调用 | 复制样式到 `dist/styles.css` |
+| `packages/ui/scripts/generate-props.mjs` | 经 `@aviala-design/spiral build` 调用 | react-docgen-typescript 生成 `dist/props.json`，随包发布给文档站 |
 
-**`export-icons.mjs` ?? CLI ???**
+**`export-icons.mjs` 额外 CLI 参数：**
 
 ```bash
 node scripts/figma-export/export-icons.mjs --thickness=Regular --mode=default
-node scripts/figma-export/export-icons.mjs --no-clean   # ??? raw SVG?????
+node scripts/figma-export/export-icons.mjs --no-clean   # 保留旧 raw SVG（不推荐）
 ```
 
 ---
 
 ## CI / Release
 
-### CI?`.github/workflows/ci.yml`?
+### CI（`.github/workflows/ci.yml`）
 
-???`push` / `pull_request` ? `main`
+触发：`push` / `pull_request` → `main`（Node 20 + pnpm 9）
 
-| ?? | ?? / ?? |
+| 步骤 | 命令 / 动作 |
 |---|---|
-| ?? ALD | ??? sibling `../ALD` ???????????? `source/ald` |
-| ?? | `pnpm install --frozen-lockfile` |
-| ?? ALD | `pnpm sync:ald \|\| true` |
-| ?? | `pnpm build` |
-| ???? | `pnpm typecheck` |
+| 准备 ALD | 若存在 sibling `../ALD` 则复制；否则使用已提交的 `source/ald` |
+| 安装 | `pnpm install --frozen-lockfile` |
+| 导出图标 | `pnpm icons:export`（需 `FIGMA_ACCESS_TOKEN`） |
+| 同步 ALD | `pnpm sync:ald \|\| true` |
+| 构建 | `pnpm build` |
+| 类型检查 | `pnpm typecheck` |
 
-### Release?`.github/workflows/release.yml`?
+### Release（`.github/workflows/release.yml`）
 
-???`push` ? `main`?Changesets Action?
+触发：`push` → `main`（Changesets Action，Node 22 + pnpm 9）
 
-| ?? | ?? |
+| 步骤 | 命令 |
 |---|---|
-| ?? + ?? | `pnpm install --frozen-lockfile`?`pnpm build` |
-| ?? PR / ?? | `pnpm changeset version`?`pnpm changeset publish` |
+| 安装 | `pnpm install --frozen-lockfile` |
+| 导出图标 | `pnpm icons:export`（需 `FIGMA_ACCESS_TOKEN`） |
+| 构建可发布包 | `pnpm --filter @aviala-design/tokens --filter @aviala-design/icons --filter @aviala-design/spiral build` |
+| 版本 PR / 发布 | `pnpm changeset version`、`pnpm changeset publish` |
 
-**?? Changesets ????**
+发布走 **npm Trusted Publishing（OIDC）**，工作流声明 `id-token: write` 并升级 npm，因此 **CI 不需要 `NPM_TOKEN`**；新包需先在 npmjs.com → Settings → Trusted publishing 配置。
+
+**本地 Changesets 工作流：**
 
 ```bash
-pnpm changeset              # ???????? @aviala-design/* ??????
-pnpm changeset version      # ???? bump ? CHANGELOG
-pnpm changeset publish      # ??? npm?? NPM_TOKEN?
+pnpm changeset              # 创建变更集（选择 @aviala-design/* 等可发布包）
+pnpm changeset version      # 应用版本 bump 与 CHANGELOG
+pnpm changeset publish      # 本地发布需先 npm login（CI 走 OIDC，无需 token）
 ```
 
-Changesets ???`.changeset/config.json`??? `@spiral/playground` ? `@spiral/docs`??? app??????
+Changesets 配置（`.changeset/config.json`）忽略 `@spiral/playground` 与 `@spiral/docs`（私有 app，不发布）。
 
 ---
 
-## ????
+## 环境变量
 
-?? `.env.example` ? `.env.local`?**???**??CLI ?????????? `.env.local` / `.env`?? `scripts/figma-export/lib/load-env.mjs`??
+复制 `.env.example` → `.env.local`（**勿提交**）。CLI 脚本从仓库根自动加载 `.env.local` / `.env`（见 `scripts/figma-export/lib/load-env.mjs`）。
 
-| ?? | ?? | ?? |
+| 变量 | 必需 | 说明 |
 |---|---|---|
-| `FIGMA_ACCESS_TOKEN` | ????? | Figma Personal Access Token?? [figma-mcp.md](./figma-mcp.md#environment) |
-| `FIGMA_FILE_COLOUR` | ? | Colour For Design ?? key?????? |
-| `FIGMA_FILE_COMPONENTS` | ? | Components ?? key?????? |
-| `FIGMA_FILE_ICONS` | ? | Icons ?? key?????? |
-| `ICONS_THICKNESS` | ? | ???????????? `Regular,Bold` |
-| `ICONS_MODE` | ? | ??????? `default` |
-| `ALD_PATH` | ? | ?? ALD ???????? `.env.example`? |
-| `HUGO_WEBSITE_PATH` | ? | Hugo ??????`docs:copy-hugo` ???? `../avialaWebsite`? |
+| `FIGMA_ACCESS_TOKEN` | 图标导出时 | Figma Personal Access Token，见 [figma-mcp.md](./figma-mcp.md#environment) |
+| `FIGMA_FILE_COLOUR` | 否 | Colour For Design 文件 key（默认已填） |
+| `FIGMA_FILE_COMPONENTS` | 否 | Components 文件 key（默认已填） |
+| `FIGMA_FILE_ICONS` | 否 | Icons 文件 key（默认已填） |
+| `ICONS_THICKNESS` | 否 | 导出过滤器，逗号分隔，如 `Regular,Bold` |
+| `ICONS_MODE` | 否 | 导出过滤器，如 `default` |
+| `ALD_PATH` | 否 | 本地 ALD 仓库路径（默认见 `.env.example`） |
 
-**CI / Release secrets?GitHub Actions??**
+**CI / Release secrets（GitHub Actions）：**
 
-| Secret | ?? |
+| Secret | 用途 |
 |---|---|
-| `GITHUB_TOKEN` | Changesets ???? PR |
-| `NPM_TOKEN` | `changeset publish` ?? npm ? |
+| `GITHUB_TOKEN` | Changesets 创建版本 PR |
+| `FIGMA_ACCESS_TOKEN` | CI / Release 中的 `pnpm icons:export` |

@@ -35,17 +35,19 @@ pnpm --filter @spiral/docs dev
 
 ## 公开文档站（Spiral Docs）
 
-中文组件文档，Semi 风格侧栏 + Live Demo + API，部署到 Hugo 站 `/docs/spiral/`。
+中文组件文档已迁出本仓库，源码位于 [avialaWebsite/apps/spiral-docs](../avialaWebsite/apps/spiral-docs)，通过 npm 上已发布的 `@aviala-design/*` 消费本库，随 Hugo 站一起部署到 `https://www.aviala.top/docs/spiral/`。
 
 ```bash
-pnpm docs:build
-pnpm docs:dev          # http://localhost:5175/docs/spiral/
-pnpm docs:copy-hugo    # 复制到 ../avialaWebsite/static/docs/spiral/
+# 在 avialaWebsite 仓库
+npm run dev:spiral-docs     # http://localhost:5175/docs/spiral/
+npm run build:spiral-docs
 ```
 
-Hugo 入口：[avialaWebsite/content/docs/_index.md](../avialaWebsite/content/docs/_index.md) → `https://www.aviala.top/docs/spiral/start/introduction`
+因此**文档展示的是已发布版本**：组件改动需要先 `pnpm changeset` 并合并到 `main`，由 [release.yml](.github/workflows/release.yml) 发布后，文档站才会同步。
 
-Hosting 需为 `/docs/spiral/*` 配置 SPA fallback（回退到 `index.html`）。
+组件 API 表格数据由 `packages/ui` 构建时生成，随包发布为 `@aviala-design/spiral/props.json`。
+
+GitHub Pages 发布步骤见：[avialaWebsite/docs/GITHUB_DEPLOY.md](../avialaWebsite/docs/GITHUB_DEPLOY.md)。
 
 ## Environment
 

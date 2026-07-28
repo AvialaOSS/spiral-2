@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import ts from "react-docgen-typescript";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
-const uiRoot = path.resolve(dirname, "../../../packages/ui/src");
+const uiRoot = path.resolve(dirname, "../src");
 
 const parser = ts.withDefaultConfig({
   savePropValueAsString: true,
@@ -120,7 +120,7 @@ for (const entry of components) {
   };
 }
 
-const outDir = path.resolve(dirname, "../src/generated");
+const outDir = path.resolve(dirname, "../dist");
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "props.json"), `${JSON.stringify(registry, null, 2)}\n`);
-console.log(`Wrote ${Object.keys(registry).length} component prop docs to src/generated/props.json`);
+console.log(`Wrote ${Object.keys(registry).length} component prop docs to dist/props.json`);
