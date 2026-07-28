@@ -1,3 +1,5 @@
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+
 import { Slot } from "@radix-ui/react-slot";
 
 import {
@@ -5,7 +7,9 @@ import {
   forwardRef,
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type AnchorHTMLAttributes,
@@ -21,6 +25,8 @@ import { cn } from "../lib/utils";
 import { useThemeLayoutKey } from "../theme/theme-provider";
 
 import { buttonVariants, type ButtonMode } from "./button";
+
+import { Popover } from "./popover";
 
 import { Typography } from "./typography";
 
@@ -232,6 +238,11 @@ function measureIndicatorFromElement(
   };
 }
 
+/** Matches the `--navigation-transition-easing` fallback cubic-bezier(0.33, 1, 0.68, 1). */
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
 function metricsApproxEqual(
   a: IndicatorMetrics,
   b: IndicatorMetrics,
@@ -378,91 +389,99 @@ function useNavigationIndicator(
     syncIndicator(metrics, true);
   }, [measureIndicator, syncIndicator]);
 
-  const startExpandCollapseTracking = useCallback(
-    (expanded: boolean) => {
-      const group = groupRef.current;
-      const el = indicatorRef.current;
+  /**
+   * While a child group's grid transition reflows the layout, tween the
+   * indicator from its current visual position toward a live re-measured
+   * target. Measuring the final position up-front is wrong (the layout has
+   * not moved yet when `data-expanded` flips), which used to make the
+   * indicator snap without animation once the transition ended.
+   */
+  const startExpandCollapseTracking = useCallback(() => {
+    const group = groupRef.current;
+    const el = indicatorRef.current;
 
-      if (!group || !el) return;
+    if (!group || !el) return;
 
-      cancelLayoutTracking();
+    cancelLayoutTracking();
 
-      animationRef.current?.cancel();
-      animationRef.current = null;
-      isAnimatingRef.current = false;
+    animationRef.current?.cancel();
+    animationRef.current = null;
+    isAnimatingRef.current = false;
 
-      const prefersReducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (prefersReducedMotion) {
-        const metrics = measureIndicator();
-        if (metrics) syncIndicator(metrics, true);
+    if (prefersReducedMotion) {
+      const metrics = measureIndicator();
+      if (metrics) syncIndicator(metrics, true);
+      return;
+    }
+
+    const { durationMs } = getNavigationAnimationTiming(group);
+
+    // Capture the start in viewport coordinates: when a horizontal group
+    // resizes, the whole navigation group can shift, so group-relative
+    // start metrics would ride along with the moving origin.
+    const startRect = el.getBoundingClientRect();
+    const startVisible = el.dataset.visible === "true";
+    const startTime = performance.now();
+
+    isLayoutTrackingRef.current = true;
+
+    const finish = () => {
+      layoutTrackingFrameRef.current = null;
+      isLayoutTrackingRef.current = false;
+      const final = measureIndicator();
+      if (final) syncIndicator(final, true);
+    };
+
+    const tick = (now: number) => {
+      if (!isLayoutTrackingRef.current) return;
+
+      const progress = Math.min(1, (now - startTime) / durationMs);
+
+      if (progress >= 1) {
+        finish();
         return;
       }
 
-      const { durationMs, easing } = getNavigationAnimationTiming(group);
-      const startMetrics = measureIndicatorFromElement(el, group);
+      const target = measureIndicator();
 
-      if (!expanded) {
-        const next = measureIndicator();
-        if (!next?.visible) {
-          syncIndicator(next ?? startMetrics, true);
-          return;
-        }
-
-        const generation = ++animationGenerationRef.current;
-        isLayoutTrackingRef.current = true;
-
-        runIndicatorAnimation(
-          el,
-          group,
-          startMetrics,
-          next,
-          durationMs,
-          easing,
-          generation,
-          animationGenerationRef,
-          animationRef,
-          isAnimatingRef,
-          syncIndicator
-        );
-
-        window.setTimeout(() => {
-          if (!isLayoutTrackingRef.current) return;
-          isLayoutTrackingRef.current = false;
-          const final = measureIndicator();
-          if (final) syncIndicator(final, true);
-        }, durationMs);
-
-        return;
-      }
-
-      isLayoutTrackingRef.current = true;
-      applyIndicatorMetrics(el, startMetrics, true);
-      metricsRef.current = startMetrics;
-      const deadline = performance.now() + durationMs;
-
-      const tick = () => {
-        if (!isLayoutTrackingRef.current) return;
-
-        const metrics = measureIndicator();
-        if (metrics) syncIndicator(metrics, true);
-
-        if (performance.now() < deadline) {
-          layoutTrackingFrameRef.current = requestAnimationFrame(tick);
+      if (target) {
+        if (!startVisible || !target.visible) {
+          syncIndicator(target, true);
         } else {
-          layoutTrackingFrameRef.current = null;
-          isLayoutTrackingRef.current = false;
-          const final = measureIndicator();
-          if (final) syncIndicator(final, true);
+          const eased = easeOutCubic(progress);
+          const groupRect = group.getBoundingClientRect();
+          const targetAbsX = groupRect.left + target.x;
+          const targetAbsY = groupRect.top + target.y;
+
+          syncIndicator(
+            {
+              x:
+                startRect.left +
+                (targetAbsX - startRect.left) * eased -
+                groupRect.left,
+              y:
+                startRect.top +
+                (targetAbsY - startRect.top) * eased -
+                groupRect.top,
+              width: startRect.width + (target.width - startRect.width) * eased,
+              height:
+                startRect.height + (target.height - startRect.height) * eased,
+              visible: true,
+            },
+            true
+          );
         }
-      };
+      }
 
       layoutTrackingFrameRef.current = requestAnimationFrame(tick);
-    },
-    [cancelLayoutTracking, groupRef, measureIndicator, syncIndicator]
-  );
+    };
+
+    layoutTrackingFrameRef.current = requestAnimationFrame(tick);
+  }, [cancelLayoutTracking, groupRef, measureIndicator, syncIndicator]);
 
   const onIndicatorRef = useCallback((node: HTMLSpanElement | null) => {
     indicatorRef.current = node;
@@ -553,21 +572,15 @@ function useNavigationIndicator(
     if (!group) return;
 
     const observer = new MutationObserver((mutations) => {
-      let expandCollapseChange: boolean | null = null;
-
-      for (const mutation of mutations) {
-        if (
+      const expandCollapseChanged = mutations.some(
+        (mutation) =>
           mutation.type === "attributes" &&
           mutation.attributeName === "data-expanded" &&
           mutation.target instanceof HTMLElement
-        ) {
-          expandCollapseChange =
-            mutation.target.getAttribute("data-expanded") === "true";
-        }
-      }
+      );
 
-      if (expandCollapseChange !== null) {
-        startExpandCollapseTracking(expandCollapseChange);
+      if (expandCollapseChanged) {
+        startExpandCollapseTracking();
       }
 
       setActiveRevision((revision) => revision + 1);
@@ -598,7 +611,12 @@ function useNavigationIndicator(
       });
 
     const onTransitionEnd = (event: TransitionEvent) => {
-      if (event.propertyName !== "grid-template-rows") return;
+      if (
+        event.propertyName !== "grid-template-rows" &&
+        event.propertyName !== "width"
+      ) {
+        return;
+      }
       if (!(event.target instanceof HTMLElement)) return;
       if (!event.target.classList.contains("aviala-navigation-item-group")) {
         return;
@@ -1000,3 +1018,412 @@ export const NavigationActionsSlot = forwardRef<
 ));
 
 NavigationActionsSlot.displayName = "NavigationActionsSlot";
+
+/* -------------------------------------------------------------------------
+ * NavigationItemMenu — child items collapsed into a hover flyout menu.
+ * Select-like API: value/defaultValue/onValueChange on the root, `value` on
+ * each item. Hidden by default, shown on hover (or click/Enter on the
+ * trigger). Selected item gets a highlight, no check icon.
+ * ---------------------------------------------------------------------- */
+
+const NAVIGATION_MENU_CLOSE_DELAY_MS = 150;
+
+type NavigationItemMenuContextValue = {
+  value: string | undefined;
+
+  hasSelection: boolean;
+
+  select: (value: string) => void;
+
+  openMenu: (viaHover: boolean) => void;
+
+  scheduleClose: () => void;
+
+  cancelClose: () => void;
+
+  openedByHoverRef: RefObject<boolean>;
+};
+
+const NavigationItemMenuContext =
+  createContext<NavigationItemMenuContextValue | null>(null);
+
+function useNavigationItemMenuContext(component: string) {
+  const context = useContext(NavigationItemMenuContext);
+
+  if (!context) {
+    throw new Error(`${component} must be used within <NavigationItemMenu>`);
+  }
+
+  return context;
+}
+
+export type NavigationItemMenuProps = {
+  /** Selected child value — similar to Select `value`. */
+  value?: string;
+
+  defaultValue?: string;
+
+  onValueChange?: (value: string) => void;
+
+  open?: boolean;
+
+  onOpenChange?: (open: boolean) => void;
+
+  children: ReactNode;
+};
+
+export function NavigationItemMenu({
+  value: valueProp,
+
+  defaultValue,
+
+  onValueChange,
+
+  open: openProp,
+
+  onOpenChange,
+
+  children,
+}: NavigationItemMenuProps) {
+  const [internalValue, setInternalValue] = useState(defaultValue);
+
+  const isValueControlled = valueProp !== undefined;
+
+  const value = isValueControlled ? valueProp : internalValue;
+
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isOpenControlled = openProp !== undefined;
+
+  const open = isOpenControlled ? openProp : internalOpen;
+
+  const closeTimerRef = useRef<number | null>(null);
+
+  const openedByHoverRef = useRef(false);
+
+  const setOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (!isOpenControlled) setInternalOpen(nextOpen);
+
+      onOpenChange?.(nextOpen);
+    },
+    [isOpenControlled, onOpenChange]
+  );
+
+  const cancelClose = useCallback(() => {
+    if (closeTimerRef.current != null) {
+      window.clearTimeout(closeTimerRef.current);
+
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const openMenu = useCallback(
+    (viaHover: boolean) => {
+      cancelClose();
+
+      openedByHoverRef.current = viaHover;
+
+      setOpen(true);
+    },
+    [cancelClose, setOpen]
+  );
+
+  const scheduleClose = useCallback(() => {
+    cancelClose();
+
+    closeTimerRef.current = window.setTimeout(() => {
+      closeTimerRef.current = null;
+
+      setOpen(false);
+    }, NAVIGATION_MENU_CLOSE_DELAY_MS);
+  }, [cancelClose, setOpen]);
+
+  const select = useCallback(
+    (nextValue: string) => {
+      if (!isValueControlled) setInternalValue(nextValue);
+
+      onValueChange?.(nextValue);
+
+      cancelClose();
+
+      setOpen(false);
+    },
+    [cancelClose, isValueControlled, onValueChange, setOpen]
+  );
+
+  useEffect(() => cancelClose, [cancelClose]);
+
+  const contextValue = useMemo<NavigationItemMenuContextValue>(
+    () => ({
+      value,
+
+      hasSelection: value != null && value !== "",
+
+      select,
+
+      openMenu,
+
+      scheduleClose,
+
+      cancelClose,
+
+      openedByHoverRef,
+    }),
+    [cancelClose, openMenu, scheduleClose, select, value]
+  );
+
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      if (nextOpen) openedByHoverRef.current = false;
+
+      cancelClose();
+
+      setOpen(nextOpen);
+    },
+    [cancelClose, setOpen]
+  );
+
+  return (
+    <NavigationItemMenuContext.Provider value={contextValue}>
+      <Popover open={open} onOpenChange={handleOpenChange}>
+        {children}
+      </Popover>
+    </NavigationItemMenuContext.Provider>
+  );
+}
+
+export type NavigationItemMenuTriggerProps = Omit<
+  ComponentPropsWithoutRef<"button">,
+  "children"
+> & {
+  /** Defaults to highlighted when the menu has a selected child. */
+  active?: boolean;
+
+  leftIcon?: ReactNode;
+
+  rightIcon?: ReactNode;
+
+  children: ReactNode;
+};
+
+/** Parent item — renders as a Navigation tab item and anchors the flyout. */
+
+export const NavigationItemMenuTrigger = forwardRef<
+  HTMLButtonElement,
+  NavigationItemMenuTriggerProps
+>(
+  (
+    {
+      className,
+
+      active,
+
+      leftIcon,
+
+      rightIcon,
+
+      children,
+
+      ...props
+    },
+
+    ref
+  ) => {
+    const menu = useNavigationItemMenuContext("NavigationItemMenuTrigger");
+
+    const isActive = active ?? menu.hasSelection;
+
+    const mode = navigationItemButtonMode(isActive);
+
+    return (
+      <span
+        className={cn("aviala-navigation-item", className)}
+        data-item-type="default"
+        data-active={isActive ? "true" : "false"}
+        onMouseEnter={() => menu.openMenu(true)}
+        onMouseLeave={menu.scheduleClose}
+      >
+        <PopoverPrimitive.Trigger asChild>
+          <button
+            ref={ref}
+            type="button"
+            className={cn(
+              buttonVariants({ mode }),
+              "aviala-navigation-item__control whitespace-normal"
+            )}
+            data-size="regular"
+            {...props}
+          >
+            {renderItemIcon(leftIcon)}
+
+            <Typography
+              level="text"
+              as="span"
+              className="aviala-navigation-item__label"
+            >
+              {children}
+            </Typography>
+
+            {rightIcon ? (
+              <span className="aviala-navigation-item__chevron">
+                {renderItemIcon(rightIcon)}
+              </span>
+            ) : null}
+          </button>
+        </PopoverPrimitive.Trigger>
+      </span>
+    );
+  }
+);
+
+NavigationItemMenuTrigger.displayName = "NavigationItemMenuTrigger";
+
+export type NavigationItemMenuContentProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+>;
+
+/** Flyout surface — right of the item in vertical, below it in horizontal. */
+
+export const NavigationItemMenuContent = forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Content>,
+  NavigationItemMenuContentProps
+>(
+  (
+    {
+      className,
+
+      side,
+
+      align = "start",
+
+      sideOffset = 6,
+
+      collisionPadding = 8,
+
+      onOpenAutoFocus,
+
+      ...props
+    },
+
+    ref
+  ) => {
+    const direction = useNavigationDirection();
+
+    const menu = useNavigationItemMenuContext("NavigationItemMenuContent");
+
+    return (
+      <PopoverPrimitive.Portal>
+        <PopoverPrimitive.Content
+          ref={ref}
+          side={side ?? (direction === "vertical" ? "right" : "bottom")}
+          align={align}
+          sideOffset={sideOffset}
+          collisionPadding={collisionPadding}
+          className={cn("aviala-navigation-menu", className)}
+          onMouseEnter={menu.cancelClose}
+          onMouseLeave={menu.scheduleClose}
+          onOpenAutoFocus={(event) => {
+            // Hover-open must not steal focus; keyboard/click open should.
+            if (menu.openedByHoverRef.current) event.preventDefault();
+
+            onOpenAutoFocus?.(event);
+          }}
+          {...props}
+        />
+      </PopoverPrimitive.Portal>
+    );
+  }
+);
+
+NavigationItemMenuContent.displayName = "NavigationItemMenuContent";
+
+export type NavigationItemMenuItemProps = Omit<
+  ComponentPropsWithoutRef<"button">,
+  "children" | "value"
+> & {
+  value: string;
+
+  /** Defaults to highlighted when it matches the menu value. */
+  selected?: boolean;
+
+  leftIcon?: ReactNode;
+
+  rightIcon?: ReactNode;
+
+  children: ReactNode;
+};
+
+/** Child option — highlighted when selected, no check icon by default. */
+
+export const NavigationItemMenuItem = forwardRef<
+  HTMLButtonElement,
+  NavigationItemMenuItemProps
+>(
+  (
+    {
+      className,
+
+      value,
+
+      selected,
+
+      leftIcon,
+
+      rightIcon,
+
+      disabled,
+
+      onClick,
+
+      children,
+
+      ...props
+    },
+
+    ref
+  ) => {
+    const menu = useNavigationItemMenuContext("NavigationItemMenuItem");
+
+    const isSelected = selected ?? menu.value === value;
+
+    return (
+      <button
+        ref={ref}
+        type="button"
+        disabled={disabled}
+        className={cn(
+          "aviala-navigation-menu-item aviala-focus-ring",
+          className
+        )}
+        data-selected={isSelected ? "true" : "false"}
+        data-disabled={disabled ? "" : undefined}
+        aria-current={isSelected ? "true" : undefined}
+        onClick={(event) => {
+          onClick?.(event);
+
+          if (!event.defaultPrevented) menu.select(value);
+        }}
+        {...props}
+      >
+        {renderItemIcon(leftIcon)}
+
+        <Typography
+          level="text"
+          as="span"
+          className="aviala-navigation-menu-item__label"
+        >
+          {children}
+        </Typography>
+
+        {rightIcon ? (
+          <span className="aviala-navigation-menu-item__trailing">
+            {renderItemIcon(rightIcon)}
+          </span>
+        ) : null}
+      </button>
+    );
+  }
+);
+
+NavigationItemMenuItem.displayName = "NavigationItemMenuItem";

@@ -1,5 +1,6 @@
 import {
   DirectionArrowDownLight,
+  DirectionArrowRightLight,
   GeneralCollapseSidebar,
   GeneralFilter,
   GeneralHome,
@@ -19,6 +20,10 @@ import {
   NavigationGroup,
   NavigationItem,
   NavigationItemGroup,
+  NavigationItemMenu,
+  NavigationItemMenuContent,
+  NavigationItemMenuItem,
+  NavigationItemMenuTrigger,
   NavigationSection,
 } from "./navigation";
 import { Typography } from "./typography";
@@ -501,6 +506,204 @@ export const AnimatedVertical: Story = {
     return (
       <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
         <VerticalNavContent activeId={activeId} onSelect={setActiveId} />
+      </Navigation>
+    );
+  },
+};
+
+/** Horizontal expandable group — the bottom indicator tracks siblings while the group animates open/closed. */
+export const HorizontalExpandable: Story = {
+  render: function HorizontalExpandableStory() {
+    const [activeId, setActiveId] = useState("team");
+    const [expanded, setExpanded] = useState(true);
+
+    const selectProps = (id: string) => ({
+      href: "#",
+      onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        setActiveId(id);
+      },
+    });
+
+    return (
+      <Navigation
+        direction="horizontal"
+        background="default"
+        className="w-full max-w-[1076px]"
+        aria-label="Top bar"
+      >
+        <NavigationBrand>
+          <NavigationBrandTitle href="#">Brand</NavigationBrandTitle>
+        </NavigationBrand>
+        <NavigationGroup>
+          <NavigationItem active={activeId === "overview"} {...selectProps("overview")}>
+            Overview
+          </NavigationItem>
+          <NavigationItem
+            leftIcon={<GeneralSetting aria-hidden />}
+            rightIcon={<DirectionArrowDownLight aria-hidden />}
+            href="#"
+            onClick={(event) => {
+              event.preventDefault();
+              setExpanded((value) => !value);
+            }}
+          >
+            Settings
+          </NavigationItem>
+          <NavigationItemGroup expanded={expanded}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "settings-general"}
+              {...selectProps("settings-general")}
+            >
+              General
+            </NavigationItem>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "settings-billing"}
+              {...selectProps("settings-billing")}
+            >
+              Billing
+            </NavigationItem>
+          </NavigationItemGroup>
+          <NavigationItem active={activeId === "team"} {...selectProps("team")}>
+            Team
+          </NavigationItem>
+        </NavigationGroup>
+      </Navigation>
+    );
+  },
+};
+
+/** Hover a parent to reveal its child items in a flyout menu (Select-like API). */
+export const HoverMenuVertical: Story = {
+  render: function HoverMenuVerticalStory() {
+    const [startValue, setStartValue] = useState<string | undefined>("intro");
+    const [formsValue, setFormsValue] = useState<string | undefined>();
+    const [activeId, setActiveId] = useState("start");
+
+    const selectProps = (id: string) => ({
+      href: "#",
+      onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        setActiveId(id);
+      },
+    });
+
+    return (
+      <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
+        <NavigationGroup>
+          <NavigationItemMenu
+            value={startValue}
+            onValueChange={(value) => {
+              setStartValue(value);
+              setActiveId("start");
+            }}
+          >
+            <NavigationItemMenuTrigger
+              active={activeId === "start"}
+              leftIcon={<GeneralHome aria-hidden />}
+              rightIcon={<DirectionArrowRightLight aria-hidden />}
+            >
+              开始
+            </NavigationItemMenuTrigger>
+            <NavigationItemMenuContent>
+              <NavigationItemMenuItem value="intro">介绍</NavigationItemMenuItem>
+              <NavigationItemMenuItem value="install">安装</NavigationItemMenuItem>
+              <NavigationItemMenuItem value="theme" rightIcon={<GeneralSetting aria-hidden />}>
+                主题
+              </NavigationItemMenuItem>
+            </NavigationItemMenuContent>
+          </NavigationItemMenu>
+          <NavigationItem
+            active={activeId === "basic"}
+            leftIcon={<SymbolApps aria-hidden />}
+            {...selectProps("basic")}
+          >
+            基础输入
+          </NavigationItem>
+          <NavigationItemMenu
+            value={formsValue}
+            onValueChange={(value) => {
+              setFormsValue(value);
+              setActiveId("forms");
+            }}
+          >
+            <NavigationItemMenuTrigger
+              active={activeId === "forms"}
+              leftIcon={<GeneralFilter aria-hidden />}
+              rightIcon={<DirectionArrowRightLight aria-hidden />}
+            >
+              信息采集
+            </NavigationItemMenuTrigger>
+            <NavigationItemMenuContent>
+              <NavigationItemMenuItem value="select" leftIcon={<GeneralSetting aria-hidden />}>
+                Select
+              </NavigationItemMenuItem>
+              <NavigationItemMenuItem value="checkbox" leftIcon={<GeneralSetting aria-hidden />}>
+                Checkbox
+              </NavigationItemMenuItem>
+              <NavigationItemMenuItem value="radio" leftIcon={<GeneralSetting aria-hidden />} disabled>
+                Radio（禁用）
+              </NavigationItemMenuItem>
+            </NavigationItemMenuContent>
+          </NavigationItemMenu>
+        </NavigationGroup>
+      </Navigation>
+    );
+  },
+};
+
+/** Horizontal variant — the flyout opens below the parent item. */
+export const HoverMenuHorizontal: Story = {
+  render: function HoverMenuHorizontalStory() {
+    const [value, setValue] = useState<string | undefined>();
+    const [activeId, setActiveId] = useState("overview");
+
+    const selectProps = (id: string) => ({
+      href: "#",
+      onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        setActiveId(id);
+      },
+    });
+
+    return (
+      <Navigation
+        direction="horizontal"
+        background="default"
+        className="w-full max-w-[1076px]"
+        aria-label="Top bar"
+      >
+        <NavigationBrand>
+          <NavigationBrandTitle href="#">Brand</NavigationBrandTitle>
+        </NavigationBrand>
+        <NavigationGroup>
+          <NavigationItem active={activeId === "overview"} {...selectProps("overview")}>
+            Overview
+          </NavigationItem>
+          <NavigationItemMenu
+            value={value}
+            onValueChange={(next) => {
+              setValue(next);
+              setActiveId("settings");
+            }}
+          >
+            <NavigationItemMenuTrigger
+              active={activeId === "settings"}
+              rightIcon={<DirectionArrowDownLight aria-hidden />}
+            >
+              Settings
+            </NavigationItemMenuTrigger>
+            <NavigationItemMenuContent>
+              <NavigationItemMenuItem value="general">General</NavigationItemMenuItem>
+              <NavigationItemMenuItem value="billing">Billing</NavigationItemMenuItem>
+            </NavigationItemMenuContent>
+          </NavigationItemMenu>
+          <NavigationItem active={activeId === "team"} {...selectProps("team")}>
+            Team
+          </NavigationItem>
+        </NavigationGroup>
       </Navigation>
     );
   },

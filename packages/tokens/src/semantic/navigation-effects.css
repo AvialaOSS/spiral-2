@@ -174,12 +174,46 @@
   opacity: 1;
 }
 
+/*
+ * Horizontal groups collapse along the inline axis. `fr` tracks cannot
+ * interpolate against indefinite available width, so animate `width`
+ * between 0 and max-content instead (interpolate-size opts keyword
+ * endpoints into the transition; browsers without support snap + fade).
+ */
+.aviala-navigation[data-direction="horizontal"]
+  .aviala-navigation-item-group[data-expanded] {
+  interpolate-size: allow-keywords;
+  display: flex;
+  align-items: center;
+  grid-template-rows: none;
+  width: 0;
+  overflow: hidden;
+  transition:
+    width var(--navigation-transition-duration, 0.3s)
+      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    opacity 0.2s ease;
+}
+
+.aviala-navigation[data-direction="horizontal"]
+  .aviala-navigation-item-group[data-expanded="true"] {
+  width: max-content;
+}
+
 .aviala-navigation-item-group__inner {
   display: flex;
   flex-direction: column;
   gap: var(--navigation-group-gap, 6px);
   overflow: hidden;
   min-height: 0;
+}
+
+.aviala-navigation[data-direction="horizontal"]
+  .aviala-navigation-item-group__inner {
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--navigation-group-gap-horizontal, 6px);
+  width: max-content;
 }
 
 .aviala-navigation-item {
@@ -315,12 +349,118 @@
   gap: var(--navigation-actions-slot-gap, 2px);
 }
 
+/* Navigation item hover menu — child items in a flyout, Select-like surface */
+.aviala-navigation-menu {
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: var(--select-slot-gap, 4px);
+  min-width: var(--navigation-menu-min-width, 165px);
+  max-height: min(var(--radix-popover-content-available-height, 320px), 320px);
+  overflow-y: auto;
+  border: 1px solid var(--select-menu-border);
+  border-radius: var(--select-menu-radius, 10px);
+  background-color: var(--select-menu-bg);
+  padding: var(--select-menu-py, 6px) var(--select-group-px, 6px);
+  box-shadow: var(--select-menu-shadow);
+  outline: none;
+}
+
+.aviala-navigation-menu[data-state="open"] {
+  animation: aviala-navigation-menu-in 0.15s ease;
+}
+
+.aviala-navigation-menu[data-state="closed"] {
+  animation: aviala-navigation-menu-out 0.15s ease forwards;
+}
+
+@keyframes aviala-navigation-menu-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aviala-navigation-menu-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.aviala-navigation-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--select-item-gap, 8px);
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  border-radius: var(--border-radius-extra-small-2, 6px);
+  padding: var(--select-item-py, 4px) var(--select-item-px, 8px);
+  color: var(--select-item-fg);
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.aviala-navigation-menu-item:hover:not(:disabled):not([data-selected="true"]) {
+  background-color: var(--select-item-highlight-bg);
+}
+
+/* Selected child — highlight only, no check icon (Figma: active tab surface) */
+.aviala-navigation-menu-item[data-selected="true"] {
+  background-color: var(--select-item-selected-bg);
+  color: var(--select-item-selected-fg);
+  box-shadow: var(--input-surface-shadow);
+}
+
+.aviala-navigation-menu-item:disabled {
+  pointer-events: none;
+  opacity: var(--input-disabled-opacity, 0.55);
+}
+
+.aviala-navigation-menu-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.aviala-navigation-menu-item__trailing {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .aviala-navigation-indicator {
     transition: none;
   }
 
   .aviala-navigation-item-group[data-expanded] {
+    transition: none;
+  }
+
+  .aviala-navigation-menu[data-state="open"],
+  .aviala-navigation-menu[data-state="closed"] {
+    animation: none;
+  }
+
+  .aviala-navigation-menu-item {
     transition: none;
   }
 
