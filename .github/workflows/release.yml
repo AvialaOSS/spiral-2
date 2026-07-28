@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write # changesets/action opens the version PR
   id-token: write # npm Trusted Publishing (OIDC)
 
 concurrency: release
