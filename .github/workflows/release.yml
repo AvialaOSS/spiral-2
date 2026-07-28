@@ -29,7 +29,9 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest
+        # Pin to 11.x: >=11.5.1 supports OIDC, while npm 12 turns the
+        # `--no-git-checks` flag pnpm forwards into a fatal EUNKNOWNCONFIG.
+        run: npm install -g npm@^11.5.1
 
       - run: pnpm install --frozen-lockfile
 
