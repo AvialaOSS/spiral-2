@@ -285,4 +285,4 @@ Changesets 配置（`.changeset/config.json`）忽略 `@spiral/playground` 与 `
 | Secret | 用途 |
 |---|---|
 | `GITHUB_TOKEN` | Changesets 创建版本 PR |
-| `FIGMA_ACCESS_TOKEN` | CI / Release 中的 `pnpm icons:export` |
+| `FIGMA_ACCESS_TOKEN` | CI / Release 中的 `pnpm icons:export`（在仓库 Settings → Secrets and variables → Actions 中配置同名 Secret） |
