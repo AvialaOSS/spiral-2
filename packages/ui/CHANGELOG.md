@@ -1,5 +1,16 @@
 # @aviala-design/spiral
 
+## 1.0.0
+
+### Major Changes
+
+- d4b53f6: Improve pickers and inputs with NumberInput, sticky wheels, and Segmentator polish.
+
+### Patch Changes
+
+- Updated dependencies [d4b53f6]
+  - @aviala-design/tokens@1.0.0
+
 ## 0.2.0
 
 ### Minor Changes
