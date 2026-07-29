@@ -1,3 +1,161 @@
+/* Form / Form Group — Figma System Composition → Form (527:56247) */
+
+.aviala-form-group {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-block-space, 14px);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.aviala-form-group__header {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.aviala-form-group__slot {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-block-space, 14px);
+  overflow: clip;
+}
+
+.aviala-form-group__action {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-content-space, 10px);
+  overflow: clip;
+  padding: 0;
+}
+
+.aviala-form-group__info,
+.aviala-form-group__feedback {
+  width: 100%;
+  min-width: 0;
+}
+
+.aviala-form-group__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-component-space, 8px);
+}
+
+.aviala-form {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  gap: var(--gap-content-space, 10px);
+}
+
+.aviala-form[data-direction="vertical"] {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.aviala-form[data-direction="horizontal"] {
+  flex-direction: row;
+  align-items: center;
+}
+
+.aviala-form__label {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.aviala-form__label--control {
+  display: block;
+  cursor: pointer;
+}
+
+.aviala-form[data-direction="vertical"] .aviala-form__label {
+  width: 100%;
+}
+
+.aviala-form[data-direction="horizontal"] .aviala-form__label {
+  width: var(--form-label-width, 85px);
+}
+
+.aviala-form__required {
+  margin-inline-start: 2px;
+  color: var(--text-text-fail-primary-black, #960024);
+}
+
+.aviala-form__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-component-space, 8px);
+}
+
+.aviala-form[data-direction="vertical"] .aviala-form__content {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.aviala-form[data-direction="horizontal"] .aviala-form__content {
+  flex: 1 1 0%;
+}
+
+.aviala-form__content > *:not(.aviala-form__message):not(.aviala-form__alert) {
+  width: 100%;
+  min-width: 0;
+}
+
+.aviala-form__content > .aviala-input,
+.aviala-form__content > .aviala-basic-input,
+.aviala-form__content > [data-slot="control"],
+.aviala-form__alert {
+  width: 100%;
+  min-width: 0;
+}
+
+.aviala-form__message {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: flex-start;
+  gap: var(--gap-inside-space, 6px);
+}
+
+.aviala-form__message-icon {
+  flex-shrink: 0;
+  margin-block-start: 1px;
+}
+
+.aviala-form__message-text {
+  min-width: 0;
+  flex: 1 1 0%;
+}
+
+.aviala-form__message--error {
+  color: var(--text-text-fail-primary-black, #960024);
+}
+
+.aviala-form__message--error .aviala-form__message-icon {
+  color: var(--text-text-fail-primary-black, #960024);
+}
+
+.aviala-form__message--info {
+  color: var(--text-text-normal-text-caption-black, #858484);
+}
+
+.aviala-form__message--info .aviala-form__message-icon {
+  color: var(--text-text-normal-text-caption-black, #858484);
+}
+
 /* Scroll — Figma System Composition → Scroll (301:6312) */
 
 .aviala-scroll {

@@ -58,8 +58,11 @@
     2 * var(--button-big-padding-y) + var(--button-big-line-height)
   );
 
-  /* Gloss = primary-3 at 20% opacity — follows generated / ALD palette step 3 */
-  --button-gloss-color: var(--aviala-primary-primary-3);
+  /* Gloss = primary-3 at 20% opacity — follows generated / ALD palette step 3.
+     The fallback is required: the runtime palette is absent until applyTheme
+     runs, and a bare var() would make every property built on this one
+     (gloss gradients, switch track) compute to guaranteed-invalid. */
+  --button-gloss-color: var(--aviala-primary-primary-3, #ffe9e5);
   --button-primary-gradient: linear-gradient(
     180deg,
     color-mix(in srgb, var(--button-gloss-color) 20%, transparent) 0%,

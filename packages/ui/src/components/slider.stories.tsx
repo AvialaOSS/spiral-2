@@ -21,11 +21,34 @@ export const Default: Story = {
 };
 
 export const Big: Story = {
-  args: { size: "big", type: "default", defaultValue: [60] },
+  args: { size: "big", type: "default", defaultValue: [40] },
 };
 
 export const Range: Story = {
   args: { size: "default", type: "range", defaultValue: [20, 70] },
+};
+
+export const SizeMatrix: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-muted-foreground">Default</span>
+        <Slider size="default" defaultValue={[40]} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-muted-foreground">Big</span>
+        <Slider size="big" defaultValue={[40]} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-muted-foreground">Range · Default</span>
+        <Slider type="range" defaultValue={[25, 65]} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="font-mono text-xs text-muted-foreground">Disabled</span>
+        <Slider disabled defaultValue={[40]} />
+      </div>
+    </div>
+  ),
 };
 
 export const Disabled: Story = {

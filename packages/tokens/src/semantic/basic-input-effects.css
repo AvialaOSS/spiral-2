@@ -44,9 +44,9 @@
   --switch-thumb-press-expand-small: calc(
     var(--switch-thumb-size-small) * (var(--switch-thumb-press-scale, 1.28) - 1)
   );
-  /* Segmentator thumb slide: 300ms with subtle ease-out overshoot */
-  --segmentator-transition-duration: var(--switch-transition-duration, 0.3s);
-  --segmentator-transition-easing: cubic-bezier(0.33, 1, 0.68, 1);
+  /* Segmentator thumb slide: longer settle with soft ease-out overshoot */
+  --segmentator-transition-duration: 0.52s;
+  --segmentator-transition-easing: cubic-bezier(0.22, 1.1, 0.36, 1);
   --switch-checked-surface: linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
@@ -62,11 +62,12 @@
   --segmentator-shadow-selected: 0 4px 8px rgba(0, 0, 0, 0.06);
   --segmentator-shadow-tiled: inset 0 -0.5px 0 rgba(0, 0, 0, 0.04);
   --segmentator-item-hover-bg: var(--aviala-neutral-neutral-6, #edebeb);
-  --segmentator-press-scale: 0.96;
-  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.3s);
+  --segmentator-press-scale: 0.98;
+  --segmentator-press-height-scale: 0.88;
+  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.52s);
   --segmentator-press-transition-easing: var(
     --segmentator-transition-easing,
-    cubic-bezier(0.33, 1, 0.68, 1)
+    cubic-bezier(0.22, 1.1, 0.36, 1)
   );
 
   --segmentator-group-padding: var(--padding-min, 2px);
@@ -354,6 +355,17 @@
   border-radius: var(--border-radius-allround, 99px);
 }
 
+.aviala-segmentator-group[data-equal-width="true"] {
+  display: flex;
+  width: 100%;
+}
+
+.aviala-segmentator-group[data-equal-width="true"] .aviala-segmentator-item {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+}
+
 @media (hover: none), (pointer: coarse) {
   .aviala-segmentator-group {
     touch-action: none;
@@ -365,6 +377,30 @@
   user-select: none;
 }
 
+@property --segmentator-thumb-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --segmentator-thumb-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --segmentator-thumb-scale {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --segmentator-thumb-scale-y {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
 .aviala-segmentator-thumb {
   pointer-events: none;
   position: absolute;
@@ -374,10 +410,17 @@
   transform-origin: center center;
   will-change: transform, width, height;
   --segmentator-thumb-scale: 1;
+  --segmentator-thumb-scale-y: 1;
   transform: translate3d(var(--segmentator-thumb-x, 0px), var(--segmentator-thumb-y, 0px), 0)
-    scale(var(--segmentator-thumb-scale));
+    scale(var(--segmentator-thumb-scale), var(--segmentator-thumb-scale-y));
   transition:
-    transform var(--segmentator-press-transition-duration, 0.3s)
+    --segmentator-thumb-x var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-y var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
+      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
     width var(--segmentator-transition-duration, 0.3s)
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
@@ -386,15 +429,38 @@
 }
 
 .aviala-segmentator-thumb[data-pressing="true"] {
-  --segmentator-thumb-scale: var(--segmentator-press-scale, 0.96);
+  --segmentator-thumb-scale: var(--segmentator-press-scale, 0.98);
+  --segmentator-thumb-scale-y: var(--segmentator-press-height-scale, 0.88);
 }
 
 .aviala-segmentator-thumb[data-instant="true"] {
-  transition: none;
+  /* Follow finger on geometry, but keep press-scale animation. */
+  transition:
+    --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
+      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
+      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
+/*
+ * During press/drag: allow position/size to animate for cross-item snaps.
+ * Continuous sticky-offset updates set data-instant so they still track 1:1.
+ */
+.aviala-segmentator-group[data-pressing="true"] .aviala-segmentator-thumb,
 .aviala-segmentator-group[data-dragging="true"] .aviala-segmentator-thumb {
-  transition: none;
+  transition:
+    --segmentator-thumb-x var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-y var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
+      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
+      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    width var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+    height var(--segmentator-transition-duration, 0.3s)
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
 .aviala-segmentator-thumb[data-mode="nested"] {
@@ -429,13 +495,23 @@
   transition:
     color 0.15s ease,
     background-color var(--segmentator-transition-duration, 0.3s)
-      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
-    transform var(--segmentator-press-transition-duration, 0.3s)
-      var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
+      var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
-.aviala-segmentator-item[data-drag-preview="true"] {
-  transform: scale(var(--segmentator-press-scale, 0.96));
+.aviala-segmentator-item__content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  transform-origin: center center;
+  transition: transform var(--segmentator-press-transition-duration, 0.3s)
+    var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
+}
+
+.aviala-segmentator-item[data-drag-preview="true"] .aviala-segmentator-item__content {
+  transform: scale(var(--segmentator-press-scale, 0.98));
 }
 
 .aviala-segmentator-group[data-dragging="true"] .aviala-segmentator-item {
@@ -443,6 +519,12 @@
     color 0.15s ease,
     background-color var(--segmentator-transition-duration, 0.3s)
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
+}
+
+.aviala-segmentator-group[data-dragging="true"] .aviala-segmentator-item__content,
+.aviala-segmentator-group[data-pressing="true"] .aviala-segmentator-item__content {
+  transition: transform var(--segmentator-press-transition-duration, 0.3s)
+    var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -507,6 +589,18 @@
 .aviala-segmentator-item[data-mode="tiled"][data-selected="true"] {
   border-radius: var(--segmentator-item-tiled-radius);
   color: var(--segmentator-selected-fg);
+}
+
+/* Sticky drag preview: highlight follows the near item (and un-highlight the old selection). */
+.aviala-segmentator-item[data-drag-preview="true"] {
+  color: var(--segmentator-selected-fg);
+}
+
+.aviala-segmentator-group[data-pressing="true"]
+  .aviala-segmentator-item[data-selected="true"]:not([data-drag-preview="true"]),
+.aviala-segmentator-group[data-dragging="true"]
+  .aviala-segmentator-item[data-selected="true"]:not([data-drag-preview="true"]) {
+  color: var(--segmentator-fg);
 }
 
 @media (prefers-reduced-motion: reduce) {

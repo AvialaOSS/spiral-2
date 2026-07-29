@@ -223,9 +223,11 @@ function buildAldThemeCss() {
   const dark = buildAldModeVars("Dark.tokens.json");
   return (
     "/* Frozen ALD theme — generated from Figma token exports, do not edit by hand */\n" +
-    varsToCssBlock('[data-theme="ald"]', light) +
+    // Prefer :root[data-theme] so ALD beats a later :root colors block
+    // (equal specificity with bare [data-theme] loses to source order).
+    varsToCssBlock(':root[data-theme="ald"]', light) +
     "\n" +
-    varsToCssBlock('[data-theme="ald"][data-mode="dark"]', dark) +
+    varsToCssBlock(':root[data-theme="ald"][data-mode="dark"]', dark) +
     "\n"
   );
 }

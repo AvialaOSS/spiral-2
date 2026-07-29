@@ -1,6 +1,7 @@
 import { GeneralSetting } from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Checkbox, CheckboxGroup, CheckboxInput } from "./checkbox";
+import { Typography } from "./typography";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Information Collect/Checkbox",
@@ -14,17 +15,23 @@ type Story = StoryObj<typeof Checkbox>;
 export const Control: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-checked" defaultChecked />
-        <label htmlFor="cb-checked">Checked</label>
+        <Typography level="text" as="label" htmlFor="cb-checked">
+          Checked
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-unchecked" />
-        <label htmlFor="cb-unchecked">Unchecked</label>
+        <Typography level="text" as="label" htmlFor="cb-unchecked">
+          Unchecked
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-indeterminate" checked="indeterminate" />
-        <label htmlFor="cb-indeterminate">Indeterminate</label>
+        <Typography level="text" as="label" htmlFor="cb-indeterminate">
+          Indeterminate
+        </Typography>
       </div>
     </div>
   ),
@@ -33,17 +40,23 @@ export const Control: Story = {
 export const Round: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-round-checked" defaultChecked round />
-        <label htmlFor="cb-round-checked">Round checked</label>
+        <Typography level="text" as="label" htmlFor="cb-round-checked">
+          Round checked
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-round-unchecked" round />
-        <label htmlFor="cb-round-unchecked">Round unchecked</label>
+        <Typography level="text" as="label" htmlFor="cb-round-unchecked">
+          Round unchecked
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-round-half" checked="indeterminate" round />
-        <label htmlFor="cb-round-half">Round indeterminate</label>
+        <Typography level="text" as="label" htmlFor="cb-round-half">
+          Round indeterminate
+        </Typography>
       </div>
     </div>
   ),
@@ -52,17 +65,23 @@ export const Round: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-dis-checked" defaultChecked disabled />
-        <label htmlFor="cb-dis-checked">Checked disabled</label>
+        <Typography level="text" as="label" htmlFor="cb-dis-checked">
+          Checked disabled
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-dis-unchecked" disabled />
-        <label htmlFor="cb-dis-unchecked">Unchecked disabled</label>
+        <Typography level="text" as="label" htmlFor="cb-dis-unchecked">
+          Unchecked disabled
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Checkbox id="cb-dis-half" checked="indeterminate" disabled />
-        <label htmlFor="cb-dis-half">Indeterminate disabled</label>
+        <Typography level="text" as="label" htmlFor="cb-dis-half">
+          Indeterminate disabled
+        </Typography>
       </div>
     </div>
   ),

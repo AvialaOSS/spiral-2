@@ -896,7 +896,7 @@ export const SelectItem = forwardRef<
     return (
       <SelectPrimitive.Item
         ref={ref}
-        className={cn("aviala-select-item aviala-focus-ring", className)}
+        className={cn("aviala-select-item", className)}
         data-layout={layout !== "default" ? layout : undefined}
         data-function={itemFunction !== "action" ? itemFunction : undefined}
         {...spiralDebugId("select.content.item")}
@@ -1097,7 +1097,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
       <button
         type="button"
         disabled={disabled}
-        className={cn("aviala-select-item aviala-select-sub-item aviala-focus-ring", className)}
+        className={cn("aviala-select-item aviala-select-sub-item", className)}
         data-layout={layout !== "default" ? layout : undefined}
         data-function={itemFunction !== "action" ? itemFunction : undefined}
         data-state={open ? "open" : undefined}

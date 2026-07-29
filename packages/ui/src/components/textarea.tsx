@@ -1,8 +1,15 @@
+import { SymbolResize } from "@aviala-design/icons";
 import {
   forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
   useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
   type TextareaHTMLAttributes,
   type ReactNode,
+  type Ref,
 } from "react";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
@@ -11,8 +18,17 @@ import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
 import type { InputState } from "./input";
 
-/** Figma Components → Information Collect → TextareaInput */
+/** Figma Components → Information Collect → TextareaInput (301:6320) */
 export type TextareaSize = "regular" | "big";
+
+function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
+  if (!ref) return;
+  if (typeof ref === "function") {
+    ref(value);
+    return;
+  }
+  ref.current = value;
+}
 
 function resolveTextareaState(
   value: string | number | readonly string[] | undefined,
@@ -42,20 +58,12 @@ function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
   );
 }
 
-function resolveLength(
-  value: string | number | readonly string[] | undefined,
-  defaultValue: string | number | readonly string[] | undefined
-) {
-  const current = value ?? defaultValue ?? "";
-  return String(current).length;
-}
-
 export type TextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> & {
   /** Figma `Size` */
   size?: TextareaSize;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  /** Figma `Controller` — character counter + resize affordance */
+  /** Figma `Controller` — character counter + SymbolResize drag handle */
   showController?: boolean;
   error?: boolean;
 };
@@ -76,34 +84,121 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onChange,
       onFocus,
       onBlur,
+      style,
       ...props
     },
     ref
   ) => {
-    const [length, setLength] = useState(() => resolveLength(value, defaultValue));
+    const rootRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [focused, setFocused] = useState(false);
     const [internalValue, setInternalValue] = useState(() => String(defaultValue ?? ""));
+    const [resizing, setResizing] = useState(false);
     const showController = showControllerProp ?? maxLength !== undefined;
     const resolvedSize = size ?? "regular";
     const resolvedValue = value !== undefined ? String(value) : internalValue;
     const displayLength = resolvedValue.length;
     const inputState = resolveTextareaState(resolvedValue, undefined, focused);
 
+    const setTextareaRef = useCallback(
+      (node: HTMLTextAreaElement | null) => {
+        textareaRef.current = node;
+        assignRef(ref, node);
+      },
+      [ref]
+    );
+
+    /** Clicks on padding / icon slots should focus the real control. */
+    const handleShellMouseDown = useCallback(
+      (event: ReactMouseEvent<HTMLDivElement>) => {
+        if (disabled) return;
+        const target = event.target as HTMLElement | null;
+        if (!target) return;
+        if (target.closest(".aviala-textarea__resize-handle")) return;
+        if (target.closest("textarea") === textareaRef.current) return;
+
+        event.preventDefault();
+        textareaRef.current?.focus();
+      },
+      [disabled]
+    );
+
+    const handleResizePointerDown = useCallback(
+      (event: ReactPointerEvent<HTMLButtonElement>) => {
+        if (disabled || event.button !== 0) return;
+        const root = rootRef.current;
+        if (!root) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const handle = event.currentTarget;
+        const startX = event.clientX;
+        const startY = event.clientY;
+        const startW = root.offsetWidth;
+        const startH = root.offsetHeight;
+        const styles = getComputedStyle(root);
+        const minW = parseFloat(styles.minWidth) || 46;
+        const minH = parseFloat(styles.minHeight) || 70;
+
+        handle.setPointerCapture(event.pointerId);
+        setResizing(true);
+
+        const onMove = (ev: PointerEvent) => {
+          const nextW = Math.max(minW, Math.round(startW + (ev.clientX - startX)));
+          const nextH = Math.max(minH, Math.round(startH + (ev.clientY - startY)));
+          root.style.width = `${nextW}px`;
+          root.style.height = `${nextH}px`;
+        };
+
+        const onUp = (ev: PointerEvent) => {
+          if (handle.hasPointerCapture(ev.pointerId)) {
+            handle.releasePointerCapture(ev.pointerId);
+          }
+          handle.removeEventListener("pointermove", onMove);
+          handle.removeEventListener("pointerup", onUp);
+          handle.removeEventListener("pointercancel", onUp);
+          setResizing(false);
+        };
+
+        handle.addEventListener("pointermove", onMove);
+        handle.addEventListener("pointerup", onUp);
+        handle.addEventListener("pointercancel", onUp);
+      },
+      [disabled]
+    );
+
+    useEffect(() => {
+      if (!resizing) return;
+      const previous = document.body.style.cursor;
+      const previousUserSelect = document.body.style.userSelect;
+      document.body.style.cursor = "nwse-resize";
+      document.body.style.userSelect = "none";
+      return () => {
+        document.body.style.cursor = previous;
+        document.body.style.userSelect = previousUserSelect;
+      };
+    }, [resizing]);
+
     return (
       <div
+        ref={rootRef}
         className={cn("aviala-textarea", className)}
         data-size={resolvedSize}
         data-input-state={inputState}
         data-error={error ? "true" : undefined}
         data-has-controller={showController ? "true" : undefined}
         data-disabled={disabled ? "true" : undefined}
+        data-resizing={resizing ? "true" : undefined}
+        style={style}
+        onMouseDown={handleShellMouseDown}
         {...spiralDebugId("textarea")}
       >
         {renderSlotIcon(leftIcon, "textarea.left-icon")}
 
         <div className="aviala-textarea__field" {...spiralDebugId("textarea.field")}>
           <textarea
-            ref={ref}
+            ref={setTextareaRef}
             disabled={disabled}
             maxLength={maxLength}
             value={value}
@@ -113,7 +208,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             onChange={(event) => {
               if (value === undefined) {
                 setInternalValue(event.target.value);
-                setLength(event.target.value.length);
               }
               onChange?.(event);
             }}
@@ -131,15 +225,28 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
         {renderSlotIcon(rightIcon, "textarea.right-icon")}
 
-        {showController && (
-          <div className="aviala-textarea__controller" aria-hidden {...spiralDebugId("textarea.controller")}>
-            <span className={cn("aviala-textarea__counter", typographyVariants({ level: "caption" }))}>
+        {showController ? (
+          <div className="aviala-textarea__controller" {...spiralDebugId("textarea.controller")}>
+            <span
+              className={cn("aviala-textarea__counter", typographyVariants({ level: "caption" }))}
+              aria-hidden
+            >
               {displayLength}
               {maxLength !== undefined ? `/${maxLength}` : ""}
             </span>
-            <span className="aviala-textarea__resize-handle" />
+            <button
+              type="button"
+              className="aviala-textarea__resize-handle"
+              aria-label="Resize textarea"
+              disabled={disabled}
+              tabIndex={disabled ? -1 : 0}
+              onPointerDown={handleResizePointerDown}
+              {...spiralDebugId("textarea.resize")}
+            >
+              <SymbolResize thickness="Regular" mode="default" aria-hidden />
+            </button>
           </div>
-        )}
+        ) : null}
       </div>
     );
   }

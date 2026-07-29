@@ -55,7 +55,7 @@ function syncAldModeTokens(vars, mode) {
     setAldVar(vars, "text/text-normal-text-white", "#fefcfc");
     setAldVar(vars, "text/text-normal-text-black", mode === "dark" ? "#e8e8e8" : "#343333");
     setAldVar(vars, "text/text-normal-text-caption-black", mode === "dark" ? "#a8a8a8" : "#858484");
-    setAldVar(vars, "text/text-normal-text-caption-white", "#a8a8a8");
+    setAldVar(vars, "text/text-normal-text-caption-white", "#fefcfc");
     setAldVar(vars, "normal-background-theme", mode === "dark" ? "#1a1a1a" : "#FAF8F8");
 }
 /** Primary-tinted ALD semantic tokens — follow palette steps (Figma token-colors). */

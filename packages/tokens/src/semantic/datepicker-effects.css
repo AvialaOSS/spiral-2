@@ -55,7 +55,9 @@
 }
 
 .aviala-datepicker-trigger:focus-visible,
-.aviala-timepicker-trigger:focus-visible {
+.aviala-datepicker-trigger:focus-within,
+.aviala-timepicker-trigger:focus-visible,
+.aviala-timepicker-trigger:focus-within {
   background-color: var(--input-bg-activated);
   outline: none;
 }
@@ -65,10 +67,12 @@
   border-color: var(--destructive, #ff646f);
 }
 
+.aviala-datepicker-trigger[data-disabled="true"],
 .aviala-datepicker-trigger:disabled,
 .aviala-timepicker-trigger:disabled {
   cursor: not-allowed;
   opacity: var(--input-disabled-opacity, 0.55);
+  pointer-events: none;
 }
 
 .aviala-datepicker-trigger__slot,
@@ -123,6 +127,30 @@
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
+.aviala-datepicker-trigger__input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  outline: none;
+}
+
+.aviala-datepicker-trigger__input:focus,
+.aviala-datepicker-trigger__input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.aviala-datepicker-trigger__input::placeholder {
+  color: inherit;
+  opacity: var(--input-placeholder-opacity, 0.6);
+}
+
 .aviala-datepicker-content,
 .aviala-timepicker-content {
   z-index: 50;
@@ -143,14 +171,124 @@
 
 .aviala-datepicker-calendar__body {
   display: flex;
+  height: var(--datepicker-panel-body-height);
   min-height: var(--datepicker-panel-body-height);
   flex-direction: column;
   gap: var(--datepicker-panel-gap, 6px);
 }
 
+.aviala-datepicker-calendar__panel-viewport {
+  position: relative;
+  height: var(--datepicker-panel-body-height);
+  flex: 0 0 var(--datepicker-panel-body-height);
+  overflow: hidden;
+}
+
+.aviala-datepicker-calendar__panel {
+  width: 100%;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="exit"] {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="enter"] {
+  position: relative;
+  z-index: 2;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="enter"][data-slide="next"] {
+  animation: aviala-datepicker-month-from-right
+    var(--datepicker-view-transition-duration, 0.28s) ease;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="enter"][data-slide="prev"] {
+  animation: aviala-datepicker-month-from-left
+    var(--datepicker-view-transition-duration, 0.28s) ease;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="exit"][data-slide="next"] {
+  animation: aviala-datepicker-month-to-left
+    var(--datepicker-view-transition-duration, 0.28s) ease forwards;
+}
+
+.aviala-datepicker-calendar__panel[data-panel-role="exit"][data-slide="prev"] {
+  animation: aviala-datepicker-month-to-right
+    var(--datepicker-view-transition-duration, 0.28s) ease forwards;
+}
+
 .aviala-datepicker-calendar__body .aviala-datepicker-time {
   flex: 1 1 auto;
   justify-content: center;
+}
+
+.aviala-datepicker-month {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  /* Keep wheel scroll padding in sync with the stretched height */
+  --datepicker-time-wheel-height: var(--datepicker-view-height);
+}
+
+.aviala-datepicker-month__columns {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-component-space, 8px);
+}
+
+.aviala-datepicker-month .aviala-datepicker-time__wheel {
+  height: var(--datepicker-time-wheel-height);
+  min-height: 0;
+}
+
+.aviala-datepicker-calendar__view-viewport {
+  position: relative;
+  display: flex;
+  height: var(--datepicker-view-height);
+  flex: 0 0 var(--datepicker-view-height);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.aviala-datepicker-calendar__view {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  gap: var(--datepicker-panel-gap, 6px);
+  transform-origin: center center;
+}
+
+.aviala-datepicker-calendar__view[data-view-role="exit"] {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: aviala-datepicker-view-exit
+    var(--datepicker-view-transition-duration, 0.28s) ease forwards;
+}
+
+.aviala-datepicker-calendar__view[data-view-role="enter"] {
+  position: relative;
+  z-index: 2;
+  animation: aviala-datepicker-view-enter
+    var(--datepicker-view-transition-duration, 0.28s) ease;
+}
+
+.aviala-datepicker-calendar__view[data-view="date"] .aviala-datepicker-calendar__grid-viewport {
+  flex: 1 1 auto;
+  min-height: var(--datepicker-grid-height);
 }
 
 .aviala-timepicker-panel {
@@ -180,8 +318,35 @@
 .aviala-datepicker-calendar__title {
   flex: 1 1 0%;
   min-width: 0;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--border-radius-small, 8px);
+  background: transparent;
+  padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
   text-align: center;
   color: var(--datepicker-header-fg, #343333);
+  overflow: hidden;
+  transition: background-color 250ms ease;
+}
+
+.aviala-datepicker-calendar__title:hover {
+  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+}
+
+.aviala-datepicker-calendar__title[data-active="true"] {
+  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+}
+
+.aviala-datepicker-calendar__title-text {
+  display: block;
+}
+
+.aviala-datepicker-calendar__title-text[data-slide="next"] {
+  animation: aviala-datepicker-title-from-right 0.28s ease;
+}
+
+.aviala-datepicker-calendar__title-text[data-slide="prev"] {
+  animation: aviala-datepicker-title-from-left 0.28s ease;
 }
 
 .aviala-datepicker-calendar__nav {
@@ -195,6 +360,8 @@
   background: transparent;
   color: var(--datepicker-header-fg, #343333);
   padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
+  /* Match Button noBackground hover fade */
+  transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-calendar__nav:hover {
@@ -218,10 +385,41 @@
   color: var(--datepicker-weekday-fg, #858484);
 }
 
+.aviala-datepicker-calendar__grid-viewport {
+  position: relative;
+  overflow: hidden;
+  min-height: var(--datepicker-grid-height);
+}
+
 .aviala-datepicker-calendar__grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--datepicker-row-gap, 2px) var(--datepicker-grid-gap, 4px);
+  width: 100%;
+}
+
+.aviala-datepicker-calendar__grid[data-slide-role="exit"] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.aviala-datepicker-calendar__grid[data-slide-role="enter"][data-slide="next"] {
+  animation: aviala-datepicker-month-from-right 0.28s ease;
+}
+
+.aviala-datepicker-calendar__grid[data-slide-role="enter"][data-slide="prev"] {
+  animation: aviala-datepicker-month-from-left 0.28s ease;
+}
+
+.aviala-datepicker-calendar__grid[data-slide-role="exit"][data-slide="next"] {
+  animation: aviala-datepicker-month-to-left 0.28s ease forwards;
+}
+
+.aviala-datepicker-calendar__grid[data-slide-role="exit"][data-slide="prev"] {
+  animation: aviala-datepicker-month-to-right 0.28s ease forwards;
 }
 
 .aviala-datepicker-day {
@@ -238,6 +436,8 @@
   background: transparent;
   color: var(--datepicker-day-fg, #343333);
   padding: var(--padding-min, 2px) var(--padding-small, 6px);
+  /* Match Button noBackground hover fade */
+  transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-day:not([data-range-pos]):not([data-selected="true"]):hover:not(:disabled) {
@@ -376,6 +576,7 @@
   background: transparent;
   color: var(--datepicker-header-fg, #343333);
   padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
+  transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-time__close:hover {
@@ -406,6 +607,23 @@
   border-radius: var(--border-radius-extra-small-2, 6px);
   background-color: var(--datepicker-day-bg-selected, #ffdad2);
   pointer-events: none;
+}
+
+/* Listbox focus ring is clipped by overflow:hidden — paint it on the
+   selected option layer instead when the column is keyboard-focused. */
+.aviala-datepicker-time__wheel-scroll.aviala-focus-ring:focus,
+.aviala-datepicker-time__wheel-scroll.aviala-focus-ring:focus-visible {
+  outline: none;
+  animation: none;
+  box-shadow: none;
+}
+
+html[data-aviala-kbd]
+  .aviala-datepicker-time__wheel-scroll:focus-visible
+  .aviala-datepicker-time__wheel-option[data-selected="true"] {
+  outline: none;
+  animation: aviala-focus-ring-settle var(--focus-transition-duration, 250ms)
+    var(--focus-transition-easing, ease) forwards;
 }
 
 .aviala-datepicker-time__wheel-fade {
@@ -442,6 +660,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -492,6 +711,8 @@
 }
 
 .aviala-datepicker-time__wheel-option[data-selected="true"] {
+  position: relative;
+  z-index: 1;
   color: var(--datepicker-day-fg-selected, #bf2300);
   opacity: 1;
   font-weight: 500;
@@ -569,11 +790,114 @@
   }
 }
 
+@keyframes aviala-datepicker-month-from-right {
+  from {
+    opacity: 0.35;
+    transform: translateX(36%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-datepicker-month-from-left {
+  from {
+    opacity: 0.35;
+    transform: translateX(-36%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-datepicker-month-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-36%);
+  }
+}
+
+@keyframes aviala-datepicker-month-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(36%);
+  }
+}
+
+@keyframes aviala-datepicker-title-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-datepicker-title-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-datepicker-view-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes aviala-datepicker-view-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .aviala-datepicker-content[data-state="open"] .aviala-datepicker-calendar,
   .aviala-datepicker-content[data-state="closed"] .aviala-datepicker-calendar,
   .aviala-timepicker-content[data-state="open"] .aviala-timepicker-panel,
   .aviala-timepicker-content[data-state="closed"] .aviala-timepicker-panel {
+    animation: none;
+  }
+
+  .aviala-datepicker-calendar__grid[data-slide-role],
+  .aviala-datepicker-calendar__title-text[data-slide],
+  .aviala-datepicker-calendar__view[data-view-role],
+  .aviala-datepicker-calendar__panel[data-panel-role] {
     animation: none;
   }
 }

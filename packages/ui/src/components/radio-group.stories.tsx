@@ -1,6 +1,7 @@
 import { GeneralSetting } from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { RadioGroup, RadioGroupItem, RadioInput } from "./radio-group";
+import { Typography } from "./typography";
 
 const meta: Meta<typeof RadioGroup> = {
   title: "Information Collect/Radio",
@@ -14,13 +15,17 @@ type Story = StoryObj<typeof RadioGroup>;
 export const Control: Story = {
   render: () => (
     <RadioGroup defaultValue="on">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <RadioGroupItem value="on" id="radio-on" />
-        <label htmlFor="radio-on">Selected</label>
+        <Typography level="text" as="label" htmlFor="radio-on">
+          Selected
+        </Typography>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <RadioGroupItem value="off" id="radio-off" />
-        <label htmlFor="radio-off">Unselected</label>
+        <Typography level="text" as="label" htmlFor="radio-off">
+          Unselected
+        </Typography>
       </div>
     </RadioGroup>
   ),

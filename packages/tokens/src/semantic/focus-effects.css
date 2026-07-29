@@ -1,5 +1,7 @@
 /* Keyboard focus ring - opt-in via `.aviala-focus-ring`.
-   Uses :focus-visible (no JS gate). Animated box-shadow: 12px to 3px, 250ms. */
+   Requires `html[data-aviala-kbd]` (set by initKeyboardFocus) so rings do not
+   appear when menus programmatically focus items after a pointer open.
+   Animated box-shadow: 12px → 3px, 250ms. */
 
 :root {
   --focus-ring-width-start: var(--size-small, 12px);
@@ -9,13 +11,15 @@
   --focus-transition-easing: ease;
 }
 
-/* Suppress native outline; custom ring only on .aviala-focus-ring:focus-visible */
-.aviala-focus-ring:focus {
+/* Suppress native outline always; custom ring only for keyboard modality */
+.aviala-focus-ring:focus,
+.aviala-focus-ring:focus-visible,
+.aviala-focus-ring:has(:focus-visible) {
   outline: none;
 }
 
-.aviala-focus-ring:focus-visible {
-  outline: none;
+html[data-aviala-kbd] .aviala-focus-ring:focus-visible,
+html[data-aviala-kbd] .aviala-focus-ring:has(:focus-visible) {
   animation: aviala-focus-ring-settle var(--focus-transition-duration)
     var(--focus-transition-easing) forwards;
 }
@@ -30,7 +34,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aviala-focus-ring:focus-visible {
+  html[data-aviala-kbd] .aviala-focus-ring:focus-visible,
+  html[data-aviala-kbd] .aviala-focus-ring:has(:focus-visible) {
+    animation: none;
+    box-shadow: 0 0 0 var(--focus-ring-width-end) var(--focus-ring-color);
+  }
+
+  /* Wheel selected-item proxy rings (overflow clips the listbox ring) */
+  html[data-aviala-kbd]
+    .aviala-datepicker-time__wheel-scroll:focus-visible
+    .aviala-datepicker-time__wheel-option[data-selected="true"],
+  html[data-aviala-kbd]
+    .aviala-scroll-picker-column__scroll:focus-visible
+    .aviala-scroll-picker-item[data-selected="true"] {
     animation: none;
     box-shadow: 0 0 0 var(--focus-ring-width-end) var(--focus-ring-color);
   }

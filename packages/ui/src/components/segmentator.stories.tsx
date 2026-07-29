@@ -47,6 +47,22 @@ export const AllRound: Story = {
   ),
 };
 
+export const EqualWidth: Story = {
+  render: () => (
+    <div className="flex w-full max-w-md flex-col gap-4">
+      <SegmentatorGroup equalWidth defaultValue="a">
+        <SegmentatorItem value="a">Date</SegmentatorItem>
+        <SegmentatorItem value="b">Time</SegmentatorItem>
+      </SegmentatorGroup>
+      <SegmentatorGroup equalWidth mode="tiled" defaultValue="a">
+        <SegmentatorItem value="a">Short</SegmentatorItem>
+        <SegmentatorItem value="b">Much longer label</SegmentatorItem>
+        <SegmentatorItem value="c">Mid</SegmentatorItem>
+      </SegmentatorGroup>
+    </div>
+  ),
+};
+
 export const IconOnly: Story = {
   render: () => (
     <SegmentatorGroup defaultValue="a">
@@ -88,7 +104,7 @@ export const SlidingIndicator: Story = {
     return (
       <div className="flex max-w-sm flex-col gap-6">
         <p className="text-sm text-muted-foreground">
-          Click segments to see the selected thumb slide between items (300ms ease-out with subtle overshoot).
+          Click segments to see the selected thumb slide between items (520ms soft ease-out with a light overshoot).
         </p>
         <SegmentatorGroup value={value} onValueChange={setValue}>
           <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>

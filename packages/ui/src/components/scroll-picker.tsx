@@ -10,11 +10,16 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import {
+  stickyRoundIndex,
+  WHEEL_SCROLL_END_MS,
+  WHEEL_STEP_THRESHOLD_FACTOR,
+  WHEEL_STICKY_AMOUNT,
+} from "../lib/sticky-wheel";
 import { typographyVariants } from "./typography";
 
 const LOOP_SECTIONS = 3;
 const MIDDLE_SECTION = 1;
-const SCROLL_END_DEBOUNCE_MS = 80;
 
 /** Figma Components → Information Collect → ScrollPicker (579:88681) */
 
@@ -22,16 +27,43 @@ function normalizeIndex(index: number, length: number): number {
   return ((index % length) + length) % length;
 }
 
-function readItemHeight(container: HTMLElement): number {
-  const item = container.querySelector<HTMLElement>(".aviala-scroll-picker-item");
-  if (item) {
-    return item.getBoundingClientRect().height;
-  }
+type ColumnMetrics = {
+  /** Distance between the top edges of two consecutive items (height + gap). */
+  pitch: number;
+  /** Scroll offset that centers the item at index 0 inside the viewport. */
+  originTop: number;
+};
 
-  const style = getComputedStyle(container);
-  const token = style.getPropertyValue("--scroll-picker-item-height").trim();
-  const parsed = parseFloat(token);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 26;
+/**
+ * Geometry is measured from the live DOM rather than derived from the height
+ * token: items carry collapsible block margins and the list is padded by
+ * spacer pseudo-elements, so the scroll pitch is not the item height and index
+ * 0 does not sit at scrollTop 0.
+ */
+function readMetrics(container: HTMLElement): ColumnMetrics | null {
+  const items = container.querySelectorAll<HTMLElement>(".aviala-scroll-picker-item");
+  const first = items[0];
+  if (!first) return null;
+
+  const itemHeight = first.offsetHeight;
+  const second = items[1];
+  const measuredPitch = second ? second.offsetTop - first.offsetTop : itemHeight;
+  const pitch = measuredPitch > 0 ? measuredPitch : itemHeight;
+  if (pitch <= 0) return null;
+
+  return {
+    pitch,
+    originTop: first.offsetTop + itemHeight / 2 - container.clientHeight / 2,
+  };
+}
+
+function scrollTopForIndex(container: HTMLElement, metrics: ColumnMetrics, index: number): number {
+  const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+  return Math.min(Math.max(metrics.originTop + index * metrics.pitch, 0), maxScroll);
+}
+
+function fractionalIndexAtScrollTop(metrics: ColumnMetrics, scrollTop: number): number {
+  return (scrollTop - metrics.originTop) / metrics.pitch;
 }
 
 export type ScrollPickerProps = HTMLAttributes<HTMLDivElement>;
@@ -68,7 +100,10 @@ export function ScrollPickerColumn<T = string>({
   const scrollRef = useRef<HTMLDivElement>(null);
   const isUserScrollingRef = useRef(false);
   const isProgrammaticScrollRef = useRef(false);
+  /** When set, value-driven auto sync must not cancel an in-flight smooth scroll. */
+  const smoothTargetValueRef = useRef<T | null>(null);
   const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const wheelAccumRef = useRef(0);
   const selectedValueRef = useRef(value);
   const reactId = useId();
 
@@ -91,13 +126,20 @@ export function ScrollPickerColumn<T = string>({
     const container = scrollRef.current;
     if (!container) return;
 
-    const itemHeight = readItemHeight(container);
+    const metrics = readMetrics(container);
+    if (!metrics) return;
+
     isProgrammaticScrollRef.current = true;
-    container.scrollTo({ top: index * itemHeight, behavior });
+    container.scrollTo({ top: scrollTopForIndex(container, metrics, index), behavior });
   }, []);
 
   const scrollToValue = useCallback(
     (nextValue: T, behavior: ScrollBehavior = "smooth") => {
+      if (behavior === "smooth") {
+        smoothTargetValueRef.current = nextValue;
+      } else {
+        smoothTargetValueRef.current = null;
+      }
       const valueIndex = getIndex(nextValue);
       const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
       scrollToIndex(targetIndex, behavior);
@@ -109,34 +151,60 @@ export function ScrollPickerColumn<T = string>({
     const container = scrollRef.current;
     if (!container || isProgrammaticScrollRef.current) {
       isProgrammaticScrollRef.current = false;
+      smoothTargetValueRef.current = null;
       return;
     }
 
-    const itemHeight = readItemHeight(container);
-    if (itemHeight <= 0 || values.length === 0) return;
+    const metrics = readMetrics(container);
+    if (!metrics || values.length === 0) return;
 
-    const rawIndex = Math.round(container.scrollTop / itemHeight);
+    const lastIndex = values.length - 1;
+    const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+    let rawIndex = stickyRoundIndex(
+      fractionalIndexAtScrollTop(metrics, container.scrollTop),
+      WHEEL_STICKY_AMOUNT
+    );
+
+    if (!loop) {
+      // The trailing spacer may be a hair too short to fully centre the edge
+      // items; treat a scroll pinned to either end as that end's index so the
+      // first/last option stays selectable.
+      if (container.scrollTop >= maxScroll - 1) {
+        rawIndex = lastIndex;
+      } else if (container.scrollTop <= 1) {
+        rawIndex = 0;
+      }
+    }
+
     const valueIndex = loop
       ? normalizeIndex(rawIndex, values.length)
-      : Math.min(Math.max(rawIndex, 0), values.length - 1);
+      : Math.min(Math.max(rawIndex, 0), lastIndex);
     const nextValue = values[valueIndex];
 
-    if (loop) {
-      const section = Math.floor(rawIndex / values.length);
-      if (section !== MIDDLE_SECTION) {
-        isProgrammaticScrollRef.current = true;
-        container.scrollTop = (values.length * MIDDLE_SECTION + valueIndex) * itemHeight;
-      }
-    } else if (rawIndex !== valueIndex) {
+    const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
+    const targetTop = scrollTopForIndex(container, metrics, targetIndex);
+    const section = loop ? Math.floor(rawIndex / values.length) : MIDDLE_SECTION;
+    const needsLoopRecenter = loop && section !== MIDDLE_SECTION;
+    const needsSnap = Math.abs(container.scrollTop - targetTop) > 1;
+
+    if (needsLoopRecenter) {
       isProgrammaticScrollRef.current = true;
-      container.scrollTop = valueIndex * itemHeight;
+      container.scrollTop = targetTop;
+    } else if (needsSnap) {
+      isProgrammaticScrollRef.current = true;
+      smoothTargetValueRef.current = nextValue;
+      container.scrollTo({ top: targetTop, behavior: "smooth" });
     }
 
     if (!Object.is(nextValue, selectedValueRef.current)) {
       onChange(nextValue);
     }
 
+    if (!needsSnap) {
+      smoothTargetValueRef.current = null;
+    }
     isUserScrollingRef.current = false;
+    wheelAccumRef.current = 0;
   }, [loop, onChange, values]);
 
   const handleScroll = useCallback(() => {
@@ -145,28 +213,30 @@ export function ScrollPickerColumn<T = string>({
     if (scrollEndTimerRef.current) {
       clearTimeout(scrollEndTimerRef.current);
     }
-    scrollEndTimerRef.current = setTimeout(settleScroll, SCROLL_END_DEBOUNCE_MS);
+    scrollEndTimerRef.current = setTimeout(settleScroll, WHEEL_SCROLL_END_MS);
   }, [settleScroll]);
 
   useLayoutEffect(() => {
     if (isUserScrollingRef.current) return;
+    // Click/keyboard already started a smooth scroll to this value — don't snap.
+    if (
+      smoothTargetValueRef.current != null &&
+      Object.is(smoothTargetValueRef.current, value)
+    ) {
+      return;
+    }
 
     const container = scrollRef.current;
     if (!container || values.length === 0) return;
 
-    const itemHeight = readItemHeight(container);
-    if (itemHeight <= 0) return;
+    const metrics = readMetrics(container);
+    if (!metrics) return;
 
     const valueIndex = getIndex(value);
     const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
-    const currentIndex = Math.round(container.scrollTop / itemHeight);
-    const currentValueIndex = loop
-      ? normalizeIndex(currentIndex, values.length)
-      : Math.min(Math.max(currentIndex, 0), values.length - 1);
-    const inMiddleSection =
-      !loop || Math.floor(currentIndex / values.length) === MIDDLE_SECTION;
+    const targetTop = scrollTopForIndex(container, metrics, targetIndex);
 
-    if (currentValueIndex === valueIndex && inMiddleSection) return;
+    if (Math.abs(container.scrollTop - targetTop) <= 1) return;
 
     scrollToIndex(targetIndex, "auto");
   }, [getIndex, loop, scrollToIndex, value, values.length]);
@@ -190,6 +260,48 @@ export function ScrollPickerColumn<T = string>({
       }
     };
   }, [settleScroll]);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (isProgrammaticScrollRef.current || values.length === 0) return;
+
+      const metrics = readMetrics(container);
+      if (!metrics) return;
+
+      wheelAccumRef.current += event.deltaY;
+      const threshold = metrics.pitch * WHEEL_STEP_THRESHOLD_FACTOR;
+      if (Math.abs(wheelAccumRef.current) < threshold) return;
+
+      const direction = wheelAccumRef.current > 0 ? 1 : -1;
+      wheelAccumRef.current = 0;
+
+      const currentIndex = getIndex(selectedValueRef.current);
+      const nextIndex = loop
+        ? normalizeIndex(currentIndex + direction, values.length)
+        : Math.min(Math.max(currentIndex + direction, 0), values.length - 1);
+      if (nextIndex === currentIndex) return;
+
+      if (scrollEndTimerRef.current) {
+        clearTimeout(scrollEndTimerRef.current);
+      }
+
+      const nextValue = values[nextIndex];
+      isUserScrollingRef.current = false;
+      scrollToValue(nextValue, "smooth");
+      if (!Object.is(nextValue, selectedValueRef.current)) {
+        onChange(nextValue);
+      }
+    };
+
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", onWheel);
+    };
+  }, [getIndex, loop, onChange, scrollToValue, values]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const currentIndex = getIndex(selectedValueRef.current);
@@ -232,7 +344,7 @@ export function ScrollPickerColumn<T = string>({
         <div className="aviala-scroll-picker-column__highlight" aria-hidden />
         <div
           ref={scrollRef}
-          className="aviala-scroll-picker-column__scroll"
+          className="aviala-scroll-picker-column__scroll aviala-focus-ring"
           onScroll={handleScroll}
           role="listbox"
           aria-label={ariaLabel}

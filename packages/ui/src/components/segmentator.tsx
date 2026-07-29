@@ -85,7 +85,10 @@ type SegmentatorThumbMetrics = {
 };
 
 const SEGMENTATOR_DRAG_THRESHOLD_PX = 4;
-const SEGMENTATOR_PRESS_SCALE = 0.96;
+/** Max finger-follow offset while stuck on an item (px), keeps drag feeling tactile. */
+const SEGMENTATOR_STICKY_OFFSET_PX = 10;
+/** If a drag update jumps farther than this, animate instead of teleporting. */
+const SEGMENTATOR_DRAG_ANIMATE_JUMP_PX = 6;
 const SEGMENTATOR_HAPTIC_PRESS_PATTERN = [20, 30, 15] as const;
 const SEGMENTATOR_HAPTIC_SELECT_MS = 16;
 
@@ -113,7 +116,6 @@ function triggerSegmentatorHaptic(kind: "press" | "select") {
 type SegmentatorDragState = {
   pressing: boolean;
   active: boolean;
-  metrics: SegmentatorThumbMetrics | null;
 };
 
 type SegmentatorPointerDrag = {
@@ -122,21 +124,21 @@ type SegmentatorPointerDrag = {
   moved: boolean;
   fallback: SegmentatorThumbMetrics;
   previewValue: string | null;
+  lastMetrics?: SegmentatorThumbMetrics;
+  /** While settling onto a new item, keep writes animated so live offset can't cut the snap. */
+  snapUntil?: number;
   cleanupWindowListeners?: () => void;
 };
 
-function buildThumbStyle(metrics: SegmentatorThumbMetrics): CSSProperties {
+/** Geometry (x/y/width/height) is always written imperatively — React must not own those. */
+function buildThumbStyle(): CSSProperties {
   return {
     position: "absolute",
     top: 0,
     left: 0,
     pointerEvents: "none",
     zIndex: 0,
-    width: metrics.width,
-    height: metrics.height,
     transformOrigin: "center center",
-    ["--segmentator-thumb-x" as string]: `${metrics.x}px`,
-    ["--segmentator-thumb-y" as string]: `${metrics.y}px`,
   };
 }
 
@@ -191,25 +193,17 @@ function findItemAtClientX(
   return nearest;
 }
 
-function lerpSegmentatorThumbMetrics(
-  from: SegmentatorThumbMetrics,
-  to: SegmentatorThumbMetrics,
-  t: number
-): SegmentatorThumbMetrics {
-  const clamped = Math.max(0, Math.min(1, t));
-  return {
-    x: from.x + (to.x - from.x) * clamped,
-    y: from.y + (to.y - from.y) * clamped,
-    width: from.width + (to.width - from.width) * clamped,
-    height: from.height + (to.height - from.height) * clamped,
-  };
-}
-
 function getItemCenterX(item: HTMLButtonElement): number {
   const rect = item.getBoundingClientRect();
   return rect.left + rect.width / 2;
 }
 
+/**
+ * Map finger X onto the nearest item, with a small tactile offset while stuck.
+ * Crossing items is a discrete jump in metrics — callers should animate those.
+ * Edge limits only apply on the first/last item (outward side); mid-track sticky
+ * offset stays free.
+ */
 function computeDragThumbMetrics(
   group: HTMLElement,
   items: HTMLButtonElement[],
@@ -220,49 +214,31 @@ function computeDragThumbMetrics(
     return { metrics: fallback, item: null };
   }
 
-  const measured = items.map((item) => ({
-    item,
-    metrics: measureItemThumbMetrics(item, group),
-  }));
-
-  const first = measured[0];
-  const last = measured[measured.length - 1];
-  const firstCenter = getItemCenterX(first.item);
-  const lastCenter = getItemCenterX(last.item);
-
-  if (clientX <= firstCenter) {
-    return { metrics: first.metrics, item: first.item };
-  }
-
-  if (clientX >= lastCenter) {
-    return { metrics: last.metrics, item: last.item };
-  }
-
-  for (let index = 0; index < measured.length - 1; index += 1) {
-    const current = measured[index];
-    const next = measured[index + 1];
-    const currentCenter = getItemCenterX(current.item);
-    const nextCenter = getItemCenterX(next.item);
-
-    if (clientX >= currentCenter && clientX <= nextCenter) {
-      const span = nextCenter - currentCenter;
-      const progress = span > 0 ? (clientX - currentCenter) / span : 0;
-      const previewItem = progress < 0.5 ? current.item : next.item;
-      return {
-        metrics: lerpSegmentatorThumbMetrics(current.metrics, next.metrics, progress),
-        item: previewItem,
-      };
-    }
-  }
-
-  const targetItem = findItemAtClientX(items, clientX);
-  if (!targetItem) {
+  const item = findItemAtClientX(items, clientX);
+  if (!item) {
     return { metrics: fallback, item: null };
   }
 
+  const base = measureItemThumbMetrics(item, group);
+  const center = getItemCenterX(item);
+  const rawOffset = Math.max(
+    -SEGMENTATOR_STICKY_OFFSET_PX,
+    Math.min(SEGMENTATOR_STICKY_OFFSET_PX, clientX - center)
+  );
+  let x = base.x + rawOffset;
+
+  const isFirst = item === items[0];
+  const isLast = item === items[items.length - 1];
+  // Only block dragging past the outer edge of the end items.
+  if (isFirst && x < base.x) x = base.x;
+  if (isLast && x > base.x) x = base.x;
+
   return {
-    metrics: measureItemThumbMetrics(targetItem, group),
-    item: targetItem,
+    metrics: {
+      ...base,
+      x,
+    },
+    item,
   };
 }
 
@@ -273,16 +249,28 @@ function applyThumbMetrics(
 ) {
   if (instant) {
     el.setAttribute("data-instant", "true");
+  } else {
+    el.removeAttribute("data-instant");
   }
-  el.style.removeProperty("transform");
   el.style.width = `${metrics.width}px`;
   el.style.height = `${metrics.height}px`;
   el.style.setProperty("--segmentator-thumb-x", `${metrics.x}px`);
   el.style.setProperty("--segmentator-thumb-y", `${metrics.y}px`);
   if (instant) {
+    // Flush the instant paint, then leave data-instant on only if the caller
+    // keeps it (drag session). Default: clear so settle animations can run.
     void el.offsetWidth;
     el.removeAttribute("data-instant");
   }
+}
+
+/** Drag-follow write: keep transitions off for the whole gesture (no per-frame toggle). */
+function applyThumbMetricsLive(el: HTMLSpanElement, metrics: SegmentatorThumbMetrics) {
+  el.setAttribute("data-instant", "true");
+  el.style.width = `${metrics.width}px`;
+  el.style.height = `${metrics.height}px`;
+  el.style.setProperty("--segmentator-thumb-x", `${metrics.x}px`);
+  el.style.setProperty("--segmentator-thumb-y", `${metrics.y}px`);
 }
 
 function metricsApproxEqual(
@@ -341,6 +329,23 @@ function useSegmentatorThumb(
     []
   );
 
+  /** Imperative-only write — safe during drag (avoids React style thrashing / flicker). */
+  const writeThumbMetrics = useCallback(
+    (metrics: SegmentatorThumbMetrics, instant = false) => {
+      metricsRef.current = metrics;
+      const el = thumbElRef.current;
+      if (el) applyThumbMetrics(el, metrics, instant);
+    },
+    []
+  );
+
+  /** Continuous drag follow — transitions stay disabled until gesture ends. */
+  const writeThumbMetricsLive = useCallback((metrics: SegmentatorThumbMetrics) => {
+    metricsRef.current = metrics;
+    const el = thumbElRef.current;
+    if (el) applyThumbMetricsLive(el, metrics);
+  }, []);
+
   const remeasureThumb = useCallback(() => {
     if (dragStateRef.current.pressing || dragStateRef.current.active) return;
 
@@ -359,10 +364,8 @@ function useSegmentatorThumb(
   }, []);
 
   useLayoutEffect(() => {
-    if ((dragState.pressing || dragState.active) && dragState.metrics) {
-      syncThumb(dragState.metrics, true);
-      return;
-    }
+    // Press/drag owns the thumb via writeThumbMetrics — do not sync from React here.
+    if (dragState.pressing || dragState.active) return;
 
     const next = measureThumb();
     if (!next) return;
@@ -389,20 +392,22 @@ function useSegmentatorThumb(
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (metricsApproxEqual(startMetrics, next) || prefersReducedMotion) {
+    if (prefersReducedMotion) {
       syncThumb(next, true);
       return;
     }
 
+    if (metricsApproxEqual(startMetrics, next)) {
+      // Already targeting this geometry (e.g. press started the slide). Do not
+      // re-apply with data-instant — that forced the in-flight transition to finish
+      // the moment the finger lifted.
+      metricsRef.current = next;
+      setThumb(next);
+      return;
+    }
+
     syncThumb(next, false);
-  }, [
-    selectedValue,
-    measureThumb,
-    syncThumb,
-    dragState.active,
-    dragState.pressing,
-    dragState.metrics,
-  ]);
+  }, [selectedValue, measureThumb, syncThumb, dragState.active, dragState.pressing]);
 
   useLayoutEffect(() => {
     const group = groupRef.current;
@@ -440,7 +445,7 @@ function useSegmentatorThumb(
     return () => cancelAnimationFrame(frame);
   }, [layoutKey, remeasureThumb]);
 
-  return { thumb, onThumbRef, measureThumb, applyThumbImmediate: syncThumb };
+  return { thumb, onThumbRef, writeThumbMetrics, writeThumbMetricsLive };
 }
 
 export type SegmentatorGroupProps = Omit<
@@ -452,6 +457,8 @@ export type SegmentatorGroupProps = Omit<
   onValueChange?: (value: string) => void;
   mode?: SegmentatorMode;
   allRound?: boolean;
+  /** When true, the group fills its container and items split the width equally. */
+  equalWidth?: boolean;
   disabled?: boolean;
 };
 
@@ -464,6 +471,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       onValueChange,
       mode = "nested",
       allRound = false,
+      equalWidth = false,
       disabled,
       children,
       ...props
@@ -479,20 +487,23 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
     const [dragState, setDragState] = useState<SegmentatorDragState>({
       pressing: false,
       active: false,
-      metrics: null,
     });
-    const { thumb, onThumbRef, measureThumb, applyThumbImmediate } = useSegmentatorThumb(
-      groupRef,
-      currentValue,
-      layoutKey,
-      dragState
-    );
+    const { thumb, onThumbRef, writeThumbMetrics, writeThumbMetricsLive } =
+      useSegmentatorThumb(groupRef, currentValue, layoutKey, dragState);
 
     const resetPointerInteraction = useCallback(() => {
       pointerDragRef.current?.cleanupWindowListeners?.();
       pointerDragRef.current = null;
       setDragPreviewValue(null);
-      setDragState({ pressing: false, active: false, metrics: null });
+      setDragState({ pressing: false, active: false });
+      const thumbEl = groupRef.current?.querySelector<HTMLSpanElement>(
+        ".aviala-segmentator-thumb"
+      );
+      if (thumbEl) {
+        thumbEl.removeAttribute("data-pressing");
+        // Leave data-instant cleared so the settle animation can run.
+        thumbEl.removeAttribute("data-instant");
+      }
     }, []);
 
     const finishPointerInteraction = useCallback(
@@ -514,6 +525,9 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           if (nextValue) {
             setValue(nextValue);
           }
+        } else if (drag.previewValue && drag.previewValue !== currentValue) {
+          consumeClickRef.current = true;
+          setValue(drag.previewValue);
         }
 
         resetPointerInteraction();
@@ -540,20 +554,44 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
             return measureItemThumbMetrics(items[0], group);
           })();
 
-        const { metrics, item } = computeDragThumbMetrics(group, items, clientX, fallback);
+        const { metrics, item } = computeDragThumbMetrics(
+          group,
+          items,
+          clientX,
+          fallback
+        );
         const nextPreviewValue = item?.dataset.value ?? drag.previewValue;
+        const itemChanged =
+          !!nextPreviewValue && nextPreviewValue !== drag.previewValue;
 
-        if (nextPreviewValue && nextPreviewValue !== drag.previewValue) {
+        if (itemChanged) {
           triggerSegmentatorHaptic("select");
+          // Hold animated writes long enough for the cross-item settle to play.
+          drag.snapUntil = performance.now() + 540;
+          if (nextPreviewValue) {
+            setDragPreviewValue(nextPreviewValue);
+          }
         }
-
         drag.previewValue = nextPreviewValue;
-        applyThumbImmediate(metrics, true);
-        setDragPreviewValue(nextPreviewValue);
-        setDragState({ pressing: true, active: true, metrics });
+
+        const prev = drag.lastMetrics;
+        const jumpDistance = prev
+          ? Math.abs(metrics.x - prev.x) + Math.abs(metrics.width - prev.width)
+          : Number.POSITIVE_INFINITY;
+        const settling = performance.now() < (drag.snapUntil ?? 0);
+        const shouldAnimate =
+          itemChanged || settling || jumpDistance >= SEGMENTATOR_DRAG_ANIMATE_JUMP_PX;
+
+        drag.lastMetrics = metrics;
+
+        if (shouldAnimate) {
+          writeThumbMetrics(metrics, false);
+        } else {
+          writeThumbMetricsLive(metrics);
+        }
         return item;
       },
-      [applyThumbImmediate]
+      [writeThumbMetrics, writeThumbMetricsLive]
     );
 
     const attachWindowDragListeners = useCallback(
@@ -562,14 +600,20 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           const drag = pointerDragRef.current;
           if (!drag || drag.pointerId !== pointerId) return;
 
-          if (Math.abs(event.clientX - drag.startX) < SEGMENTATOR_DRAG_THRESHOLD_PX) return;
+          if (Math.abs(event.clientX - drag.startX) < SEGMENTATOR_DRAG_THRESHOLD_PX) {
+            return;
+          }
 
-          drag.moved = true;
+          if (!drag.moved) {
+            drag.moved = true;
+            setDragState({ pressing: true, active: true });
+          }
           event.preventDefault();
           updateDragThumb(event.clientX);
         };
 
         const onPointerEnd = (event: PointerEvent) => {
+          if (event.pointerId !== pointerId) return;
           finishPointerInteraction(event.pointerId);
         };
 
@@ -602,9 +646,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       const group = groupRef.current;
       if (!group) return;
 
-      const metrics = measureThumb();
-      if (!metrics) return;
-
+      const metrics = measureItemThumbMetrics(pressedItem, group);
       const pressedValue = pressedItem.dataset.value ?? currentValue;
 
       triggerSegmentatorHaptic("press");
@@ -616,17 +658,21 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
         moved: false,
         fallback: metrics,
         previewValue: pressedValue,
+        lastMetrics: metrics,
       };
       pointerDragRef.current.cleanupWindowListeners = attachWindowDragListeners(
         event.pointerId
       );
 
+      // Animate onto the pressed item (including when it wasn't selected), and
+      // let press-scale transition run — do not use live/instant writes here.
+      writeThumbMetrics(metrics, false);
       setDragPreviewValue(pressedValue);
-      setDragState({ pressing: true, active: false, metrics });
+      setDragState({ pressing: true, active: false });
       group.setPointerCapture(event.pointerId);
     };
 
-    const thumbStyle: CSSProperties | undefined = thumb ? buildThumbStyle(thumb) : undefined;
+    const thumbStyle: CSSProperties | undefined = thumb ? buildThumbStyle() : undefined;
 
     return (
       <SegmentatorContext.Provider
@@ -651,12 +697,14 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           {...props}
           className={cn("aviala-segmentator-group", className)}
           data-all-round={allRound ? "true" : "false"}
+          data-equal-width={equalWidth ? "true" : undefined}
           data-mode={mode}
           data-dragging={dragState.active ? "true" : undefined}
           data-pressing={dragState.pressing ? "true" : undefined}
           onPointerDown={handlePointerDown}
           onPointerUp={finishPointerDrag}
           onPointerCancel={finishPointerDrag}
+          onLostPointerCapture={finishPointerDrag}
         >
           {children}
           {thumb && (
@@ -732,19 +780,21 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
         }}
         {...props}
       >
-        {renderIcon(icon, dimmed && !!icon)}
-        {!iconOnly && (
-          <span
-            className={cn(
-              "relative z-[1] shrink-0 [word-break:break-word]",
-              typographyVariants({ level: "text" }),
-              dimmed && "opacity-[var(--button-disabled-opacity,0.55)]"
-            )}
-          >
-            {children}
-          </span>
-        )}
-        {!iconOnly && renderIcon(rightIcon, dimmed && !!rightIcon)}
+        <span className="aviala-segmentator-item__content">
+          {renderIcon(icon, dimmed && !!icon)}
+          {!iconOnly && (
+            <span
+              className={cn(
+                "relative z-[1] shrink-0 [word-break:break-word]",
+                typographyVariants({ level: "text" }),
+                dimmed && "opacity-[var(--button-disabled-opacity,0.55)]"
+              )}
+            >
+              {children}
+            </span>
+          )}
+          {!iconOnly && renderIcon(rightIcon, dimmed && !!rightIcon)}
+        </span>
       </button>
     );
   }

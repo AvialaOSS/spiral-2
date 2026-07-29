@@ -282,11 +282,12 @@
   --segmentator-shadow-tiled: inset 0 -0.5px 0
     var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
   --segmentator-item-hover-bg: var(--aviala-neutral-neutral-6, #edebeb);
-  --segmentator-press-scale: 0.96;
-  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.3s);
+  --segmentator-press-scale: 0.98;
+  --segmentator-press-height-scale: 0.88;
+  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.52s);
   --segmentator-press-transition-easing: var(
     --segmentator-transition-easing,
-    cubic-bezier(0.33, 1, 0.68, 1)
+    cubic-bezier(0.22, 1.1, 0.36, 1)
   );
   --segmentator-haptic-press-ms: 20;
   --segmentator-haptic-select-ms: 16;
@@ -393,9 +394,14 @@
     var(--datepicker-grid-rows) * var(--datepicker-day-height) +
       (var(--datepicker-grid-rows) - 1) * var(--datepicker-row-gap)
   );
+  /* Date grid content (weekdays + grid) — keep month wheels the same height */
+  --datepicker-view-height: calc(
+    var(--datepicker-weekday-height) + var(--datepicker-panel-gap) +
+      var(--datepicker-grid-height)
+  );
   --datepicker-panel-body-height: calc(
     var(--datepicker-header-height) + var(--datepicker-panel-gap) +
-      var(--datepicker-weekday-height) + var(--datepicker-panel-gap) + var(--datepicker-grid-height)
+      var(--datepicker-view-height)
   );
   --datepicker-time-wheel-item-height: 36px;
   --datepicker-time-wheel-visible-count: 5;
@@ -616,15 +622,19 @@
   /* Slider — Figma Information Collect → Slider (384:21584) */
   --slider-width: 70px;
   --slider-track-height: 4px;
-  --slider-track-height-big: 6px;
+  --slider-track-height-big: 8px;
   --slider-thumb-size: 8px;
-  --slider-thumb-size-big: 12px;
+  --slider-thumb-size-big: 10px;
+  --slider-pad-y: var(--padding-tinyer, 3px);
   --slider-track-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
   --slider-track-border: var(--border-border-normal-primary, #e2e0e0);
   --slider-range-bg: var(--box-box-theme-primarybackground, #ff5532);
   --slider-thumb-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
   --slider-thumb-border: var(--border-border-theme-primary, #ff5532);
-  --slider-disabled-opacity: var(--transparency-disable, 0.55);
+  /* Availability Status=OFF — secondary fill, not whole-control opacity */
+  --slider-track-bg-disabled: var(--control-control-normal-lightbackground-deep, #fdfbfb);
+  --slider-range-bg-disabled: var(--box-box-theme-secondarybackground, #ffdad2);
+  --slider-thumb-border-disabled: var(--box-box-theme-secondarybackground, #ffdad2);
 
   /* Upload — Figma Information Collect → Upload (527:56238 / 527:56237) */
   --upload-radius: var(--border-radius-small, 8px);

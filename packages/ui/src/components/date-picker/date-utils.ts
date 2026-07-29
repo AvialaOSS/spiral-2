@@ -182,3 +182,102 @@ export function normalizeRange(from: Date, to: Date): DateRange {
   }
   return { from: to, to: from };
 }
+
+export type ParsedDateInput = {
+  date: Date;
+  hours?: number;
+  minutes?: number;
+};
+
+function isValidYmd(year: number, month: number, day: number): boolean {
+  if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+  const date = new Date(year, month - 1, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  );
+}
+
+function parseTimeFragment(
+  hoursText?: string,
+  minutesText?: string
+): { hours: number; minutes: number } | undefined {
+  if (hoursText == null || minutesText == null) return undefined;
+  const hours = Number(hoursText);
+  const minutes = Number(minutesText);
+  if (
+    !Number.isInteger(hours) ||
+    !Number.isInteger(minutes) ||
+    hours < 0 ||
+    hours > 23 ||
+    minutes < 0 ||
+    minutes > 59
+  ) {
+    return undefined;
+  }
+  return { hours, minutes };
+}
+
+/** Parse typed date strings: `YYYY-MM-DD`, `YYYY/MM/DD`, `YYYY.MM.DD`, optional `HH:mm`. */
+export function parseDateInput(text: string): ParsedDateInput | null {
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+
+  const ymd = trimmed.match(
+    /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?$/
+  );
+  if (ymd) {
+    const year = Number(ymd[1]);
+    const month = Number(ymd[2]);
+    const day = Number(ymd[3]);
+    if (!isValidYmd(year, month, day)) return null;
+    const time = parseTimeFragment(ymd[4], ymd[5]);
+    if (ymd[4] != null && !time) return null;
+    return {
+      date: startOfDay(new Date(year, month - 1, day)),
+      hours: time?.hours,
+      minutes: time?.minutes,
+    };
+  }
+
+  const mdy = trimmed.match(
+    /^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})(?:[ T](\d{1,2}):(\d{2}))?$/
+  );
+  if (mdy) {
+    const month = Number(mdy[1]);
+    const day = Number(mdy[2]);
+    const year = Number(mdy[3]);
+    if (!isValidYmd(year, month, day)) return null;
+    const time = parseTimeFragment(mdy[4], mdy[5]);
+    if (mdy[4] != null && !time) return null;
+    return {
+      date: startOfDay(new Date(year, month - 1, day)),
+      hours: time?.hours,
+      minutes: time?.minutes,
+    };
+  }
+
+  return null;
+}
+
+const RANGE_SEPARATOR = /\s*(?:-|~|—|–|至)\s*/;
+
+/** Parse range text like `2026-07-01 - 2026-07-15` or `2026/07/01 至 2026/07/15`. */
+export function parseDateRangeInput(text: string): DateRange | null {
+  const trimmed = text.trim();
+  if (!trimmed) return { from: undefined, to: undefined };
+
+  const parts = trimmed.split(RANGE_SEPARATOR).filter(Boolean);
+  if (parts.length === 1) {
+    const parsed = parseDateInput(parts[0]);
+    if (!parsed) return null;
+    return { from: parsed.date, to: undefined };
+  }
+  if (parts.length !== 2) return null;
+
+  const fromParsed = parseDateInput(parts[0]);
+  const toParsed = parseDateInput(parts[1]);
+  if (!fromParsed || !toParsed) return null;
+  return normalizeRange(fromParsed.date, toParsed.date);
+}
