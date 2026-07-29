@@ -209,7 +209,11 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
               <SelectContent>
                 <SelectItemGroup>
                   {pageSizeOptions.map((option) => (
-                    <SelectItem key={option} value={String(option)}>
+                    <SelectItem
+                      key={option}
+                      value={String(option)}
+                      itemFunction="checkbox"
+                    >
                       {sizeOptionLabel(option)}
                     </SelectItem>
                   ))}

@@ -35,7 +35,7 @@ function patchKeyboardFocusDts(filePath) {
 
   content = content.replace(
     /declare function cn\(/,
-    '/** @deprecated No-op. Focus rings use `:focus-visible` + `.aviala-focus-ring`. */\ndeclare function initKeyboardFocus(): void;\ndeclare function cn('
+    "/** Installs keyboard-modality gate for `.aviala-focus-ring` (`html[data-aviala-kbd]`). Auto-run by ThemeProvider. */\ndeclare function initKeyboardFocus(): void;\ndeclare function cn("
   );
   content = content.replace(
     /ThemeScript, Tooltip,/,

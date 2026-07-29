@@ -163,9 +163,11 @@
 .aviala-input[data-disabled="true"] > .aviala-input__slot,
 .aviala-input[data-disabled="true"] > .aviala-input__badge-area,
 .aviala-input[data-disabled="true"] > .aviala-input__field,
+.aviala-input[data-disabled="true"] > .aviala-number-input__controls,
 .aviala-input:has(input:disabled) > .aviala-input__slot,
 .aviala-input:has(input:disabled) > .aviala-input__badge-area,
-.aviala-input:has(input:disabled) > .aviala-input__field {
+.aviala-input:has(input:disabled) > .aviala-input__field,
+.aviala-input:has(input:disabled) > .aviala-number-input__controls {
   opacity: var(--input-disabled-opacity, 0.55);
 }
 
@@ -189,6 +191,105 @@
   background-color: color-mix(in srgb, var(--input-border-activated, var(--primary)) 25%, transparent);
 }
 
+/* NumberInput — Figma Information Collect → NumberInput (197:3237) */
+.aviala-input.aviala-number-input {
+  /* Stretch steppers to the shell height; other children re-center themselves. */
+  align-items: stretch;
+}
+
+.aviala-input.aviala-number-input > .aviala-input__slot,
+.aviala-input.aviala-number-input > .aviala-input__badge-area,
+.aviala-input.aviala-number-input > .aviala-input__field {
+  align-self: center;
+}
+
+.aviala-number-input__input::-webkit-outer-spin-button,
+.aviala-number-input__input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.aviala-number-input__input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.aviala-number-input__controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-self: stretch;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-none, 0px);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.aviala-number-input__step {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-inside, 4px);
+  border: 0;
+  background: transparent;
+  padding: var(--padding-none, 0px) var(--padding-small, 6px);
+  color: inherit;
+  cursor: pointer;
+}
+
+.aviala-number-input__step--up {
+  border-radius: var(--border-radius-extra-small-2, 6px)
+    var(--border-radius-extra-small-2, 6px) 0 0;
+}
+
+.aviala-number-input__step--down {
+  border-radius: 0 0 var(--border-radius-extra-small-2, 6px)
+    var(--border-radius-extra-small-2, 6px);
+}
+
+.aviala-number-input__step svg {
+  width: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
+  height: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
+  pointer-events: none;
+}
+
+.aviala-number-input__step--up svg {
+  /* Arrow faces up — negative margin on the opposite side. */
+  margin-bottom: calc(-1 * var(--padding-tiny, 4px));
+}
+
+.aviala-number-input__step--down svg {
+  /* Arrow faces down — negative margin on the opposite side. */
+  margin-top: calc(-1 * var(--padding-tiny, 4px));
+}
+
+.aviala-number-input__step:disabled {
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aviala-number-input__step:hover:not(:disabled) {
+    background-color: color-mix(
+      in srgb,
+      var(--control-control-normal-background-deep, #e2e0e0) 55%,
+      transparent
+    );
+  }
+}
+
+.aviala-number-input__step:focus-visible {
+  outline: none;
+  background-color: color-mix(
+    in srgb,
+    var(--control-control-normal-background-deep, #e2e0e0) 55%,
+    transparent
+  );
+}
+
 /* Textarea — Figma Information Collect → TextareaInput */
 .aviala-textarea {
   position: relative;
@@ -203,6 +304,7 @@
   background-color: var(--input-bg-default);
   box-shadow: var(--input-shell-shadow);
   color: var(--input-fg);
+  cursor: text;
   transition:
     background-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -246,6 +348,9 @@
   position: relative;
   z-index: 1;
   display: inline-flex;
+  /* content-box so slot-py sits outside the 18px icon row — Figma first/last
+     icon frames are padding 6 + Icons 18 = 30px, aligning with the first text line. */
+  box-sizing: content-box;
   height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));
   flex-shrink: 0;
   align-items: center;
@@ -284,6 +389,7 @@
   z-index: 1;
   display: flex;
   min-width: 0;
+  min-height: 0;
   flex: 1 1 0%;
   flex-direction: column;
   align-self: stretch;
@@ -310,7 +416,8 @@
   min-width: 0;
   min-height: 100%;
   flex: 1 1 auto;
-  resize: vertical;
+  /* Custom SymbolResize handle owns resizing — hide the native grip. */
+  resize: none;
   border: 0;
   background: transparent;
   padding: 0;
@@ -336,7 +443,6 @@
 }
 
 .aviala-textarea__controller {
-  pointer-events: none;
   position: absolute;
   right: 4px;
   bottom: 2px;
@@ -348,38 +454,46 @@
   border-radius: var(--border-radius-extra-small-2, 6px);
   background-color: var(--textarea-controller-bg, #f5f3f3);
   padding: var(--padding-none, 0px) var(--padding-min, 2px);
+  pointer-events: none;
 }
 
 .aviala-textarea__counter {
   color: var(--textarea-counter-fg, var(--typography-caption-fg));
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .aviala-textarea__resize-handle {
   position: relative;
-  width: 16px;
-  height: 20px;
+  display: inline-flex;
+  width: 12px;
+  height: 16px;
   flex-shrink: 0;
+  cursor: nwse-resize;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  border-radius: var(--border-radius-extra-small-2, 6px);
+  background: transparent;
+  padding: 0;
+  color: var(--textarea-counter-fg, #858484);
+  touch-action: none;
+  pointer-events: auto;
 }
 
-.aviala-textarea__resize-handle::before,
-.aviala-textarea__resize-handle::after {
-  content: "";
-  position: absolute;
-  right: 1px;
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid var(--textarea-counter-fg, #858484);
-  border-bottom: 1px solid var(--textarea-counter-fg, #858484);
+.aviala-textarea__resize-handle svg {
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
 }
 
-.aviala-textarea__resize-handle::before {
-  bottom: 5px;
+.aviala-textarea__resize-handle:disabled {
+  cursor: not-allowed;
 }
 
-.aviala-textarea__resize-handle::after {
-  bottom: 1px;
-  right: 5px;
+.aviala-textarea[data-resizing="true"] {
+  user-select: none;
 }
 
 /* Radio — Figma Information Collect → Radio / RadioInput */
@@ -883,6 +997,11 @@
     background-color 0.15s ease,
     color 0.15s ease,
     box-shadow 0.15s ease;
+}
+
+/* Menu highlight is data-highlighted / hover — never the keyboard focus ring */
+.aviala-select-item.aviala-focus-ring:focus-visible {
+  animation: none;
 }
 
 .aviala-select-item[data-layout="people"] {

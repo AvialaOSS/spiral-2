@@ -17,7 +17,7 @@
   --text-text-normal-text-black: #343333;
   --text-text-normal-text-caption-black: #858484;
   --text-text-normal-text-white: #fefcfc;
-  --text-text-normal-text-caption-white: #a8a8a8;
+  --text-text-normal-text-caption-white: #fefcfc;
 
   /* shadcn semantic aliases — default typography/surfaces use neutral tokens, not theme tint */
   --background: var(--normal-background-theme, #faf8f8);
@@ -45,7 +45,7 @@
 [data-mode="dark"] {
   --background: #1a1a1a;
   --foreground: var(--text-text-normal-text-white, #e8e8e8);
-  --muted-foreground: var(--text-text-normal-text-caption-white, #a8a8a8);
+  --muted-foreground: var(--text-text-normal-text-caption-black, #a8a8a8);
   --secondary-foreground: var(--text-text-normal-text-white, #e8e8e8);
   --accent-foreground: var(--text-text-normal-text-white, #e8e8e8);
   --card: #242424;

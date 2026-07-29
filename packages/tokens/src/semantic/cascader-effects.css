@@ -252,6 +252,10 @@
   padding: var(--cascader-item-py, var(--select-item-py))
     var(--cascader-item-px, var(--select-item-px));
   color: var(--cascader-item-fg, var(--select-item-fg));
+  /* Required so `.aviala-cascader-item__text { font-size: inherit }` resolves to
+     the design token — not the UA/body 16px button inheritance. */
+  font-size: var(--cascader-item-font-size, var(--select-item-font-size));
+  line-height: var(--cascader-item-line-height, var(--select-item-line-height));
   text-align: left;
   transition:
     background-color 0.15s ease,
@@ -264,6 +268,8 @@
   padding-top: var(--cascader-item-py, var(--select-item-py));
   padding-bottom: var(--cascader-label-pb, var(--select-label-pb));
   color: var(--cascader-label-fg, var(--select-label-fg));
+  font-size: var(--cascader-label-font-size, var(--select-label-font-size));
+  line-height: var(--cascader-label-line-height, var(--select-label-line-height));
 }
 
 .aviala-cascader-item[data-layout="title"]:hover,

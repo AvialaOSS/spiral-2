@@ -20,6 +20,7 @@ import {
   type ThemeMode,
   type ThemePreset,
 } from "@aviala-design/tokens";
+import { initKeyboardFocus } from "../lib/keyboard-focus";
 
 export type ThemeProviderProps = {
   children: ReactNode;
@@ -117,6 +118,10 @@ export function ThemeProvider({
           }),
     [isStaticTheme, mode, primaryColor, presetId, paletteConfig]
   );
+
+  useLayoutEffect(() => {
+    initKeyboardFocus();
+  }, []);
 
   useLayoutEffect(() => {
     applyBaseNumbersDensity(document.documentElement, density);

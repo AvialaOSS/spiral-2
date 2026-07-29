@@ -4,22 +4,19 @@ import {
   DirectionArrowRight,
   TimeAndDateClock,
   TimeAndDateDate,
-  type AvialaIconProps,
 } from "@aviala-design/icons";
 import {
-  cloneElement,
   forwardRef,
-  isValidElement,
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  type ButtonHTMLAttributes,
   type ComponentPropsWithoutRef,
+  type InputHTMLAttributes,
   type KeyboardEvent,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
@@ -49,6 +46,8 @@ import {
   isSameDay,
   isSameMonth,
   normalizeRange,
+  parseDateInput,
+  parseDateRangeInput,
   startOfDay,
   WEEKDAY_LABELS,
   type DateRange,
@@ -58,7 +57,7 @@ import {
   SegmentatorGroup,
   SegmentatorItem,
 } from "../segmentator";
-import { DatePickerTimeWheelColumn } from "./date-picker-time-wheel";
+import { DatePickerMonthYearWheels } from "./date-picker-month-wheels";
 import { TimePickerWheels } from "../time-picker/time-picker-wheels";
 
 export type { DatePickerMode, DatePickerPanel, DatePickerSize, DatePickerTimeValue } from "./date-picker-context";
@@ -305,6 +304,80 @@ export function DatePicker(props: DatePickerProps) {
     [mode, props]
   );
 
+  const commitTypedValue = useCallback(
+    (text: string) => {
+      const trimmed = text.trim();
+
+      if (mode === "single") {
+        if (!trimmed) {
+          commitSingle(undefined);
+          return true;
+        }
+        const parsed = parseDateInput(trimmed);
+        if (!parsed) return false;
+        if (isDateDisabled(parsed.date, minDate, maxDate)) return false;
+
+        const hours = parsed.hours ?? timeValue.hours;
+        const minutes = parsed.minutes ?? timeValue.minutes;
+        if (enableTime && (parsed.hours != null || parsed.minutes != null)) {
+          setTimeValue({ hours, minutes });
+        }
+
+        const next = enableTime
+          ? applyTimeToDate(parsed.date, hours, minutes)
+          : parsed.date;
+        commitSingle(next);
+        setViewMonth(new Date(next.getFullYear(), next.getMonth(), 1));
+        setFocusedDay(startOfDay(next));
+        return true;
+      }
+
+      if (!trimmed) {
+        setRangeDraftFrom(undefined);
+        commitRange({});
+        return true;
+      }
+
+      const parsedRange = parseDateRangeInput(trimmed);
+      if (!parsedRange) return false;
+      if (parsedRange.from && isDateDisabled(parsedRange.from, minDate, maxDate)) {
+        return false;
+      }
+      if (parsedRange.to && isDateDisabled(parsedRange.to, minDate, maxDate)) {
+        return false;
+      }
+
+      const withTime = (date: Date) =>
+        enableTime
+          ? applyTimeToDate(date, timeValue.hours, timeValue.minutes)
+          : date;
+
+      const next: DateRange = {
+        from: parsedRange.from ? withTime(parsedRange.from) : undefined,
+        to: parsedRange.to ? withTime(parsedRange.to) : undefined,
+      };
+      setRangeDraftFrom(next.to ? undefined : next.from ? startOfDay(next.from) : undefined);
+      commitRange(next);
+      const anchor = next.from ?? next.to;
+      if (anchor) {
+        setViewMonth(new Date(anchor.getFullYear(), anchor.getMonth(), 1));
+        setFocusedDay(startOfDay(anchor));
+      }
+      return true;
+    },
+    [
+      commitRange,
+      commitSingle,
+      enableTime,
+      maxDate,
+      minDate,
+      mode,
+      setTimeValue,
+      timeValue.hours,
+      timeValue.minutes,
+    ]
+  );
+
   const selectDate = useCallback(
     (date: Date) => {
       if (disabled || isDateDisabled(date, minDate, maxDate)) return;
@@ -383,6 +456,7 @@ export function DatePicker(props: DatePickerProps) {
   const contextValue = useMemo(
     () => ({
       open,
+      setOpen: handleOpenChange,
       disabled,
       size,
       mode,
@@ -396,6 +470,7 @@ export function DatePicker(props: DatePickerProps) {
             : rangeValue
           : rangeValue,
       selectDate,
+      commitTypedValue,
       minDate,
       maxDate,
       focusedDay,
@@ -408,9 +483,11 @@ export function DatePicker(props: DatePickerProps) {
     }),
     [
       activePanel,
+      commitTypedValue,
       disabled,
       enableTime,
       focusedDay,
+      handleOpenChange,
       maxDate,
       minDate,
       mode,
@@ -435,7 +512,10 @@ export function DatePicker(props: DatePickerProps) {
   );
 }
 
-export type DatePickerTriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value"> & {
+export type DatePickerTriggerProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "value" | "size" | "onChange"
+> & {
   size?: DatePickerSize;
   allRound?: boolean;
   leftIcon?: ReactNode;
@@ -446,9 +526,41 @@ export type DatePickerTriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement
   displayValue?: ReactNode;
   rangeSeparator?: string;
   className?: string;
+  /** When false, shows a read-only value instead of an editable input. Default true. */
+  editable?: boolean;
 };
 
-export const DatePickerTrigger = forwardRef<HTMLButtonElement, DatePickerTriggerProps>(
+function formatTriggerValue(
+  mode: DatePickerMode,
+  singleValue: Date | undefined,
+  rangeValue: DateRange,
+  enableTime: boolean,
+  timeValue: DatePickerTimeValue,
+  rangeSeparator: string
+): string | null {
+  if (mode === "single") {
+    if (!singleValue) return null;
+    return enableTime
+      ? formatDisplayDateTime(singleValue, timeValue.hours, timeValue.minutes)
+      : formatIsoDate(singleValue);
+  }
+
+  if (rangeValue.from && rangeValue.to) {
+    return enableTime
+      ? `${formatDisplayDateTime(rangeValue.from, timeValue.hours, timeValue.minutes)}${rangeSeparator}${formatDisplayDateTime(rangeValue.to, timeValue.hours, timeValue.minutes)}`
+      : `${formatIsoDate(rangeValue.from)}${rangeSeparator}${formatIsoDate(rangeValue.to)}`;
+  }
+
+  if (rangeValue.from) {
+    return enableTime
+      ? `${formatDisplayDateTime(rangeValue.from, timeValue.hours, timeValue.minutes)}${rangeSeparator}…`
+      : `${formatIsoDate(rangeValue.from)}${rangeSeparator}…`;
+  }
+
+  return null;
+}
+
+export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerProps>(
   (
     {
       className,
@@ -456,18 +568,23 @@ export const DatePickerTrigger = forwardRef<HTMLButtonElement, DatePickerTrigger
       allRound = false,
       leftIcon,
       rightIcon,
-      placeholder = "YYYY/MM/DD",
+      placeholder = "YYYY-MM-DD",
       rangePlaceholder = "Start date - End date",
       error = false,
       displayValue,
       rangeSeparator = " - ",
       disabled: disabledProp,
+      editable = true,
+      onFocus,
+      onBlur,
+      onKeyDown,
       ...props
     },
     ref
   ) => {
     const {
       open,
+      setOpen,
       disabled: disabledContext,
       size: sizeContext,
       mode,
@@ -475,66 +592,268 @@ export const DatePickerTrigger = forwardRef<HTMLButtonElement, DatePickerTrigger
       rangeValue,
       enableTime,
       timeValue,
+      commitTypedValue,
     } = useDatePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
+    const inputRef = useRef<HTMLInputElement>(null);
+    const editingRef = useRef(false);
+
+    const setInputRefs = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref]
+    );
 
     const formatted =
       displayValue ??
-      (mode === "single"
-        ? singleValue
-          ? enableTime
-            ? formatDisplayDateTime(singleValue, timeValue.hours, timeValue.minutes)
-            : formatDisplayDate(singleValue)
-          : null
-        : rangeValue.from && rangeValue.to
-          ? enableTime
-            ? `${formatDisplayDateTime(rangeValue.from, timeValue.hours, timeValue.minutes)}${rangeSeparator}${formatDisplayDateTime(rangeValue.to, timeValue.hours, timeValue.minutes)}`
-            : `${formatDisplayDate(rangeValue.from)}${rangeSeparator}${formatDisplayDate(rangeValue.to)}`
-          : rangeValue.from
-            ? enableTime
-              ? `${formatDisplayDateTime(rangeValue.from, timeValue.hours, timeValue.minutes)}${rangeSeparator}…`
-              : `${formatDisplayDate(rangeValue.from)}${rangeSeparator}…`
-            : null);
+      formatTriggerValue(
+        mode,
+        singleValue,
+        rangeValue,
+        enableTime,
+        timeValue,
+        rangeSeparator
+      );
 
     const defaultPlaceholder = enableTime ? "YYYY-MM-DD HH:mm" : placeholder;
+    const emptyPlaceholder = mode === "range" ? rangePlaceholder : defaultPlaceholder;
+    const formattedText = typeof formatted === "string" ? formatted : null;
+    const [draft, setDraft] = useState(formattedText ?? "");
 
-    const hasValue = formatted != null && formatted !== false;
+    useEffect(() => {
+      if (editingRef.current) return;
+      setDraft(formattedText ?? "");
+    }, [formattedText]);
+
+    const commitDraft = useCallback(() => {
+      const nextText = draft;
+      const ok = commitTypedValue(nextText);
+      if (!ok) {
+        setDraft(formattedText ?? "");
+      }
+      return ok;
+    }, [commitTypedValue, draft, formattedText]);
+
+    const openPicker = () => {
+      if (disabled) return;
+      setOpen(true);
+    };
+
+    const showEditableInput = editable && displayValue == null;
+
+    if (!showEditableInput) {
+      const hasValue = formatted != null && formatted !== false;
+      return (
+        <PopoverPrimitive.Trigger asChild>
+          <button
+            type="button"
+            className={cn("aviala-datepicker-trigger aviala-focus-ring", className)}
+            data-size={size}
+            data-all-round={allRound ? "true" : "false"}
+            data-state={open ? "open" : "closed"}
+            data-error={error ? "true" : undefined}
+            disabled={disabled}
+            aria-expanded={open}
+            aria-haspopup="dialog"
+          >
+            {renderSlotIcon(
+              leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />
+            )}
+            <span className="aviala-datepicker-trigger__field">
+              <span
+                className={cn(
+                  "aviala-datepicker-trigger__value",
+                  typographyVariants({ level: "text" })
+                )}
+                data-placeholder={hasValue ? undefined : "true"}
+              >
+                {hasValue ? formatted : emptyPlaceholder}
+              </span>
+            </span>
+            {renderSlotIcon(rightIcon)}
+          </button>
+        </PopoverPrimitive.Trigger>
+      );
+    }
 
     return (
-      <PopoverPrimitive.Trigger asChild>
-        <button
-          ref={ref}
-          type="button"
+      <PopoverPrimitive.Anchor asChild>
+        <div
           className={cn("aviala-datepicker-trigger aviala-focus-ring", className)}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
           data-error={error ? "true" : undefined}
-          disabled={disabled}
-          aria-expanded={open}
-          aria-haspopup="dialog"
-          {...props}
+          data-disabled={disabled ? "true" : undefined}
+          onMouseDown={(event) => {
+            if (disabled) return;
+            if (event.target === inputRef.current) return;
+            event.preventDefault();
+            inputRef.current?.focus();
+            openPicker();
+          }}
         >
           {renderSlotIcon(
-            leftIcon ?? (
-              <TimeAndDateDate level="text" biggerSize aria-hidden />
-            )
+            leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />
           )}
           <span className="aviala-datepicker-trigger__field">
-            <span
+            <input
+              ref={setInputRefs}
+              type="text"
               className={cn(
-                "aviala-datepicker-trigger__value",
+                "aviala-datepicker-trigger__input",
                 typographyVariants({ level: "text" })
               )}
-              data-placeholder={hasValue ? undefined : "true"}
-            >
-              {hasValue ? formatted : mode === "range" ? rangePlaceholder : defaultPlaceholder}
-            </span>
+              value={draft}
+              placeholder={emptyPlaceholder}
+              disabled={disabled}
+              aria-expanded={open}
+              aria-haspopup="dialog"
+              autoComplete="off"
+              spellCheck={false}
+              onChange={(event) => setDraft(event.target.value)}
+              onFocus={(event) => {
+                editingRef.current = true;
+                openPicker();
+                // #region agent log
+                {
+                  const inputEl = event.currentTarget;
+                  const logTriggerStyles = (phase: string) => {
+                    const trigger = inputEl.closest(
+                      ".aviala-datepicker-trigger"
+                    ) as HTMLElement | null;
+                    const cs = trigger ? getComputedStyle(trigger) : null;
+                    fetch(
+                      "http://127.0.0.1:7374/ingest/ad1201c6-cfe5-466e-96ed-49d0c8840eda",
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          "X-Debug-Session-Id": "0f383b",
+                        },
+                        body: JSON.stringify({
+                          sessionId: "0f383b",
+                          runId: "pre-fix",
+                          hypothesisId: "A-E",
+                          location: "date-picker.tsx:DatePickerTrigger.onFocus",
+                          message: `trigger styles on input focus (${phase})`,
+                          data: {
+                            phase,
+                            openProp: open,
+                            dataState: trigger?.getAttribute("data-state"),
+                            matchesFocusWithin:
+                              trigger?.matches(":focus-within") ?? null,
+                            matchesFocusVisible:
+                              trigger?.matches(":focus-visible") ?? null,
+                            hasFocusRingClass:
+                              trigger?.classList.contains("aviala-focus-ring") ??
+                              null,
+                            kbdAttr: document.documentElement.hasAttribute(
+                              "data-aviala-kbd"
+                            ),
+                            bg: cs?.backgroundColor ?? null,
+                            boxShadow: cs?.boxShadow ?? null,
+                            borderColor: cs?.borderColor ?? null,
+                            borderWidth: cs?.borderWidth ?? null,
+                            activeTag: document.activeElement?.tagName ?? null,
+                            activeClass:
+                              (document.activeElement as HTMLElement | null)
+                                ?.className ?? null,
+                          },
+                          timestamp: Date.now(),
+                        }),
+                      }
+                    ).catch(() => {});
+                  };
+                  logTriggerStyles("sync");
+                  requestAnimationFrame(() => logTriggerStyles("raf"));
+                }
+                // #endregion
+                onFocus?.(event);
+              }}
+              onBlur={(event) => {
+                editingRef.current = false;
+                // #region agent log
+                {
+                  const trigger = event.currentTarget.closest(
+                    ".aviala-datepicker-trigger"
+                  ) as HTMLElement | null;
+                  const cs = trigger ? getComputedStyle(trigger) : null;
+                  fetch(
+                    "http://127.0.0.1:7374/ingest/ad1201c6-cfe5-466e-96ed-49d0c8840eda",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "X-Debug-Session-Id": "0f383b",
+                      },
+                      body: JSON.stringify({
+                        sessionId: "0f383b",
+                        runId: "pre-fix",
+                        hypothesisId: "A-E",
+                        location: "date-picker.tsx:DatePickerTrigger.onBlur",
+                        message: "trigger styles on input blur",
+                        data: {
+                          openProp: open,
+                          dataState: trigger?.getAttribute("data-state"),
+                          matchesFocusWithin:
+                            trigger?.matches(":focus-within") ?? null,
+                          kbdAttr: document.documentElement.hasAttribute(
+                            "data-aviala-kbd"
+                          ),
+                          bg: cs?.backgroundColor ?? null,
+                          boxShadow: cs?.boxShadow ?? null,
+                          relatedTargetTag:
+                            (event.relatedTarget as HTMLElement | null)
+                              ?.tagName ?? null,
+                        },
+                        timestamp: Date.now(),
+                      }),
+                    }
+                  ).catch(() => {});
+                }
+                // #endregion
+                window.setTimeout(() => {
+                  const active = document.activeElement;
+                  if (
+                    active?.closest(
+                      ".aviala-datepicker-content, .aviala-datepicker-trigger"
+                    )
+                  ) {
+                    return;
+                  }
+                  commitDraft();
+                }, 0);
+                onBlur?.(event);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  commitDraft();
+                }
+                if (event.key === "Escape") {
+                  setDraft(formattedText ?? "");
+                  setOpen(false);
+                }
+                if (event.key === "ArrowDown" && !open) {
+                  event.preventDefault();
+                  openPicker();
+                }
+                onKeyDown?.(event);
+              }}
+              {...props}
+            />
           </span>
           {renderSlotIcon(rightIcon)}
-        </button>
-      </PopoverPrimitive.Trigger>
+        </div>
+      </PopoverPrimitive.Anchor>
     );
   }
 );
@@ -617,7 +936,7 @@ function DatePickerPanelFooter() {
 
   if (!enableTime) return null;
 
-  const panelValue = activePanel === "date" ? "date" : "time";
+  const panelValue = activePanel === "time" ? "time" : "date";
   const isRangeMode = mode === "range";
 
   return (
@@ -633,18 +952,49 @@ function DatePickerPanelFooter() {
       <SegmentatorItem
         value="date"
         leftIcon={<TimeAndDateDate level="text" biggerSize aria-hidden />}
-        iconOnly={isRangeMode && activePanel === "time"}
+        iconOnly={isRangeMode && panelValue === "time"}
       >
         {getFooterDateLabel(mode, singleValue, rangeValue)}
       </SegmentatorItem>
       <SegmentatorItem
         value="time"
         leftIcon={<TimeAndDateClock level="text" biggerSize aria-hidden />}
-        iconOnly={isRangeMode && activePanel === "date"}
+        iconOnly={isRangeMode && panelValue === "date"}
       >
         {formatTimeValue(timeValue.hours, timeValue.minutes)}
       </SegmentatorItem>
     </SegmentatorGroup>
+  );
+}
+
+type MonthSlideDirection = "prev" | "next";
+
+type MonthSlideState = {
+  direction: MonthSlideDirection;
+  outgoingMonth: Date;
+};
+
+type CalendarContentView = "date" | "month";
+
+type ViewCrossfadeState = {
+  outgoing: CalendarContentView;
+};
+
+type PanelKind = "date" | "time";
+
+type PanelSlideState = {
+  outgoing: PanelKind;
+  direction: MonthSlideDirection;
+};
+
+function monthDiff(from: Date, to: Date): number {
+  return (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+}
+
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 }
 
@@ -662,11 +1012,78 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     focusedDay,
     setFocusedDay,
     activePanel,
+    setActivePanel,
     enableTime,
   } = useDatePickerContext();
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const days = useMemo(() => getCalendarDays(viewMonth), [viewMonth]);
+  const prevViewMonthRef = useRef(viewMonth);
+  const [monthSlide, setMonthSlide] = useState<MonthSlideState | null>(null);
+  const isMonthPanel = activePanel === "month";
+  const isTimePanel = activePanel === "time" && enableTime;
+  const targetContentView: CalendarContentView = isMonthPanel ? "month" : "date";
+  const [contentView, setContentView] = useState<CalendarContentView>(targetContentView);
+  const [viewCrossfade, setViewCrossfade] = useState<ViewCrossfadeState | null>(null);
+  const [monthWheelLayoutKey, setMonthWheelLayoutKey] = useState(0);
+  const contentViewRef = useRef(contentView);
+  contentViewRef.current = contentView;
+
+  const targetPanel: PanelKind = isTimePanel ? "time" : "date";
+  const [panel, setPanel] = useState<PanelKind>(targetPanel);
+  const [panelSlide, setPanelSlide] = useState<PanelSlideState | null>(null);
+  const panelRef = useRef(panel);
+  panelRef.current = panel;
+
+  useLayoutEffect(() => {
+    const previous = panelRef.current;
+    if (targetPanel === previous) return;
+    if (prefersReducedMotion()) {
+      setPanel(targetPanel);
+      setPanelSlide(null);
+      panelRef.current = targetPanel;
+      return;
+    }
+    setPanelSlide({
+      outgoing: previous,
+      direction: targetPanel === "time" ? "next" : "prev",
+    });
+    setPanel(targetPanel);
+    panelRef.current = targetPanel;
+  }, [targetPanel]);
+
+  useLayoutEffect(() => {
+    const previous = contentViewRef.current;
+    if (targetContentView === previous) return;
+    if (prefersReducedMotion()) {
+      setContentView(targetContentView);
+      setViewCrossfade(null);
+      contentViewRef.current = targetContentView;
+      return;
+    }
+    setViewCrossfade({ outgoing: previous });
+    setContentView(targetContentView);
+    contentViewRef.current = targetContentView;
+  }, [targetContentView]);
+
+  useLayoutEffect(() => {
+    const previous = prevViewMonthRef.current;
+    const diff = monthDiff(previous, viewMonth);
+    prevViewMonthRef.current = viewMonth;
+    if (diff === 0 || prefersReducedMotion() || contentView === "month" || panel === "time") {
+      setMonthSlide(null);
+      return;
+    }
+    setMonthSlide({
+      direction: diff > 0 ? "next" : "prev",
+      outgoingMonth: previous,
+    });
+  }, [contentView, panel, viewMonth]);
+
+  const outgoingDays = useMemo(
+    () => (monthSlide ? getCalendarDays(monthSlide.outgoingMonth) : null),
+    [monthSlide]
+  );
 
   const handleDayKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
     let next: Date | null = null;
@@ -717,100 +1134,40 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     }
   };
 
-  return (
-    <div
-      className={cn("aviala-datepicker-calendar", className)}
-      role="application"
-      aria-label="Calendar"
-    >
-      {activePanel === "time" && enableTime ? (
-        <div className="aviala-datepicker-calendar__body">
-          <DatePickerTimePanel />
-        </div>
-      ) : (
-        <div className="aviala-datepicker-calendar__body">
-          <div className="aviala-datepicker-calendar__header">
-            <button
-              type="button"
-              className="aviala-datepicker-calendar__nav aviala-focus-ring"
-              aria-label="Previous month"
-              onClick={() => setViewMonth(addMonths(viewMonth, -1))}
-            >
-              <DirectionArrowLeft level="text" biggerSize aria-hidden />
-            </button>
-            <div
-              id={`${calendarId}-label`}
-              className={cn(
-                "aviala-datepicker-calendar__title",
-                typographyVariants({ level: "subtitle" })
-              )}
-            >
-              {formatMonthYear(viewMonth)}
-            </div>
-            <button
-              type="button"
-              className="aviala-datepicker-calendar__nav aviala-focus-ring"
-              aria-label="Next month"
-              onClick={() => setViewMonth(addMonths(viewMonth, 1))}
-            >
-              <DirectionArrowRight level="text" biggerSize aria-hidden />
-            </button>
-          </div>
+  const stepMonth = isMonthPanel ? 12 : 1;
 
-          <div className="aviala-datepicker-calendar__weekdays" aria-hidden>
-            {WEEKDAY_LABELS.map((label) => (
-              <span
-                key={label}
-                className={cn(
-                  "aviala-datepicker-calendar__weekday",
-                  typographyVariants({ level: "caption" })
-                )}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-
-          <div
-            className="aviala-datepicker-calendar__grid"
-            role="grid"
-            aria-labelledby={`${calendarId}-label`}
+  const renderDateContent = () => (
+    <>
+      <div className="aviala-datepicker-calendar__weekdays" aria-hidden>
+        {WEEKDAY_LABELS.map((label) => (
+          <span
+            key={label}
+            className={cn(
+              "aviala-datepicker-calendar__weekday",
+              typographyVariants({ level: "caption" })
+            )}
           >
-            {days.map((day) => {
-              const outside = !isSameMonth(day, viewMonth);
-              const rangePos: RangeSelectionPosition =
-                mode === "range"
-                  ? getRangeSelectionPosition(day, rangeValue.from, rangeValue.to)
-                  : singleValue && isSameDay(day, singleValue)
-                    ? "single"
-                    : "none";
-              const selected = rangePos !== "none";
-              const inRange =
-                mode === "range" && isDateInRange(day, rangeValue.from, rangeValue.to);
-              const isToday = isSameDay(day, today);
-              const disabled = isDateDisabled(day, minDate, maxDate);
-              const focused = focusedDay ? isSameDay(day, focusedDay) : false;
+            {label}
+          </span>
+        ))}
+      </div>
 
+      <div className="aviala-datepicker-calendar__grid-viewport">
+        {monthSlide && outgoingDays ? (
+          <div
+            key={`out-${monthSlide.outgoingMonth.getFullYear()}-${monthSlide.outgoingMonth.getMonth()}`}
+            className="aviala-datepicker-calendar__grid"
+            data-slide-role="exit"
+            data-slide={monthSlide.direction}
+            aria-hidden
+          >
+            {outgoingDays.map((day) => {
+              const outside = !isSameMonth(day, monthSlide.outgoingMonth);
               return (
-                <button
+                <span
                   key={day.toISOString()}
-                  type="button"
-                  role="gridcell"
-                  tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
-                  className="aviala-datepicker-day aviala-focus-ring"
+                  className="aviala-datepicker-day"
                   data-outside={outside ? "true" : undefined}
-                  data-selected={selected ? "true" : undefined}
-                  data-in-range={inRange && !selected ? "true" : undefined}
-                  data-range-pos={rangePos !== "none" ? rangePos : undefined}
-                  data-today={isToday ? "true" : undefined}
-                  data-disabled={disabled ? "true" : undefined}
-                  aria-label={formatDisplayDate(day)}
-                  aria-selected={selected || undefined}
-                  aria-disabled={disabled || undefined}
-                  disabled={disabled}
-                  onClick={() => selectDate(day)}
-                  onFocus={() => setFocusedDay(day)}
-                  onKeyDown={(event) => handleDayKeyDown(event, day)}
                 >
                   <span
                     className={cn(
@@ -820,15 +1177,200 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
                   >
                     {day.getDate()}
                   </span>
-                  {isToday ? (
-                    <span className="aviala-datepicker-day__today-dot" aria-hidden />
-                  ) : null}
-                </button>
+                </span>
               );
             })}
           </div>
+        ) : null}
+
+        <div
+          key={`in-${viewMonth.getFullYear()}-${viewMonth.getMonth()}`}
+          className="aviala-datepicker-calendar__grid"
+          role="grid"
+          aria-labelledby={`${calendarId}-label`}
+          data-slide-role={monthSlide ? "enter" : undefined}
+          data-slide={monthSlide?.direction}
+          onAnimationEnd={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.currentTarget.dataset.slideRole === "enter") {
+              setMonthSlide(null);
+            }
+          }}
+        >
+          {days.map((day) => {
+            const outside = !isSameMonth(day, viewMonth);
+            const rangePos: RangeSelectionPosition =
+              mode === "range"
+                ? getRangeSelectionPosition(day, rangeValue.from, rangeValue.to)
+                : singleValue && isSameDay(day, singleValue)
+                  ? "single"
+                  : "none";
+            const selected = rangePos !== "none";
+            const inRange =
+              mode === "range" && isDateInRange(day, rangeValue.from, rangeValue.to);
+            const isToday = isSameDay(day, today);
+            const dayDisabled = isDateDisabled(day, minDate, maxDate);
+            const focused = focusedDay ? isSameDay(day, focusedDay) : false;
+
+            return (
+              <button
+                key={day.toISOString()}
+                type="button"
+                role="gridcell"
+                tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
+                className="aviala-datepicker-day aviala-focus-ring"
+                data-outside={outside ? "true" : undefined}
+                data-selected={selected ? "true" : undefined}
+                data-in-range={inRange && !selected ? "true" : undefined}
+                data-range-pos={rangePos !== "none" ? rangePos : undefined}
+                data-today={isToday ? "true" : undefined}
+                data-disabled={dayDisabled ? "true" : undefined}
+                aria-label={formatDisplayDate(day)}
+                aria-selected={selected || undefined}
+                aria-disabled={dayDisabled || undefined}
+                disabled={dayDisabled}
+                onClick={() => selectDate(day)}
+                onFocus={() => setFocusedDay(day)}
+                onKeyDown={(event) => handleDayKeyDown(event, day)}
+              >
+                <span
+                  className={cn(
+                    "aviala-datepicker-day__label",
+                    typographyVariants({ level: "text" })
+                  )}
+                >
+                  {day.getDate()}
+                </span>
+                {isToday ? (
+                  <span className="aviala-datepicker-day__today-dot" aria-hidden />
+                ) : null}
+              </button>
+            );
+          })}
         </div>
-      )}
+      </div>
+    </>
+  );
+
+  const renderContentView = (view: CalendarContentView) =>
+    view === "month" ? (
+      <DatePickerMonthYearWheels layoutKey={monthWheelLayoutKey} />
+    ) : (
+      renderDateContent()
+    );
+
+  const renderDatePanel = () => (
+    <>
+      <div className="aviala-datepicker-calendar__header">
+        <button
+          type="button"
+          className="aviala-datepicker-calendar__nav aviala-focus-ring"
+          aria-label={isMonthPanel ? "Previous year" : "Previous month"}
+          onClick={() => setViewMonth(addMonths(viewMonth, -stepMonth))}
+        >
+          <DirectionArrowLeft level="text" biggerSize aria-hidden />
+        </button>
+        <button
+          type="button"
+          id={`${calendarId}-label`}
+          className={cn(
+            "aviala-datepicker-calendar__title aviala-focus-ring",
+            typographyVariants({ level: "subtitle" })
+          )}
+          data-active={isMonthPanel ? "true" : undefined}
+          aria-expanded={isMonthPanel}
+          aria-label={isMonthPanel ? "关闭年月选择" : "选择年月"}
+          onClick={() => setActivePanel(isMonthPanel ? "date" : "month")}
+        >
+          <span
+            key={`${viewMonth.getFullYear()}-${viewMonth.getMonth()}`}
+            className="aviala-datepicker-calendar__title-text"
+            data-slide={isMonthPanel ? undefined : monthSlide?.direction}
+          >
+            {formatMonthYear(viewMonth)}
+          </span>
+        </button>
+        <button
+          type="button"
+          className="aviala-datepicker-calendar__nav aviala-focus-ring"
+          aria-label={isMonthPanel ? "Next year" : "Next month"}
+          onClick={() => setViewMonth(addMonths(viewMonth, stepMonth))}
+        >
+          <DirectionArrowRight level="text" biggerSize aria-hidden />
+        </button>
+      </div>
+
+      <div className="aviala-datepicker-calendar__view-viewport">
+        {viewCrossfade ? (
+          <div
+            key={`exit-${viewCrossfade.outgoing}`}
+            className="aviala-datepicker-calendar__view"
+            data-view-role="exit"
+            data-view={viewCrossfade.outgoing}
+            aria-hidden
+          >
+            {renderContentView(viewCrossfade.outgoing)}
+          </div>
+        ) : null}
+        <div
+          key={`enter-${contentView}`}
+          className="aviala-datepicker-calendar__view"
+          data-view-role={viewCrossfade ? "enter" : undefined}
+          data-view={contentView}
+          onAnimationEnd={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.currentTarget.dataset.viewRole === "enter") {
+              setViewCrossfade(null);
+              if (contentView === "month") {
+                setMonthWheelLayoutKey((key) => key + 1);
+              }
+            }
+          }}
+        >
+          {renderContentView(contentView)}
+        </div>
+      </div>
+    </>
+  );
+
+  const renderPanel = (kind: PanelKind) =>
+    kind === "time" ? <DatePickerTimePanel /> : renderDatePanel();
+
+  return (
+    <div
+      className={cn("aviala-datepicker-calendar", className)}
+      role="application"
+      aria-label="Calendar"
+    >
+      <div className="aviala-datepicker-calendar__panel-viewport">
+        {panelSlide ? (
+          <div
+            key={`panel-exit-${panelSlide.outgoing}`}
+            className="aviala-datepicker-calendar__panel aviala-datepicker-calendar__body"
+            data-panel-role="exit"
+            data-slide={panelSlide.direction}
+            data-panel={panelSlide.outgoing}
+            aria-hidden
+          >
+            {renderPanel(panelSlide.outgoing)}
+          </div>
+        ) : null}
+        <div
+          key={`panel-enter-${panel}`}
+          className="aviala-datepicker-calendar__panel aviala-datepicker-calendar__body"
+          data-panel-role={panelSlide ? "enter" : undefined}
+          data-slide={panelSlide?.direction}
+          data-panel={panel}
+          onAnimationEnd={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.currentTarget.dataset.panelRole === "enter") {
+              setPanelSlide(null);
+            }
+          }}
+        >
+          {renderPanel(panel)}
+        </div>
+      </div>
 
       <DatePickerPanelFooter />
     </div>
@@ -870,6 +1412,7 @@ export function DatePickerField({
   rangePlaceholder,
   error,
   rangeSeparator,
+  editable,
   value,
   defaultValue,
   onValueChange,
@@ -930,6 +1473,7 @@ export function DatePickerField({
         rangePlaceholder={rangePlaceholder}
         error={error}
         rangeSeparator={rangeSeparator}
+        editable={editable}
       />
       <DatePickerContent className={contentClassName}>
         <DatePickerCalendar className={calendarClassName} />

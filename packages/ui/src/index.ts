@@ -9,6 +9,12 @@ export {
 
 export { Button, buttonVariants, type ButtonProps, type ButtonMode, type ButtonSize } from "./components/button";
 export { Input, inputRootVariants, type InputProps, type InputSize } from "./components/input";
+export {
+  NumberInput,
+  numberInputRootVariants,
+  type NumberInputProps,
+  type NumberInputStyle,
+} from "./components/number-input";
 export { Textarea, type TextareaProps, type TextareaSize } from "./components/textarea";
 export {
   Select,
@@ -117,7 +123,7 @@ export {
   type SegmentatorItemProps,
   type SegmentatorMode,
 } from "./components/segmentator";
-export { FormField, type FormFieldProps } from "./components/form-field";
+export { FormField, type FormFieldProps, type FormFieldDirection } from "./components/form-field";
 export {
   Typography,
   typographyVariants,
@@ -134,7 +140,12 @@ export {
   type TypefacePairProps,
 } from "./components/typeface";
 export { InputGroup, InputGroupAddon, type InputGroupProps } from "./components/input-group";
-export { Stack, Fieldset, type StackProps } from "./components/stack";
+export {
+  Stack,
+  Fieldset,
+  type StackProps,
+  type FieldsetProps,
+} from "./components/stack";
 export {
   ColorPicker,
   ColorPickerTrigger,
@@ -205,6 +216,8 @@ export {
   formatDisplayDate,
   formatMonthYear,
   formatTimeValue,
+  parseDateInput,
+  parseDateRangeInput,
 } from "./components/date-picker";
 export {
   TimePicker,

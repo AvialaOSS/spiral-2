@@ -1,10 +1,14 @@
 /* Slider / Upload / ScrollPicker — Figma Information Collect */
 
-/* —— Slider (384:21584) —— */
+/* —— Slider (384:21584) ——
+ * Track/thumb strokes are Figma OUTSIDE — use content-box so declared
+ * height is the fill (4/8px), not eaten by the 1px border.
+ */
 .aviala-slider {
   position: relative;
   display: flex;
   width: var(--slider-width, 70px);
+  padding-block: var(--slider-pad-y, 3px);
   touch-action: none;
   user-select: none;
   align-items: center;
@@ -12,46 +16,53 @@
 
 .aviala-slider[data-disabled="true"],
 .aviala-slider[data-disabled] {
-  opacity: var(--slider-disabled-opacity, 0.55);
   pointer-events: none;
+  --slider-track-bg: var(--slider-track-bg-disabled);
+  --slider-range-bg: var(--slider-range-bg-disabled);
+  --slider-thumb-border: var(--slider-thumb-border-disabled);
 }
 
 .aviala-slider__track {
   position: relative;
+  box-sizing: border-box;
   height: var(--slider-track-height, 4px);
   flex-grow: 1;
   overflow: visible;
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--slider-track-bg);
-  border: 1px solid var(--slider-track-border);
+  /* Figma strokeAlign=OUTSIDE — don't eat into the 4/8px fill height */
+  box-shadow: 0 0 0 var(--border-thickness-default, 1px) var(--slider-track-border);
 }
 
 .aviala-slider--size-big .aviala-slider__track {
-  height: var(--slider-track-height-big, 6px);
+  height: var(--slider-track-height-big, 8px);
 }
 
 .aviala-slider__range {
   position: absolute;
-  height: 100%;
+  top: 0;
+  bottom: 0;
   border-radius: inherit;
   background-color: var(--slider-range-bg);
 }
 
 .aviala-slider__thumb {
   display: block;
+  box-sizing: border-box;
   width: var(--slider-thumb-size, 8px);
   height: var(--slider-thumb-size, 8px);
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--slider-thumb-bg);
-  border: 1.5px solid var(--slider-thumb-border);
-  box-shadow: 0 0 0 1px var(--slider-track-bg);
+  /* Figma strokeAlign=OUTSIDE */
+  box-shadow: 0 0 0 var(--border-thickness-default, 1px) var(--slider-thumb-border);
+  border: 0;
   cursor: grab;
   outline: none;
 }
 
 .aviala-slider--size-big .aviala-slider__thumb {
-  width: var(--slider-thumb-size-big, 12px);
-  height: var(--slider-thumb-size-big, 12px);
+  width: var(--slider-thumb-size-big, 10px);
+  height: var(--slider-thumb-size-big, 10px);
 }
 
 .aviala-slider__thumb:active {
@@ -183,9 +194,29 @@
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   outline: none;
+}
+
+/* Listbox focus ring is clipped by overflow:hidden — paint it on the
+   selected option layer instead when the column is keyboard-focused. */
+.aviala-scroll-picker-column__scroll.aviala-focus-ring:focus,
+.aviala-scroll-picker-column__scroll.aviala-focus-ring:focus-visible {
+  outline: none;
+  animation: none;
+  box-shadow: none;
+}
+
+html[data-aviala-kbd]
+  .aviala-scroll-picker-column__scroll:focus-visible
+  .aviala-scroll-picker-item[data-selected="true"] {
+  outline: none;
+  animation: aviala-focus-ring-settle var(--focus-transition-duration, 250ms)
+    var(--focus-transition-easing, ease) forwards;
 }
 
 .aviala-scroll-picker-column__scroll::-webkit-scrollbar {
@@ -228,6 +259,8 @@
 }
 
 .aviala-scroll-picker-item[data-selected="true"] {
+  position: relative;
+  z-index: 1;
   color: var(--scroll-picker-item-fg-selected);
   opacity: 1;
 }

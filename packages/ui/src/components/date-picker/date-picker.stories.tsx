@@ -226,6 +226,49 @@ export const DateOnly: Story = {
   ),
 };
 
+export const MonthYearWheels: Story = {
+  render: () => {
+    const [value, setValue] = useState<Date | undefined>(new Date(2026, 6, 4));
+
+    return (
+      <DatePicker
+        mode="single"
+        defaultOpen
+        enableTime={false}
+        value={value}
+        onValueChange={setValue}
+        className="w-[290px]"
+      >
+        <DatePickerTrigger />
+        <DatePickerContent>
+          <MonthPanelOpenCalendar />
+        </DatePickerContent>
+      </DatePicker>
+    );
+  },
+};
+
+export const TypedInput: Story = {
+  name: "Typed input",
+  render: () => (
+    <div className="flex w-full max-w-sm flex-col gap-2">
+      <p className="text-sm text-muted-foreground">
+        Type <code>2026-07-04</code> or <code>2026/07/04 14:30</code>, then press Enter.
+      </p>
+      <SingleDemo defaultValue={new Date(2026, 6, 4)} />
+    </div>
+  ),
+};
+
+function MonthPanelOpenCalendar() {
+  const { setActivePanel } = useDatePickerContext();
+  useEffect(() => {
+    setActivePanel("month");
+  }, [setActivePanel]);
+
+  return <DatePickerCalendar />;
+}
+
 const sizes: DatePickerSize[] = ["regular", "big"];
 
 export const SizeMatrix: Story = {

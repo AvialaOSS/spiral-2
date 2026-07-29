@@ -1,4 +1,5 @@
-@import "@aviala-design/tokens/styles.css";
+/* Token CSS comes from @aviala-design/spiral/styles.css in preview.tsx —
+   avoid a second :root import that can clobber [data-theme="ald"]. */
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
