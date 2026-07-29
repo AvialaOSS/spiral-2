@@ -256,12 +256,21 @@ export function DatePicker(props: DatePickerProps) {
       return;
     }
 
+    setFocusedDay((current) => {
+      if (current) return current;
+      if (mode === "single" && singleValue) return startOfDay(singleValue);
+      const rangeAnchor =
+        mode === "range" ? rangeValue.from ?? rangeValue.to : undefined;
+      if (rangeAnchor) return startOfDay(rangeAnchor);
+      return startOfDay(new Date());
+    });
+
     const markPointerDown = () => {
       pointerDownCloseRef.current = true;
     };
     document.addEventListener("pointerdown", markPointerDown, true);
     return () => document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
+  }, [mode, open, rangeValue.from, rangeValue.to, singleValue]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
@@ -379,7 +388,7 @@ export function DatePicker(props: DatePickerProps) {
   );
 
   const selectDate = useCallback(
-    (date: Date) => {
+    (date: Date, options?: { close?: boolean; switchToTime?: boolean }) => {
       if (disabled || isDateDisabled(date, minDate, maxDate)) return;
       const day = startOfDay(date);
       setFocusedDay(day);
@@ -388,14 +397,17 @@ export function DatePicker(props: DatePickerProps) {
         setViewMonth(new Date(day.getFullYear(), day.getMonth(), 1));
       }
 
+      const switchToTime = options?.switchToTime ?? enableTime;
+      const shouldClose = options?.close ?? !enableTime;
+
       if (mode === "single") {
         const next = enableTime
           ? applyTimeToDate(day, timeValue.hours, timeValue.minutes)
           : day;
         commitSingle(next);
-        if (enableTime) {
+        if (switchToTime) {
           setActivePanel("time");
-        } else {
+        } else if (shouldClose) {
           handleOpenChange(false);
         }
         return;
@@ -415,9 +427,9 @@ export function DatePicker(props: DatePickerProps) {
       if (isSameDay(day, currentFrom)) {
         commitRange({ from: withTime(day), to: withTime(day) });
         setRangeDraftFrom(undefined);
-        if (enableTime) {
+        if (switchToTime) {
           setActivePanel("time");
-        } else {
+        } else if (shouldClose) {
           handleOpenChange(false);
         }
         return;
@@ -429,9 +441,9 @@ export function DatePicker(props: DatePickerProps) {
         to: normalized.to ? withTime(normalized.to) : undefined,
       });
       setRangeDraftFrom(undefined);
-      if (enableTime) {
+      if (switchToTime) {
         setActivePanel("time");
-      } else {
+      } else if (shouldClose) {
         handleOpenChange(false);
       }
     },
@@ -940,30 +952,32 @@ function DatePickerPanelFooter() {
   const isRangeMode = mode === "range";
 
   return (
-    <SegmentatorGroup
-      value={panelValue}
-      onValueChange={(value) => setActivePanel(value as DatePickerPanel)}
-      mode="nested"
-      className="aviala-datepicker-footer"
-      data-layout={isRangeMode ? "range" : "single"}
-      data-active-panel={activePanel}
-      aria-label="日期与时间切换"
-    >
-      <SegmentatorItem
-        value="date"
-        leftIcon={<TimeAndDateDate level="text" biggerSize aria-hidden />}
-        iconOnly={isRangeMode && panelValue === "time"}
+    <div className="aviala-datepicker-footer-wrap">
+      <SegmentatorGroup
+        value={panelValue}
+        onValueChange={(value) => setActivePanel(value as DatePickerPanel)}
+        mode="nested"
+        className="aviala-datepicker-footer"
+        data-layout={isRangeMode ? "range" : "single"}
+        data-active-panel={activePanel}
+        aria-label="日期与时间切换"
       >
-        {getFooterDateLabel(mode, singleValue, rangeValue)}
-      </SegmentatorItem>
-      <SegmentatorItem
-        value="time"
-        leftIcon={<TimeAndDateClock level="text" biggerSize aria-hidden />}
-        iconOnly={isRangeMode && panelValue === "date"}
-      >
-        {formatTimeValue(timeValue.hours, timeValue.minutes)}
-      </SegmentatorItem>
-    </SegmentatorGroup>
+        <SegmentatorItem
+          value="date"
+          leftIcon={<TimeAndDateDate level="text" biggerSize aria-hidden />}
+          iconOnly={isRangeMode && panelValue === "time"}
+        >
+          {getFooterDateLabel(mode, singleValue, rangeValue)}
+        </SegmentatorItem>
+        <SegmentatorItem
+          value="time"
+          leftIcon={<TimeAndDateClock level="text" biggerSize aria-hidden />}
+          iconOnly={isRangeMode && panelValue === "date"}
+        >
+          {formatTimeValue(timeValue.hours, timeValue.minutes)}
+        </SegmentatorItem>
+      </SegmentatorGroup>
+    </div>
   );
 }
 
@@ -1019,6 +1033,8 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const today = useMemo(() => startOfDay(new Date()), []);
   const days = useMemo(() => getCalendarDays(viewMonth), [viewMonth]);
   const prevViewMonthRef = useRef(viewMonth);
+  const dayGridRef = useRef<HTMLDivElement>(null);
+  const pendingDayFocusRef = useRef(false);
   const [monthSlide, setMonthSlide] = useState<MonthSlideState | null>(null);
   const isMonthPanel = activePanel === "month";
   const isTimePanel = activePanel === "time" && enableTime;
@@ -1080,41 +1096,42 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     });
   }, [contentView, panel, viewMonth]);
 
+  useLayoutEffect(() => {
+    if (!pendingDayFocusRef.current || !focusedDay) return;
+    const grid = dayGridRef.current;
+    if (!grid) return;
+    const target = grid.querySelector<HTMLButtonElement>(
+      `button[data-day="${formatIsoDate(focusedDay)}"]`
+    );
+    if (!target || target.disabled) return;
+    pendingDayFocusRef.current = false;
+    target.focus();
+  }, [focusedDay, days, monthSlide]);
+
   const outgoingDays = useMemo(
     () => (monthSlide ? getCalendarDays(monthSlide.outgoingMonth) : null),
     [monthSlide]
   );
 
   const handleDayKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
-    let next: Date | null = null;
+    let deltaDays = 0;
     switch (event.key) {
       case "ArrowLeft":
-        next = new Date(date);
-        next.setDate(next.getDate() - 1);
+        deltaDays = -1;
         break;
       case "ArrowRight":
-        next = new Date(date);
-        next.setDate(next.getDate() + 1);
+        deltaDays = 1;
         break;
       case "ArrowUp":
-        next = new Date(date);
-        next.setDate(next.getDate() - 7);
+        deltaDays = -7;
         break;
       case "ArrowDown":
-        next = new Date(date);
-        next.setDate(next.getDate() + 7);
+        deltaDays = 7;
         break;
       case "Home":
-        next = new Date(date.getFullYear(), date.getMonth(), 1);
-        break;
       case "End":
-        next = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        break;
       case "PageUp":
-        next = addMonths(date, event.shiftKey ? -12 : -1);
-        break;
       case "PageDown":
-        next = addMonths(date, event.shiftKey ? 12 : 1);
         break;
       case "Enter":
       case " ":
@@ -1126,8 +1143,36 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     }
 
     event.preventDefault();
-    if (!next) return;
+
+    let next: Date;
+    if (event.key === "Home") {
+      next = new Date(date.getFullYear(), date.getMonth(), 1);
+    } else if (event.key === "End") {
+      next = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    } else if (event.key === "PageUp") {
+      next = addMonths(date, event.shiftKey ? -12 : -1);
+    } else if (event.key === "PageDown") {
+      next = addMonths(date, event.shiftKey ? 12 : 1);
+    } else {
+      next = new Date(date);
+      next.setDate(next.getDate() + deltaDays);
+      // Skip disabled days while moving in the same direction
+      let guard = 0;
+      while (isDateDisabled(next, minDate, maxDate) && guard < 366) {
+        next.setDate(next.getDate() + (deltaDays > 0 ? 1 : -1));
+        guard += 1;
+      }
+    }
+
     const normalized = startOfDay(next);
+    if (isDateDisabled(normalized, minDate, maxDate)) return;
+
+    pendingDayFocusRef.current = true;
+    if (mode === "single") {
+      selectDate(normalized, { close: false, switchToTime: false });
+      return;
+    }
+
     setFocusedDay(normalized);
     if (!isSameMonth(normalized, viewMonth)) {
       setViewMonth(new Date(normalized.getFullYear(), normalized.getMonth(), 1));
@@ -1184,6 +1229,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
         ) : null}
 
         <div
+          ref={dayGridRef}
           key={`in-${viewMonth.getFullYear()}-${viewMonth.getMonth()}`}
           className="aviala-datepicker-calendar__grid"
           role="grid"
@@ -1211,12 +1257,14 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
             const isToday = isSameDay(day, today);
             const dayDisabled = isDateDisabled(day, minDate, maxDate);
             const focused = focusedDay ? isSameDay(day, focusedDay) : false;
+            const dayKey = formatIsoDate(day);
 
             return (
               <button
-                key={day.toISOString()}
+                key={dayKey}
                 type="button"
                 role="gridcell"
+                data-day={dayKey}
                 tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
                 className="aviala-datepicker-day aviala-focus-ring"
                 data-outside={outside ? "true" : undefined}

@@ -62,5 +62,5 @@
   --typography-caption-fg: var(--text-text-normal-text-caption-black, #858484);
   --typography-caption-fg-white: var(--text-text-normal-text-caption-white, #fefcfc);
 
-  --typeface-gap: var(--gap-inside, 4px);
+  --typeface-gap: var(--gap-none, 0);
 }

@@ -133,7 +133,7 @@ export function ColorPickerInputs({
       {format === "hex" ? (
         <div className="aviala-color-picker-field">
           <span className="aviala-color-picker-field__badge-area">
-            <Badge>#</Badge>
+            <Badge style="normal">#</Badge>
           </span>
           <input
             className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
@@ -171,7 +171,7 @@ export function ColorPickerInputs({
           onKeyDown={(e) => e.key === "Enter" && commitAlpha()}
         />
         <span className="aviala-color-picker-field__badge-area">
-          <Badge>%</Badge>
+          <Badge style="normal">%</Badge>
         </span>
       </div>
 

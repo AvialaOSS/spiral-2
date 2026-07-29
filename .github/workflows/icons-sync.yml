@@ -1,0 +1,85 @@
+name: Icons Sync
+
+# Explicit Figma → React icon sync. Does not run on every CI/Release.
+# Commits generated packages/icons/src only — raw/ stays gitignored.
+
+on:
+  workflow_dispatch:
+    inputs:
+      thickness:
+        description: "Optional thickness filter (comma-separated, e.g. Regular,Medium)"
+        required: false
+        default: ""
+      mode:
+        description: "Optional mode filter (comma-separated, e.g. default,fill)"
+        required: false
+        default: ""
+      category:
+        description: "Optional category filter (comma-separated, e.g. direction,ai)"
+        required: false
+        default: ""
+      name:
+        description: "Optional icon name filter (comma-separated, e.g. direction_arrowLeft)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Export icons from Figma
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+          ICONS_THICKNESS: ${{ inputs.thickness }}
+          ICONS_MODE: ${{ inputs.mode }}
+          ICONS_CATEGORY: ${{ inputs.category }}
+          ICONS_NAME: ${{ inputs.name }}
+        run: pnpm icons:export
+
+      - name: Build icon React components from raw/
+        run: |
+          FILTERS="${{ inputs.thickness }}${{ inputs.mode }}${{ inputs.category }}${{ inputs.name }}"
+          if [ -n "$FILTERS" ]; then
+            # Partial export: regenerate matching icons only; keep other committed components.
+            pnpm --filter @aviala-design/icons exec node ./scripts/build-icons.mjs --merge
+          else
+            pnpm icons:build
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: sync icons from Figma"
+          title: "chore: sync icons from Figma"
+          body: |
+            Auto-generated icon sync from Figma.
+
+            - Updates `packages/icons/src` (components + catalog) only
+            - `packages/icons/raw/` remains gitignored
+            - Add a changeset for `@aviala-design/icons` before merging if this should publish
+
+            Filters (empty = full export):
+            - thickness: `${{ inputs.thickness }}`
+            - mode: `${{ inputs.mode }}`
+            - category: `${{ inputs.category }}`
+            - name: `${{ inputs.name }}`
+          branch: chore/sync-icons-from-figma
+          delete-branch: true
+          add-paths: |
+            packages/icons/src/**
