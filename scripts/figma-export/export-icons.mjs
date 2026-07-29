@@ -11,11 +11,16 @@
  *   FIGMA_FILE_ICONS    — optional
  *   ICONS_THICKNESS     — optional filter, comma-separated (e.g. Regular)
  *   ICONS_MODE          — optional filter, comma-separated (e.g. default)
+ *   ICONS_CATEGORY      — optional filter, comma-separated (e.g. direction,ai)
+ *   ICONS_NAME          — optional filter, comma-separated icon names (e.g. direction_arrowLeft)
  *
  * Usage:
  *   pnpm icons:export
  *   pnpm icons:export:dry
  *   node scripts/figma-export/export-icons.mjs --thickness=Regular --mode=default
+ *   node scripts/figma-export/export-icons.mjs --category=direction,ai
+ *   node scripts/figma-export/export-icons.mjs --name=direction_arrowLeft
+ *   node scripts/figma-export/export-icons.mjs --only=direction_arrowLeft  # alias for --name
  *   node scripts/figma-export/export-icons.mjs --no-clean   # keep stale raw SVGs (not recommended)
  */
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -67,12 +72,24 @@ function readFilter(name) {
   );
 }
 
+/** Case-insensitive set membership for category / icon name filters. */
+function filterHas(filter, value) {
+  if (!filter || !value) return false;
+  const needle = value.toLowerCase();
+  for (const entry of filter) {
+    if (entry.toLowerCase() === needle) return true;
+  }
+  return false;
+}
+
 loadEnv(rootDir);
 
 const token = process.env.FIGMA_ACCESS_TOKEN;
 const fileKey = process.env.FIGMA_FILE_ICONS || "kLrxJHsDob2VoX7PfkD5PW";
 const thicknessFilter = readFilter("thickness");
 const modeFilter = readFilter("mode");
+const categoryFilter = readFilter("category");
+const nameFilter = readFilter("name") ?? readFilter("only");
 
 if (!token) {
   console.error("FIGMA_ACCESS_TOKEN is missing.");
@@ -85,6 +102,8 @@ const client = createFigmaClient(token);
 console.log(`Figma icons file: ${fileKey}`);
 if (thicknessFilter) console.log(`Filter thickness: ${[...thicknessFilter].join(", ")}`);
 if (modeFilter) console.log(`Filter mode: ${[...modeFilter].join(", ")}`);
+if (categoryFilter) console.log(`Filter category: ${[...categoryFilter].join(", ")}`);
+if (nameFilter) console.log(`Filter name: ${[...nameFilter].join(", ")}`);
 console.log(dryRun ? "Dry run — no files will be written." : `Output: ${outDir}`);
 
 const [componentSets, components] = await Promise.all([
@@ -137,6 +156,11 @@ for (const component of components) {
   const iconName = setInfo?.setName
     ? componentSetToIconName(setInfo.setName) ?? variant.name
     : variant.name;
+
+  if (categoryFilter && !filterHas(categoryFilter, category)) continue;
+  if (nameFilter && !filterHas(nameFilter, iconName) && !filterHas(nameFilter, variant.name)) {
+    continue;
+  }
 
   const relativePath = dedupeRelativePath(
     variantToRelativePath(category, { ...variant, name: iconName }) ??
@@ -201,6 +225,8 @@ const manifest = {
   filters: {
     thickness: thicknessFilter ? [...thicknessFilter] : null,
     mode: modeFilter ? [...modeFilter] : null,
+    category: categoryFilter ? [...categoryFilter] : null,
+    name: nameFilter ? [...nameFilter] : null,
   },
   count: 0,
   icons: [],

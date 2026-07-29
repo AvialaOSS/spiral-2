@@ -388,20 +388,21 @@
     var(--padding-min, 2px) * 2 + var(--line-height-line-height-regular, 1.125rem)
   );
   --datepicker-header-height: calc(
-    var(--padding-tiny, 4px) * 4 + var(--icon-size-text-bigger, var(--size-middle, 1rem))
+    var(--padding-tiny, 4px) * 3 +
+      var(--typography-subtitle-line-height, var(--line-height-middle, 1.375rem))
   );
   --datepicker-grid-height: calc(
     var(--datepicker-grid-rows) * var(--datepicker-day-height) +
       (var(--datepicker-grid-rows) - 1) * var(--datepicker-row-gap)
   );
-  /* Date grid content (weekdays + grid) — keep month wheels the same height */
+  /* Date grid content (weekdays + grid) — bottom padding applied on view-viewport */
   --datepicker-view-height: calc(
     var(--datepicker-weekday-height) + var(--datepicker-panel-gap) +
       var(--datepicker-grid-height)
   );
   --datepicker-panel-body-height: calc(
     var(--datepicker-header-height) + var(--datepicker-panel-gap) +
-      var(--datepicker-view-height)
+      var(--datepicker-view-height) + var(--padding-tiny, 4px)
   );
   --datepicker-time-wheel-item-height: 36px;
   --datepicker-time-wheel-visible-count: 5;

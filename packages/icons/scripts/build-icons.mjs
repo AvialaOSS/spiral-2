@@ -20,6 +20,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const rawDir = join(__dirname, "../raw");
 const outDir = join(__dirname, "../src/components");
 const srcDir = join(__dirname, "../src");
+/** When set, only regenerate icons present in raw/; keep other committed components. */
+const mergeMode = process.argv.includes("--merge");
 
 const SVGR_OPTIONS = {
   plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
@@ -158,6 +160,14 @@ function shouldReplaceVariantPath(currentPath, nextRelativePath) {
 }
 
 const svgs = collectSvgFiles(rawDir);
+
+if (svgs.length === 0) {
+  console.warn(
+    "No SVGs in packages/icons/raw — skipping icon codegen (keeping committed src/components)."
+  );
+  console.warn("To regenerate: pnpm icons:export && pnpm icons:build");
+  process.exit(0);
+}
 
 /** @type {Map<string, { iconName: string, category?: string, fileStem: string, variants: Map<string, Map<string, string>> }>} */
 const iconGroups = new Map();
@@ -302,12 +312,16 @@ export function ${componentName}(props: ${componentName}Props) {
 /** Remove orphaned components and stale tsc artifacts that shadow .tsx during bundling. */
 const COMPONENT_ARTIFACT = /\.(tsx|js|d\.ts(?:\.map)?|js\.map)$/;
 
-for (const file of readdirSync(outDir)) {
-  if (!COMPONENT_ARTIFACT.test(file)) continue;
-  const name = file.replace(/\.(tsx|js|d\.ts(?:\.map)?|js\.map)$/, "");
-  if (!componentNames.has(name) && name !== "Placeholder") {
-    unlinkSync(join(outDir, file));
+if (!mergeMode) {
+  for (const file of readdirSync(outDir)) {
+    if (!COMPONENT_ARTIFACT.test(file)) continue;
+    const name = file.replace(/\.(tsx|js|d\.ts(?:\.map)?|js\.map)$/, "");
+    if (!componentNames.has(name) && name !== "Placeholder") {
+      unlinkSync(join(outDir, file));
+    }
   }
+} else {
+  console.log("Merge mode: keeping committed components not present in raw/.");
 }
 
 for (const file of readdirSync(outDir)) {
@@ -319,6 +333,35 @@ for (const file of readdirSync(outDir)) {
 for (const file of ["index.js", "index.d.ts", "index.d.ts.map", "catalog.js", "catalog.d.ts", "catalog.d.ts.map", "icon.js", "icon.d.ts", "icon.d.ts.map", "icon-size.js", "icon-size.d.ts", "icon-size.d.ts.map", "types.js", "types.d.ts", "types.d.ts.map", "resolve-variant.js", "resolve-variant.d.ts", "resolve-variant.d.ts.map"]) {
   const artifact = join(srcDir, file);
   if (existsSync(artifact)) unlinkSync(artifact);
+}
+
+if (mergeMode) {
+  const catalogPath = join(srcDir, "catalog.ts");
+  if (existsSync(catalogPath)) {
+    const prevSource = readFileSync(catalogPath, "utf8");
+    const entryRe =
+      /\{\s*name:\s*"([^"]+)",\s*iconName:\s*"([^"]+)",\s*file:\s*"([^"]+)",\s*thicknesses:\s*(\[[^\]]*\])\s*as IconThickness\[\],\s*modes:\s*(\[[^\]]*\])\s*as IconMode\[\](?:,\s*category:\s*"([^"]*)")?(?:,\s*legacy:\s*true)?,?\s*component:\s*\1\s*\}/g;
+    const byName = new Map(catalogEntries.map((entry) => [entry.name, entry]));
+    let match;
+    while ((match = entryRe.exec(prevSource)) !== null) {
+      const [, name, iconName, fileStem, thicknesses, modes, category] = match;
+      if (byName.has(name)) continue;
+      if (!existsSync(join(outDir, `${name}.tsx`))) continue;
+      catalogEntries.push({
+        name,
+        iconName,
+        category: category || undefined,
+        fileStem,
+        thicknesses,
+        modes,
+        legacy: /legacy:\s*true/.test(match[0]) || undefined,
+      });
+      exportLines.push(`export { ${name}, type ${name}Props } from "./components/${name}";`);
+      componentNames.add(name);
+    }
+    catalogEntries.sort((a, b) => a.name.localeCompare(b.name));
+    exportLines.sort((a, b) => a.localeCompare(b));
+  }
 }
 
 if (exportLines.length === 0) {

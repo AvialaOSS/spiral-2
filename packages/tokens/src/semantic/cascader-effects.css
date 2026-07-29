@@ -134,7 +134,9 @@
 }
 
 .aviala-cascader-content {
-  z-index: 50;
+  /* Above modal (overlay 50 / content 51); restore hits when Dialog disables body pointer-events */
+  z-index: 60;
+  pointer-events: auto;
   width: max-content;
   max-width: var(--cascader-menu-max-width, min(var(--radix-popover-content-available-width, 100vw), calc(100vw - 16px)));
   overflow: hidden;

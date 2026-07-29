@@ -35,17 +35,12 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Export icons from Figma
-        run: pnpm icons:export
-        env:
-          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
-
-      - run: pnpm --filter @aviala-design/tokens --filter @aviala-design/icons --filter @aviala-design/spiral build
-
+      # No Figma export. Version PR path only runs `changeset version` (cheap).
+      # Publish path builds from committed sources inside `release:publish`.
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish
+          publish: pnpm release:publish
           version: pnpm changeset version
           commit: "chore: version packages"
           title: "chore: version packages"

@@ -65,7 +65,7 @@
 
 .aviala-modal__header-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--modal-header-gap, var(--gap-content-space, 10px));
 }
 
@@ -96,7 +96,7 @@
 .aviala-modal__header-typeface {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-inside, 0);
+  gap: var(--gap-none, 0);
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -112,7 +112,7 @@
 
 .aviala-modal__close {
   flex-shrink: 0;
-  align-self: stretch;
+  align-self: center;
   color: var(--modal-close-fg, var(--text-text-normal-text-caption-black, #858484));
 }
 
@@ -181,10 +181,12 @@
 
 @keyframes aviala-modal-content-out {
   from {
+    opacity: 1;
     transform: translateY(0) scale(1);
   }
 
   to {
+    opacity: 0;
     transform: translateY(-8px) scale(0.98);
   }
 }

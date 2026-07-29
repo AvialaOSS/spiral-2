@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
-import { Link } from "./link";
+import { Button } from "./button";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
 
@@ -101,23 +101,35 @@ export const ModalContent = forwardRef<
     },
     ref
   ) => {
-    const content = (
-      <>
-        {showOverlay ? <ModalOverlay /> : null}
-        <DialogPrimitive.Content
-          ref={ref}
-          className={cn(modalContentVariants({ size }), className)}
-          onOpenAutoFocus={onOpenAutoFocus}
-          {...props}
-        >
-          <div className="aviala-modal-content__surface">{children}</div>
-        </DialogPrimitive.Content>
-      </>
+    // Overlay + Content must be direct Portal children (not a Fragment) so Radix
+    // Presence can keep each mounted through the exit `data-state="closed"` animation.
+    const overlay = showOverlay ? <ModalOverlay /> : null;
+    const panel = (
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(modalContentVariants({ size }), className)}
+        onOpenAutoFocus={onOpenAutoFocus}
+        {...props}
+      >
+        <div className="aviala-modal-content__surface">{children}</div>
+      </DialogPrimitive.Content>
     );
 
-    if (!portalled) return content;
+    if (!portalled) {
+      return (
+        <>
+          {overlay}
+          {panel}
+        </>
+      );
+    }
 
-    return <DialogPrimitive.Portal>{content}</DialogPrimitive.Portal>;
+    return (
+      <DialogPrimitive.Portal>
+        {overlay}
+        {panel}
+      </DialogPrimitive.Portal>
+    );
   }
 );
 ModalContent.displayName = DialogPrimitive.Content.displayName;
@@ -151,8 +163,8 @@ export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
         <div className="aviala-modal__header-main">{children}</div>
         {showClose ? (
           <DialogPrimitive.Close asChild>
-            <Link
-              level="text"
+            <Button
+              type="button"
               mode="noBackgroundCustom"
               iconOnly
               aria-label={closeLabel}

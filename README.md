@@ -49,9 +49,39 @@ npm run build:spiral-docs
 
 GitHub Pages 发布步骤见：[avialaWebsite/docs/GITHUB_DEPLOY.md](../avialaWebsite/docs/GITHUB_DEPLOY.md)。
 
+## Publishing
+
+Release uses [changesets](https://github.com/changesets/changesets) (Version PR → merge → npm publish). **CI and Release never call Figma.**
+
+1. Feature work → `pnpm changeset` → PR → merge to `main`
+2. Release Action opens **Version PR** (versions / changelogs only — no Figma, no publish-time build)
+3. Merge Version PR → Release runs `pnpm release:publish` (build tokens / icons from committed `src` / spiral → `changeset publish`)
+
+Batch several changesets before merging the Version PR to avoid extra Version↔Publish round-trips. Optional: enable auto-merge on `chore: version packages`.
+
+### Icons
+
+- `packages/icons/raw/` stays **gitignored** (keeps the clone small).
+- Git + CI/publish use committed `packages/icons/src/components` (+ `catalog.ts`).
+- Sync from Figma only when icons change:
+  - Local: `pnpm icons:sync` (or filtered export below), then commit **src** only and add a changeset for `@aviala-design/icons`
+  - CI: Actions → **Icons Sync** (`icons-sync.yml`, `workflow_dispatch`) with optional filters → PR touching `packages/icons/src/**` only
+
+```bash
+pnpm icons:export                                    # full export → raw/
+pnpm icons:export --category=direction,ai            # filter by category
+pnpm icons:export --name=direction_arrowLeft         # filter by icon name
+pnpm icons:export --thickness=Regular --mode=default
+pnpm icons:build                                     # raw → src (full replace)
+pnpm icons:build:merge                               # raw → src (update matching icons only)
+pnpm icons:sync                                      # full export + build + tsup
+```
+
+Env equivalents: `ICONS_THICKNESS`, `ICONS_MODE`, `ICONS_CATEGORY`, `ICONS_NAME`.
+
 ## Environment
 
-Copy `.env.example` to `.env.local` and set `FIGMA_ACCESS_TOKEN` for Figma exports. See [docs/figma-mcp.md](docs/figma-mcp.md).
+Copy `.env.example` to `.env.local` and set `FIGMA_ACCESS_TOKEN` for Figma exports. See [docs/figma-mcp.md](docs/figma-mcp.md). Only needed for icon sync, not for normal build/release.
 
 ## MVP components
 

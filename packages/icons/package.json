@@ -27,6 +27,7 @@
   "scripts": {
     "build": "node scripts/build-icons.mjs && tsup",
     "build:icons": "node scripts/build-icons.mjs",
+    "build:release": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist src/components src/catalog.ts"

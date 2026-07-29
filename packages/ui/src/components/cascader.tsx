@@ -305,6 +305,7 @@ export function Cascader({
   const isValueControlled = valueProp !== undefined;
   const open = isOpenControlled ? openProp : internalOpen;
   const selectedPath = isValueControlled ? valueProp ?? [] : internalValue;
+  const wasOpenRef = useRef(open);
 
   useEffect(() => {
     const markWindowBlur = () => {
@@ -314,11 +315,27 @@ export function Cascader({
     return () => window.removeEventListener("blur", markWindowBlur, true);
   }, []);
 
+  // Only seed expansion when the panel opens. While open, `selectPath` /
+  // `expandTo` own `activePath` — re-syncing on every `selectedPath` change
+  // collapses the next column (desktop recovers via hover; touch cannot).
   useEffect(() => {
-    if (open) {
-      setActivePath(selectedPath.length > 0 ? selectedPath.slice(0, -1) : []);
+    const justOpened = open && !wasOpenRef.current;
+    wasOpenRef.current = open;
+    if (!justOpened) return;
+
+    if (selectedPath.length === 0) {
+      setActivePath([]);
+      return;
     }
-  }, [open, selectedPath]);
+
+    const selectedOption = findOptionPath(options, selectedPath);
+    if (selectedOption?.children?.length) {
+      setActivePath(selectedPath);
+      return;
+    }
+
+    setActivePath(selectedPath.slice(0, -1));
+  }, [open, options, selectedPath]);
 
   useEffect(() => {
     if (!open) {

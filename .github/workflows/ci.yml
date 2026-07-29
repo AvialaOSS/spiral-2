@@ -31,11 +31,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Export icons from Figma
-        run: pnpm icons:export
-        env:
-          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
-
+      # Icons: build from committed src/components (raw/ is gitignored; no Figma in CI).
       - run: pnpm sync:ald || true
       - run: pnpm build
       - run: pnpm typecheck

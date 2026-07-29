@@ -18,7 +18,7 @@ export type DatePickerContextValue = {
   setViewMonth: (month: Date) => void;
   singleValue?: Date;
   rangeValue: DateRange;
-  selectDate: (date: Date) => void;
+  selectDate: (date: Date, options?: { close?: boolean; switchToTime?: boolean }) => void;
   commitTypedValue: (text: string) => boolean;
   minDate?: Date;
   maxDate?: Date;

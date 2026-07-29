@@ -5,6 +5,15 @@ description: Aviala Design Icons pipeline for @aviala-design/icons — SVG expor
 
 # Spiral Icons
 
+## Source of truth
+
+| Path | In git? | Role |
+|---|---|---|
+| `packages/icons/raw/` | **No** (gitignore) | Local / CI sync scratch from Figma |
+| `packages/icons/src/components/` + `catalog.ts` | **Yes** | What CI and `release:publish` build (`tsup` / `build:release`) |
+
+Normal `pnpm build`, CI, and Release **do not** call Figma. Sync icons only when the set changes.
+
 ## Figma source model
 
 Icons live in **component sets**:
@@ -14,8 +23,6 @@ Icons live in **component sets**:
 | Component set | `direction/arrowLeft` |
 | Variant (order varies) | `thickness=Regular, mode=default, name=direction_arrowLeft` |
 | Exported SVG | `raw/direction/direction_arrowLeft-regular-default.svg` |
-
-Export defaults to **all variants** (no filter unless `ICONS_THICKNESS` / `ICONS_MODE` set).
 
 ## React component model
 
@@ -40,12 +47,38 @@ Missing variant combinations fall back to `Medium/default`, then any available v
 ## Pipeline
 
 ```bash
-pnpm icons:export    # clean raw/ then export all variants → raw/{category}/
-pnpm icons:build     # group by icon name → React components
-pnpm icons:sync      # export + build
+pnpm icons:export       # clean raw/ then export → raw/{category}/
+pnpm icons:build        # raw → React components (full replace of generated set)
+pnpm icons:build:merge  # raw → React (update icons present in raw/; keep others)
+pnpm icons:sync         # export + build:icons + build:release (tsup)
 ```
 
-Each export **wipes `packages/icons/raw/` first** (unless `--no-clean`) so deduped `-2` / `-3` files from prior runs do not linger as legacy components.
+Each full export **wipes `packages/icons/raw/` first** (unless `--no-clean`) so deduped `-2` / `-3` files from prior runs do not linger as legacy components.
+
+### Optional export filters
+
+| Flag / env | Example |
+|---|---|
+| `--thickness=` / `ICONS_THICKNESS` | `Regular,Medium` |
+| `--mode=` / `ICONS_MODE` | `default,fill` |
+| `--category=` / `ICONS_CATEGORY` | `direction,ai` |
+| `--name=` or `--only=` / `ICONS_NAME` | `direction_arrowLeft` |
+| `--dry-run` | list matches, write nothing |
+| `--no-clean` | do not wipe `raw/` before write |
+
+```bash
+pnpm icons:export --category=direction --thickness=Regular
+pnpm icons:export --name=direction_arrowLeft
+pnpm icons:export:dry --category=ai
+```
+
+After a **filtered** export, use `pnpm icons:build:merge` so other committed icons are not deleted. Full export → `pnpm icons:build`.
+
+### GitHub Actions
+
+Workflow **Icons Sync** (`.github/workflows/icons-sync.yml`): `workflow_dispatch` with the same optional filters → Figma export → build → PR with `packages/icons/src/**` only (never `raw/`).
+
+Commit generated **src**, add a changeset for `@aviala-design/icons`, then follow the normal Version → Publish path (still no Figma on publish).
 
 ## Setup
 
@@ -58,11 +91,18 @@ FIGMA_ACCESS_TOKEN=your_token
 ## Output layout
 
 ```
-raw/direction/direction_arrowLeft-light-default.svg
-raw/direction/direction_arrowLeft-regular-fill.svg
-src/components/DirectionArrowLeft.tsx   # one component, all variants inside
-src/catalog.ts                          # iconCatalog with thicknesses/modes[]
+raw/direction/direction_arrowLeft-light-default.svg   # gitignored
+src/components/DirectionArrowLeft.tsx                 # committed
+src/catalog.ts                                        # committed
 ```
+
+## Package scripts
+
+| Script | Meaning |
+|---|---|
+| `build` | `build-icons` (no-op if `raw/` empty) + `tsup` |
+| `build:icons` | SVG → components |
+| `build:release` | `tsup` only (CI / publish) |
 
 ## Rules
 
