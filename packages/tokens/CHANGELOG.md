@@ -1,5 +1,11 @@
 # @aviala-design/tokens
 
+## 2.0.0
+
+### Major Changes
+
+- 54f5b37: Fix Cascader menus rendering behind Modal (z-index/pointer-events), Modalclose focus and exit animation, Cascader touch column expansion, andDatePicker keyboard/layout polish. Typeface header gap uses --gap-none.Add build:release (tsup-only) and merge-mode icon codegen so CI/publishwork without Figma or a full raw/ tree. Export supports category/name filters.
+
 ## 1.0.0
 
 ### Major Changes
