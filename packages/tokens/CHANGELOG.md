@@ -1,5 +1,11 @@
 # @aviala-design/tokens
 
+## 2.2.0
+
+### Minor Changes
+
+- c9a451b: Add `appearance` variants to Popover: `tooltip` (shared inverted tooltip skin) and `primary` (brand primary surface, white text). ResponsiveTooltip now keeps the tooltip look on touch devices instead of showing a light popover panel. Form-control slot-icon rendering is consolidated into a shared helper (internal, no API change).
+
 ## 2.1.0
 
 ### Minor Changes
