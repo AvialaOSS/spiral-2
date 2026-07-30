@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import { cn } from "../lib/utils";
 import {
   Tooltip,
   TooltipContent,
@@ -47,12 +46,14 @@ export interface ResponsiveTooltipProps {
  * no trigger on phones. `ResponsiveTooltip` renders the SAME content through the
  * right primitive for the device:
  * - Desktop (`pointer: fine`): Radix Tooltip — opens on hover and keyboard focus.
- * - Touch (`pointer: coarse`): Radix Popover — opens on tap, dismisses on outside
- *   tap / Escape, like any other popover.
+ * - Touch (`pointer: coarse`): Radix Popover with `appearance="tooltip"` — opens on
+ *   tap, dismisses on outside tap / Escape, but keeps the tooltip visual skin
+ *   (dark surface, caption text, solid caret) so it looks identical to desktop.
  *
- * The consumer API is unchanged between devices; only the trigger gesture differs.
- * Animations are handled by the respective effect CSS (tooltip-effects /
- * popover-effects), so direction-aware scale-in/out works on both branches.
+ * The consumer API and the look are unchanged between devices; only the trigger
+ * gesture differs. Animations are handled by the respective effect CSS
+ * (tooltip-effects / popover-effects), so direction-aware scale-in/out works on
+ * both branches.
  *
  * @example
  * <TooltipProvider> // needed for the desktop hover-delay; Popover needs none
@@ -82,6 +83,7 @@ export function ResponsiveTooltip({
       <Popover open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
         <PopoverTrigger asChild>{children}</PopoverTrigger>
         <PopoverContent
+          appearance="tooltip"
           side={side}
           align={align}
           sideOffset={sideOffset}

@@ -6,8 +6,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from "react";
-import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-import { iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
@@ -39,23 +38,6 @@ const inputRootVariants = cva("aviala-input relative min-w-0 font-sans", {
   },
 });
 
-function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-input__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-      {...(debugId ? spiralDebugId(debugId) : undefined)}
-    >
-      {content}
-    </span>
-  );
-}
 
 function renderBadgeArea(node: ReactNode): ReactNode {
   if (node == null || node === false) return null;
@@ -122,7 +104,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         data-disabled={disabled ? "true" : undefined}
         {...spiralDebugId("input")}
       >
-        {renderSlotIcon(leftIcon, "input.left-icon")}
+        {renderSlotIcon(leftIcon, "aviala-input__slot", "input.left-icon")}
         {renderBadgeArea(leftBadge)}
 
         <div
@@ -160,7 +142,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         {renderBadgeArea(rightBadge)}
-        {renderSlotIcon(rightIcon, "input.right-icon")}
+        {renderSlotIcon(rightIcon, "aviala-input__slot", "input.right-icon")}
       </div>
     );
   }

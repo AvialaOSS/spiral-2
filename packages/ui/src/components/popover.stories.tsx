@@ -53,6 +53,36 @@ export const WithArrow: Story = {
   ),
 };
 
+/** `appearance="tooltip"` — the shared inverted tooltip skin (dark surface, caption
+ *  text, solid caret). This is what `ResponsiveTooltip` renders on touch devices. */
+export const TooltipAppearance: Story = {
+  render: () => (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button mode="default">Tooltip look</Button>
+      </PopoverTrigger>
+      <PopoverContent appearance="tooltip" showArrow side="top">
+        Looks like a tooltip, triggers like a popover.
+      </PopoverContent>
+    </Popover>
+  ),
+};
+
+/** `appearance="primary"` — brand primary surface with white text (same tokens as the
+ *  primary button), borderless with a solid primary caret. */
+export const PrimaryAppearance: Story = {
+  render: () => (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button mode="default">Primary look</Button>
+      </PopoverTrigger>
+      <PopoverContent appearance="primary" showArrow side="top">
+        Primary surface with white text.
+      </PopoverContent>
+    </Popover>
+  ),
+};
+
 /** Hover (desktop) / tap (touch) to reveal — `HoverPopover` wraps Popover with
  *  hover-intent + keyboard focus, and degrades to tap on touch devices. */
 export const HoverTrigger: Story = {

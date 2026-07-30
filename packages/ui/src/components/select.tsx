@@ -31,6 +31,7 @@ import { Link } from "./link";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 
@@ -357,23 +358,6 @@ function isWithinSelectSubLayer(target: EventTarget | null) {
   return target instanceof Element && target.closest(".aviala-select-sub-content") !== null;
 }
 
-function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-select-trigger__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-      {...(debugId ? spiralDebugId(debugId) : undefined)}
-    >
-      {content}
-    </span>
-  );
-}
 
 function renderItemIcon(
   node: ReactNode,
@@ -690,7 +674,7 @@ export const SelectTrigger = forwardRef<
       {...spiralDebugId("select.trigger")}
       {...props}
     >
-      {renderSlotIcon(leftIcon, "select.trigger.icon-left")}
+      {renderSlotIcon(leftIcon, "aviala-select-trigger__slot", "select.trigger.icon-left")}
       <span className="aviala-select-trigger__field">
         <SelectPrimitive.Value
           placeholder={placeholder}
@@ -698,7 +682,7 @@ export const SelectTrigger = forwardRef<
           {...spiralDebugId("select.trigger.value")}
         />
       </span>
-      {renderSlotIcon(rightIcon, "select.trigger.icon-right")}
+      {renderSlotIcon(rightIcon, "aviala-select-trigger__slot", "select.trigger.icon-right")}
       <SelectPrimitive.Icon asChild>
         <span
           className="aviala-select-trigger__expand"

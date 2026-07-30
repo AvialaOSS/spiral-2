@@ -242,6 +242,7 @@ export {
   PopoverAnchor,
   type PopoverProps,
   type PopoverContentProps,
+  type PopoverAppearance,
 } from "./components/popover";
 export {
   HoverPopover,

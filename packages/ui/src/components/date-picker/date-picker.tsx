@@ -20,8 +20,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
-import { cloneAvialaIconElement } from "../../lib/clone-aviala-icon";
-import { iconSlotCssVarStyle } from "../../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { typographyVariants } from "../typography";
 import {
   DatePickerProvider,
@@ -96,22 +95,6 @@ export type DatePickerRangeProps = DatePickerBaseProps & {
 
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
-function renderSlotIcon(node: ReactNode): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-datepicker-trigger__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-    >
-      {content}
-    </span>
-  );
-}
 
 function getInitialViewMonth(
   mode: DatePickerMode,
@@ -676,7 +659,8 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
             aria-haspopup="dialog"
           >
             {renderSlotIcon(
-              leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />
+              leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />,
+              "aviala-datepicker-trigger__slot"
             )}
             <span className="aviala-datepicker-trigger__field">
               <span
@@ -689,7 +673,7 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
                 {hasValue ? formatted : emptyPlaceholder}
               </span>
             </span>
-            {renderSlotIcon(rightIcon)}
+            {renderSlotIcon(rightIcon, "aviala-datepicker-trigger__slot")}
           </button>
         </PopoverPrimitive.Trigger>
       );
@@ -713,7 +697,8 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
           }}
         >
           {renderSlotIcon(
-            leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />
+            leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />,
+            "aviala-datepicker-trigger__slot"
           )}
           <span className="aviala-datepicker-trigger__field">
             <input
@@ -734,104 +719,10 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
               onFocus={(event) => {
                 editingRef.current = true;
                 openPicker();
-                // #region agent log
-                {
-                  const inputEl = event.currentTarget;
-                  const logTriggerStyles = (phase: string) => {
-                    const trigger = inputEl.closest(
-                      ".aviala-datepicker-trigger"
-                    ) as HTMLElement | null;
-                    const cs = trigger ? getComputedStyle(trigger) : null;
-                    fetch(
-                      "http://127.0.0.1:7374/ingest/ad1201c6-cfe5-466e-96ed-49d0c8840eda",
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                          "X-Debug-Session-Id": "0f383b",
-                        },
-                        body: JSON.stringify({
-                          sessionId: "0f383b",
-                          runId: "pre-fix",
-                          hypothesisId: "A-E",
-                          location: "date-picker.tsx:DatePickerTrigger.onFocus",
-                          message: `trigger styles on input focus (${phase})`,
-                          data: {
-                            phase,
-                            openProp: open,
-                            dataState: trigger?.getAttribute("data-state"),
-                            matchesFocusWithin:
-                              trigger?.matches(":focus-within") ?? null,
-                            matchesFocusVisible:
-                              trigger?.matches(":focus-visible") ?? null,
-                            hasFocusRingClass:
-                              trigger?.classList.contains("aviala-focus-ring") ??
-                              null,
-                            kbdAttr: document.documentElement.hasAttribute(
-                              "data-aviala-kbd"
-                            ),
-                            bg: cs?.backgroundColor ?? null,
-                            boxShadow: cs?.boxShadow ?? null,
-                            borderColor: cs?.borderColor ?? null,
-                            borderWidth: cs?.borderWidth ?? null,
-                            activeTag: document.activeElement?.tagName ?? null,
-                            activeClass:
-                              (document.activeElement as HTMLElement | null)
-                                ?.className ?? null,
-                          },
-                          timestamp: Date.now(),
-                        }),
-                      }
-                    ).catch(() => {});
-                  };
-                  logTriggerStyles("sync");
-                  requestAnimationFrame(() => logTriggerStyles("raf"));
-                }
-                // #endregion
                 onFocus?.(event);
               }}
               onBlur={(event) => {
                 editingRef.current = false;
-                // #region agent log
-                {
-                  const trigger = event.currentTarget.closest(
-                    ".aviala-datepicker-trigger"
-                  ) as HTMLElement | null;
-                  const cs = trigger ? getComputedStyle(trigger) : null;
-                  fetch(
-                    "http://127.0.0.1:7374/ingest/ad1201c6-cfe5-466e-96ed-49d0c8840eda",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        "X-Debug-Session-Id": "0f383b",
-                      },
-                      body: JSON.stringify({
-                        sessionId: "0f383b",
-                        runId: "pre-fix",
-                        hypothesisId: "A-E",
-                        location: "date-picker.tsx:DatePickerTrigger.onBlur",
-                        message: "trigger styles on input blur",
-                        data: {
-                          openProp: open,
-                          dataState: trigger?.getAttribute("data-state"),
-                          matchesFocusWithin:
-                            trigger?.matches(":focus-within") ?? null,
-                          kbdAttr: document.documentElement.hasAttribute(
-                            "data-aviala-kbd"
-                          ),
-                          bg: cs?.backgroundColor ?? null,
-                          boxShadow: cs?.boxShadow ?? null,
-                          relatedTargetTag:
-                            (event.relatedTarget as HTMLElement | null)
-                              ?.tagName ?? null,
-                        },
-                        timestamp: Date.now(),
-                      }),
-                    }
-                  ).catch(() => {});
-                }
-                // #endregion
                 window.setTimeout(() => {
                   const active = document.activeElement;
                   if (
@@ -863,7 +754,7 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
               {...props}
             />
           </span>
-          {renderSlotIcon(rightIcon)}
+          {renderSlotIcon(rightIcon, "aviala-datepicker-trigger__slot")}
         </div>
       </PopoverPrimitive.Anchor>
     );

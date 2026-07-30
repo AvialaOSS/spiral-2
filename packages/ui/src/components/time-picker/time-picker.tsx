@@ -12,8 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
-import { cloneAvialaIconElement } from "../../lib/clone-aviala-icon";
-import { iconSlotCssVarStyle } from "../../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { formatTimeValue } from "../date-picker/date-utils";
 import { typographyVariants } from "../typography";
 import {
@@ -39,22 +38,6 @@ export type TimePickerProps = {
   className?: string;
 };
 
-function renderSlotIcon(node: ReactNode): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-timepicker-trigger__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-    >
-      {content}
-    </span>
-  );
-}
 
 export function TimePicker({
   children,
@@ -196,7 +179,8 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
           {...props}
         >
           {renderSlotIcon(
-            leftIcon ?? <TimeAndDateClock level="text" biggerSize aria-hidden />
+            leftIcon ?? <TimeAndDateClock level="text" biggerSize aria-hidden />,
+            "aviala-timepicker-trigger__slot"
           )}
           <span className="aviala-timepicker-trigger__field">
             <span
@@ -209,7 +193,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
               {hasValue ? formatted : placeholder}
             </span>
           </span>
-          {renderSlotIcon(rightIcon)}
+          {renderSlotIcon(rightIcon, "aviala-timepicker-trigger__slot")}
         </button>
       </PopoverPrimitive.Trigger>
     );

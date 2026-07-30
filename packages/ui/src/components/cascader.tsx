@@ -27,6 +27,7 @@ import { Badge } from "./badge";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 
@@ -79,23 +80,6 @@ function useCascaderContext() {
   return context;
 }
 
-function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-cascader-trigger__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-      {...(debugId ? spiralDebugId(debugId) : undefined)}
-    >
-      {content}
-    </span>
-  );
-}
 
 function renderItemIcon(
   node: ReactNode,
@@ -523,7 +507,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
           {...spiralDebugId("cascader.trigger")}
           {...props}
         >
-          {renderSlotIcon(leftIcon, "cascader.trigger.icon-left")}
+          {renderSlotIcon(leftIcon, "aviala-cascader-trigger__slot", "cascader.trigger.icon-left")}
           <span className="aviala-cascader-trigger__field" {...spiralDebugId("cascader.trigger.value")}>
             <span
               className={cn("aviala-cascader-trigger__value", typographyVariants({ level: "text" }))}
@@ -532,7 +516,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
               {hasValue ? resolvedDisplay : placeholder}
             </span>
           </span>
-          {renderSlotIcon(rightIcon, "cascader.trigger.icon-right")}
+          {renderSlotIcon(rightIcon, "aviala-cascader-trigger__slot", "cascader.trigger.icon-right")}
           <span
             className="aviala-cascader-trigger__expand"
             aria-hidden

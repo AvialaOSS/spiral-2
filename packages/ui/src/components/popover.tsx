@@ -7,7 +7,7 @@ import {
 } from "react";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
-import { OverlayPointerSvg, POPOVER_POINTER } from "./overlay-pointer";
+import { OverlayPointerSvg, POPOVER_POINTER, TOOLTIP_POINTER } from "./overlay-pointer";
 
 export type PopoverProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>;
 
@@ -50,6 +50,8 @@ export function Popover({
 export const PopoverTrigger = PopoverPrimitive.Trigger;
 export const PopoverAnchor = PopoverPrimitive.Anchor;
 
+export type PopoverAppearance = "default" | "tooltip" | "primary";
+
 export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
   /** Render without Portal — use inside nested overlays. */
   portalled?: boolean;
@@ -57,6 +59,13 @@ export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimiti
   showArrow?: boolean;
   /** Strip surface padding — consumer controls inner spacing. */
   flush?: boolean;
+  /**
+   * Visual skin of the surface:
+   * - `default` — light bordered panel (select-menu aligned), text typography, stroked caret.
+   * - `tooltip` — shared inverted tooltip skin (dark, caption text, borderless, solid caret).
+   * - `primary` — brand primary surface with white text, borderless, solid caret.
+   */
+  appearance?: PopoverAppearance;
 };
 
 export const PopoverContent = forwardRef<
@@ -73,21 +82,30 @@ export const PopoverContent = forwardRef<
       portalled = true,
       showArrow = false,
       flush = false,
+      appearance = "default",
       ...props
     },
     ref
   ) => {
+    const isDefaultAppearance = appearance === "default";
+    const surfaceLevel = appearance === "tooltip" ? "caption" : "text";
+    const pointer = isDefaultAppearance ? POPOVER_POINTER : TOOLTIP_POINTER;
+
     const content = (
       <PopoverPrimitive.Content
         ref={ref}
         align={align}
         sideOffset={sideOffset}
         collisionPadding={collisionPadding}
+        data-appearance={appearance}
         className={cn("aviala-popover-content", className)}
         {...props}
       >
         <div
-          className={cn("aviala-popover-content__surface", typographyVariants({ level: "text" }))}
+          className={cn(
+            "aviala-popover-content__surface",
+            typographyVariants({ level: surfaceLevel })
+          )}
           data-flush={flush ? "true" : undefined}
         >
           {children}
@@ -95,15 +113,15 @@ export const PopoverContent = forwardRef<
         {showArrow ? (
           <PopoverPrimitive.Arrow
             asChild
-            width={POPOVER_POINTER.width}
-            height={POPOVER_POINTER.height}
+            width={pointer.width}
+            height={pointer.height}
           >
             <OverlayPointerSvg
-              variant="popover"
+              variant={isDefaultAppearance ? "popover" : "default"}
               className="aviala-popover-content__arrow"
-              width={POPOVER_POINTER.width}
-              height={POPOVER_POINTER.height}
-              path={POPOVER_POINTER.path}
+              width={pointer.width}
+              height={pointer.height}
+              path={pointer.path}
             />
           </PopoverPrimitive.Arrow>
         ) : null}

@@ -11,8 +11,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-import { iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
@@ -40,23 +39,6 @@ function resolveTextareaState(
   return focused ? "typing" : "fill";
 }
 
-function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-textarea__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-      {...(debugId ? spiralDebugId(debugId) : undefined)}
-    >
-      {content}
-    </span>
-  );
-}
 
 export type TextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> & {
   /** Figma `Size` */
@@ -194,7 +176,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         onMouseDown={handleShellMouseDown}
         {...spiralDebugId("textarea")}
       >
-        {renderSlotIcon(leftIcon, "textarea.left-icon")}
+        {renderSlotIcon(leftIcon, "aviala-textarea__slot", "textarea.left-icon")}
 
         <div className="aviala-textarea__field" {...spiralDebugId("textarea.field")}>
           <textarea
@@ -223,7 +205,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           />
         </div>
 
-        {renderSlotIcon(rightIcon, "textarea.right-icon")}
+        {renderSlotIcon(rightIcon, "aviala-textarea__slot", "textarea.right-icon")}
 
         {showController ? (
           <div className="aviala-textarea__controller" {...spiralDebugId("textarea.controller")}>

@@ -13,8 +13,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-import { iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
@@ -86,23 +85,6 @@ function decimalPlaces(n: number): number {
   return i === -1 ? 0 : text.length - i - 1;
 }
 
-function renderSlotIcon(node: ReactNode, debugId?: string): ReactNode {
-  if (!node) return null;
-  const content = cloneAvialaIconElement(node, {
-    level: "text",
-    biggerSize: true,
-  });
-
-  return (
-    <span
-      className="aviala-input__slot"
-      style={iconSlotCssVarStyle(node, "--input-slot-icon-size", "text", true)}
-      {...(debugId ? spiralDebugId(debugId) : undefined)}
-    >
-      {content}
-    </span>
-  );
-}
 
 function renderBadgeArea(node: ReactNode): ReactNode {
   if (node == null || node === false) return null;
@@ -220,7 +202,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         data-disabled={disabled ? "true" : undefined}
         {...spiralDebugId("number-input")}
       >
-        {renderSlotIcon(leftIcon, "number-input.left-icon")}
+        {renderSlotIcon(leftIcon, "aviala-input__slot", "number-input.left-icon")}
         {renderBadgeArea(leftBadge)}
 
         <div
@@ -283,7 +265,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         </div>
 
         {renderBadgeArea(rightBadge)}
-        {renderSlotIcon(rightIcon, "number-input.right-icon")}
+        {renderSlotIcon(rightIcon, "aviala-input__slot", "number-input.right-icon")}
 
         {showControls ? (
           <div

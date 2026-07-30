@@ -26,8 +26,11 @@
   padding: 0;
 }
 
-/* Radix Popper arrow host — overlap panel edge; Radix positions host via transform */
-.aviala-popover-content > span:has(> .aviala-popover-content__arrow) {
+/* Default appearance — Figma 16×5 stroked caret. Fill matches panel; outline reads on light
+   page bg. Host sizing, junction clip/fill-nudge and per-side nudges below are default-only:
+   they compensate for the 1px border. The borderless tooltip/primary appearances use a solid
+   14×5 caret and carry their own rules further down. */
+.aviala-popover-content[data-appearance="default"] > span:has(> .aviala-popover-content__arrow) {
   z-index: 2;
   pointer-events: none;
   overflow: visible;
@@ -36,25 +39,24 @@
 }
 
 /* Nudge host toward panel — flat edge is y=0 in SVG; Radix rotates the host per side */
-.aviala-popover-content[data-side="bottom"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="bottom"] > span:has(> .aviala-popover-content__arrow) {
   margin-top: 1px;
 }
 
-.aviala-popover-content[data-side="top"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="top"] > span:has(> .aviala-popover-content__arrow) {
   margin-bottom: 1px;
 }
 
-.aviala-popover-content[data-side="left"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="left"] > span:has(> .aviala-popover-content__arrow) {
   margin-right: 1px;
 }
 
-.aviala-popover-content[data-side="right"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="right"] > span:has(> .aviala-popover-content__arrow) {
   margin-left: 1px;
 }
 
-/* Figma 16×5 caret — fill matches panel; stroked outline reads on light page bg */
-.aviala-popover-content__arrow,
-.aviala-popover-content__arrow svg {
+.aviala-popover-content[data-appearance="default"] .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="default"] .aviala-popover-content__arrow svg {
   display: block;
   overflow: visible;
   flex-shrink: 0;
@@ -77,11 +79,11 @@
 }
 
 /* Flat edge is y=0 in SVG coords — clip junction stroke; nudge fill toward panel via local Y */
-.aviala-popover-content:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-outline {
+.aviala-popover-content[data-appearance="default"]:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-outline {
   clip-path: inset(1px 0 0 0);
 }
 
-.aviala-popover-content:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-fill {
+.aviala-popover-content[data-appearance="default"]:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-fill {
   transform: translateY(-1px);
 }
 
@@ -161,4 +163,62 @@
     /* !important — side-specific enter rules above outspecificity these selectors */
     animation: none !important;
   }
+}
+
+/* Tooltip appearance — shared inverted tooltip skin. Reuses the Tooltip component's
+   --tooltip-content-* tokens so a touch ResponsiveTooltip (Popover under the hood) stays
+   pixel-identical to a desktop Tooltip from a single token source. Borderless, caption text
+   (set on the surface class in TSX), solid 14×5 caret. */
+.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__surface {
+  max-width: var(--tooltip-content-max-width, 240px);
+  border: none;
+  border-radius: var(--tooltip-content-radius, 8px);
+  background-color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-fg, #fefcfc);
+  box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
+  padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
+}
+
+/* Primary appearance — brand primary surface, white text (same tokens as the primary button).
+   Borderless, text typography, solid caret filled with the primary bg. */
+.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__surface {
+  border: none;
+  background-color: var(--button-primary-bg, #ff856b);
+  color: var(--button-primary-fg, #ffffff);
+}
+
+/* Tooltip / primary caret — solid 14×5 (TOOLTIP_POINTER, single path, no outline). Host sizing
+   mirrors the default rules but at 14×5; no junction clip/nudge since these surfaces have no
+   border. Fill tracks each surface bg so the caret blends into the panel. */
+.aviala-popover-content[data-appearance="tooltip"] > span:has(> .aviala-popover-content__arrow),
+.aviala-popover-content[data-appearance="primary"] > span:has(> .aviala-popover-content__arrow) {
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+  min-width: 14px;
+  min-height: 5px;
+}
+
+.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__arrow svg {
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+  width: 14px;
+  height: 5px;
+  min-width: 14px;
+  min-height: 5px;
+  color: var(--tooltip-content-bg, #343333);
+}
+
+.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow svg {
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+  width: 14px;
+  height: 5px;
+  min-width: 14px;
+  min-height: 5px;
+  color: var(--button-primary-bg, #ff856b);
 }
