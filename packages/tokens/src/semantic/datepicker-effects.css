@@ -75,6 +75,13 @@
   pointer-events: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .aviala-datepicker-trigger:hover:not(:focus-within):not([data-state="open"]):not([data-disabled="true"]):not(:disabled),
+  .aviala-timepicker-trigger:hover:not(:focus-within):not([data-state="open"]):not(:disabled) {
+    background-color: var(--input-bg-hover);
+  }
+}
+
 .aviala-datepicker-trigger__slot,
 .aviala-timepicker-trigger__slot {
   position: relative;
@@ -303,7 +310,6 @@
   border-radius: var(--datepicker-panel-radius, 10px);
   background-color: var(--datepicker-panel-bg, #fefcfc);
   box-shadow: var(--datepicker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
-  padding: var(--datepicker-panel-py, 8px) var(--datepicker-panel-px, 8px);
 }
 
 .aviala-timepicker-panel .aviala-datepicker-time {

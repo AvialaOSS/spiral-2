@@ -53,6 +53,10 @@ const buttonVariants = cva(
         true: "min-w-[var(--button-min-width-allround,48px)] !rounded-[var(--border-radius-allround,99px)]",
         false: "min-w-[var(--button-min-width,46px)]",
       },
+      compact: {
+        true: "min-w-0",
+        false: "",
+      },
     },
     defaultVariants: {
       mode: "primary",
@@ -197,6 +201,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       size: sizeProp,
       allRound = false,
+      compact,
       iconOnly: iconOnlyProp,
       asChild = false,
       loading = false,
@@ -269,7 +274,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
 
     const classes = cn(
-      buttonVariants({ mode, ...(iconOnly ? {} : { allRound }) }),
+      buttonVariants({ mode, ...(iconOnly ? {} : { allRound }), compact }),
       iconOnly && "min-w-0",
       iconOnly && allRound && "!rounded-[var(--border-radius-allround,99px)]",
       className

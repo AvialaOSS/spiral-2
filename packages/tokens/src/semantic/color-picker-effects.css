@@ -285,6 +285,12 @@
   opacity: var(--input-disabled-opacity, 0.55);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .aviala-color-picker-trigger:hover:not(:focus-visible):not([data-open="true"]):not([data-disabled="true"]):not(:disabled) {
+    background-color: var(--input-bg-hover, #e2e0e0);
+  }
+}
+
 .aviala-color-picker-trigger__swatch {
   display: inline-flex;
   height: var(--input-icon-slot-height, var(--input-line-height, 1.125rem));

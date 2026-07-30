@@ -16,3 +16,13 @@ packages/ui/src/**/*.js
 packages/ui/src/**/*.d.ts
 packages/ui/src/**/*.d.ts.map
 packages/ui/src/**/*.js.map
+
+# Same protection for packages/tokens sources
+packages/tokens/src/**/*.js
+packages/tokens/src/**/*.d.ts
+packages/tokens/src/**/*.d.ts.map
+packages/tokens/src/**/*.js.map
+
+# Local agent workspace memory + sandbox temp dirs (never commit)
+.workbuddy/
+_tmp_*

@@ -156,14 +156,23 @@ function measureNavigationIndicator(
   );
 
   if (direction === "vertical") {
+    let inset = railInset;
+
+    // Grow / shrink the rail on the active item only (hover taller, press shorter).
+    if (item.matches(":active")) {
+      inset = readIndicatorToken(group, "--navigation-rail-inset-press", 9);
+    } else if (item.matches(":hover")) {
+      inset = readIndicatorToken(group, "--navigation-rail-inset-hover", 3);
+    }
+
     return {
       x: railLeft,
 
-      y: itemRect.top - groupRect.top + railInset,
+      y: itemRect.top - groupRect.top + inset,
 
       width: railWidth,
 
-      height: Math.max(0, itemRect.height - railInset * 2),
+      height: Math.max(0, itemRect.height - inset * 2),
 
       visible: true,
     };
@@ -647,6 +656,40 @@ function useNavigationIndicator(
     startExpandCollapseTracking,
     syncIndicator,
   ]);
+
+  // Vertical rail: resize when hovering / pressing the active item.
+  useEffect(() => {
+    if (direction !== "vertical") return;
+
+    const group = groupRef.current;
+    if (!group) return;
+
+    const refreshInteractionMetrics = () => {
+      if (isLayoutTrackingRef.current || isAnimatingRef.current) return;
+
+      const metrics = measureIndicator();
+      if (!metrics) return;
+      if (metricsRef.current && metricsApproxEqual(metrics, metricsRef.current)) {
+        return;
+      }
+
+      syncIndicator(metrics, false);
+    };
+
+    group.addEventListener("pointerover", refreshInteractionMetrics);
+    group.addEventListener("pointerout", refreshInteractionMetrics);
+    group.addEventListener("pointerdown", refreshInteractionMetrics);
+    group.addEventListener("pointerup", refreshInteractionMetrics);
+    group.addEventListener("pointercancel", refreshInteractionMetrics);
+
+    return () => {
+      group.removeEventListener("pointerover", refreshInteractionMetrics);
+      group.removeEventListener("pointerout", refreshInteractionMetrics);
+      group.removeEventListener("pointerdown", refreshInteractionMetrics);
+      group.removeEventListener("pointerup", refreshInteractionMetrics);
+      group.removeEventListener("pointercancel", refreshInteractionMetrics);
+    };
+  }, [direction, groupRef, measureIndicator, syncIndicator]);
 
   return onIndicatorRef;
 }

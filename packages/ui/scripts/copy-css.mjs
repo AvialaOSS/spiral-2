@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -44,6 +44,9 @@ function patchKeyboardFocusDts(filePath) {
   writeFileSync(filePath, content);
 }
 
+// The d.ts patch only applies when tsup has already emitted declarations —
+// skip silently so this script can also run standalone (`build:styles`).
 for (const file of ["index.d.ts", "index.d.cts"]) {
-  patchKeyboardFocusDts(join(dist, file));
+  const filePath = join(dist, file);
+  if (existsSync(filePath)) patchKeyboardFocusDts(filePath);
 }

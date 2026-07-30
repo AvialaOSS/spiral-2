@@ -30,6 +30,7 @@
   ],
   "scripts": {
     "build": "tsup && node scripts/copy-css.mjs && node scripts/generate-props.mjs",
+    "build:styles": "node scripts/copy-css.mjs",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist"
