@@ -9,8 +9,9 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
-import { Button } from "./button";
+import { Button, buttonVariants } from "./button";
 import { Input } from "./input";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import {
   Select,
   SelectContent,
@@ -45,6 +46,21 @@ function buildPageList(page: number, pageCount: number): Array<number | "ellipsi
     result.push(current);
   }
   return result;
+}
+
+/** Resolve the page numbers hidden behind an ellipsis slot. */
+function ellipsisRange(
+  pages: Array<number | "ellipsis">,
+  index: number
+): number[] {
+  const prev = pages[index - 1];
+  const next = pages[index + 1];
+  if (typeof prev !== "number" || typeof next !== "number") return [];
+  const start = prev + 1;
+  const end = next - 1;
+  const range: number[] = [];
+  for (let p = start; p <= end; p += 1) range.push(p);
+  return range;
 }
 
 export type PaginationProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
@@ -87,6 +103,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
     const [uncontrolledPage, setUncontrolledPage] = useState(defaultPage);
     const [uncontrolledPageSize, setUncontrolledPageSize] = useState(defaultPageSize);
     const [jumpValue, setJumpValue] = useState("");
+    const [openEllipsis, setOpenEllipsis] = useState<number | null>(null);
     const page = pageProp ?? uncontrolledPage;
     const pageSize = pageSizeProp ?? uncontrolledPageSize;
     const safePageCount = Math.max(1, pageCount);
@@ -132,20 +149,60 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
           <div className="aviala-pagination__pages">
             {pages.map((item, index) =>
               item === "ellipsis" ? (
-                <Typography
+                <Popover
                   key={`ellipsis-${index}`}
-                  level="text"
-                  as="span"
-                  className="aviala-pagination__page"
-                  aria-hidden
+                  open={openEllipsis === index}
+                  onOpenChange={(open) => setOpenEllipsis(open ? index : null)}
                 >
-                  …
-                </Typography>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      data-size="regular"
+                      className={cn(
+                        buttonVariants({ mode: "noBackgroundCustom", compact: true }),
+                        "aviala-pagination__page--ellipsis"
+                      )}
+                      aria-label="更多页码"
+                      aria-haspopup="menu"
+                    >
+                      <Typography level="text" as="span">
+                        …
+                      </Typography>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="aviala-pagination__ellipsis-content" showArrow flush>
+                    <div className="aviala-pagination__ellipsis-menu">
+                      {ellipsisRange(pages, index).map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          data-size="regular"
+                          className={cn(
+                            buttonVariants({ mode: "noBackgroundCustom", compact: true }),
+                            "aviala-pagination__ellipsis-page"
+                          )}
+                          onClick={() => {
+                            setPage(p);
+                            setOpenEllipsis(null);
+                          }}
+                        >
+                          <Typography level="text" as="span">
+                            {p}
+                          </Typography>
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
               ) : (
                 <button
                   key={item}
                   type="button"
-                  className="aviala-pagination__page aviala-focus-ring"
+                  data-size="regular"
+                  className={cn(
+                    buttonVariants({ mode: "noBackgroundCustom", compact: true }),
+                    "aviala-pagination__page"
+                  )}
                   data-active={item === currentPage ? "true" : undefined}
                   aria-current={item === currentPage ? "page" : undefined}
                   onClick={() => setPage(item)}

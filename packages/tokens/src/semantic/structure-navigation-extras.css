@@ -366,20 +366,10 @@ button.aviala-breadcrumb-item:hover {
 }
 
 .aviala-pagination__page {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   min-width: 28px;
-  padding: var(--pagination-page-py, 4px) var(--pagination-page-px, 8px);
-  border: 0;
-  border-radius: var(--pagination-page-radius, 8px);
-  background: transparent;
-  color: var(--pagination-page-fg);
-  cursor: pointer;
 }
 
 .aviala-pagination__page[data-active="true"] {
-  padding: var(--pagination-page-active-py, 6px) var(--pagination-page-active-px, 10px);
   background-color: var(--pagination-page-active-bg);
   color: var(--pagination-page-active-fg);
   box-shadow: inset 0 -0.5px 0 var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
@@ -392,6 +382,15 @@ button.aviala-breadcrumb-item:hover {
 .aviala-pagination__page:disabled {
   opacity: var(--transparency-disable, 0.55);
   cursor: not-allowed;
+}
+
+.aviala-pagination__ellipsis-menu {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  gap: var(--pagination-page-gap, 6px);
+  max-height: 200px;
+  overflow-y: auto;
+  padding: var(--popover-content-py, 8px) var(--popover-content-px, 8px);
 }
 
 .aviala-pagination__jump,

@@ -244,6 +244,10 @@ export {
   type PopoverContentProps,
 } from "./components/popover";
 export {
+  HoverPopover,
+  type HoverPopoverProps,
+} from "./components/hover-popover";
+export {
   Modal,
   ModalTrigger,
   ModalPortal,
@@ -277,6 +281,10 @@ export {
   type TooltipProviderProps,
   type TooltipContentProps,
 } from "./components/tooltip";
+export {
+  ResponsiveTooltip,
+  type ResponsiveTooltipProps,
+} from "./components/responsive-tooltip";
 export {
   Feedback,
   type FeedbackProps,

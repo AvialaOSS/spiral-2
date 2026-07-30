@@ -14,10 +14,15 @@ Aviala Design aligned React component library built on shadcn/ui, Radix UI, and 
 
 ```bash
 pnpm install
-pnpm sync:ald
-pnpm build
 pnpm --filter @spiral/playground dev
 ```
+
+No build step is needed before dev: `@aviala-design/tokens/vite-plugin` serves
+the theme engine and every token stylesheet straight from source (the generated
+`styles.css` / `ald-theme.css` are produced on the fly, and edits to
+`packages/tokens/src/semantic/*.css` or `source/ald/**` hot-reload). Run
+`pnpm sync:ald` only when refreshing the committed ALD tokens from a local ALD
+checkout, and `pnpm build` when you need publishable `dist/` artifacts.
 
 ## Playground
 
@@ -32,6 +37,10 @@ Open http://localhost:5173 — theme switcher, color palette, icon gallery, Basi
 ```bash
 pnpm --filter @spiral/docs dev
 ```
+
+Storybook uses the same zero-build setup (the tokens Vite plugin in
+`.storybook/main.ts`), so it starts without `turbo build` and hot-reloads
+token CSS changes.
 
 ## 公开文档站（Spiral Docs）
 

@@ -2,8 +2,6 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import {
   forwardRef,
   useCallback,
-  useEffect,
-  useRef,
   useState,
   type ComponentPropsWithoutRef,
 } from "react";
@@ -14,9 +12,11 @@ import { OverlayPointerSvg, POPOVER_POINTER } from "./overlay-pointer";
 export type PopoverProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>;
 
 /**
- * Radix Popover closes on `window` blur (e.g. focusing DevTools). Suppress only
- * blur-initiated closes; pointer-down (outside click, trigger toggle) and Escape
- * must still dismiss on the first interaction.
+ * Thin controlled/uncontrolled wrapper around Radix `Popover.Root`. We don't add
+ * any custom close-suppression: a non-modal Popover already prevents focus-outside
+ * from dismissing (`onFocusOutside` is default-prevented by Radix), so a window
+ * blur never closes it — no extra bookkeeping needed, and it keeps Escape a
+ * single, predictable dismiss.
  */
 export function Popover({
   open: openProp,
@@ -28,41 +28,10 @@ export function Popover({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = openProp !== undefined;
   const open = isControlled ? openProp : internalOpen;
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
-
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) {
-      pointerDownCloseRef.current = false;
-      return;
-    }
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
-      if (!isControlled) {
-        setInternalOpen(nextOpen);
-      }
+      if (!isControlled) setInternalOpen(nextOpen);
       onOpenChange?.(nextOpen);
     },
     [isControlled, onOpenChange]
@@ -86,6 +55,8 @@ export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimiti
   portalled?: boolean;
   /** Show a caret arrow pointing at the trigger (Figma with-arrow variant). */
   showArrow?: boolean;
+  /** Strip surface padding — consumer controls inner spacing. */
+  flush?: boolean;
 };
 
 export const PopoverContent = forwardRef<
@@ -101,6 +72,7 @@ export const PopoverContent = forwardRef<
       collisionPadding = 8,
       portalled = true,
       showArrow = false,
+      flush = false,
       ...props
     },
     ref
@@ -114,7 +86,10 @@ export const PopoverContent = forwardRef<
         className={cn("aviala-popover-content", className)}
         {...props}
       >
-        <div className={cn("aviala-popover-content__surface", typographyVariants({ level: "text" }))}>
+        <div
+          className={cn("aviala-popover-content__surface", typographyVariants({ level: "text" }))}
+          data-flush={flush ? "true" : undefined}
+        >
           {children}
         </div>
         {showArrow ? (

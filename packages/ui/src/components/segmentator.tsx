@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type ButtonHTMLAttributes,
@@ -27,8 +28,6 @@ type SegmentatorContextValue = {
   allRound: boolean;
   disabled?: boolean;
   consumeClickRef: RefObject<boolean>;
-  dragPreviewValue: string | null;
-  isPressing: boolean;
 };
 
 const SegmentatorContext = createContext<SegmentatorContextValue | null>(null);
@@ -69,10 +68,13 @@ function useSegmentatorState(
   const isControlled = value !== undefined;
   const current = isControlled ? value : internal;
 
-  const setValue = (next: string) => {
-    if (!isControlled) setInternal(next);
-    onValueChange?.(next);
-  };
+  const setValue = useCallback(
+    (next: string) => {
+      if (!isControlled) setInternal(next);
+      onValueChange?.(next);
+    },
+    [isControlled, onValueChange]
+  );
 
   return [current, setValue] as const;
 }
@@ -152,6 +154,22 @@ function getEnabledSegmentatorItems(group: HTMLElement): HTMLButtonElement[] {
   return Array.from(
     group.querySelectorAll<HTMLButtonElement>('.aviala-segmentator-item:not(:disabled)')
   );
+}
+
+/**
+ * Imperatively toggle the drag-preview highlight on items.
+ * Mirrors the command-only philosophy of writeThumbMetrics — drag preview must
+ * not go through React state/context, otherwise every item re-renders per crossing.
+ */
+function applyDragPreview(group: HTMLElement, activeItem: HTMLButtonElement | null) {
+  const items = getEnabledSegmentatorItems(group);
+  for (const item of items) {
+    if (item === activeItem) {
+      item.setAttribute("data-drag-preview", "true");
+    } else {
+      item.removeAttribute("data-drag-preview");
+    }
+  }
 }
 
 function measureItemThumbMetrics(
@@ -483,7 +501,6 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
     const layoutKey = useThemeLayoutKey();
     const consumeClickRef = useRef(false);
     const pointerDragRef = useRef<SegmentatorPointerDrag | null>(null);
-    const [dragPreviewValue, setDragPreviewValue] = useState<string | null>(null);
     const [dragState, setDragState] = useState<SegmentatorDragState>({
       pressing: false,
       active: false,
@@ -494,9 +511,12 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
     const resetPointerInteraction = useCallback(() => {
       pointerDragRef.current?.cleanupWindowListeners?.();
       pointerDragRef.current = null;
-      setDragPreviewValue(null);
       setDragState({ pressing: false, active: false });
-      const thumbEl = groupRef.current?.querySelector<HTMLSpanElement>(
+      const group = groupRef.current;
+      if (group) {
+        applyDragPreview(group, null);
+      }
+      const thumbEl = group?.querySelector<HTMLSpanElement>(
         ".aviala-segmentator-thumb"
       );
       if (thumbEl) {
@@ -568,8 +588,8 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           triggerSegmentatorHaptic("select");
           // Hold animated writes long enough for the cross-item settle to play.
           drag.snapUntil = performance.now() + 540;
-          if (nextPreviewValue) {
-            setDragPreviewValue(nextPreviewValue);
+          if (item) {
+            applyDragPreview(group, item);
           }
         }
         drag.previewValue = nextPreviewValue;
@@ -667,7 +687,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       // Animate onto the pressed item (including when it wasn't selected), and
       // let press-scale transition run — do not use live/instant writes here.
       writeThumbMetrics(metrics, false);
-      setDragPreviewValue(pressedValue);
+      applyDragPreview(group, pressedItem);
       setDragState({ pressing: true, active: false });
       group.setPointerCapture(event.pointerId);
     };
@@ -676,16 +696,17 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
 
     return (
       <SegmentatorContext.Provider
-        value={{
-          value: currentValue,
-          onValueChange: setValue,
-          mode,
-          allRound,
-          disabled,
-          consumeClickRef,
-          dragPreviewValue,
-          isPressing: dragState.pressing,
-        }}
+        value={useMemo(
+          () => ({
+            value: currentValue,
+            onValueChange: setValue,
+            mode,
+            allRound,
+            disabled,
+            consumeClickRef,
+          }),
+          [currentValue, setValue, mode, allRound, disabled]
+        )}
       >
         <div
           ref={(node) => {
@@ -764,9 +785,6 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
         data-selected={selected ? "true" : "false"}
         data-value={value}
         data-mode={ctx.mode}
-        data-drag-preview={
-          ctx.isPressing && ctx.dragPreviewValue === value ? "true" : undefined
-        }
         data-all-round={ctx.allRound ? "true" : "false"}
         disabled={isDisabled}
         className={cn("aviala-segmentator-item aviala-focus-ring", iconOnly && "min-w-0", className)}

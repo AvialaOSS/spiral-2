@@ -156,6 +156,8 @@
   --radio-label-fg: var(--text-text-normal-text-black, #343333);
   --radio-caption-fg: var(--text-text-normal-text-caption-black, #858484);
   --radio-card-border-selected: var(--border-border-theme-primary, #ff5532);
+  --radio-card-hover-bg: var(--aviala-neutral-neutral-4, #faf8f8);
+  --radio-card-press-bg: var(--aviala-neutral-neutral-6, #edebeb);
   --radio-disabled-opacity: var(--input-disabled-opacity, 0.55);
 
   --select-menu-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
@@ -252,6 +254,8 @@
   --switch-height-regular: 22px;
   --switch-height-small: 20px;
   --switch-track-bg: var(--control-control-normal-background-deep, #e2e0e0);
+  --switch-hover-bg: var(--aviala-neutral-neutral-8, #d2d0d0);
+  --switch-press-bg: var(--aviala-neutral-neutral-9, #bebcbc);
   --switch-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
   --switch-thumb-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
@@ -419,7 +423,7 @@
   --popover-content-px: var(--padding-default, 8px);
   --popover-content-py: var(--padding-default, 8px);
   --popover-content-max-width: 320px;
-  --popover-content-arrow-stroke: var(--border-border-normal-primary, #e2e0e0);
+  --popover-content-arrow-stroke: var(--border-border-normal-light, #f5f3f3);
 
   /* Modal — Figma Information Display → Modal (553:58593) */
   --modal-overlay-bg: rgba(0, 0, 0, 0.45);
@@ -515,6 +519,9 @@
   --navigation-item-active-shadow: var(--button-shadow-light);
   --navigation-item-rail: var(--border-border-theme-primary, #ff5532);
   --navigation-rail-inset: 6px;
+  /* Vertical active rail: grow on hover / shrink on press (inset from item edges). */
+  --navigation-rail-inset-hover: 3px;
+  --navigation-rail-inset-press: 9px;
   --navigation-rail-left: 1px;
   --navigation-rail-width: 3px;
   --navigation-indicator-width-horizontal: 50px;

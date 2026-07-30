@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "./popover";
+import { HoverPopover } from "./hover-popover";
 import { Stack } from "./stack";
 
 const meta: Meta<typeof Popover> = {
@@ -49,6 +50,33 @@ export const WithArrow: Story = {
         Popover with caret arrow pointing at the trigger.
       </PopoverContent>
     </Popover>
+  ),
+};
+
+/** Hover (desktop) / tap (touch) to reveal — `HoverPopover` wraps Popover with
+ *  hover-intent + keyboard focus, and degrades to tap on touch devices. */
+export const HoverTrigger: Story = {
+  render: () => (
+    <div className="flex flex-col items-center gap-3">
+      <p className="text-sm text-muted-foreground">将鼠标悬浮在按钮上以显示 Popover（触屏为点按）</p>
+      <HoverPopover
+        content={
+          <div className="flex flex-col gap-2 p-1">
+            <p>富内容浮层：可交互。</p>
+            <div className="flex gap-2">
+              <Button mode="primary" size="small">
+                Action
+              </Button>
+              <Button mode="second" size="small">
+                Cancel
+              </Button>
+            </div>
+          </div>
+        }
+      >
+        <Button mode="default">Hover to open</Button>
+      </HoverPopover>
+    </div>
   ),
 };
 

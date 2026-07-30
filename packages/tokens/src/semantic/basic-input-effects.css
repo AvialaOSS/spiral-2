@@ -15,6 +15,8 @@
   --switch-height-regular: 22px;
   --switch-height-small: 20px;
   --switch-track-bg: var(--control-control-normal-background-deep, #e2e0e0);
+  --switch-hover-bg: var(--aviala-neutral-neutral-8, #d2d0d0);
+  --switch-press-bg: var(--aviala-neutral-neutral-9, #bebcbc);
   --switch-checked-bg: var(--control-control-theme-background, #ff5532);
   --switch-thumb-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
@@ -326,6 +328,23 @@
     calc(var(--switch-thumb-travel-small) - var(--switch-thumb-press-expand-small))
   );
   transition-duration: var(--switch-press-transition-duration, 0.2s);
+}
+
+/* hover / press — mirrors Button noBackgroundCustom (unchecked) and primary brightness (checked) */
+@media (hover: hover) and (pointer: fine) {
+  .aviala-switch[data-state="unchecked"]:hover:not(:disabled) {
+    background-color: var(--switch-hover-bg);
+  }
+  .aviala-switch[data-state="checked"]:hover:not(:disabled) .aviala-switch__surface {
+    filter: brightness(var(--button-hover-brightness, 1.05));
+  }
+}
+
+.aviala-switch[data-state="unchecked"]:active:not(:disabled) {
+  background-color: var(--switch-press-bg);
+}
+.aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__surface {
+  filter: brightness(var(--button-active-brightness, 0.95));
 }
 
 /* ---- Segmentator ---- */

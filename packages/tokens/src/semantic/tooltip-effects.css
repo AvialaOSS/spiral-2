@@ -6,6 +6,9 @@
 }
 
 .aviala-tooltip-content__surface {
+  /* Radix Popper sets --radix-tooltip-content-transform-origin on Content (accounts
+     for side + arrow position) — enter scale grows from the invocation point */
+  transform-origin: var(--radix-tooltip-content-transform-origin, 50% 50%);
   max-width: var(--tooltip-content-max-width, 240px);
   border-radius: var(--tooltip-content-radius, 8px);
   background-color: var(--tooltip-content-bg, #343333);
@@ -39,40 +42,58 @@
   animation: aviala-tooltip-presence-out 0.1s ease forwards;
 }
 
+/* Surface — scales up to full size from the invocation point. Direction comes from
+   transform-origin (Radix's --radix-tooltip-content-transform-origin, per side + arrow position)
+   so a single keyframe covers all sides. No translate: the panel and arrow must move as one,
+   so both scale-only around their junction-facing origins. */
 .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__surface,
 .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__surface {
-  animation: aviala-tooltip-in 0.15s ease;
+  animation: aviala-tooltip-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__surface {
   animation: aviala-tooltip-out 0.1s ease forwards;
 }
 
-/* Pointer — enter only; exit fade is on root for Radix Presence */
+/* Pointer — mirrors the surface: same keyframes and easing. The arrow host <span> is rotated
+   per side by Radix (top: none, bottom: 180deg, sides: ±90deg). A corner origin (e.g. 50% 0)
+   would therefore land on a different screen point for each side, sliding the caret off the
+   panel during exit. Use the svg CENTER (50% 50%) — rotation-invariant, so the caret scales in
+   place and stays glued to the panel on every side. Exit fade is on root for Radix Presence. */
+.aviala-tooltip-content__arrow {
+  transform-origin: 50% 50%;
+}
+
 .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
 .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
-  animation: aviala-tooltip-in 0.15s ease;
+  animation: aviala-tooltip-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__arrow {
+  animation: aviala-tooltip-out 0.1s ease forwards;
 }
 
 @keyframes aviala-tooltip-in {
   from {
     opacity: 0;
-    transform: translateY(2px);
+    transform: scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
+/* Exit: scale only — opacity is faded by the root presence-out. Shared with the arrow so the
+   panel and caret shrink together around their junction, with no relative slide. */
 @keyframes aviala-tooltip-out {
   from {
-    transform: translateY(0);
+    transform: scale(1);
   }
 
   to {
-    transform: translateY(2px);
+    transform: scale(0.96);
   }
 }
 
@@ -93,6 +114,7 @@
   .aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__surface,
   .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
   .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
-    animation: none;
+    /* !important — side-specific enter rules above outspecificity these selectors */
+    animation: none !important;
   }
 }

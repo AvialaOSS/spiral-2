@@ -1,1 +1,0 @@
-{"version":3,"file":"base-numbers.d.ts","sourceRoot":"","sources":["base-numbers.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,kBAAkB,GAAG,SAAS,GAAG,iBAAiB,CAAC;AAE/D,eAAO,MAAM,kBAAkB,EAAE,MAAM,CAAC,kBAAkB,EAAE,MAAM,CAGjE,CAAC;AAEF,eAAO,MAAM,yBAAyB,iBAAiB,CAAC;AAExD,wBAAgB,uBAAuB,CACrC,MAAM,EAAE,WAAW,EACnB,OAAO,GAAE,kBAA8B,GACtC,IAAI,CAMN"}

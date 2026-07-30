@@ -14,6 +14,9 @@
   --input-shell-error-shadow: inset 0 0 0 1px var(--destructive, #ff646f),
     var(--input-surface-shadow);
 
+  --radio-card-hover-bg: var(--aviala-neutral-neutral-4, #faf8f8);
+  --radio-card-press-bg: var(--aviala-neutral-neutral-6, #edebeb);
+
   --radio-checked-surface: linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
@@ -588,11 +591,21 @@
   border: 1px solid transparent;
   border-radius: var(--border-radius-small, 8px);
   padding: var(--padding-default, 8px);
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .aviala-radio-input[data-style="card"]:has(.aviala-radio[data-state="checked"]) {
   border-color: var(--radio-card-border-selected);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aviala-radio-input[data-style="card"]:hover:not([data-disabled="true"]):not(:has(.aviala-radio[data-state="checked"])) {
+    background-color: var(--radio-card-hover-bg);
+  }
+}
+
+.aviala-radio-input[data-style="card"]:active:not([data-disabled="true"]):not(:has(.aviala-radio[data-state="checked"])) {
+  background-color: var(--radio-card-press-bg);
 }
 
 .aviala-radio-input[data-disabled="true"] {
