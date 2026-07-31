@@ -75,7 +75,7 @@ function renderFeedbackIcon(node: ReactNode): ReactNode {
 }
 
 function defaultStatusIcon(type: FeedbackType, mode: FeedbackMode): ReactNode {
-  const iconMode = mode === "primary" ? "fill" : "fill";
+  const iconMode = mode === "primary" ? "fill" : "default";
   const thickness = "Regular";
 
   switch (type) {
