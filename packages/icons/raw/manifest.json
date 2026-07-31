@@ -1,11 +1,13 @@
 {
-  "exportedAt": "2026-07-08T16:31:31.276Z",
+  "exportedAt": "2026-07-31T06:27:40.600Z",
   "fileKey": "kLrxJHsDob2VoX7PfkD5PW",
   "filters": {
     "thickness": null,
-    "mode": null
+    "mode": null,
+    "category": null,
+    "name": null
   },
-  "count": 1785,
+  "count": 1884,
   "icons": [
     {
       "file": "accessibility/accessibility_accessibility-light-default.svg",
@@ -938,6 +940,36 @@
       "nodeId": "591:2559"
     },
     {
+      "file": "brand/brand_aliPay-light-default.svg",
+      "componentSet": "brand/aliPay",
+      "category": "brand",
+      "name": "brand_aliPay",
+      "variantName": "brand_aliPay",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3384:172"
+    },
+    {
+      "file": "brand/brand_aliPay-medium-default.svg",
+      "componentSet": "brand/aliPay",
+      "category": "brand",
+      "name": "brand_aliPay",
+      "variantName": "brand_aliPay",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3384:170"
+    },
+    {
+      "file": "brand/brand_aliPay-regular-default.svg",
+      "componentSet": "brand/aliPay",
+      "category": "brand",
+      "name": "brand_aliPay",
+      "variantName": "brand_aliPay",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3384:168"
+    },
+    {
       "file": "brand/brand_Apple-light-default.svg",
       "componentSet": "brand/Apple",
       "category": "brand",
@@ -1238,6 +1270,126 @@
       "nodeId": "782:656"
     },
     {
+      "file": "brand/brand_googlePlayStore-light-default.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3386:135"
+    },
+    {
+      "file": "brand/brand_googlePlayStore-light-fill.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3386:137"
+    },
+    {
+      "file": "brand/brand_googlePlayStore-medium-default.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3386:129"
+    },
+    {
+      "file": "brand/brand_googlePlayStore-medium-fill.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3386:131"
+    },
+    {
+      "file": "brand/brand_googlePlayStore-regular-default.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3386:123"
+    },
+    {
+      "file": "brand/brand_googlePlayStore-regular-fill.svg",
+      "componentSet": "brand/googlePlayStore",
+      "category": "brand",
+      "name": "brand_googlePlayStore",
+      "variantName": "brand_googlePlayStore",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3386:125"
+    },
+    {
+      "file": "brand/brand_paypal-light-default.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3384:269"
+    },
+    {
+      "file": "brand/brand_paypal-light-fill.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3384:271"
+    },
+    {
+      "file": "brand/brand_paypal-medium-default.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3384:264"
+    },
+    {
+      "file": "brand/brand_paypal-medium-fill.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3384:266"
+    },
+    {
+      "file": "brand/brand_paypal-regular-default.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3384:259"
+    },
+    {
+      "file": "brand/brand_paypal-regular-fill.svg",
+      "componentSet": "brand/paypal",
+      "category": "brand",
+      "name": "brand_paypal",
+      "variantName": "brand_paypal",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3384:261"
+    },
+    {
       "file": "brand/brand_qq-light-default.svg",
       "componentSet": "brand/qq",
       "category": "brand",
@@ -1296,6 +1448,36 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "1432:204"
+    },
+    {
+      "file": "brand/brand_wechatPay-light-default.svg",
+      "componentSet": "brand/wechatPay",
+      "category": "brand",
+      "name": "brand_wechatPay",
+      "variantName": "brand_wechatPay",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3384:120"
+    },
+    {
+      "file": "brand/brand_wechatPay-medium-default.svg",
+      "componentSet": "brand/wechatPay",
+      "category": "brand",
+      "name": "brand_wechatPay",
+      "variantName": "brand_wechatPay",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3384:118"
+    },
+    {
+      "file": "brand/brand_wechatPay-regular-default.svg",
+      "componentSet": "brand/wechatPay",
+      "category": "brand",
+      "name": "brand_wechatPay",
+      "variantName": "brand_wechatPay",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3384:116"
     },
     {
       "file": "communicate/communicate_comment-light-default.svg",
@@ -2378,6 +2560,26 @@
       "nodeId": "2856:5319"
     },
     {
+      "file": "data/data_barChart-bold-default.svg",
+      "componentSet": "data/barChart",
+      "category": "data",
+      "name": "data_barChart",
+      "variantName": "data_barChart",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:453"
+    },
+    {
+      "file": "data/data_barChart-bold-fill.svg",
+      "componentSet": "data/barChart",
+      "category": "data",
+      "name": "data_barChart",
+      "variantName": "data_barChart",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:457"
+    },
+    {
       "file": "data/data_barChart-light-default.svg",
       "componentSet": "data/barChart",
       "category": "data",
@@ -2436,6 +2638,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "1383:342"
+    },
+    {
+      "file": "data/data_bubbleChart-bold-default.svg",
+      "componentSet": "data/bubbleChart",
+      "category": "data",
+      "name": "data_bubbleChart",
+      "variantName": "data_bubbleChart",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:358"
+    },
+    {
+      "file": "data/data_bubbleChart-bold-fill.svg",
+      "componentSet": "data/bubbleChart",
+      "category": "data",
+      "name": "data_bubbleChart",
+      "variantName": "data_bubbleChart",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:362"
     },
     {
       "file": "data/data_bubbleChart-light-default.svg",
@@ -2498,6 +2720,26 @@
       "nodeId": "2880:9040"
     },
     {
+      "file": "data/data_dataDashboard-bold-default.svg",
+      "componentSet": "data/dataDashboard",
+      "category": "data",
+      "name": "data_dataDashboard",
+      "variantName": "data_dataDashboard",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:485"
+    },
+    {
+      "file": "data/data_dataDashboard-bold-fill.svg",
+      "componentSet": "data/dataDashboard",
+      "category": "data",
+      "name": "data_dataDashboard",
+      "variantName": "data_dataDashboard",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:487"
+    },
+    {
       "file": "data/data_dataDashboard-light-default.svg",
       "componentSet": "data/dataDashboard",
       "category": "data",
@@ -2556,6 +2798,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "1382:202"
+    },
+    {
+      "file": "data/data_dataSheet-bold-default.svg",
+      "componentSet": "data/dataSheet",
+      "category": "data",
+      "name": "data_dataSheet",
+      "variantName": "data_dataSheet",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:301"
+    },
+    {
+      "file": "data/data_dataSheet-bold-fill.svg",
+      "componentSet": "data/dataSheet",
+      "category": "data",
+      "name": "data_dataSheet",
+      "variantName": "data_dataSheet",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:303"
     },
     {
       "file": "data/data_dataSheet-light-default.svg",
@@ -2618,6 +2880,26 @@
       "nodeId": "2880:9073"
     },
     {
+      "file": "data/data_dynamicsNegative-bold-default.svg",
+      "componentSet": "data/dynamicsNegative",
+      "category": "data",
+      "name": "data_dynamicsNegative",
+      "variantName": "data_dynamicsNegative",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:219"
+    },
+    {
+      "file": "data/data_dynamicsNegative-bold-fill.svg",
+      "componentSet": "data/dynamicsNegative",
+      "category": "data",
+      "name": "data_dynamicsNegative",
+      "variantName": "data_dynamicsNegative",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:222"
+    },
+    {
       "file": "data/data_dynamicsNegative-light-default.svg",
       "componentSet": "data/dynamicsNegative",
       "category": "data",
@@ -2676,6 +2958,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "2880:9086"
+    },
+    {
+      "file": "data/data_dynamicsPositive-bold-default.svg",
+      "componentSet": "data/dynamicsPositive",
+      "category": "data",
+      "name": "data_dynamicsPositive",
+      "variantName": "data_dynamicsPositive",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:170"
+    },
+    {
+      "file": "data/data_dynamicsPositive-bold-fill.svg",
+      "componentSet": "data/dynamicsPositive",
+      "category": "data",
+      "name": "data_dynamicsPositive",
+      "variantName": "data_dynamicsPositive",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:173"
     },
     {
       "file": "data/data_dynamicsPositive-light-default.svg",
@@ -2738,6 +3040,16 @@
       "nodeId": "2880:9126"
     },
     {
+      "file": "data/data_lineChart-bold-default.svg",
+      "componentSet": "data/lineChart",
+      "category": "data",
+      "name": "data_lineChart",
+      "variantName": "data_lineChart",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:151"
+    },
+    {
       "file": "data/data_lineChart-light-default.svg",
       "componentSet": "data/lineChart",
       "category": "data",
@@ -2766,6 +3078,26 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "2880:9061"
+    },
+    {
+      "file": "data/data_pieChart-bold-default.svg",
+      "componentSet": "data/pieChart",
+      "category": "data",
+      "name": "data_pieChart",
+      "variantName": "data_pieChart",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:418"
+    },
+    {
+      "file": "data/data_pieChart-bold-fill.svg",
+      "componentSet": "data/pieChart",
+      "category": "data",
+      "name": "data_pieChart",
+      "variantName": "data_pieChart",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:420"
     },
     {
       "file": "data/data_pieChart-light-default.svg",
@@ -2826,6 +3158,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "2880:9025"
+    },
+    {
+      "file": "data/data_ringChart-bold-default.svg",
+      "componentSet": "data/ringChart",
+      "category": "data",
+      "name": "data_ringChart",
+      "variantName": "data_ringChart",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3331:264"
+    },
+    {
+      "file": "data/data_ringChart-bold-fill.svg",
+      "componentSet": "data/ringChart",
+      "category": "data",
+      "name": "data_ringChart",
+      "variantName": "data_ringChart",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3331:266"
     },
     {
       "file": "data/data_ringChart-light-default.svg",
@@ -4988,6 +5340,16 @@
       "nodeId": "701:684"
     },
     {
+      "file": "direction/direction_arrowDown-bold-default.svg",
+      "componentSet": "direction/arrowDown",
+      "category": "direction",
+      "name": "direction_arrowDown",
+      "variantName": "direction_arrowDown",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:70"
+    },
+    {
       "file": "direction/direction_arrowDown-light-default.svg",
       "componentSet": "direction/arrowDown",
       "category": "direction",
@@ -5016,6 +5378,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "99:132"
+    },
+    {
+      "file": "direction/direction_arrowDownCircle-bold-default.svg",
+      "componentSet": "direction/arrowDownCircle",
+      "category": "direction",
+      "name": "direction_arrowDownCircle",
+      "variantName": "direction_arrowDownCircle",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:364"
     },
     {
       "file": "direction/direction_arrowDownCircle-light-default.svg",
@@ -5078,6 +5450,16 @@
       "nodeId": "99:293"
     },
     {
+      "file": "direction/direction_arrowLeft-bold-default.svg",
+      "componentSet": "direction/arrowLeft",
+      "category": "direction",
+      "name": "direction_arrowLeft",
+      "variantName": "direction_arrowLeft",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:12"
+    },
+    {
       "file": "direction/direction_arrowLeft-light-default.svg",
       "componentSet": "direction/arrowLeft",
       "category": "direction",
@@ -5106,6 +5488,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "62:71"
+    },
+    {
+      "file": "direction/direction_arrowLeftCircle-bold-default.svg",
+      "componentSet": "direction/arrowLeftCircle",
+      "category": "direction",
+      "name": "direction_arrowLeftCircle",
+      "variantName": "direction_arrowLeftCircle",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:355"
     },
     {
       "file": "direction/direction_arrowLeftCircle-light-default.svg",
@@ -5138,6 +5530,16 @@
       "nodeId": "960:210"
     },
     {
+      "file": "direction/direction_arrowLeftDown-bold-default.svg",
+      "componentSet": "direction/arrowLeftDown",
+      "category": "direction",
+      "name": "direction_arrowLeftDown",
+      "variantName": "direction_arrowLeftDown",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:196"
+    },
+    {
       "file": "direction/direction_arrowLeftDown-light-default.svg",
       "componentSet": "direction/arrowLeftDown",
       "category": "direction",
@@ -5166,6 +5568,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "119:175"
+    },
+    {
+      "file": "direction/direction_arrowLeftLight-bold-default.svg",
+      "componentSet": "direction/arrowLeftLight",
+      "category": "direction",
+      "name": "direction_arrowLeftLight",
+      "variantName": "direction_arrowLeftLight",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:367"
     },
     {
       "file": "direction/direction_arrowLeftLight-light-default.svg",
@@ -5198,6 +5610,16 @@
       "nodeId": "266:29"
     },
     {
+      "file": "direction/direction_arrowLeftUp-bold-default.svg",
+      "componentSet": "direction/arrowLeftUp",
+      "category": "direction",
+      "name": "direction_arrowLeftUp",
+      "variantName": "direction_arrowLeftUp",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:176"
+    },
+    {
       "file": "direction/direction_arrowLeftUp-light-default.svg",
       "componentSet": "direction/arrowLeftUp",
       "category": "direction",
@@ -5228,6 +5650,16 @@
       "nodeId": "119:165"
     },
     {
+      "file": "direction/direction_arrowRight-bold-default.svg",
+      "componentSet": "direction/arrowRight",
+      "category": "direction",
+      "name": "direction_arrowRight",
+      "variantName": "direction_arrowRight",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:32"
+    },
+    {
       "file": "direction/direction_arrowRight-light-default.svg",
       "componentSet": "direction/arrowRight",
       "category": "direction",
@@ -5256,6 +5688,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "99:17"
+    },
+    {
+      "file": "direction/direction_arrowRightCircle-bold-default.svg",
+      "componentSet": "direction/arrowRightCircle",
+      "category": "direction",
+      "name": "direction_arrowRightCircle",
+      "variantName": "direction_arrowRightCircle",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:361"
     },
     {
       "file": "direction/direction_arrowRightCircle-light-default.svg",
@@ -5318,6 +5760,16 @@
       "nodeId": "119:195"
     },
     {
+      "file": "direction/direction_arrowRightLight-bold-default.svg",
+      "componentSet": "direction/arrowRightLight",
+      "category": "direction",
+      "name": "direction_arrowRightLight",
+      "variantName": "direction_arrowRightLight",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:369"
+    },
+    {
       "file": "direction/direction_arrowRightLight-light-default.svg",
       "componentSet": "direction/arrowRightLight",
       "category": "direction",
@@ -5346,6 +5798,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "266:36"
+    },
+    {
+      "file": "direction/direction_arrowRightUp-bold-default.svg",
+      "componentSet": "direction/arrowRightUp",
+      "category": "direction",
+      "name": "direction_arrowRightUp",
+      "variantName": "direction_arrowRightUp",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:216"
     },
     {
       "file": "direction/direction_arrowRightUp-light-default.svg",
@@ -5378,6 +5840,16 @@
       "nodeId": "119:185"
     },
     {
+      "file": "direction/direction_arrowUp-bold-default.svg",
+      "componentSet": "direction/arrowUp",
+      "category": "direction",
+      "name": "direction_arrowUp",
+      "variantName": "direction_arrowUp",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:51"
+    },
+    {
       "file": "direction/direction_arrowUp-light-default.svg",
       "componentSet": "direction/arrowUp",
       "category": "direction",
@@ -5406,6 +5878,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "99:125"
+    },
+    {
+      "file": "direction/direction_arrowUpCircle-bold-default.svg",
+      "componentSet": "direction/arrowUpCircle",
+      "category": "direction",
+      "name": "direction_arrowUpCircle",
+      "variantName": "direction_arrowUpCircle",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:358"
     },
     {
       "file": "direction/direction_arrowUpCircle-light-default.svg",
@@ -5438,6 +5920,16 @@
       "nodeId": "960:217"
     },
     {
+      "file": "direction/direction_arrowUpLight-bold-default.svg",
+      "componentSet": "direction/arrowUpLight",
+      "category": "direction",
+      "name": "direction_arrowUpLight",
+      "variantName": "direction_arrowUpLight",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:88"
+    },
+    {
       "file": "direction/direction_arrowUpLight-light-default.svg",
       "componentSet": "direction/arrowUpLight",
       "category": "direction",
@@ -5468,6 +5960,16 @@
       "nodeId": "99:286"
     },
     {
+      "file": "direction/direction_fold-bold-default.svg",
+      "componentSet": "direction/fold",
+      "category": "direction",
+      "name": "direction_fold",
+      "variantName": "direction_fold",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:149"
+    },
+    {
       "file": "direction/direction_fold-light-default.svg",
       "componentSet": "direction/fold",
       "category": "direction",
@@ -5496,6 +5998,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "101:481"
+    },
+    {
+      "file": "direction/direction_Unfold-bold-default.svg",
+      "componentSet": "direction/Unfold",
+      "category": "direction",
+      "name": "direction_Unfold",
+      "variantName": "direction_Unfold",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3381:124"
     },
     {
       "file": "direction/direction_Unfold-light-default.svg",
@@ -7208,6 +7720,86 @@
       "nodeId": "824:2714"
     },
     {
+      "file": "genera/genera_pinSlash-bold-default.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3421:221"
+    },
+    {
+      "file": "genera/genera_pinSlash-bold-fill.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3421:227"
+    },
+    {
+      "file": "genera/genera_pinSlash-light-default.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3421:206"
+    },
+    {
+      "file": "genera/genera_pinSlash-light-fill.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3421:209"
+    },
+    {
+      "file": "genera/genera_pinSlash-medium-default.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3421:218"
+    },
+    {
+      "file": "genera/genera_pinSlash-medium-fill.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3421:224"
+    },
+    {
+      "file": "genera/genera_pinSlash-regular-default.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3421:212"
+    },
+    {
+      "file": "genera/genera_pinSlash-regular-fill.svg",
+      "componentSet": "genera/pinSlash",
+      "category": "genera",
+      "name": "genera_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3421:215"
+    },
+    {
       "file": "general/general_beautyMode-light-default.svg",
       "componentSet": "general/beautyMode",
       "category": "general",
@@ -8736,6 +9328,86 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "767:50"
+    },
+    {
+      "file": "general/general_pin-bold-default.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3421:246"
+    },
+    {
+      "file": "general/general_pin-bold-fill.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3421:252"
+    },
+    {
+      "file": "general/general_pin-light-default.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3421:231"
+    },
+    {
+      "file": "general/general_pin-light-fill.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3421:234"
+    },
+    {
+      "file": "general/general_pin-medium-default.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3421:243"
+    },
+    {
+      "file": "general/general_pin-medium-fill.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3421:249"
+    },
+    {
+      "file": "general/general_pin-regular-default.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3421:237"
+    },
+    {
+      "file": "general/general_pin-regular-fill.svg",
+      "componentSet": "general/pin",
+      "category": "general",
+      "name": "general_pin",
+      "variantName": "general_pin",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3421:240"
     },
     {
       "file": "general/general_position-light-default.svg",
@@ -10656,6 +11328,86 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "962:1128"
+    },
+    {
+      "file": "items/items_seat-bold-default.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3354:108"
+    },
+    {
+      "file": "items/items_seat-bold-fill.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3354:111"
+    },
+    {
+      "file": "items/items_seat-light-default.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3354:98"
+    },
+    {
+      "file": "items/items_seat-light-fill.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3354:101"
+    },
+    {
+      "file": "items/items_seat-medium-default.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3354:93"
+    },
+    {
+      "file": "items/items_seat-medium-fill.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3354:96"
+    },
+    {
+      "file": "items/items_seat-regular-default.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3354:88"
+    },
+    {
+      "file": "items/items_seat-regular-fill.svg",
+      "componentSet": "items/seat",
+      "category": "items",
+      "name": "items_seat",
+      "variantName": "items_seat",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3354:91"
     },
     {
       "file": "items/items_shirt-light-default.svg",
@@ -16598,6 +17350,26 @@
       "nodeId": "1099:758"
     },
     {
+      "file": "travel/travel_railway-bold-default.svg",
+      "componentSet": "travel/railway",
+      "category": "travel",
+      "name": "travel_railway",
+      "variantName": "travel_railway",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3342:20"
+    },
+    {
+      "file": "travel/travel_railway-bold-fill.svg",
+      "componentSet": "travel/railway",
+      "category": "travel",
+      "name": "travel_railway",
+      "variantName": "travel_railway",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3342:22"
+    },
+    {
       "file": "travel/travel_railway-light-default.svg",
       "componentSet": "travel/railway",
       "category": "travel",
@@ -16778,6 +17550,26 @@
       "nodeId": "828:3005"
     },
     {
+      "file": "users/users_teacher-bold-default.svg",
+      "componentSet": "users/teacher",
+      "category": "users",
+      "name": "users_teacher",
+      "variantName": "users_teacher",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1255"
+    },
+    {
+      "file": "users/users_teacher-bold-fill.svg",
+      "componentSet": "users/teacher",
+      "category": "users",
+      "name": "users_teacher",
+      "variantName": "users_teacher",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1257"
+    },
+    {
       "file": "users/users_teacher-light-default.svg",
       "componentSet": "users/teacher",
       "category": "users",
@@ -16836,6 +17628,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "887:1914"
+    },
+    {
+      "file": "users/users_user-bold-default.svg",
+      "componentSet": "users/user",
+      "category": "users",
+      "name": "users_user",
+      "variantName": "users_user",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:156"
+    },
+    {
+      "file": "users/users_user-bold-fill.svg",
+      "componentSet": "users/user",
+      "category": "users",
+      "name": "users_user",
+      "variantName": "users_user",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:158"
     },
     {
       "file": "users/users_user-light-default.svg",
@@ -16898,6 +17710,26 @@
       "nodeId": "76:376"
     },
     {
+      "file": "users/users_userAdd-bold-default.svg",
+      "componentSet": "users/userAdd",
+      "category": "users",
+      "name": "users_userAdd",
+      "variantName": "users_userAdd",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1097"
+    },
+    {
+      "file": "users/users_userAdd-bold-fill.svg",
+      "componentSet": "users/userAdd",
+      "category": "users",
+      "name": "users_userAdd",
+      "variantName": "users_userAdd",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1100"
+    },
+    {
       "file": "users/users_userAdd-light-default.svg",
       "componentSet": "users/userAdd",
       "category": "users",
@@ -16956,6 +17788,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "224:57"
+    },
+    {
+      "file": "users/users_userCircle-bold-default.svg",
+      "componentSet": "users/userCircle",
+      "category": "users",
+      "name": "users_userCircle",
+      "variantName": "users_userCircle",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1281"
+    },
+    {
+      "file": "users/users_userCircle-bold-fill.svg",
+      "componentSet": "users/userCircle",
+      "category": "users",
+      "name": "users_userCircle",
+      "variantName": "users_userCircle",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1283"
     },
     {
       "file": "users/users_userCircle-light-default.svg",
@@ -17018,6 +17870,26 @@
       "nodeId": "2267:2453"
     },
     {
+      "file": "users/users_userGroup-bold-default.svg",
+      "componentSet": "users/userGroup",
+      "category": "users",
+      "name": "users_userGroup",
+      "variantName": "users_userGroup",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1039"
+    },
+    {
+      "file": "users/users_userGroup-bold-fill.svg",
+      "componentSet": "users/userGroup",
+      "category": "users",
+      "name": "users_userGroup",
+      "variantName": "users_userGroup",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1042"
+    },
+    {
       "file": "users/users_userGroup-light-default.svg",
       "componentSet": "users/userGroup",
       "category": "users",
@@ -17076,6 +17948,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "152:303"
+    },
+    {
+      "file": "users/users_userInfo-bold-default.svg",
+      "componentSet": "users/userInfo",
+      "category": "users",
+      "name": "users_userInfo",
+      "variantName": "users_userInfo",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1217"
+    },
+    {
+      "file": "users/users_userInfo-bold-fill.svg",
+      "componentSet": "users/userInfo",
+      "category": "users",
+      "name": "users_userInfo",
+      "variantName": "users_userInfo",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1219"
     },
     {
       "file": "users/users_userInfo-light-default.svg",
@@ -17138,6 +18030,26 @@
       "nodeId": "826:759"
     },
     {
+      "file": "users/users_userLiked-bold-default.svg",
+      "componentSet": "users/userLiked",
+      "category": "users",
+      "name": "users_userLiked",
+      "variantName": "users_userLiked",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "119:880"
+    },
+    {
+      "file": "users/users_userLiked-bold-fill.svg",
+      "componentSet": "users/userLiked",
+      "category": "users",
+      "name": "users_userLiked",
+      "variantName": "users_userLiked",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "119:883"
+    },
+    {
       "file": "users/users_userLiked-light-default.svg",
       "componentSet": "users/userLiked",
       "category": "users",
@@ -17165,7 +18077,7 @@
       "variantName": "users_userLiked",
       "thickness": "Medium",
       "mode": "default",
-      "nodeId": "119:880"
+      "nodeId": "3385:247"
     },
     {
       "file": "users/users_userLiked-medium-fill.svg",
@@ -17175,7 +18087,7 @@
       "variantName": "users_userLiked",
       "thickness": "Medium",
       "mode": "fill",
-      "nodeId": "119:883"
+      "nodeId": "3385:250"
     },
     {
       "file": "users/users_userLiked-regular-default.svg",
@@ -17196,6 +18108,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "119:877"
+    },
+    {
+      "file": "users/users_userList-bold-default.svg",
+      "componentSet": "users/userList",
+      "category": "users",
+      "name": "users_userList",
+      "variantName": "users_userList",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1183"
+    },
+    {
+      "file": "users/users_userList-bold-fill.svg",
+      "componentSet": "users/userList",
+      "category": "users",
+      "name": "users_userList",
+      "variantName": "users_userList",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1185"
     },
     {
       "file": "users/users_userList-light-default.svg",
@@ -17258,6 +18190,26 @@
       "nodeId": "824:2881"
     },
     {
+      "file": "users/users_userMention-bold-default.svg",
+      "componentSet": "users/userMention",
+      "category": "users",
+      "name": "users_userMention",
+      "variantName": "users_userMention",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:192"
+    },
+    {
+      "file": "users/users_userMention-bold-fill.svg",
+      "componentSet": "users/userMention",
+      "category": "users",
+      "name": "users_userMention",
+      "variantName": "users_userMention",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:195"
+    },
+    {
       "file": "users/users_userMention-light-default.svg",
       "componentSet": "users/userMention",
       "category": "users",
@@ -17318,6 +18270,26 @@
       "nodeId": "76:439"
     },
     {
+      "file": "users/users_userSwitch-bold-default.svg",
+      "componentSet": "users/userSwitch",
+      "category": "users",
+      "name": "users_userSwitch",
+      "variantName": "users_userSwitch",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:1135"
+    },
+    {
+      "file": "users/users_userSwitch-bold-fill.svg",
+      "componentSet": "users/userSwitch",
+      "category": "users",
+      "name": "users_userSwitch",
+      "variantName": "users_userSwitch",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:1138"
+    },
+    {
       "file": "users/users_userSwitch-light-default.svg",
       "componentSet": "users/userSwitch",
       "category": "users",
@@ -17376,6 +18348,26 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "358:253"
+    },
+    {
+      "file": "users/users_userVerified-bold-default.svg",
+      "componentSet": "users/userVerified",
+      "category": "users",
+      "name": "users_userVerified",
+      "variantName": "users_userVerified",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3385:381"
+    },
+    {
+      "file": "users/users_userVerified-bold-fill.svg",
+      "componentSet": "users/userVerified",
+      "category": "users",
+      "name": "users_userVerified",
+      "variantName": "users_userVerified",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3385:384"
     },
     {
       "file": "users/users_userVerified-light-default.svg",

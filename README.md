@@ -70,24 +70,14 @@ Batch several changesets before merging the Version PR to avoid extra Version↔
 
 ### Icons
 
-- `packages/icons/raw/` stays **gitignored** (keeps the clone small).
-- Git + CI/publish use committed `packages/icons/src/components` (+ `catalog.ts`).
-- Sync from Figma only when icons change:
-  - Local: `pnpm icons:sync` (or filtered export below), then commit **src** only and add a changeset for `@aviala-design/icons`
-  - CI: Actions → **Icons Sync** (`icons-sync.yml`, `workflow_dispatch`) with optional filters → PR touching `packages/icons/src/**` only
+Sync from Figma only when icons change; commit `packages/icons/src/**` only (`raw/` stays gitignored). Full maintenance guide: [`packages/icons/README.md`](packages/icons/README.md).
 
 ```bash
-pnpm icons:export                                    # full export → raw/
-pnpm icons:export --category=direction,ai            # filter by category
-pnpm icons:export --name=direction_arrowLeft         # filter by icon name
-pnpm icons:export --thickness=Regular --mode=default
-pnpm icons:build                                     # raw → src (full replace)
-pnpm icons:build:merge                               # raw → src (update matching icons only)
 pnpm icons:sync                                      # full export + build + tsup
+pnpm icons:export --name=direction_arrowLeft         # then icons:build:merge for partial updates
 ```
 
-Env equivalents: `ICONS_THICKNESS`, `ICONS_MODE`, `ICONS_CATEGORY`, `ICONS_NAME`.
-
+CI: Actions → **Icons Sync** (`icons-sync.yml`).
 ## Environment
 
 Copy `.env.example` to `.env.local` and set `FIGMA_ACCESS_TOKEN` for Figma exports. See [docs/figma-mcp.md](docs/figma-mcp.md). Only needed for icon sync, not for normal build/release.
