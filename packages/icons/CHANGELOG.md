@@ -1,5 +1,11 @@
 # @aviala-design/icons
 
+## 2.2.0
+
+### Minor Changes
+
+- f0f9155: fix and add some icons
+
 ## 2.1.0
 
 ### Minor Changes
