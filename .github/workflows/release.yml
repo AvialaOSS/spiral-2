@@ -38,13 +38,41 @@ jobs:
       # No Figma export. Version PR path only runs `changeset version` (cheap).
       # Publish path builds from committed sources inside `release:publish`.
       - name: Create Release Pull Request or Publish
+        id: changesets
         uses: changesets/action@v1
         with:
           publish: pnpm release:publish
-          version: pnpm changeset version
+          version: pnpm run version:packages
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # No NPM_TOKEN — authenticate via npm Trusted Publisher (OIDC).
           # Configure each package on npmjs.com → Settings → Trusted publishing.
+
+      # Cross-repo: notify avialaWebsite to open a docs-coverage PR.
+      # Requires secret AVIALA_WEBSITE_TOKEN (fine-grained PAT on avialaWebsite,
+      # Contents: Read and write) — default GITHUB_TOKEN cannot dispatch other repos.
+      - name: Dispatch docs scaffold on avialaWebsite
+        if: steps.changesets.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AVIALA_WEBSITE_TOKEN }}
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::AVIALA_WEBSITE_TOKEN not set; skip docs scaffold dispatch."
+            exit 0
+          fi
+          VERSION=$(node -e '
+            const pkgs = JSON.parse(process.env.PUBLISHED_PACKAGES || "[]");
+            const spiral = pkgs.find((p) => p.name === "@aviala-design/spiral");
+            if (!spiral) process.exit(2);
+            process.stdout.write(spiral.version);
+          ') || {
+            echo "No @aviala-design/spiral in published packages; skip."
+            exit 0
+          }
+          echo "Dispatching spiral-released for @aviala-design/spiral@$VERSION"
+          gh api repos/AvialaOSS/avialaWebsite/dispatches \
+            -f event_type='spiral-released' \
+            -f "client_payload[spiral_version]=${VERSION}"

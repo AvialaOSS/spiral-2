@@ -23,14 +23,17 @@
       "require": "./dist/index.cjs"
     },
     "./styles.css": "./dist/styles.css",
-    "./props.json": "./dist/props.json"
+    "./props.json": "./dist/props.json",
+    "./component-changelogs.json": "./dist/component-changelogs.json"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup && node scripts/copy-css.mjs && node scripts/generate-props.mjs",
+    "build": "tsup && node scripts/copy-css.mjs && node scripts/generate-props.mjs && node scripts/aggregate-changelogs.mjs",
     "build:styles": "node scripts/copy-css.mjs",
+    "changelog:aggregate": "node scripts/aggregate-changelogs.mjs",
+    "changelog:stamp": "node scripts/stamp-unreleased.mjs",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist"

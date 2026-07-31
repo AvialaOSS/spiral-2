@@ -13,6 +13,7 @@ description: How to add or modify Spiral 2 React components aligned with Aviala 
 4. Base on Radix primitives where applicable (shadcn pattern)
 5. Add `*.stories.tsx` under `packages/ui/src/components/`
 6. Export from `packages/ui/src/index.ts`
+7. If the change is user-visible: update `packages/ui/changelogs/{DisplayName}.md` **and** add a changeset
 
 ## File layout
 
@@ -20,7 +21,31 @@ description: How to add or modify Spiral 2 React components aligned with Aviala 
 packages/ui/src/components/{name}/
   {name}.tsx
   {name}.stories.tsx
+
+packages/ui/changelogs/{DisplayName}.md   # e.g. Button.md, DatePickerField.md
 ```
+
+`DisplayName` must match the docs `nav.component` / export name (`Button`, `SegmentatorGroup`, `CascaderField`, …).
+
+## Component changelog
+
+Write under `## [Unreleased]` — do **not** hand-fill the next semver. `pnpm run version:packages` stamps Unreleased → the package version after `changeset version`.
+
+```md
+# Button
+
+## [Unreleased]
+
+### Added
+- …
+
+## 2.1.0
+…
+```
+
+Allowed section headings: `Added` / `Changed` / `Fixed` / `Removed` / `Deprecated`.
+
+Build emits `dist/component-changelogs.json` (export `@aviala-design/spiral/component-changelogs.json`) for the docs site.
 
 ## Forbidden
 
