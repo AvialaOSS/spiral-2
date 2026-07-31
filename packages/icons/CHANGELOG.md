@@ -1,5 +1,11 @@
 # @aviala-design/icons
 
+## 2.1.0
+
+### Minor Changes
+
+- e611b87: Fix icon package externals and feedback mode
+
 ## 2.0.2
 
 ### Patch Changes
