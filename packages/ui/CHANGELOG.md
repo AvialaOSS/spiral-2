@@ -1,5 +1,16 @@
 # @aviala-design/spiral
 
+## 2.4.0
+
+### Minor Changes
+
+- e6085de: ListItem: showTrailing (keep chevron), showTopDivider, href
+
+### Patch Changes
+
+- Updated dependencies [e6085de]
+  - @aviala-design/tokens@2.2.1
+
 ## 2.3.1
 
 ### Patch Changes
