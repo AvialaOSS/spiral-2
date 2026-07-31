@@ -1,5 +1,11 @@
 # @aviala-design/tokens
 
+## 2.2.1
+
+### Patch Changes
+
+- e6085de: ListItem: showTrailing (keep chevron), showTopDivider, href
+
 ## 2.2.0
 
 ### Minor Changes
