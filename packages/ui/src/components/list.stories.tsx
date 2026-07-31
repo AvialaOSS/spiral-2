@@ -164,6 +164,24 @@ export const Interactive: Story = {
   ),
 };
 
+/** Link row without trailing actions / divider (chevron kept) */
+export const LinkWithoutTrailing: Story = {
+  render: () => (
+    <List className="w-[507px]">
+      <ListItem
+        itemType="action"
+        leading="default"
+        title="对文档有改进意见吗？"
+        subtitle="欢迎编辑文档，为更多开发者提供帮助"
+        showTrailing={false}
+        href="https://github.com/AvialaOSS/avialaWebsite/tree/main/apps/spiral-docs"
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+    </List>
+  ),
+};
+
 /** Single variant helper for controls */
 export const SingleItem: Story = {
   args: {

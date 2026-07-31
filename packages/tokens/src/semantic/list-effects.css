@@ -28,9 +28,19 @@
   width: 100%;
   background-color: var(--list-bg);
   color: var(--list-item-fg);
+  text-decoration: none;
   transition:
     background-color 0.15s ease,
     color 0.15s ease;
+}
+
+a.aviala-list-item {
+  cursor: pointer;
+  color: inherit;
+}
+
+.aviala-list-item[data-interactive="true"]:not([data-disabled]) {
+  cursor: pointer;
 }
 
 .aviala-list-group > .aviala-list-item:first-child {
@@ -113,6 +123,16 @@
   border-top: 1px solid var(--list-item-border);
   padding-block: var(--list-item-content-py, 8px);
   padding-right: var(--list-item-content-pr, 14px);
+}
+
+/* First row in a group has no top hairline; override with data-top-divider. */
+.aviala-list-group > .aviala-list-item:first-child .aviala-list-item__content,
+.aviala-list-item[data-top-divider="false"] .aviala-list-item__content {
+  border-top: none;
+}
+
+.aviala-list-item[data-top-divider="true"] .aviala-list-item__content {
+  border-top: 1px solid var(--list-item-border);
 }
 
 .aviala-list-item[data-leading="none"] .aviala-list-item__content {

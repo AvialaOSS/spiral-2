@@ -10,6 +10,7 @@ import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  type Ref,
 } from "react";
 import { Button } from "./button";
 import { Switch, type SwitchProps } from "./switch";
@@ -143,7 +144,7 @@ function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode
   );
 }
 
-export type ListItemProps = ComponentPropsWithoutRef<"div"> & {
+type ListItemSharedProps = {
   /** Figma `Type` variant */
   itemType?: ListItemType;
   /** Figma `left icon setting` variant */
@@ -164,13 +165,40 @@ export type ListItemProps = ComponentPropsWithoutRef<"div"> & {
   select?: ReactNode;
   /** Trailing switch props for `switch` type */
   switchProps?: Omit<SwitchProps, "size">;
-  /** Fully custom trailing region — overrides type presets */
+  /**
+   * Fully custom trailing region — overrides type presets.
+   * Pass `null` to hide trailing actions + divider (same as `showTrailing={false}`).
+   * For `action` type, the chevron is still shown unless `showChevron={false}`.
+   */
   trailing?: ReactNode;
+  /**
+   * When false, hide trailing actions and the vertical divider.
+   * `action` type still shows the chevron unless `showChevron={false}`.
+   * Default true.
+   */
+  showTrailing?: boolean;
+  /**
+   * Show the trailing chevron for `action` type. Default true when `itemType="action"`.
+   */
+  showChevron?: boolean;
+  /**
+   * Show the top hairline on the content row (between items).
+   * Default: auto — hidden for the first child in a `ListGroup`, shown otherwise.
+   * Set explicitly to force show/hide.
+   */
+  showTopDivider?: boolean;
   selected?: boolean;
   disabled?: boolean;
-  /** Enables hover highlight (auto when `onClick` is set) */
+  /** Enables hover highlight (auto when `onClick` / `href` is set) */
   interactive?: boolean;
+  /** Render as a link — navigates when the row is activated */
+  href?: string;
+  target?: ComponentPropsWithoutRef<"a">["target"];
+  rel?: string;
 };
+
+export type ListItemProps = Omit<ComponentPropsWithoutRef<"div">, "title"> &
+  ListItemSharedProps;
 
 /** Figma Structure Navigation → List item */
 export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
@@ -188,15 +216,22 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       select,
       switchProps,
       trailing,
+      showTrailing = true,
+      showChevron,
+      showTopDivider,
       selected = false,
       disabled = false,
       interactive,
+      href,
+      target,
+      rel,
       onClick,
       ...props
     },
     ref
   ) => {
-    const isInteractive = interactive ?? onClick != null;
+    const isInteractive = interactive ?? (onClick != null || href != null);
+    const chevronVisible = showChevron ?? itemType === "action";
 
     const primaryAction =
       action ??
@@ -206,7 +241,21 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
         </Button>
       );
 
+    const chevron = chevronVisible ? (
+      <span className="aviala-list-item__chevron" aria-hidden>
+        <DirectionArrowRightLight width={18} height={18} />
+      </span>
+    ) : null;
+
     const renderTrailing = () => {
+      const hideActions = !showTrailing || trailing === null;
+
+      if (hideActions) {
+        // Keep action-type chevron when trailing actions / divider are hidden.
+        return chevron && itemType === "action" ? (
+          <div className="aviala-list-item__more">{chevron}</div>
+        ) : null;
+      }
       if (trailing !== undefined) return trailing;
 
       switch (itemType) {
@@ -226,9 +275,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
                 )}
               </div>
               <ListDivider />
-              <span className="aviala-list-item__chevron" aria-hidden>
-                <DirectionArrowRightLight width={18} height={18} />
-              </span>
+              {chevron}
             </div>
           );
         case "switch":
@@ -251,28 +298,63 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       }
     };
 
-    return (
-      <div
-        ref={ref}
-        role="listitem"
-        className={cn("aviala-list-item", className)}
-        data-leading={leading}
-        data-type={itemType}
-        data-selected={selected ? "true" : undefined}
-        data-disabled={disabled ? "true" : undefined}
-        data-interactive={isInteractive ? "true" : undefined}
-        onClick={disabled ? undefined : onClick}
-        {...props}
-      >
+    const sharedClassName = cn("aviala-list-item", className);
+    const sharedData = {
+      "data-leading": leading,
+      "data-type": itemType,
+      "data-selected": selected ? ("true" as const) : undefined,
+      "data-disabled": disabled ? ("true" as const) : undefined,
+      "data-interactive": isInteractive ? ("true" as const) : undefined,
+      "data-top-divider":
+        showTopDivider === undefined
+          ? undefined
+          : showTopDivider
+            ? ("true" as const)
+            : ("false" as const),
+    };
+    const trailingNode = renderTrailing();
+    const body = (
+      <>
         {renderLeadingIcon(icon, leading)}
         <div className="aviala-list-item__body">
           <div className="aviala-list-item__content">
             <div className="aviala-list-item__head">
               <Typeface content="textCaption" primary={title} secondary={subtitle} />
             </div>
-            {renderTrailing()}
+            {trailingNode}
           </div>
         </div>
+      </>
+    );
+
+    if (href && !disabled) {
+      return (
+        <a
+          ref={ref as Ref<HTMLAnchorElement>}
+          role="listitem"
+          className={sharedClassName}
+          href={href}
+          target={target}
+          rel={rel}
+          onClick={onClick as ComponentPropsWithoutRef<"a">["onClick"]}
+          {...sharedData}
+          {...(props as ComponentPropsWithoutRef<"a">)}
+        >
+          {body}
+        </a>
+      );
+    }
+
+    return (
+      <div
+        ref={ref}
+        role="listitem"
+        className={sharedClassName}
+        onClick={disabled ? undefined : onClick}
+        {...sharedData}
+        {...props}
+      >
+        {body}
       </div>
     );
   }
