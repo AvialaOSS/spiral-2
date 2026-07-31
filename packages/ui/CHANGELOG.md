@@ -1,5 +1,23 @@
 # @aviala-design/spiral
 
+## 2.3.1
+
+### Patch Changes
+
+- Updated dependencies [f0f9155]
+  - @aviala-design/icons@2.2.0
+
+## 2.3.0
+
+### Minor Changes
+
+- e611b87: Fix icon package externals and feedback mode
+
+### Patch Changes
+
+- Updated dependencies [e611b87]
+  - @aviala-design/icons@2.1.0
+
 ## 2.2.0
 
 ### Minor Changes
