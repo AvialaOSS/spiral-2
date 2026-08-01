@@ -100,21 +100,25 @@ export function writeComponentChangelogsJson(registry, outFile) {
 export function stampUnreleased(version) {
   if (!existsSync(changelogsDir)) return 0;
 
+  const unreleasedHeading = /^##[ \t]+\[Unreleased\][ \t]*$/m;
+
   let updated = 0;
   for (const file of readdirSync(changelogsDir)) {
     if (!file.endsWith(".md")) continue;
     const filePath = path.join(changelogsDir, file);
-    const before = readFileSync(filePath, "utf8");
-    if (!/^##\s+\[Unreleased\]\s*$/m.test(before)) continue;
+    const raw = readFileSync(filePath, "utf8");
+    const before = raw.replace(/\r\n/g, "\n");
+    if (!unreleasedHeading.test(before)) continue;
 
-    // Only stamp when Unreleased has at least one bullet before the next ## heading.
+    // Only stamp when Unreleased has at least one bullet before the next ## heading
+    // (or end of file). Use (?![\s\S]) for EOF — JS has no \Z end anchor (\Z is literal "Z").
     const unreleasedBlock = before.match(
-      /^##\s+\[Unreleased\]\s*\n([\s\S]*?)(?=^##\s|\Z)/m,
+      /^##[ \t]+\[Unreleased\][ \t]*\n([\s\S]*?)(?=^##[ \t]|(?![\s\S]))/m,
     );
     if (!unreleasedBlock) continue;
-    if (!/^\s*-\s+\S/m.test(unreleasedBlock[1])) continue;
+    if (!/^[ \t]*-[ \t]+\S/m.test(unreleasedBlock[1])) continue;
 
-    const after = before.replace(/^##\s+\[Unreleased\]\s*$/m, `## ${version}`);
+    const after = before.replace(unreleasedHeading, `## ${version}`);
     if (after === before) continue;
     writeFileSync(filePath, after);
     updated += 1;

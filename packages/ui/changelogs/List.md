@@ -1,6 +1,6 @@
 # List
 
-## [Unreleased]
+## 2.4.0
 
 ### Added
 - `ListItem` `showTrailing` — set `false` (or `trailing={null}`) to hide trailing actions and the vertical divider; `action` type still shows the chevron
