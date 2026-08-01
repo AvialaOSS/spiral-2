@@ -1,5 +1,11 @@
 # @aviala-design/spiral
 
+## 2.4.1
+
+### Patch Changes
+
+- 96614a2: Verify release action can open the version PR (no user-facing change).
+
 ## 2.4.0
 
 ### Minor Changes
