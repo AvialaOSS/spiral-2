@@ -8,7 +8,7 @@ import { OverlayPointerSvg, TOOLTIP_POINTER } from "./overlay-pointer";
 export const TOOLTIP_DELAY_DURATION = 300;
 
 export interface TooltipProviderProps {
-  children?: ReactNode;
+  children: ReactNode;
   /**
    * Delay before the tooltip opens on hover, in ms.
    * Defaults to `TOOLTIP_DELAY_DURATION` (300). Pass `0` for instant open on hover.
@@ -27,6 +27,7 @@ export interface TooltipProviderProps {
  * Pass `delayDuration={0}` for instant open on hover.
  */
 export function TooltipProvider({
+  children,
   delayDuration = TOOLTIP_DELAY_DURATION,
   skipDelayDuration = 0,
   ...props
@@ -36,7 +37,9 @@ export function TooltipProvider({
       delayDuration={delayDuration}
       skipDelayDuration={skipDelayDuration}
       {...props}
-    />
+    >
+      {children}
+    </TooltipPrimitive.Provider>
   );
 }
 
