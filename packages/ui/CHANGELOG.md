@@ -1,5 +1,25 @@
 # @aviala-design/spiral
 
+## 2.5.0
+
+### Minor Changes
+
+- 7a634b3: Checkbox: add size="huge", fix Huge check stroke-dasharray scaling
+- 7a634b3: Segmentator: horizontal scroll when items overflow; equalWidth no longer clips labels
+
+### Patch Changes
+
+- 7a634b3: Checkbox: 300ms interruptible check/uncheck transitions with surface crossfade
+- 7a634b3: Navigation: snappier active-indicator / expand easing
+- 7a634b3: Slider: restyle (thicker track, core thumb, shadow), thumb hover/press scale, jump animation, showValueTooltip, remount on type change
+- 7a634b3: TooltipContent / ResponsiveTooltip / PopoverContent: typography `level` (`caption` | `text`)
+- Updated dependencies [7a634b3]
+- Updated dependencies [7a634b3]
+- Updated dependencies [7a634b3]
+- Updated dependencies [7a634b3]
+- Updated dependencies [7a634b3]
+  - @aviala-design/tokens@2.3.0
+
 ## 2.4.1
 
 ### Patch Changes

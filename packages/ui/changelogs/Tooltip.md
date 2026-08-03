@@ -1,6 +1,6 @@
 # Tooltip
 
-## [Unreleased]
+## 2.5.0
 
 ### Added
 - `TooltipContent` / `ResponsiveTooltip` 支持 `level`：`"caption"`（默认）或 `"text"`

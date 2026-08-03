@@ -1,6 +1,6 @@
 # SegmentatorGroup
 
-## [Unreleased]
+## 2.5.0
 
 ### Changed
 - 内容超出容器时支持横向滚动（隐藏滚动条，触控板 / 触控仍可滑动）

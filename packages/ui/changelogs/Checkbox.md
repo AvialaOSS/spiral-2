@@ -1,6 +1,6 @@
 # Checkbox
 
-## [Unreleased]
+## 2.5.0
 
 ### Added
 - `size="huge"`：对应 Figma Checkbox `Size=Huge`（26px / `--size-large`，圆角 `--border-radius-small`，勾选与半选标记 14px，勾选描边 2px）

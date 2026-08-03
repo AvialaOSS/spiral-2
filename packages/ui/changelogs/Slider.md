@@ -1,6 +1,6 @@
 # Slider
 
-## [Unreleased]
+## 2.5.0
 
 ### Added
 - `showValueTooltip`：悬停拇指、拖动或按住轨道调整时，在对应拇指上方显示数值提示
