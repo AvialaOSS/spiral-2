@@ -1,6 +1,6 @@
 # Navigation
 
-## [Unreleased]
+## 2.5.0
 
 ### Changed
 - 激活指示条与展开 / 收拢动效改用更干脆的 ease-out（`--navigation-transition-easing`: `cubic-bezier(0.16, 1, 0.3, 1)`；指示条脚本插值同步）

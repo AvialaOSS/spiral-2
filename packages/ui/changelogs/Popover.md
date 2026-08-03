@@ -1,6 +1,6 @@
 # Popover
 
-## [Unreleased]
+## 2.5.0
 
 ### Added
 - `PopoverContent` 支持 `level`（`"caption"` | `"text"`）；未传时：`appearance="tooltip"` 默认为 `caption`，其余外观默认为 `text`
