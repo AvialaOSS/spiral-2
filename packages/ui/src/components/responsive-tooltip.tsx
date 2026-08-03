@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
   TOOLTIP_DELAY_DURATION,
+  type TooltipContentLevel,
 } from "./tooltip";
 import {
   Popover,
@@ -27,7 +28,13 @@ export interface ResponsiveTooltipProps {
   collisionPadding?: number;
   /** Show the caret arrow pointing at the trigger. */
   showArrow?: boolean;
-  /** Hover open delay on desktop, in ms (ignored on touch). Requires a TooltipProvider ancestor. */
+  /** Typography level for the content surface (default `caption`). */
+  level?: TooltipContentLevel;
+  /**
+   * Hover open delay on desktop, in ms (ignored on touch).
+   * Defaults to 300 (`TOOLTIP_DELAY_DURATION`). Pass `0` for instant open on hover.
+   * Requires a TooltipProvider ancestor for shared delay context.
+   */
   delayDuration?: number;
   /** Controlled open state. */
   open?: boolean;
@@ -70,6 +77,7 @@ export function ResponsiveTooltip({
   sideOffset = 4,
   collisionPadding = 8,
   showArrow = true,
+  level = "caption",
   delayDuration = TOOLTIP_DELAY_DURATION,
   open,
   defaultOpen,
@@ -84,6 +92,7 @@ export function ResponsiveTooltip({
         <PopoverTrigger asChild>{children}</PopoverTrigger>
         <PopoverContent
           appearance="tooltip"
+          level={level}
           side={side}
           align={align}
           sideOffset={sideOffset}
@@ -111,6 +120,7 @@ export function ResponsiveTooltip({
         sideOffset={sideOffset}
         collisionPadding={collisionPadding}
         showArrow={showArrow}
+        level={level}
         className={contentClassName}
       >
         {content}

@@ -230,6 +230,11 @@ const components = [
       { exportName: "TooltipContent" },
     ],
   },
+  {
+    key: "ResponsiveTooltip",
+    file: "components/responsive-tooltip.tsx",
+    exportName: "ResponsiveTooltip",
+  },
   { key: "Loading", file: "components/loading.tsx", exportName: "Loading" },
   { key: "Badge", file: "components/badge.tsx", exportName: "Badge" },
   { key: "Avatar", file: "components/avatar.tsx", exportName: "Avatar" },

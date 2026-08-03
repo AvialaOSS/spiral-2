@@ -667,9 +667,11 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  border: 0;
-  border-radius: var(--checkbox-radius, 8px);
-  background: transparent;
+  border: 1px solid var(--checkbox-border-unchecked);
+  border-radius: var(--checkbox-radius, 6px);
+  background-color: transparent;
+  background-image: var(--checkbox-unchecked-surface);
+  box-shadow: none;
   padding: 0;
   transition: opacity 0.15s ease;
 }
@@ -678,14 +680,29 @@
   border-radius: var(--checkbox-radius-round, 99px);
 }
 
-.aviala-checkbox:disabled {
-  cursor: not-allowed;
+/* Figma Size=Huge — size-large (26px), radius-small (8px), icon/mark 14px */
+.aviala-checkbox[data-size="huge"] {
+  width: var(--checkbox-size-huge, 1.625rem);
+  height: var(--checkbox-size-huge, 1.625rem);
+  border-radius: var(--checkbox-radius-huge, 8px);
 }
 
-.aviala-checkbox[data-state="unchecked"] {
-  border: 1px solid var(--checkbox-border-unchecked);
-  background-image: var(--checkbox-unchecked-surface);
-  box-shadow: none;
+.aviala-checkbox[data-size="huge"][data-round="true"] {
+  border-radius: var(--checkbox-radius-round, 99px);
+}
+
+.aviala-checkbox[data-size="huge"] .aviala-checkbox__indicator-icon {
+  width: var(--checkbox-icon-size-huge, 0.875rem);
+  height: var(--checkbox-icon-size-huge, 0.875rem);
+}
+
+.aviala-checkbox[data-size="huge"] .aviala-checkbox__indeterminate-mark {
+  width: var(--checkbox-indeterminate-mark-size-huge, 0.875rem);
+  height: var(--checkbox-indeterminate-mark-size-huge, 0.875rem);
+}
+
+.aviala-checkbox:disabled {
+  cursor: not-allowed;
 }
 
 .aviala-checkbox[data-state="unchecked"]:disabled {
@@ -696,27 +713,29 @@
 
 .aviala-checkbox[data-state="checked"],
 .aviala-checkbox[data-state="indeterminate"] {
-  border: 1px solid transparent;
-  background-color: transparent;
+  border-color: transparent;
 }
 
 .aviala-checkbox__surface {
   pointer-events: none;
   position: absolute;
-  inset: 0;
+  /* Cover the 1px unchecked border so orange ↔ gray crossfades cleanly */
+  inset: -1px;
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  background-image: var(--checkbox-checked-surface);
+  box-shadow: var(--input-surface-shadow);
+  transition: opacity var(--checkbox-check-duration, 300ms)
+    var(--checkbox-surface-easing, ease);
 }
 
 .aviala-checkbox[data-state="checked"] .aviala-checkbox__surface {
   opacity: 1;
-  background-image: var(--checkbox-checked-surface);
-  box-shadow: var(--input-surface-shadow);
 }
 
 .aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__surface {
   opacity: 1;
+  background-image: none;
   background-color: var(--checkbox-indeterminate-bg);
   box-shadow: var(--input-surface-shadow);
 }
@@ -736,17 +755,68 @@
   height: var(--checkbox-icon-size, 0.75rem);
 }
 
-.aviala-checkbox__indicator-icon--check,
+.aviala-checkbox__check-icon {
+  display: block;
+  overflow: visible;
+}
+
+/*
+ * pathLength=1 — dashoffset 1→0 draws short-arm → long-arm.
+ * CSS lengths are px: with pathLength=1, one path unit = (iconCssSize / 12) px
+ * (viewBox is 0 0 12 12). Unitless `1` becomes 1px and under-draws at Huge (14px).
+ */
+.aviala-checkbox__check-path {
+  vector-effect: non-scaling-stroke;
+  fill: none;
+  stroke-width: var(--checkbox-check-stroke, 1.4px);
+  stroke-dasharray: calc(var(--checkbox-icon-size, 0.75rem) / 12);
+  stroke-dashoffset: calc(var(--checkbox-icon-size, 0.75rem) / 12);
+  opacity: 0;
+  transition:
+    stroke-dashoffset var(--checkbox-check-duration, 300ms)
+      var(--checkbox-check-easing, cubic-bezier(0.873, 0, 0, 1)),
+    opacity calc(var(--checkbox-check-duration, 300ms) * 0.45)
+      var(--checkbox-surface-easing, ease);
+}
+
+.aviala-checkbox[data-size="huge"] .aviala-checkbox__check-path {
+  stroke-width: var(--checkbox-check-stroke-huge, 2px);
+  stroke-dasharray: calc(var(--checkbox-icon-size-huge, 0.875rem) / 12);
+  stroke-dashoffset: calc(var(--checkbox-icon-size-huge, 0.875rem) / 12);
+}
+
+.aviala-checkbox[data-state="checked"] .aviala-checkbox__check-path {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__check-path {
+  stroke-dashoffset: calc(var(--checkbox-icon-size, 0.75rem) / 12);
+  opacity: 0;
+}
+
+.aviala-checkbox[data-size="huge"][data-state="indeterminate"] .aviala-checkbox__check-path {
+  stroke-dashoffset: calc(var(--checkbox-icon-size-huge, 0.875rem) / 12);
+}
+
+.aviala-checkbox[data-motion="boot"] .aviala-checkbox__surface,
+.aviala-checkbox[data-motion="boot"] .aviala-checkbox__check-path {
+  transition: none;
+}
+
 .aviala-checkbox__indicator-icon--indeterminate {
   display: none;
 }
 
-.aviala-checkbox[data-state="checked"] .aviala-checkbox__indicator-icon--check {
+.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--indeterminate {
   display: inline-flex;
 }
 
-.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--indeterminate {
-  display: inline-flex;
+@media (prefers-reduced-motion: reduce) {
+  .aviala-checkbox__surface,
+  .aviala-checkbox__check-path {
+    transition: none;
+  }
 }
 
 .aviala-checkbox__indeterminate-mark {
@@ -1216,7 +1286,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border-radius: var(--checkbox-radius, 8px);
+  border-radius: var(--checkbox-radius, 6px);
   border: 1px solid var(--checkbox-border-unchecked);
   background-image: var(--checkbox-unchecked-surface);
   box-shadow: none;

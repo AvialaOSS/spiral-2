@@ -178,12 +178,27 @@ function measureItemThumbMetrics(
 ): SegmentatorThumbMetrics {
   const groupRect = group.getBoundingClientRect();
   const itemRect = item.getBoundingClientRect();
+  // Absolute thumb lives in the group's content box — include scroll offsets.
   return {
-    x: itemRect.left - groupRect.left,
-    y: itemRect.top - groupRect.top,
+    x: itemRect.left - groupRect.left + group.scrollLeft,
+    y: itemRect.top - groupRect.top + group.scrollTop,
     width: itemRect.width,
     height: itemRect.height,
   };
+}
+
+function syncSegmentatorOverflowing(group: HTMLElement) {
+  const overflowing = group.scrollWidth > group.clientWidth + 1;
+  if (overflowing) {
+    group.setAttribute("data-overflowing", "true");
+  } else {
+    group.removeAttribute("data-overflowing");
+  }
+  return overflowing;
+}
+
+function isSegmentatorOverflowing(group: HTMLElement | null): boolean {
+  return group?.getAttribute("data-overflowing") === "true";
 }
 
 function findItemAtClientX(
@@ -327,14 +342,7 @@ function useSegmentatorThumb(
     );
     if (!selected) return null;
 
-    const groupRect = group.getBoundingClientRect();
-    const itemRect = selected.getBoundingClientRect();
-    return {
-      x: itemRect.left - groupRect.left,
-      y: itemRect.top - groupRect.top,
-      width: itemRect.width,
-      height: itemRect.height,
-    };
+    return measureItemThumbMetrics(selected, group);
   }, [groupRef]);
 
   const syncThumb = useCallback(
@@ -385,6 +393,20 @@ function useSegmentatorThumb(
     // Press/drag owns the thumb via writeThumbMetrics — do not sync from React here.
     if (dragState.pressing || dragState.active) return;
 
+    const group = groupRef.current;
+    if (group) {
+      const selected = group.querySelector<HTMLButtonElement>(
+        '.aviala-segmentator-item[data-selected="true"]'
+      );
+      if (selected && !isInitialMount.current) {
+        selected.scrollIntoView({
+          inline: "nearest",
+          block: "nearest",
+          behavior: "smooth",
+        });
+      }
+    }
+
     const next = measureThumb();
     if (!next) return;
 
@@ -425,22 +447,35 @@ function useSegmentatorThumb(
     }
 
     syncThumb(next, false);
-  }, [selectedValue, measureThumb, syncThumb, dragState.active, dragState.pressing]);
+  }, [selectedValue, measureThumb, syncThumb, dragState.active, dragState.pressing, groupRef]);
 
   useLayoutEffect(() => {
     const group = groupRef.current;
     if (!group) return;
 
-    const observer = new ResizeObserver(() => {
+    const updateOverflowAndThumb = () => {
+      syncSegmentatorOverflowing(group);
       remeasureThumb();
+    };
+
+    updateOverflowAndThumb();
+
+    const observer = new ResizeObserver(() => {
+      updateOverflowAndThumb();
     });
     observer.observe(group);
 
     const items = group.querySelectorAll(".aviala-segmentator-item");
     items.forEach((item) => observer.observe(item));
 
+    const onScroll = () => {
+      syncSegmentatorOverflowing(group);
+      remeasureThumb();
+    };
+    group.addEventListener("scroll", onScroll, { passive: true });
+
     const layoutObserver = new MutationObserver(() => {
-      requestAnimationFrame(remeasureThumb);
+      requestAnimationFrame(updateOverflowAndThumb);
     });
     layoutObserver.observe(document.documentElement, {
       attributes: true,
@@ -450,6 +485,7 @@ function useSegmentatorThumb(
     return () => {
       observer.disconnect();
       layoutObserver.disconnect();
+      group.removeEventListener("scroll", onScroll);
     };
   }, [groupRef, remeasureThumb]);
 
@@ -659,6 +695,8 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
 
     const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
       if (disabled || !isSegmentatorDragPointer(event.pointerType)) return;
+      // When horizontally overflowing, pan-x owns the gesture — keep tap-to-select only.
+      if (isSegmentatorOverflowing(groupRef.current)) return;
 
       const pressedItem = getPressedItemFromTarget(event.target);
       if (!pressedItem) return;

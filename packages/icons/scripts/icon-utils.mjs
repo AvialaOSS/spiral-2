@@ -2,7 +2,7 @@
  * Shared naming helpers for Figma icon variants ↔ raw SVG paths ↔ React component names.
  */
 
-export const ICON_THICKNESSES = ["Light", "Regular", "Medium", "Bold"];
+export const ICON_THICKNESSES = ["Light", "Regular", "Medium", "Bold", "Black"];
 export const ICON_MODES = ["default", "fill"];
 
 /** Figma thickness → canonical React/catalog thickness. */
@@ -11,6 +11,7 @@ const THICKNESS_ALIASES = {
   regular: "Regular",
   medium: "Medium",
   bold: "Bold",
+  black: "Black",
   /** @deprecated legacy Figma names — mapped during migration */
   standard: "Regular",
   semilight: "Medium",
@@ -24,6 +25,7 @@ const THICKNESS_FROM_FILE = {
   standard: "Regular",
   light: "Light",
   bold: "Bold",
+  black: "Black",
 };
 
 const FILE_THICKNESS_ENTRIES = Object.entries(THICKNESS_FROM_FILE).sort(

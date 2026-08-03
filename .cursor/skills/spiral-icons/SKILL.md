@@ -37,7 +37,7 @@ import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 
 | Prop | Values | Default |
 |---|---|---|
-| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` | `Medium` |
+| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium` |
 | `mode` | `default` \| `fill` | `default` |
 
 Component name = PascalCase of icon `name` (`direction_arrowLeft` → `DirectionArrowLeft`).
@@ -106,7 +106,7 @@ src/catalog.ts                                        # committed
 
 ## Rules
 
-- Figma artboard is **120×120**; built SVGs use `viewBox="0 0 120 120"` with no fixed width/height — set size via props (`width`, `height`, or `Icon` `size`)
+- Figma artboard is **120×120**; build normalizes SVG `viewBox` to `0 0 120 120` (and strips fixed width/height) — set size via props (`width`, `height`, or `Icon` `size`)
 - Parse variant strings order-independently (`parseVariantName`)
 - Never use canvas frame names for export
 - SVGR → `currentColor`

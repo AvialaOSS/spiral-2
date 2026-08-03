@@ -233,12 +233,23 @@
   --input-border: var(--input-border-activated);
   --input-bg: var(--input-bg-activated);
 
+  /* Figma Size=Default → size-big; Size=Huge → size-large */
   --checkbox-size: var(--size-big, 1.25rem);
-  --checkbox-radius: var(--border-radius-small, 8px);
+  --checkbox-size-huge: var(--size-large, 1.625rem);
+  --checkbox-radius: var(--border-radius-extra-small-2, 6px);
+  --checkbox-radius-huge: var(--border-radius-small, 8px);
   --checkbox-radius-round: var(--border-radius-allround, 99px);
   --checkbox-icon-size: 0.75rem;
+  --checkbox-icon-size-huge: 0.875rem;
   --checkbox-indeterminate-mark-size: 0.75rem;
+  --checkbox-indeterminate-mark-size-huge: 0.875rem;
   --checkbox-indeterminate-mark-radius: var(--border-radius-extra-small-2, 6px);
+  /* Check / uncheck motion (CSS transitions — interruptible) */
+  --checkbox-check-stroke: 1.4px;
+  --checkbox-check-stroke-huge: 2px;
+  --checkbox-check-duration: 300ms;
+  --checkbox-check-easing: cubic-bezier(0.873, 0, 0, 1);
+  --checkbox-surface-easing: ease;
   --checkbox-bg-unchecked: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
   --checkbox-border-unchecked: var(--border-border-normal-primary, #e2e0e0);
   --checkbox-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
@@ -526,7 +537,8 @@
   --navigation-rail-width: 3px;
   --navigation-indicator-width-horizontal: 50px;
   --navigation-transition-duration: var(--switch-transition-duration, 0.3s);
-  --navigation-transition-easing: cubic-bezier(0.33, 1, 0.68, 1);
+  /* Snappy ease-out: most travel happens early, then settles hard. */
+  --navigation-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
   --navigation-icon-box: var(--line-height-regular, 1.125rem);
   --navigation-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
   --navigation-item-hover-bg: var(--button-no-bg-custom-hover);
@@ -627,22 +639,38 @@
   --focus-transition-duration: 250ms;
   --focus-transition-easing: ease;
 
-  /* Slider — Figma Information Collect → Slider (384:21584) */
-  --slider-width: 70px;
-  --slider-track-height: 4px;
-  --slider-track-height-big: 8px;
-  --slider-thumb-size: 8px;
-  --slider-thumb-size-big: 10px;
+  /* Slider — Figma Information Collect → Slider (384:21585) */
+  --slider-width: 96px;
+  --slider-track-height: 6px;
+  --slider-track-height-big: 10px;
+  --slider-thumb-size: 14px;
+  --slider-thumb-size-big: 16px;
+  --slider-thumb-core-size: 8px;
+  --slider-thumb-core-size-big: 10px;
+  --slider-thumb-hover-scale: 1.18;
+  --slider-thumb-press-scale: 0.92;
+  --slider-thumb-scale-transition-duration: 0.15s;
+  /* Click / keyboard value jumps — off while data-dragging */
+  --slider-value-transition-duration: 0.22s;
+  --slider-value-transition-easing: cubic-bezier(0.22, 1, 0.36, 1);
   --slider-pad-y: var(--padding-tinyer, 3px);
-  --slider-track-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
-  --slider-track-border: var(--border-border-normal-primary, #e2e0e0);
+  /* Default & Big tracks share fill tokens; Big only differs by height/thumb.
+   * Track fill ON: border-normal-primary; OFF: border-normal-light. No stroke. */
+  --slider-track-bg: var(--border-border-normal-primary, #e2e0e0);
   --slider-range-bg: var(--box-box-theme-primarybackground, #ff5532);
   --slider-thumb-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
-  --slider-thumb-border: var(--border-border-theme-primary, #ff5532);
-  /* Availability Status=OFF — secondary fill, not whole-control opacity */
-  --slider-track-bg-disabled: var(--control-control-normal-lightbackground-deep, #fdfbfb);
+  --slider-thumb-core: var(--box-box-theme-primarybackground, #ff5532);
+  /* BasicShadow / BasicShadow-Level4WithLIne */
+  --slider-thumb-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 0 1px rgba(0, 0, 0, 0.2);
+  /* Availability Status=OFF */
+  --slider-track-bg-disabled: var(--border-border-normal-light, #f5f3f3);
   --slider-range-bg-disabled: var(--box-box-theme-secondarybackground, #ffdad2);
-  --slider-thumb-border-disabled: var(--box-box-theme-secondarybackground, #ffdad2);
+  --slider-thumb-core-disabled: var(
+    --box-box-theme-secondarybackground,
+    #ffdad2
+  );
 
   /* Upload — Figma Information Collect → Upload (527:56238 / 527:56237) */
   --upload-radius: var(--border-radius-small, 8px);

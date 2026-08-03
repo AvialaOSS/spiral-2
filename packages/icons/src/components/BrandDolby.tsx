@@ -5,11 +5,11 @@ import { resolveIconVariant } from "../resolve-variant";
 import type { AvialaIconProps } from "../types";
 import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS } from "../types";
 
-const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M18.7041 23C38.6935 23 55 39.6529 55 60.0195C55 80.3861 38.6935 97 18.7041 97H8V23H18.7041ZM112 23V97H101.296C81.3065 97 65 80.3774 65 60C65 39.6226 81.3065 23 101.296 23H112Z" fill="currentColor" /></svg>;
+const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M18.7041 23C38.6935 23 55 39.6529 55 60.0195C55 80.3861 38.6935 97 18.7041 97H8V23H18.7041ZM112 23V97H101.296C81.3065 97 65 80.3774 65 60C65 39.6226 81.3065 23 101.296 23H112Z" fill="currentColor" /></svg>;
 
-const MediumDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M16.3877 21C37.653 21 54.9999 38.553 55 60.0205C55 81.488 37.653 99 16.3877 99H5V21H16.3877ZM115 21V99H103.612C82.347 99 65 81.4789 65 60C65 38.5211 82.347 21 103.612 21H115Z" fill="currentColor" /></svg>;
+const MediumDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M16.3877 21C37.653 21 54.9999 38.553 55 60.0205C55 81.488 37.653 99 16.3877 99H5V21H16.3877ZM115 21V99H103.612C82.347 99 65 81.4789 65 60C65 38.5211 82.347 21 103.612 21H115Z" fill="currentColor" /></svg>;
 
-const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M17.9326 22C38.3471 22.0002 55 39.1036 55 60.0205C54.9998 80.9372 38.347 97.9998 17.9326 98H7V22H17.9326ZM113 22V98H102.067C81.6529 97.9998 65 80.928 65 60C65 39.072 81.6529 22.0002 102.067 22H113Z" fill="currentColor" /></svg>;
+const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M17.9326 22C38.3471 22.0002 55 39.1036 55 60.0205C54.9998 80.9372 38.347 97.9998 17.9326 98H7V22H17.9326ZM113 22V98H102.067C81.6529 97.9998 65 80.928 65 60C65 39.072 81.6529 22.0002 102.067 22H113Z" fill="currentColor" /></svg>;
 
 const variants = {
   Light: {

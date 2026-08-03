@@ -96,7 +96,9 @@ import { DeviceTv, type DeviceTvProps } from "./components/DeviceTv";
 import { DeviceTwsBox, type DeviceTwsBoxProps } from "./components/DeviceTwsBox";
 import { DeviceWatchOPPORound, type DeviceWatchOPPORoundProps } from "./components/DeviceWatchOPPORound";
 import { DeviceWatchRound, type DeviceWatchRoundProps } from "./components/DeviceWatchRound";
+import { DeviceWatchRoundWithClockHands, type DeviceWatchRoundWithClockHandsProps } from "./components/DeviceWatchRoundWithClockHands";
 import { DeviceWatchSquare, type DeviceWatchSquareProps } from "./components/DeviceWatchSquare";
+import { DeviceWatchSquareWithClockHands, type DeviceWatchSquareWithClockHandsProps } from "./components/DeviceWatchSquareWithClockHands";
 import { DirectionArrowDown, type DirectionArrowDownProps } from "./components/DirectionArrowDown";
 import { DirectionArrowDownCircle, type DirectionArrowDownCircleProps } from "./components/DirectionArrowDownCircle";
 import { DirectionArrowDownLight, type DirectionArrowDownLightProps } from "./components/DirectionArrowDownLight";
@@ -151,7 +153,6 @@ import { FilesPhotoFile, type FilesPhotoFileProps } from "./components/FilesPhot
 import { FilesSheetFile, type FilesSheetFileProps } from "./components/FilesSheetFile";
 import { FilesSlideFile, type FilesSlideFileProps } from "./components/FilesSlideFile";
 import { FilesVideoFile, type FilesVideoFileProps } from "./components/FilesVideoFile";
-import { GeneraPinSlash, type GeneraPinSlashProps } from "./components/GeneraPinSlash";
 import { GeneralBeautyMode, type GeneralBeautyModeProps } from "./components/GeneralBeautyMode";
 import { GeneralBluetooth, type GeneralBluetoothProps } from "./components/GeneralBluetooth";
 import { GeneralCamera, type GeneralCameraProps } from "./components/GeneralCamera";
@@ -178,11 +179,13 @@ import { GeneralHeadphoneTransparency, type GeneralHeadphoneTransparencyProps } 
 import { GeneralHistory, type GeneralHistoryProps } from "./components/GeneralHistory";
 import { GeneralHome, type GeneralHomeProps } from "./components/GeneralHome";
 import { GeneralJumpOut, type GeneralJumpOutProps } from "./components/GeneralJumpOut";
+import { GeneralKeyboardAndIME, type GeneralKeyboardAndIMEProps } from "./components/GeneralKeyboardAndIME";
 import { GeneralKids, type GeneralKidsProps } from "./components/GeneralKids";
 import { GeneralMenu, type GeneralMenuProps } from "./components/GeneralMenu";
 import { GeneralNotification, type GeneralNotificationProps } from "./components/GeneralNotification";
 import { GeneralNotificationSlash, type GeneralNotificationSlashProps } from "./components/GeneralNotificationSlash";
 import { GeneralPin, type GeneralPinProps } from "./components/GeneralPin";
+import { GeneralPinSlash, type GeneralPinSlashProps } from "./components/GeneralPinSlash";
 import { GeneralPosition, type GeneralPositionProps } from "./components/GeneralPosition";
 import { GeneralQrCode, type GeneralQrCodeProps } from "./components/GeneralQrCode";
 import { GeneralRefresh, type GeneralRefreshProps } from "./components/GeneralRefresh";
@@ -320,9 +323,13 @@ import { TimeAndDateCountdownRunning, type TimeAndDateCountdownRunningProps } fr
 import { TimeAndDateDate, type TimeAndDateDateProps } from "./components/TimeAndDateDate";
 import { TimeAndDateTimer, type TimeAndDateTimerProps } from "./components/TimeAndDateTimer";
 import { TravelBus, type TravelBusProps } from "./components/TravelBus";
+import { TravelCableCar, type TravelCableCarProps } from "./components/TravelCableCar";
 import { TravelCar, type TravelCarProps } from "./components/TravelCar";
+import { TravelEntrance, type TravelEntranceProps } from "./components/TravelEntrance";
+import { TravelExit, type TravelExitProps } from "./components/TravelExit";
 import { TravelPlane, type TravelPlaneProps } from "./components/TravelPlane";
 import { TravelRailway, type TravelRailwayProps } from "./components/TravelRailway";
+import { TravelRailwayMonorail, type TravelRailwayMonorailProps } from "./components/TravelRailwayMonorail";
 import { TravelRide, type TravelRideProps } from "./components/TravelRide";
 import { TravelTaxi, type TravelTaxiProps } from "./components/TravelTaxi";
 import { TravelWalk, type TravelWalkProps } from "./components/TravelWalk";
@@ -453,7 +460,9 @@ export const iconCatalog = [
   { name: "DeviceTwsBox", iconName: "device_twsBox", file: "device_twsBox", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceTwsBox },
   { name: "DeviceWatchOPPORound", iconName: "device_watchOPPORound", file: "device_watchOPPORound", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceWatchOPPORound },
   { name: "DeviceWatchRound", iconName: "device_watchRound", file: "device_watchRound", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceWatchRound },
+  { name: "DeviceWatchRoundWithClockHands", iconName: "device_watchRoundWithClockHands", file: "device_watchRoundWithClockHands", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceWatchRoundWithClockHands },
   { name: "DeviceWatchSquare", iconName: "device_watchSquare", file: "device_watchSquare", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceWatchSquare },
+  { name: "DeviceWatchSquareWithClockHands", iconName: "device_watchSquareWithClockHands", file: "device_watchSquareWithClockHands", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "device", component: DeviceWatchSquareWithClockHands },
   { name: "DirectionArrowDown", iconName: "direction_arrowDown", file: "direction_arrowDown", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "direction", component: DirectionArrowDown },
   { name: "DirectionArrowDownCircle", iconName: "direction_arrowDownCircle", file: "direction_arrowDownCircle", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "direction", component: DirectionArrowDownCircle },
   { name: "DirectionArrowDownLight", iconName: "direction_arrowDownLight", file: "direction_arrowDownLight", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "direction", component: DirectionArrowDownLight },
@@ -508,7 +517,6 @@ export const iconCatalog = [
   { name: "FilesSheetFile", iconName: "files_sheetFile", file: "files_sheetFile", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "files", component: FilesSheetFile },
   { name: "FilesSlideFile", iconName: "files_slideFile", file: "files_slideFile", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "files", component: FilesSlideFile },
   { name: "FilesVideoFile", iconName: "files_videoFile", file: "files_videoFile", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "files", component: FilesVideoFile },
-  { name: "GeneraPinSlash", iconName: "genera_pinSlash", file: "genera_pinSlash", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "genera", component: GeneraPinSlash },
   { name: "GeneralBeautyMode", iconName: "general_beautyMode", file: "general_beautyMode", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralBeautyMode },
   { name: "GeneralBluetooth", iconName: "general_bluetooth", file: "general_bluetooth", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralBluetooth },
   { name: "GeneralCamera", iconName: "general_camera", file: "general_camera", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralCamera },
@@ -533,13 +541,15 @@ export const iconCatalog = [
   { name: "GeneralHeadphoneAdaptiveNoiseCancellation", iconName: "general_headphoneAdaptiveNoiseCancellation", file: "general_headphoneAdaptiveNoiseCancellation", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHeadphoneAdaptiveNoiseCancellation },
   { name: "GeneralHeadphoneTransparency", iconName: "general_headphoneTransparency", file: "general_headphoneTransparency", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHeadphoneTransparency },
   { name: "GeneralHistory", iconName: "general_history", file: "general_history", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralHistory },
-  { name: "GeneralHome", iconName: "general_home", file: "general_home", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHome },
-  { name: "GeneralJumpOut", iconName: "general_jumpOut", file: "general_jumpOut", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralJumpOut },
+  { name: "GeneralHome", iconName: "general_home", file: "general_home", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHome },
+  { name: "GeneralJumpOut", iconName: "general_jumpOut", file: "general_jumpOut", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralJumpOut },
+  { name: "GeneralKeyboardAndIME", iconName: "general_keyboardAndIME", file: "general_keyboardAndIME", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralKeyboardAndIME },
   { name: "GeneralKids", iconName: "general_kids", file: "general_kids", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralKids },
-  { name: "GeneralMenu", iconName: "general_menu", file: "general_menu", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralMenu },
+  { name: "GeneralMenu", iconName: "general_menu", file: "general_menu", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralMenu },
   { name: "GeneralNotification", iconName: "general_notification", file: "general_notification", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralNotification },
   { name: "GeneralNotificationSlash", iconName: "general_notificationSlash", file: "general_notificationSlash", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralNotificationSlash },
   { name: "GeneralPin", iconName: "general_pin", file: "general_pin", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralPin },
+  { name: "GeneralPinSlash", iconName: "general_pinSlash", file: "general_pinSlash", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralPinSlash },
   { name: "GeneralPosition", iconName: "general_position", file: "general_position", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralPosition },
   { name: "GeneralQrCode", iconName: "general_qrCode", file: "general_qrCode", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralQrCode },
   { name: "GeneralRefresh", iconName: "general_refresh", file: "general_refresh", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralRefresh },
@@ -549,17 +559,17 @@ export const iconCatalog = [
   { name: "GeneralRotate", iconName: "general_rotate", file: "general_rotate", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralRotate },
   { name: "GeneralScanQRcode", iconName: "general_scanQRcode", file: "general_scanQRcode", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralScanQRcode },
   { name: "GeneralScreenMirroring", iconName: "general_screenMirroring", file: "general_screenMirroring", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralScreenMirroring },
-  { name: "GeneralSearch", iconName: "general_search", file: "general_search", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralSearch },
-  { name: "GeneralSetting", iconName: "general_setting", file: "general_setting", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralSetting },
+  { name: "GeneralSearch", iconName: "general_search", file: "general_search", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralSearch },
+  { name: "GeneralSetting", iconName: "general_setting", file: "general_setting", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralSetting },
   { name: "GeneralShare", iconName: "general_share", file: "general_share", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralShare },
   { name: "GeneralSort", iconName: "general_sort", file: "general_sort", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralSort },
   { name: "GeneralSpeedDashboard", iconName: "general_speedDashboard", file: "general_speedDashboard", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralSpeedDashboard },
   { name: "GeneralTicketSet", iconName: "general_ticketSet", file: "general_ticketSet", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralTicketSet },
-  { name: "GeneralTodoList", iconName: "general_todoList", file: "general_todoList", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralTodoList },
+  { name: "GeneralTodoList", iconName: "general_todoList", file: "general_todoList", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralTodoList },
   { name: "GeneralTranslate", iconName: "general_translate", file: "general_translate", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralTranslate },
   { name: "GeneralTransmission", iconName: "general_transmission", file: "general_transmission", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralTransmission },
   { name: "GeneralUpload", iconName: "general_upload", file: "general_upload", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralUpload },
-  { name: "GeneralVoice", iconName: "general_voice", file: "general_voice", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralVoice },
+  { name: "GeneralVoice", iconName: "general_voice", file: "general_voice", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralVoice },
   { name: "GeneralVoiceInput", iconName: "general_voiceInput", file: "general_voiceInput", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralVoiceInput },
   { name: "GeneralVoiceInputSlash", iconName: "general_voiceInputSlash", file: "general_voiceInputSlash", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralVoiceInputSlash },
   { name: "GeneralVolumeMax", iconName: "general_volumeMax", file: "general_volumeMax", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralVolumeMax },
@@ -633,7 +643,7 @@ export const iconCatalog = [
   { name: "SymbolApps", iconName: "symbol_apps", file: "symbol_apps", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolApps },
   { name: "SymbolBriefcase", iconName: "symbol_briefcase", file: "symbol_briefcase", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolBriefcase },
   { name: "SymbolBussiness", iconName: "symbol_bussiness", file: "symbol_bussiness", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolBussiness },
-  { name: "SymbolEnd", iconName: "symbol_end", file: "symbol_end", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolEnd },
+  { name: "SymbolEnd", iconName: "symbol_end", file: "symbol_end", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolEnd },
   { name: "SymbolEye", iconName: "symbol_eye", file: "symbol_eye", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolEye },
   { name: "SymbolEyeSlash", iconName: "symbol_eyeSlash", file: "symbol_eyeSlash", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolEyeSlash },
   { name: "SymbolFast", iconName: "symbol_fast", file: "symbol_fast", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolFast },
@@ -660,7 +670,7 @@ export const iconCatalog = [
   { name: "SymbolQuestion", iconName: "symbol_question", file: "symbol_question", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "symbol", component: SymbolQuestion },
   { name: "SymbolQuestionCircle", iconName: "symbol_questionCircle", file: "symbol_questionCircle", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolQuestionCircle },
   { name: "SymbolResize", iconName: "symbol_resize", file: "symbol_resize", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "symbol", component: SymbolResize },
-  { name: "SymbolRight", iconName: "symbol_right", file: "symbol_right", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "symbol", component: SymbolRight },
+  { name: "SymbolRight", iconName: "symbol_right", file: "symbol_right", thicknesses: ["Black","Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "symbol", component: SymbolRight },
   { name: "SymbolRightCircle", iconName: "symbol_rightCircle", file: "symbol_rightCircle", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolRightCircle },
   { name: "SymbolStar", iconName: "symbol_star", file: "symbol_star", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolStar },
   { name: "SymbolStarSlash", iconName: "symbol_starSlash", file: "symbol_starSlash", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "symbol", component: SymbolStarSlash },
@@ -677,9 +687,13 @@ export const iconCatalog = [
   { name: "TimeAndDateDate", iconName: "timeAndDate_date", file: "timeAndDate_date", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "timeAndDate", component: TimeAndDateDate },
   { name: "TimeAndDateTimer", iconName: "timeAndDate_timer", file: "timeAndDate_timer", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "timeAndDate", component: TimeAndDateTimer },
   { name: "TravelBus", iconName: "travel_bus", file: "travel_bus", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelBus },
+  { name: "TravelCableCar", iconName: "travel_cableCar", file: "travel_cableCar", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelCableCar },
   { name: "TravelCar", iconName: "travel_car", file: "travel_car", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelCar },
+  { name: "TravelEntrance", iconName: "travel_entrance", file: "travel_entrance", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelEntrance },
+  { name: "TravelExit", iconName: "travel_exit", file: "travel_exit", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelExit },
   { name: "TravelPlane", iconName: "travel_plane", file: "travel_plane", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelPlane },
   { name: "TravelRailway", iconName: "travel_railway", file: "travel_railway", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelRailway },
+  { name: "TravelRailwayMonorail", iconName: "travel_railwayMonorail", file: "travel_railwayMonorail", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelRailwayMonorail },
   { name: "TravelRide", iconName: "travel_ride", file: "travel_ride", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "travel", component: TravelRide },
   { name: "TravelTaxi", iconName: "travel_taxi", file: "travel_taxi", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "travel", component: TravelTaxi },
   { name: "TravelWalk", iconName: "travel_walk", file: "travel_walk", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "travel", component: TravelWalk },

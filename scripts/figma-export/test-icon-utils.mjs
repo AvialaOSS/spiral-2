@@ -23,10 +23,22 @@ assert.equal(medium.thickness, "Medium");
 
 assert.equal(normalizeThickness("Medium"), "Medium");
 assert.equal(normalizeThickness("medium"), "Medium");
+assert.equal(normalizeThickness("Black"), "Black");
+assert.equal(normalizeThickness("black"), "Black");
 
 assert.equal(normalizeThickness("Standard"), "Regular");
 assert.equal(normalizeThickness("Semi Light"), "Medium");
 assert.equal(normalizeThickness("semilight"), "Medium");
+
+assert.deepEqual(
+  parseVariantName("thickness=Black, mode=default, name=symbol_right"),
+  { thickness: "Black", mode: "default", name: "symbol_right" }
+);
+assert.deepEqual(parseSvgVariantFileName("symbol_right-black-default"), {
+  iconName: "symbol_right",
+  thickness: "Black",
+  mode: "default",
+});
 
 assert.equal(componentSetToCategory("direction/arrowLeft"), "direction");
 

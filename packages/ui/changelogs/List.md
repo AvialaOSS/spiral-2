@@ -3,10 +3,10 @@
 ## 2.4.0
 
 ### Added
-- `ListItem` `showTrailing` — set `false` (or `trailing={null}`) to hide trailing actions and the vertical divider; `action` type still shows the chevron
-- `ListItem` `showChevron` — control the trailing chevron on `action` rows
-- `ListItem` `showTopDivider` — force show/hide the content-row top hairline (default: hidden on the first child in a `ListGroup`)
-- `ListItem` `href` / `target` / `rel` — render the row as a link for navigation
+- `ListItem` `showTrailing`：设为 `false`（或 `trailing={null}`）可隐藏尾部操作与竖向分隔线；`action` 类型仍显示 chevron
+- `ListItem` `showChevron`：控制 `action` 行尾部 chevron 的显示
+- `ListItem` `showTopDivider`：强制显示/隐藏内容行顶部分割线（默认：`ListGroup` 内首个子项隐藏）
+- `ListItem` `href` / `target` / `rel`：将行渲染为导航链接
 
 ### Fixed
-- First `ListItem` in a `ListGroup` no longer shows a top hairline by default
+- `ListGroup` 内首个 `ListItem` 默认不再显示顶部分割线

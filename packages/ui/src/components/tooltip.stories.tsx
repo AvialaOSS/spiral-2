@@ -81,6 +81,19 @@ export const WithoutArrow: Story = {
   ),
 };
 
+export const TextLevel: Story = {
+  render: () => (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button mode="default">Text level</Button>
+      </TooltipTrigger>
+      <TooltipContent level="text">
+        Tooltip with text typography
+      </TooltipContent>
+    </Tooltip>
+  ),
+};
+
 export const InstantOpen: Story = {
   render: () => (
     <TooltipProvider delayDuration={0}>

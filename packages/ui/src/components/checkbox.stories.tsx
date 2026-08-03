@@ -62,6 +62,37 @@ export const Round: Story = {
   ),
 };
 
+export const Huge: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-2">
+        <Checkbox id="cb-huge-checked" defaultChecked size="huge" />
+        <Typography level="text" as="label" htmlFor="cb-huge-checked">
+          Huge checked
+        </Typography>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="cb-huge-unchecked" size="huge" />
+        <Typography level="text" as="label" htmlFor="cb-huge-unchecked">
+          Huge unchecked
+        </Typography>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="cb-huge-half" checked="indeterminate" size="huge" />
+        <Typography level="text" as="label" htmlFor="cb-huge-half">
+          Huge indeterminate
+        </Typography>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="cb-huge-round" defaultChecked size="huge" round />
+        <Typography level="text" as="label" htmlFor="cb-huge-round">
+          Huge round
+        </Typography>
+      </div>
+    </div>
+  ),
+};
+
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
@@ -91,7 +122,7 @@ export const VariantMatrix: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-8">
       <div>
-        <p className="mb-3 text-sm text-muted-foreground">Square (Round=OFF)</p>
+        <p className="mb-3 text-sm text-muted-foreground">Default · Square</p>
         <div className="flex flex-col gap-3">
           <Checkbox defaultChecked aria-label="Checked" />
           <Checkbox defaultChecked disabled aria-label="Checked disabled" />
@@ -102,7 +133,23 @@ export const VariantMatrix: Story = {
         </div>
       </div>
       <div>
-        <p className="mb-3 text-sm text-muted-foreground">Round (Round=ON)</p>
+        <p className="mb-3 text-sm text-muted-foreground">Huge · Square</p>
+        <div className="flex flex-col gap-3">
+          <Checkbox defaultChecked size="huge" aria-label="Huge checked" />
+          <Checkbox defaultChecked size="huge" disabled aria-label="Huge checked disabled" />
+          <Checkbox size="huge" aria-label="Huge unchecked" />
+          <Checkbox size="huge" disabled aria-label="Huge unchecked disabled" />
+          <Checkbox checked="indeterminate" size="huge" aria-label="Huge indeterminate" />
+          <Checkbox
+            checked="indeterminate"
+            size="huge"
+            disabled
+            aria-label="Huge indeterminate disabled"
+          />
+        </div>
+      </div>
+      <div>
+        <p className="mb-3 text-sm text-muted-foreground">Default · Round</p>
         <div className="flex flex-col gap-3">
           <Checkbox defaultChecked round aria-label="Round checked" />
           <Checkbox defaultChecked round disabled aria-label="Round checked disabled" />
@@ -110,6 +157,34 @@ export const VariantMatrix: Story = {
           <Checkbox round disabled aria-label="Round unchecked disabled" />
           <Checkbox checked="indeterminate" round aria-label="Round indeterminate" />
           <Checkbox checked="indeterminate" round disabled aria-label="Round indeterminate disabled" />
+        </div>
+      </div>
+      <div>
+        <p className="mb-3 text-sm text-muted-foreground">Huge · Round</p>
+        <div className="flex flex-col gap-3">
+          <Checkbox defaultChecked size="huge" round aria-label="Huge round checked" />
+          <Checkbox
+            defaultChecked
+            size="huge"
+            round
+            disabled
+            aria-label="Huge round checked disabled"
+          />
+          <Checkbox size="huge" round aria-label="Huge round unchecked" />
+          <Checkbox size="huge" round disabled aria-label="Huge round unchecked disabled" />
+          <Checkbox
+            checked="indeterminate"
+            size="huge"
+            round
+            aria-label="Huge round indeterminate"
+          />
+          <Checkbox
+            checked="indeterminate"
+            size="huge"
+            round
+            disabled
+            aria-label="Huge round indeterminate disabled"
+          />
         </div>
       </div>
     </div>

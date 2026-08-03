@@ -96,6 +96,7 @@ export {
   type CheckboxGroupProps,
   type CheckboxInputProps,
   type CheckboxGroupDirection,
+  type CheckboxSize,
 } from "./components/checkbox";
 export {
   RadioGroup,
@@ -242,6 +243,7 @@ export {
   PopoverAnchor,
   type PopoverProps,
   type PopoverContentProps,
+  type PopoverContentLevel,
   type PopoverAppearance,
 } from "./components/popover";
 export {
@@ -281,6 +283,7 @@ export {
   TOOLTIP_DELAY_DURATION,
   type TooltipProviderProps,
   type TooltipContentProps,
+  type TooltipContentLevel,
 } from "./components/tooltip";
 export {
   ResponsiveTooltip,
