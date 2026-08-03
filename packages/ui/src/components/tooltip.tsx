@@ -1,5 +1,5 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { forwardRef, type ComponentPropsWithoutRef } from "react";
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
 import { OverlayPointerSvg, TOOLTIP_POINTER } from "./overlay-pointer";
@@ -7,8 +7,25 @@ import { OverlayPointerSvg, TOOLTIP_POINTER } from "./overlay-pointer";
 /** Default show delay — 300ms per ALD / Radix convention. */
 export const TOOLTIP_DELAY_DURATION = 300;
 
-export type TooltipProviderProps = ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>;
+export interface TooltipProviderProps {
+  children?: ReactNode;
+  /**
+   * Delay before the tooltip opens on hover, in ms.
+   * Defaults to `TOOLTIP_DELAY_DURATION` (300). Pass `0` for instant open on hover.
+   */
+  delayDuration?: number;
+  /**
+   * When moving between tooltips, skip the open delay within this window (ms).
+   */
+  skipDelayDuration?: number;
+  /** When true, hovering the tooltip content itself does not keep it open. */
+  disableHoverableContent?: boolean;
+}
 
+/**
+ * Provides shared hover-delay state for nested Tooltips.
+ * Pass `delayDuration={0}` for instant open on hover.
+ */
 export function TooltipProvider({
   delayDuration = TOOLTIP_DELAY_DURATION,
   skipDelayDuration = 0,
@@ -26,9 +43,16 @@ export function TooltipProvider({
 export const Tooltip = TooltipPrimitive.Root;
 export const TooltipTrigger = TooltipPrimitive.Trigger;
 
+export type TooltipContentLevel = "caption" | "text";
+
 export type TooltipContentProps = ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
   /** Show a caret arrow pointing at the trigger (default true). */
   showArrow?: boolean;
+  /**
+   * Typography level for the surface copy.
+   * Figma default is `caption`; pass `text` for body-sized tooltip copy.
+   */
+  level?: TooltipContentLevel;
 };
 
 export const TooltipContent = forwardRef<
@@ -42,6 +66,7 @@ export const TooltipContent = forwardRef<
       sideOffset = 4,
       collisionPadding = 8,
       showArrow = true,
+      level = "caption",
       ...props
     },
     ref
@@ -54,7 +79,12 @@ export const TooltipContent = forwardRef<
         className={cn("aviala-tooltip-content", className)}
         {...props}
       >
-        <div className={cn("aviala-tooltip-content__surface", typographyVariants({ level: "caption" }))}>
+        <div
+          className={cn(
+            "aviala-tooltip-content__surface",
+            typographyVariants({ level })
+          )}
+        >
           {children}
         </div>
         {showArrow ? (

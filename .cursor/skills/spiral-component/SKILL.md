@@ -29,6 +29,8 @@ packages/ui/changelogs/{DisplayName}.md   # e.g. Button.md, DatePickerField.md
 
 ## Component changelog
 
+条目正文统一使用**中文**（API 名、代码标识符、枚举值保持原文）。Section 标题仍用英文：`Added` / `Changed` / `Fixed` / `Removed` / `Deprecated`。
+
 Write under `## [Unreleased]` — do **not** hand-fill the next semver. `pnpm run version:packages` stamps Unreleased → the package version after `changeset version`.
 
 ```md

@@ -97,11 +97,11 @@
   will-change: transform, width, height;
   transition:
     transform var(--navigation-transition-duration, 0.3s)
-      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+      var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
     width var(--navigation-transition-duration, 0.3s)
-      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+      var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
     height var(--navigation-transition-duration, 0.3s)
-      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+      var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
     opacity 120ms ease;
 }
 
@@ -165,7 +165,7 @@
   opacity: 0;
   transition:
     grid-template-rows var(--navigation-transition-duration, 0.3s)
-      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+      var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
     opacity 0.2s ease;
 }
 
@@ -190,7 +190,7 @@
   overflow: hidden;
   transition:
     width var(--navigation-transition-duration, 0.3s)
-      var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
+      var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
     opacity 0.2s ease;
 }
 
@@ -299,7 +299,7 @@
   svg {
   transform-origin: center;
   transition: transform var(--navigation-transition-duration, 0.3s)
-    var(--navigation-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
+    var(--navigation-transition-easing, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .aviala-navigation-item:has(+ .aviala-navigation-item-group[data-expanded="true"])

@@ -1,17 +1,19 @@
 /* Slider / Upload / ScrollPicker — Figma Information Collect */
 
-/* —— Slider (384:21584) ——
- * Track/thumb strokes are Figma OUTSIDE — use content-box so declared
- * height is the fill (4/8px), not eaten by the 1px border.
+/* —— Slider (384:21585) ——
+ * Default: 6px track, 14px white thumb + 8px core.
+ * Big: 10px track (same fill tokens, no stroke), 16px thumb + 10px core.
+ * Track ON: border-normal-primary; OFF: border-normal-light.
  */
 .aviala-slider {
   position: relative;
   display: flex;
-  width: var(--slider-width, 70px);
+  width: var(--slider-width, 96px);
   padding-block: var(--slider-pad-y, 3px);
   touch-action: none;
   user-select: none;
   align-items: center;
+  overflow: visible;
 }
 
 .aviala-slider[data-disabled="true"],
@@ -19,23 +21,21 @@
   pointer-events: none;
   --slider-track-bg: var(--slider-track-bg-disabled);
   --slider-range-bg: var(--slider-range-bg-disabled);
-  --slider-thumb-border: var(--slider-thumb-border-disabled);
+  --slider-thumb-core: var(--slider-thumb-core-disabled);
 }
 
 .aviala-slider__track {
   position: relative;
   box-sizing: border-box;
-  height: var(--slider-track-height, 4px);
+  height: var(--slider-track-height, 6px);
   flex-grow: 1;
   overflow: visible;
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--slider-track-bg);
-  /* Figma strokeAlign=OUTSIDE — don't eat into the 4/8px fill height */
-  box-shadow: 0 0 0 var(--border-thickness-default, 1px) var(--slider-track-border);
 }
 
 .aviala-slider--size-big .aviala-slider__track {
-  height: var(--slider-track-height-big, 8px);
+  height: var(--slider-track-height-big, 10px);
 }
 
 .aviala-slider__range {
@@ -44,29 +44,151 @@
   bottom: 0;
   border-radius: inherit;
   background-color: var(--slider-range-bg);
+  transition:
+    left var(--slider-value-transition-duration, 0.22s)
+      var(--slider-value-transition-easing, cubic-bezier(0.22, 1, 0.36, 1)),
+    right var(--slider-value-transition-duration, 0.22s)
+      var(--slider-value-transition-easing, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+/* Radix puts left/right on an anonymous wrapper around the thumb. */
+.aviala-slider > span:has(> .aviala-slider__thumb) {
+  transition:
+    left var(--slider-value-transition-duration, 0.22s)
+      var(--slider-value-transition-easing, cubic-bezier(0.22, 1, 0.36, 1)),
+    right var(--slider-value-transition-duration, 0.22s)
+      var(--slider-value-transition-easing, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .aviala-slider__thumb {
+  position: relative;
   display: block;
   box-sizing: border-box;
-  width: var(--slider-thumb-size, 8px);
-  height: var(--slider-thumb-size, 8px);
+  width: var(--slider-thumb-size, 14px);
+  height: var(--slider-thumb-size, 14px);
   border-radius: var(--border-radius-allround, 99px);
-  background-color: var(--slider-thumb-bg);
-  /* Figma strokeAlign=OUTSIDE */
-  box-shadow: 0 0 0 var(--border-thickness-default, 1px) var(--slider-thumb-border);
   border: 0;
-  cursor: grab;
+  background: transparent;
+  cursor: pointer;
   outline: none;
 }
 
-.aviala-slider--size-big .aviala-slider__thumb {
-  width: var(--slider-thumb-size-big, 10px);
-  height: var(--slider-thumb-size-big, 10px);
+/* Visual disc — scales on hover/press so the value tooltip (sibling) does not. */
+.aviala-slider__thumb-face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--slider-thumb-bg);
+  box-shadow: var(--slider-thumb-shadow);
+  transform-origin: center center;
+  transition: transform var(--slider-thumb-scale-transition-duration, 0.15s)
+    ease;
+  pointer-events: none;
 }
 
-.aviala-slider__thumb:active {
-  cursor: grabbing;
+.aviala-slider__thumb-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--slider-thumb-core-size, 8px);
+  height: var(--slider-thumb-core-size, 8px);
+  border-radius: inherit;
+  background-color: var(--slider-thumb-core);
+  pointer-events: none;
+}
+
+.aviala-slider--size-big .aviala-slider__thumb {
+  width: var(--slider-thumb-size-big, 16px);
+  height: var(--slider-thumb-size-big, 16px);
+}
+
+.aviala-slider--size-big .aviala-slider__thumb-face::after {
+  width: var(--slider-thumb-core-size-big, 10px);
+  height: var(--slider-thumb-core-size-big, 10px);
+}
+
+.aviala-slider__thumb:hover .aviala-slider__thumb-face {
+  transform: scale(var(--slider-thumb-hover-scale, 1.18));
+}
+
+.aviala-slider__thumb:active .aviala-slider__thumb-face {
+  transform: scale(var(--slider-thumb-press-scale, 0.92));
+}
+
+/* Value tooltip — DOM-bound sibling of the face (does not scale with hover).
+ * Opacity + scale transitions avoid mount/unmount flashes from keyframe presence. */
+.aviala-slider__value-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.96);
+  transform-origin: bottom center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.1s ease,
+    transform 0.1s ease,
+    visibility 0s linear 0.1s;
+}
+
+.aviala-slider__value-tooltip[data-state="instant-open"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+  transition:
+    opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+.aviala-slider__value-tooltip__surface {
+  max-width: var(--tooltip-content-max-width, 240px);
+  border-radius: var(--tooltip-content-radius, 8px);
+  background-color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-fg, #fefcfc);
+  box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
+  padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
+  white-space: nowrap;
+}
+
+.aviala-slider__value-tooltip__arrow {
+  display: flex;
+  color: var(--tooltip-content-bg, #343333);
+  margin-top: -1px;
+}
+
+.aviala-slider__value-tooltip__arrow .aviala-tooltip-content__arrow,
+.aviala-slider__value-tooltip__arrow svg {
+  display: block;
+  width: 14px;
+  height: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-slider__thumb-face,
+  .aviala-slider__range,
+  .aviala-slider > span:has(> .aviala-slider__thumb),
+  .aviala-slider__value-tooltip {
+    transition: none;
+  }
+
+  .aviala-slider__value-tooltip[data-state="closed"] {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Dragging: follow pointer 1:1 — no position lag. Keep thumb scale transition. */
+.aviala-slider[data-dragging="true"] .aviala-slider__range,
+.aviala-slider[data-dragging="true"] > span:has(> .aviala-slider__thumb) {
+  transition: none;
 }
 
 /* —— Upload (527:56238 / 527:56237) —— */

@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export type IconThickness = "Light" | "Regular" | "Medium" | "Bold";
+export type IconThickness = "Light" | "Regular" | "Medium" | "Bold" | "Black";
 export type IconMode = "default" | "fill";
 
 /** Typography level for Icons component sizing — Figma Components → Icons */
@@ -13,7 +13,13 @@ export type IconLevel =
   | "text"
   | "caption";
 
-export const ICON_THICKNESSES = ["Light", "Regular", "Medium", "Bold"] as const satisfies readonly IconThickness[];
+export const ICON_THICKNESSES = [
+  "Light",
+  "Regular",
+  "Medium",
+  "Bold",
+  "Black",
+] as const satisfies readonly IconThickness[];
 export const ICON_MODES = ["default", "fill"] as const satisfies readonly IconMode[];
 export const ICON_LEVELS = [
   "display",

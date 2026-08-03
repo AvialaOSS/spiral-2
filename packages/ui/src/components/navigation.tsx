@@ -63,7 +63,7 @@ type IndicatorMetrics = {
 
 const NAVIGATION_ANIMATION_MS_FALLBACK = 300;
 
-const NAVIGATION_ANIMATION_EASING_FALLBACK = "cubic-bezier(0.33, 1, 0.68, 1)";
+const NAVIGATION_ANIMATION_EASING_FALLBACK = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 function parseDurationMs(value: string): number {
   const trimmed = value.trim();
@@ -247,9 +247,9 @@ function measureIndicatorFromElement(
   };
 }
 
-/** Matches the `--navigation-transition-easing` fallback cubic-bezier(0.33, 1, 0.68, 1). */
-function easeOutCubic(t: number) {
-  return 1 - Math.pow(1 - t, 3);
+/** Matches the `--navigation-transition-easing` fallback cubic-bezier(0.16, 1, 0.3, 1). */
+function easeOutQuint(t: number) {
+  return 1 - Math.pow(1 - t, 5);
 }
 
 function metricsApproxEqual(
@@ -461,7 +461,7 @@ function useNavigationIndicator(
         if (!startVisible || !target.visible) {
           syncIndicator(target, true);
         } else {
-          const eased = easeOutCubic(progress);
+          const eased = easeOutQuint(progress);
           const groupRect = group.getBoundingClientRect();
           const targetAbsX = groupRect.left + target.x;
           const targetAbsY = groupRect.top + target.y;

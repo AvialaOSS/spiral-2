@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-07-31T06:27:40.600Z",
+  "exportedAt": "2026-08-03T20:53:04.323Z",
   "fileKey": "kLrxJHsDob2VoX7PfkD5PW",
   "filters": {
     "thickness": null,
@@ -7,7 +7,7 @@
     "category": null,
     "name": null
   },
-  "count": 1884,
+  "count": 1953,
   "icons": [
     {
       "file": "accessibility/accessibility_accessibility-light-default.svg",
@@ -5280,6 +5280,86 @@
       "nodeId": "1431:156"
     },
     {
+      "file": "device/device_watchRoundWithClockHands-bold-default.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3437:122"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-bold-fill.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3437:123"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-light-default.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3436:94"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-light-fill.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3436:97"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-medium-default.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3436:88"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-medium-fill.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3436:91"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-regular-default.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3436:82"
+    },
+    {
+      "file": "device/device_watchRoundWithClockHands-regular-fill.svg",
+      "componentSet": "device/watchRoundWithClockHands",
+      "category": "device",
+      "name": "device_watchRoundWithClockHands",
+      "variantName": "device_watchRoundWithClockHands",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3436:85"
+    },
+    {
       "file": "device/device_watchSquare-light-default.svg",
       "componentSet": "device/watchSquare",
       "category": "device",
@@ -5338,6 +5418,86 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "701:684"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-bold-default.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3437:135"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-bold-fill.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3437:136"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-light-default.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3436:76"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-light-fill.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3436:78"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-medium-default.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3436:71"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-medium-fill.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3436:73"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-regular-default.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3436:66"
+    },
+    {
+      "file": "device/device_watchSquareWithClockHands-regular-fill.svg",
+      "componentSet": "device/watchSquareWithClockHands",
+      "category": "device",
+      "name": "device_watchSquareWithClockHands",
+      "variantName": "device_watchSquareWithClockHands",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3436:68"
     },
     {
       "file": "direction/direction_arrowDown-bold-default.svg",
@@ -7720,86 +7880,6 @@
       "nodeId": "824:2714"
     },
     {
-      "file": "genera/genera_pinSlash-bold-default.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Bold",
-      "mode": "default",
-      "nodeId": "3421:221"
-    },
-    {
-      "file": "genera/genera_pinSlash-bold-fill.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Bold",
-      "mode": "fill",
-      "nodeId": "3421:227"
-    },
-    {
-      "file": "genera/genera_pinSlash-light-default.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Light",
-      "mode": "default",
-      "nodeId": "3421:206"
-    },
-    {
-      "file": "genera/genera_pinSlash-light-fill.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Light",
-      "mode": "fill",
-      "nodeId": "3421:209"
-    },
-    {
-      "file": "genera/genera_pinSlash-medium-default.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Medium",
-      "mode": "default",
-      "nodeId": "3421:218"
-    },
-    {
-      "file": "genera/genera_pinSlash-medium-fill.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Medium",
-      "mode": "fill",
-      "nodeId": "3421:224"
-    },
-    {
-      "file": "genera/genera_pinSlash-regular-default.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Regular",
-      "mode": "default",
-      "nodeId": "3421:212"
-    },
-    {
-      "file": "genera/genera_pinSlash-regular-fill.svg",
-      "componentSet": "genera/pinSlash",
-      "category": "genera",
-      "name": "genera_pinSlash",
-      "variantName": "general_pinSlash",
-      "thickness": "Regular",
-      "mode": "fill",
-      "nodeId": "3421:215"
-    },
-    {
       "file": "general/general_beautyMode-light-default.svg",
       "componentSet": "general/beautyMode",
       "category": "general",
@@ -9030,6 +9110,26 @@
       "nodeId": "828:2224"
     },
     {
+      "file": "general/general_home-bold-default.svg",
+      "componentSet": "general/home",
+      "category": "general",
+      "name": "general_home",
+      "variantName": "general_home",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3440:1086"
+    },
+    {
+      "file": "general/general_home-bold-fill.svg",
+      "componentSet": "general/home",
+      "category": "general",
+      "name": "general_home",
+      "variantName": "general_home",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3440:1088"
+    },
+    {
       "file": "general/general_home-light-default.svg",
       "componentSet": "general/home",
       "category": "general",
@@ -9090,6 +9190,16 @@
       "nodeId": "150:187"
     },
     {
+      "file": "general/general_jumpOut-bold-default.svg",
+      "componentSet": "general/jumpOut",
+      "category": "general",
+      "name": "general_jumpOut",
+      "variantName": "general_jumpOut",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3440:1117"
+    },
+    {
       "file": "general/general_jumpOut-light-default.svg",
       "componentSet": "general/jumpOut",
       "category": "general",
@@ -9118,6 +9228,86 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "201:187"
+    },
+    {
+      "file": "general/general_keyboardAndIME-bold-default.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3437:588"
+    },
+    {
+      "file": "general/general_keyboardAndIME-bold-fill.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3437:594"
+    },
+    {
+      "file": "general/general_keyboardAndIME-light-default.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3437:573"
+    },
+    {
+      "file": "general/general_keyboardAndIME-light-fill.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3437:576"
+    },
+    {
+      "file": "general/general_keyboardAndIME-medium-default.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3437:585"
+    },
+    {
+      "file": "general/general_keyboardAndIME-medium-fill.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3437:591"
+    },
+    {
+      "file": "general/general_keyboardAndIME-regular-default.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3437:579"
+    },
+    {
+      "file": "general/general_keyboardAndIME-regular-fill.svg",
+      "componentSet": "general/keyboardAndIME",
+      "category": "general",
+      "name": "general_keyboardAndIME",
+      "variantName": "general_keyboardAndIME",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3437:582"
     },
     {
       "file": "general/general_kids-light-default.svg",
@@ -9178,6 +9368,16 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "1431:882"
+    },
+    {
+      "file": "general/general_menu-bold-default.svg",
+      "componentSet": "general/menu",
+      "category": "general",
+      "name": "general_menu",
+      "variantName": "general_menu",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3440:1003"
     },
     {
       "file": "general/general_menu-light-default.svg",
@@ -9408,6 +9608,86 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "3421:240"
+    },
+    {
+      "file": "general/general_pinSlash-bold-default.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3421:221"
+    },
+    {
+      "file": "general/general_pinSlash-bold-fill.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3421:227"
+    },
+    {
+      "file": "general/general_pinSlash-light-default.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3421:206"
+    },
+    {
+      "file": "general/general_pinSlash-light-fill.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3421:209"
+    },
+    {
+      "file": "general/general_pinSlash-medium-default.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3421:218"
+    },
+    {
+      "file": "general/general_pinSlash-medium-fill.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3421:224"
+    },
+    {
+      "file": "general/general_pinSlash-regular-default.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3421:212"
+    },
+    {
+      "file": "general/general_pinSlash-regular-fill.svg",
+      "componentSet": "general/pinSlash",
+      "category": "general",
+      "name": "general_pinSlash",
+      "variantName": "general_pinSlash",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3421:215"
     },
     {
       "file": "general/general_position-light-default.svg",
@@ -9830,6 +10110,16 @@
       "nodeId": "1431:635"
     },
     {
+      "file": "general/general_search-bold-default.svg",
+      "componentSet": "general/search",
+      "category": "general",
+      "name": "general_search",
+      "variantName": "general_search",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3452:1234"
+    },
+    {
       "file": "general/general_search-light-default.svg",
       "componentSet": "general/search",
       "category": "general",
@@ -9858,6 +10148,26 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "355:154"
+    },
+    {
+      "file": "general/general_setting-bold-default.svg",
+      "componentSet": "general/setting",
+      "category": "general",
+      "name": "general_setting",
+      "variantName": "general_setting",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3441:1149"
+    },
+    {
+      "file": "general/general_setting-bold-fill.svg",
+      "componentSet": "general/setting",
+      "category": "general",
+      "name": "general_setting",
+      "variantName": "general_setting",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3441:1151"
     },
     {
       "file": "general/general_setting-light-default.svg",
@@ -10160,6 +10470,26 @@
       "nodeId": "871:303"
     },
     {
+      "file": "general/general_todoList-bold-default.svg",
+      "componentSet": "general/todoList",
+      "category": "general",
+      "name": "general_todoList",
+      "variantName": "general_todoList",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3440:1034"
+    },
+    {
+      "file": "general/general_todoList-bold-fill.svg",
+      "componentSet": "general/todoList",
+      "category": "general",
+      "name": "general_todoList",
+      "variantName": "general_todoList",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3440:1036"
+    },
+    {
       "file": "general/general_todoList-light-default.svg",
       "componentSet": "general/todoList",
       "category": "general",
@@ -10308,6 +10638,16 @@
       "thickness": "Regular",
       "mode": "default",
       "nodeId": "412:138"
+    },
+    {
+      "file": "general/general_voice-bold-default.svg",
+      "componentSet": "general/voice",
+      "category": "general",
+      "name": "general_voice",
+      "variantName": "general_voice",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3442:1191"
     },
     {
       "file": "general/general_voice-light-default.svg",
@@ -14380,6 +14720,26 @@
       "nodeId": "881:1293"
     },
     {
+      "file": "symbol/symbol_end-bold-default.svg",
+      "componentSet": "symbol/end",
+      "category": "symbol",
+      "name": "symbol_end",
+      "variantName": "symbol_end",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3304:617"
+    },
+    {
+      "file": "symbol/symbol_end-bold-fill.svg",
+      "componentSet": "symbol/end",
+      "category": "symbol",
+      "name": "symbol_end",
+      "variantName": "symbol_end",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3304:630"
+    },
+    {
       "file": "symbol/symbol_end-light-default.svg",
       "componentSet": "symbol/end",
       "category": "symbol",
@@ -16170,6 +16530,16 @@
       "nodeId": "250:16"
     },
     {
+      "file": "symbol/symbol_right-black-default.svg",
+      "componentSet": "symbol/right",
+      "category": "symbol",
+      "name": "symbol_right",
+      "variantName": "symbol_right",
+      "thickness": "Black",
+      "mode": "default",
+      "nodeId": "3436:6"
+    },
+    {
       "file": "symbol/symbol_right-bold-default.svg",
       "componentSet": "symbol/right",
       "category": "symbol",
@@ -17230,6 +17600,86 @@
       "nodeId": "828:1343"
     },
     {
+      "file": "travel/travel_cableCar-bold-default.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3426:9"
+    },
+    {
+      "file": "travel/travel_cableCar-bold-fill.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3426:13"
+    },
+    {
+      "file": "travel/travel_cableCar-light-default.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3426:15"
+    },
+    {
+      "file": "travel/travel_cableCar-light-fill.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3426:17"
+    },
+    {
+      "file": "travel/travel_cableCar-medium-default.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3426:7"
+    },
+    {
+      "file": "travel/travel_cableCar-medium-fill.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3426:11"
+    },
+    {
+      "file": "travel/travel_cableCar-regular-default.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3426:3"
+    },
+    {
+      "file": "travel/travel_cableCar-regular-fill.svg",
+      "componentSet": "travel/cableCar",
+      "category": "travel",
+      "name": "travel_cableCar",
+      "variantName": "travel_cableCar",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3426:5"
+    },
+    {
       "file": "travel/travel_car-light-default.svg",
       "componentSet": "travel/car",
       "category": "travel",
@@ -17288,6 +17738,166 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "828:1925"
+    },
+    {
+      "file": "travel/travel_entrance-bold-default.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3427:135"
+    },
+    {
+      "file": "travel/travel_entrance-bold-fill.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3427:139"
+    },
+    {
+      "file": "travel/travel_entrance-light-default.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3427:141"
+    },
+    {
+      "file": "travel/travel_entrance-light-fill.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3427:143"
+    },
+    {
+      "file": "travel/travel_entrance-medium-default.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3427:133"
+    },
+    {
+      "file": "travel/travel_entrance-medium-fill.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3427:137"
+    },
+    {
+      "file": "travel/travel_entrance-regular-default.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3427:129"
+    },
+    {
+      "file": "travel/travel_entrance-regular-fill.svg",
+      "componentSet": "travel/entrance",
+      "category": "travel",
+      "name": "travel_entrance",
+      "variantName": "travel_entrance",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3427:131"
+    },
+    {
+      "file": "travel/travel_exit-bold-default.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3427:152"
+    },
+    {
+      "file": "travel/travel_exit-bold-fill.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3427:156"
+    },
+    {
+      "file": "travel/travel_exit-light-default.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3427:158"
+    },
+    {
+      "file": "travel/travel_exit-light-fill.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3427:160"
+    },
+    {
+      "file": "travel/travel_exit-medium-default.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3427:150"
+    },
+    {
+      "file": "travel/travel_exit-medium-fill.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3427:154"
+    },
+    {
+      "file": "travel/travel_exit-regular-default.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3427:146"
+    },
+    {
+      "file": "travel/travel_exit-regular-fill.svg",
+      "componentSet": "travel/exit",
+      "category": "travel",
+      "name": "travel_exit",
+      "variantName": "travel_exit",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3427:148"
     },
     {
       "file": "travel/travel_plane-light-default.svg",
@@ -17428,6 +18038,86 @@
       "thickness": "Regular",
       "mode": "fill",
       "nodeId": "828:2051"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-bold-default.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Bold",
+      "mode": "default",
+      "nodeId": "3424:58"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-bold-fill.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Bold",
+      "mode": "fill",
+      "nodeId": "3424:62"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-light-default.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Light",
+      "mode": "default",
+      "nodeId": "3424:64"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-light-fill.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Light",
+      "mode": "fill",
+      "nodeId": "3424:66"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-medium-default.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Medium",
+      "mode": "default",
+      "nodeId": "3424:56"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-medium-fill.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Medium",
+      "mode": "fill",
+      "nodeId": "3424:60"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-regular-default.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Regular",
+      "mode": "default",
+      "nodeId": "3424:52"
+    },
+    {
+      "file": "travel/travel_railwayMonorail-regular-fill.svg",
+      "componentSet": "travel/railwayMonorail",
+      "category": "travel",
+      "name": "travel_railwayMonorail",
+      "variantName": "travel_railwayMonorail",
+      "thickness": "Regular",
+      "mode": "fill",
+      "nodeId": "3424:54"
     },
     {
       "file": "travel/travel_ride-light-default.svg",

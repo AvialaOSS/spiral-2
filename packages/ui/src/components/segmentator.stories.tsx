@@ -63,6 +63,27 @@ export const EqualWidth: Story = {
   ),
 };
 
+/** Narrow container — swipe / trackpad to scroll when items would otherwise clip. */
+export const HorizontalScroll: Story = {
+  render: () => (
+    <div className="flex w-[220px] flex-col gap-4">
+      <SegmentatorGroup defaultValue="all">
+        <SegmentatorItem value="all">全部</SegmentatorItem>
+        <SegmentatorItem value="light">Light</SegmentatorItem>
+        <SegmentatorItem value="regular">Regular</SegmentatorItem>
+        <SegmentatorItem value="medium">Medium</SegmentatorItem>
+        <SegmentatorItem value="bold">Bold</SegmentatorItem>
+        <SegmentatorItem value="black">Black</SegmentatorItem>
+      </SegmentatorGroup>
+      <SegmentatorGroup equalWidth defaultValue="a">
+        <SegmentatorItem value="a">很长的选项标签甲</SegmentatorItem>
+        <SegmentatorItem value="b">很长的选项标签乙</SegmentatorItem>
+        <SegmentatorItem value="c">很长的选项标签丙</SegmentatorItem>
+      </SegmentatorGroup>
+    </div>
+  ),
+};
+
 export const IconOnly: Story = {
   render: () => (
     <SegmentatorGroup defaultValue="a">

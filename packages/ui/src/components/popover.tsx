@@ -51,6 +51,7 @@ export const PopoverTrigger = PopoverPrimitive.Trigger;
 export const PopoverAnchor = PopoverPrimitive.Anchor;
 
 export type PopoverAppearance = "default" | "tooltip" | "primary";
+export type PopoverContentLevel = "caption" | "text";
 
 export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
   /** Render without Portal — use inside nested overlays. */
@@ -62,10 +63,15 @@ export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimiti
   /**
    * Visual skin of the surface:
    * - `default` — light bordered panel (select-menu aligned), text typography, stroked caret.
-   * - `tooltip` — shared inverted tooltip skin (dark, caption text, borderless, solid caret).
+   * - `tooltip` — shared inverted tooltip skin (dark, caption text by default, borderless, solid caret).
    * - `primary` — brand primary surface with white text, borderless, solid caret.
    */
   appearance?: PopoverAppearance;
+  /**
+   * Typography level for the surface copy.
+   * Defaults to `caption` for `appearance="tooltip"`, otherwise `text`.
+   */
+  level?: PopoverContentLevel;
 };
 
 export const PopoverContent = forwardRef<
@@ -83,12 +89,14 @@ export const PopoverContent = forwardRef<
       showArrow = false,
       flush = false,
       appearance = "default",
+      level,
       ...props
     },
     ref
   ) => {
     const isDefaultAppearance = appearance === "default";
-    const surfaceLevel = appearance === "tooltip" ? "caption" : "text";
+    const surfaceLevel =
+      level ?? (appearance === "tooltip" ? "caption" : "text");
     const pointer = isDefaultAppearance ? POPOVER_POINTER : TOOLTIP_POINTER;
 
     const content = (

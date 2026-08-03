@@ -6,10 +6,11 @@ const meta: Meta<typeof Slider> = {
   title: "Information Collect/Slider",
   component: Slider,
   tags: ["autodocs"],
-  argTypes: {
+    argTypes: {
     size: { control: "select", options: ["default", "big"] },
     type: { control: "select", options: ["default", "range"] },
     disabled: { control: "boolean" },
+    showValueTooltip: { control: "boolean" },
   },
 };
 
@@ -31,22 +32,21 @@ export const Range: Story = {
 export const SizeMatrix: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-muted-foreground">Default</span>
-        <Slider size="default" defaultValue={[40]} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-muted-foreground">Big</span>
-        <Slider size="big" defaultValue={[40]} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-muted-foreground">Range · Default</span>
-        <Slider type="range" defaultValue={[25, 65]} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-xs text-muted-foreground">Disabled</span>
-        <Slider disabled defaultValue={[40]} />
-      </div>
+      {(
+        [
+          ["Default", { size: "default" as const }],
+          ["Big", { size: "big" as const }],
+          ["Range · Default", { type: "range" as const, defaultValue: [25, 65] }],
+          ["Range · Big", { size: "big" as const, type: "range" as const, defaultValue: [25, 65] }],
+          ["Disabled · Default", { disabled: true }],
+          ["Disabled · Big", { size: "big" as const, disabled: true }],
+        ] as const
+      ).map(([label, props]) => (
+        <div key={label} className="flex flex-col gap-2">
+          <span className="font-mono text-xs text-muted-foreground">{label}</span>
+          <Slider defaultValue={[40]} {...props} />
+        </div>
+      ))}
     </div>
   ),
 };
@@ -61,5 +61,31 @@ export const Controlled: Story = {
     return (
       <Slider value={value} onValueChange={setValue} aria-label="Volume" />
     );
+  },
+};
+
+export const ValueTooltip: Story = {
+  name: "Value tooltip",
+  args: {
+    showValueTooltip: true,
+    defaultValue: [40],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Enable `showValueTooltip` to show the thumb value on hover and while dragging. Use `formatValueTooltip` to customize the label.",
+      },
+    },
+  },
+};
+
+export const ValueTooltipFormatted: Story = {
+  name: "Value tooltip · formatted",
+  args: {
+    showValueTooltip: true,
+    defaultValue: [20, 70],
+    type: "range",
+    formatValueTooltip: (value) => `${value}%`,
   },
 };

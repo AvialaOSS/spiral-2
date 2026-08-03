@@ -410,7 +410,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border-radius: var(--checkbox-radius, 8px);
+  border-radius: var(--checkbox-radius, 6px);
   border: 1px solid var(--checkbox-border-unchecked);
   background-color: var(--checkbox-bg-unchecked);
 }

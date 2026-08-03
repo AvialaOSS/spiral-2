@@ -38,7 +38,7 @@ import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 
 | Prop | Values | Default |
 |---|---|---|
-| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` | `Medium` |
+| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium` |
 | `mode` | `default` \| `fill` | `default` |
 | `level` | typography level for token-based sizing | — |
 | `biggerSize` | bump one ALD size step for the given `level` | `false` |

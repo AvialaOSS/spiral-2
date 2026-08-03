@@ -1,50 +1,62 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { SymbolRight } from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,
   isValidElement,
+  useEffect,
+  useState,
   type ComponentPropsWithoutRef,
   type ReactElement,
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
 import { TypefacePair } from "./typeface";
+import { CheckboxCheckIcon } from "./checkbox-check-icon";
 
 /** Figma Components → Information Collect → Checkbox */
 export type CheckboxGroupDirection = "vertical" | "horizontal";
 
+/** Figma Checkbox `Size` — Default → `default`, Huge → `huge` */
+export type CheckboxSize = "default" | "huge";
+
 export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
   /** Figma Checkbox `Round` */
   round?: boolean;
+  /** Figma Checkbox `Size` */
+  size?: CheckboxSize;
 };
 
 export const Checkbox = forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxProps
->(({ className, round = false, ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={cn("aviala-checkbox aviala-focus-ring", className)}
-    data-round={round ? "true" : undefined}
-    {...props}
-  >
-    <span aria-hidden className="aviala-checkbox__surface" />
-    <CheckboxPrimitive.Indicator className="aviala-checkbox__indicator">
-      <SymbolRight
-        className="aviala-checkbox__indicator-icon aviala-checkbox__indicator-icon--check"
-        thickness="Bold"
-        width={12}
-        height={12}
-        aria-hidden
-      />
-      <span
-        aria-hidden
-        className="aviala-checkbox__indeterminate-mark aviala-checkbox__indicator-icon--indeterminate"
-      />
-    </CheckboxPrimitive.Indicator>
-  </CheckboxPrimitive.Root>
-));
+>(({ className, round = false, size = "default", ...props }, ref) => {
+  /** Skip enter transitions on first paint (defaultChecked / controlled initial). */
+  const [motionReady, setMotionReady] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMotionReady(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  return (
+    <CheckboxPrimitive.Root
+      ref={ref}
+      className={cn("aviala-checkbox aviala-focus-ring", className)}
+      data-round={round ? "true" : undefined}
+      data-size={size}
+      data-motion={motionReady ? "ready" : "boot"}
+      {...props}
+    >
+      <span aria-hidden className="aviala-checkbox__surface" />
+      <CheckboxPrimitive.Indicator forceMount className="aviala-checkbox__indicator">
+        <CheckboxCheckIcon className="aviala-checkbox__indicator-icon aviala-checkbox__indicator-icon--check" />
+        <span
+          aria-hidden
+          className="aviala-checkbox__indeterminate-mark aviala-checkbox__indicator-icon--indeterminate"
+        />
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
+  );
+});
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
 export type CheckboxGroupProps = ComponentPropsWithoutRef<"div"> & {

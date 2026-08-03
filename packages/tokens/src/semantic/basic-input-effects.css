@@ -351,13 +351,22 @@
 .aviala-segmentator-group {
   position: relative;
   display: inline-flex;
+  box-sizing: border-box;
+  max-width: 100%;
   min-width: var(--button-min-width, 46px);
-  flex-shrink: 0;
+  flex-shrink: 1;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
   gap: var(--segmentator-group-gap);
   border-radius: var(--segmentator-group-radius);
+  scrollbar-width: none;
+}
+
+.aviala-segmentator-group::-webkit-scrollbar {
+  display: none;
 }
 
 .aviala-segmentator-group[data-mode="nested"] {
@@ -381,13 +390,18 @@
 
 .aviala-segmentator-group[data-equal-width="true"] .aviala-segmentator-item {
   flex: 1 1 0;
-  min-width: 0;
+  /* Grow equally when space allows; do not shrink below content (scroll instead). */
+  min-width: max-content;
   justify-content: center;
 }
 
 @media (hover: none), (pointer: coarse) {
   .aviala-segmentator-group {
     touch-action: none;
+  }
+
+  .aviala-segmentator-group[data-overflowing="true"] {
+    touch-action: pan-x;
   }
 }
 

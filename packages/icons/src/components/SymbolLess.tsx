@@ -5,11 +5,11 @@ import { resolveIconVariant } from "../resolve-variant";
 import type { AvialaIconProps } from "../types";
 import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS } from "../types";
 
-const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M110 57C111.657 57 113 58.3431 113 60C113 61.6569 111.657 63 110 63H10C8.34315 63 7 61.6569 7 60C7 58.3431 8.34315 57 10 57H110Z" fill="currentColor" /></svg>;
+const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M110 57C111.657 57 113 58.3431 113 60C113 61.6569 111.657 63 110 63H10C8.34315 63 7 61.6569 7 60C7 58.3431 8.34315 57 10 57H110Z" fill="currentColor" /></svg>;
 
-const MediumDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M109 55.5C111.485 55.5 113.5 57.5147 113.5 60C113.5 62.4853 111.485 64.5 109 64.5H11C8.51472 64.5 6.5 62.4853 6.5 60C6.5 57.5147 8.51472 55.5 11 55.5H109Z" fill="currentColor" /></svg>;
+const MediumDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M109 55.5C111.485 55.5 113.5 57.5147 113.5 60C113.5 62.4853 111.485 64.5 109 64.5H11C8.51472 64.5 6.5 62.4853 6.5 60C6.5 57.5147 8.51472 55.5 11 55.5H109Z" fill="currentColor" /></svg>;
 
-const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" {...props}><path d="M109 56C111.209 56 113 57.7909 113 60C113 62.2091 111.209 64 109 64H11C8.79086 64 7 62.2091 7 60C7 57.7909 8.79086 56 11 56H109Z" fill="currentColor" /></svg>;
+const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M109 56C111.209 56 113 57.7909 113 60C113 62.2091 111.209 64 109 64H11C8.79086 64 7 62.2091 7 60C7 57.7909 8.79086 56 11 56H109Z" fill="currentColor" /></svg>;
 
 const variants = {
   Light: {

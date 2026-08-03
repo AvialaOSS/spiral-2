@@ -1,5 +1,10 @@
 # Tooltip
 
+## [Unreleased]
+
+### Added
+- `TooltipContent` / `ResponsiveTooltip` 支持 `level`：`"caption"`（默认）或 `"text"`
+
 ## 2.2.0
 
 ### Changed

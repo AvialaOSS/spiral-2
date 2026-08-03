@@ -52,14 +52,21 @@ const SVGR_OPTIONS = {
   },
 };
 
-/** Ensure viewBox exists for 120×120 Figma artboards before SVGR. */
+/**
+ * Figma icon artboards are 120×120. Exports occasionally ship wrong height/width
+ * (e.g. symbol_end at 120×260); force the canonical viewBox so size props scale correctly.
+ * Only touch the root `<svg>` tag — never strip `stroke-width` etc. on child nodes.
+ */
 function normalizeIconSvg(svg) {
-  if (/viewBox=/i.test(svg)) return svg;
-  const widthMatch = svg.match(/\bwidth="(\d+(?:\.\d+)?)/);
-  const heightMatch = svg.match(/\bheight="(\d+(?:\.\d+)?)/);
-  const w = widthMatch?.[1] ?? "120";
-  const h = heightMatch?.[1] ?? "120";
-  return svg.replace(/<svg\b/, `<svg viewBox="0 0 ${w} ${h}"`);
+  return svg.replace(/<svg\b([^>]*)>/i, (_match, attrs) => {
+    let nextAttrs = String(attrs)
+      .replace(/\s*\bviewBox="[^"]*"/gi, "")
+      .replace(/\s*\bwidth="[^"]*"/gi, "")
+      .replace(/\s*\bheight="[^"]*"/gi, "")
+      .trim();
+    nextAttrs = nextAttrs ? ` ${nextAttrs}` : "";
+    return `<svg viewBox="0 0 120 120"${nextAttrs}>`;
+  });
 }
 
 mkdirSync(outDir, { recursive: true });
