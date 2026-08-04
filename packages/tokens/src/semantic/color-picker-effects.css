@@ -63,37 +63,25 @@
   pointer-events: none;
 }
 
-.aviala-color-picker-slider {
-  position: relative;
-  height: var(--color-picker-slider-height, 8px);
-  width: 100%;
-  border: 1px solid var(--color-picker-thumb-border, #e2e0e0);
-  border-radius: var(--border-radius-allround, 99px);
-  touch-action: none;
-  cursor: pointer;
-}
-
-.aviala-color-picker-slider__track {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  overflow: hidden;
-}
-
-.aviala-color-picker-slider__thumb {
-  position: absolute;
-  top: 50%;
-  width: var(--color-picker-slider-thumb, 10px);
-  height: var(--color-picker-slider-thumb, 10px);
-  transform: translate(-50%, -50%);
-  border: 2px solid #fff;
-  border-radius: 999px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-  pointer-events: none;
-}
-
 .aviala-color-picker-slider-row {
   padding: 3px var(--color-picker-panel-px, 8px);
+}
+
+/* Hue / alpha rails reuse the shared Slider thumb + interaction model;
+ * only the track fill is ColorPicker-specific (spectrum / opacity). */
+.aviala-color-picker-slider.aviala-slider {
+  width: 100%;
+}
+
+.aviala-color-picker-slider .aviala-slider__track {
+  overflow: hidden;
+  border: 1px solid var(--color-picker-thumb-border, #e2e0e0);
+  background-color: transparent;
+  background-image: var(--color-picker-slider-track-bg);
+}
+
+.aviala-color-picker-slider .aviala-slider__range {
+  background-color: transparent;
 }
 
 .aviala-color-picker-inputs {

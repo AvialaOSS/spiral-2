@@ -362,8 +362,6 @@
   --color-picker-swatch-input: 18px;
   --color-picker-swatch-button: 26px;
   --color-picker-swatch-button-size: 32px;
-  --color-picker-slider-height: 8px;
-  --color-picker-slider-thumb: 10px;
   --color-picker-panel-bg: var(--select-menu-bg);
   --color-picker-panel-border: var(--select-menu-border);
   --color-picker-panel-radius: var(--select-menu-radius);
