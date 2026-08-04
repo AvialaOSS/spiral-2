@@ -13,6 +13,7 @@ import {
 } from "react";
 import { cn } from "../../lib/utils";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
+import { useLocaleMessages } from "../../locale";
 import { formatTimeValue } from "../date-picker/date-utils";
 import { typographyVariants } from "../typography";
 import {
@@ -146,7 +147,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
       allRound = false,
       leftIcon,
       rightIcon,
-      placeholder = "HH:mm",
+      placeholder,
       error = false,
       displayValue,
       disabled: disabledProp,
@@ -154,9 +155,11 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
     },
     ref
   ) => {
+    const locale = useLocaleMessages("TimePicker");
     const { open, disabled: disabledContext, size: sizeContext, value } = useTimePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
+    const resolvedPlaceholder = placeholder ?? locale.placeholder;
     const formatted =
       displayValue !== undefined
         ? displayValue
@@ -190,7 +193,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
               )}
               data-placeholder={hasValue ? undefined : "true"}
             >
-              {hasValue ? formatted : placeholder}
+              {hasValue ? formatted : resolvedPlaceholder}
             </span>
           </span>
           {renderSlotIcon(rightIcon, "aviala-timepicker-trigger__slot")}
@@ -243,10 +246,15 @@ export type TimePickerPanelProps = {
 };
 
 export function TimePickerPanel({ className }: TimePickerPanelProps) {
+  const locale = useLocaleMessages("TimePicker");
   const { value, setValue } = useTimePickerContext();
 
   return (
-    <div className={cn("aviala-timepicker-panel", className)} role="application" aria-label="Time picker">
+    <div
+      className={cn("aviala-timepicker-panel", className)}
+      role="application"
+      aria-label={locale.panel}
+    >
       <TimePickerWheels value={value} onChange={setValue} />
     </div>
   );

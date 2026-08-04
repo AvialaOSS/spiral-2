@@ -6,6 +6,29 @@ export {
   type PaletteConfig,
   type HueFamily,
 } from "@aviala-design/tokens";
+export {
+  LocaleProvider,
+  useLocale,
+  useLocaleMessages,
+  interpolate,
+  zhCN,
+  enUS,
+  type Locale,
+  type LocaleProviderProps,
+  type LocaleComponentName,
+} from "./locale";
+export {
+  ConfigProvider,
+  useDirection,
+  useRtl,
+  mirrorSide,
+  mirrorSideForDirection,
+  forwardChevronSide,
+  backChevronSide,
+  type ConfigProviderProps,
+  type Direction,
+  type PhysicalSide,
+} from "./config";
 
 export { Button, buttonVariants, type ButtonProps, type ButtonMode, type ButtonSize } from "./components/button";
 export { Input, inputRootVariants, type InputProps, type InputSize } from "./components/input";
@@ -123,8 +146,17 @@ export {
   type SegmentatorGroupProps,
   type SegmentatorItemProps,
   type SegmentatorMode,
+  type SegmentatorDirection,
 } from "./components/segmentator";
-export { FormField, type FormFieldProps, type FormFieldDirection } from "./components/form-field";
+export {
+  Form,
+  FormField,
+  type FormFieldProps,
+  type FormFieldLayoutProps,
+  type FormFieldControlledProps,
+  type FormFieldRenderProps,
+  type FormFieldDirection,
+} from "./components/form-field";
 export {
   Typography,
   typographyVariants,
@@ -287,6 +319,7 @@ export {
 } from "./components/tooltip";
 export {
   ResponsiveTooltip,
+  RESPONSIVE_TOOLTIP_LONG_PRESS_MS,
   type ResponsiveTooltipProps,
 } from "./components/responsive-tooltip";
 export {
@@ -353,6 +386,14 @@ export {
   type NavigationActionsProps,
   type NavigationActionsSlotProps,
 } from "./components/navigation";
+export {
+  Tab,
+  TabItem,
+  type TabProps,
+  type TabItemProps,
+  type TabStyle,
+  type TabBackground,
+} from "./components/tab";
 export { Slider, type SliderProps, type SliderSize, type SliderType } from "./components/slider";
 export { Upload, type UploadProps, type UploadStyle } from "./components/upload";
 export {

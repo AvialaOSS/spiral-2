@@ -1,8 +1,9 @@
 import { useCallback, type CSSProperties } from "react";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";
+import { useLocaleMessages } from "../../locale";
 import { Slider } from "../slider";
-import { hueGradientStops, solidHex } from "./color-utils";
+import { hueGradientStops, solidHex, toRgbComponents } from "./color-utils";
 import { useOptionalColorPickerContext } from "./color-picker-context";
 import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
 
@@ -22,6 +23,7 @@ export function ColorPickerSlider({
   defaultValue,
   onChange,
 }: ColorPickerSliderProps) {
+  const locale = useLocaleMessages("ColorPicker");
   const ctx = useOptionalColorPickerContext();
   const local = useColorPickerState({
     value: ctx ? undefined : valueProp,
@@ -47,10 +49,16 @@ export function ColorPickerSlider({
     [kind, setHsva]
   );
 
+  // Hue: spectrum only. Alpha: same-hue 0→1 (avoid `transparent` muddy lerp);
+  // checkerboard sits under the gradient in CSS.
   const trackBg =
     kind === "hue"
       ? `linear-gradient(90deg, ${hueGradientStops()})`
-      : `linear-gradient(90deg, transparent, ${solidHex(value)}), var(--color-picker-checkerboard)`;
+      : (() => {
+          const solid = solidHex(value);
+          const { r, g, b } = toRgbComponents(solid);
+          return `linear-gradient(90deg, rgba(${r},${g},${b},0), ${solid})`;
+        })();
 
   return (
     <div
@@ -64,14 +72,15 @@ export function ColorPickerSlider({
     >
       <Slider
         className="aviala-color-picker-slider"
-        size="default"
+        data-kind={kind}
+        size="big"
         min={0}
         max={kind === "hue" ? 360 : 100}
         step={1}
         value={sliderValue}
         onValueChange={handleValueChange}
         disabled={isDisabled}
-        aria-label={kind === "hue" ? "Hue" : "Opacity"}
+        aria-label={kind === "hue" ? locale.hue : locale.opacity}
       />
     </div>
   );

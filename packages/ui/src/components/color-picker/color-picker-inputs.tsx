@@ -12,6 +12,7 @@ import {
 } from "../select";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";
+import { useLocaleMessages } from "../../locale";
 import { typographyVariants } from "../typography";
 import {
   alphaPercent,
@@ -50,6 +51,7 @@ export function ColorPickerInputs({
   format: formatProp,
   onFormatChange,
 }: ColorPickerInputsProps) {
+  const locale = useLocaleMessages("ColorPicker");
   const ctx = useOptionalColorPickerContext();
   const local = useColorPickerState({
     value: ctx ? undefined : valueProp,
@@ -117,11 +119,11 @@ export function ColorPickerInputs({
           size="regular"
           iconOnly
           disabled={isDisabled}
-          aria-label="Pick color from screen"
+          aria-label={locale.pickFromScreen}
           {...spiralDebugId("color-picker.content.inputs.eyedropper")}
           title={
             eyeDropperSupported
-              ? "Pick color from screen"
+              ? locale.pickFromScreen
               : "EyeDropper not supported in this browser"
           }
           onClick={handleEyedropper}
@@ -139,7 +141,7 @@ export function ColorPickerInputs({
             className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
             value={hexDraft}
             disabled={isDisabled}
-            aria-label="Hex color"
+            aria-label={locale.hex}
             onChange={(e) => setHexDraft(e.target.value.toUpperCase())}
             onBlur={commitHex}
             onKeyDown={(e) => e.key === "Enter" && commitHex()}
@@ -151,7 +153,7 @@ export function ColorPickerInputs({
             className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
             value={componentDraft}
             disabled={isDisabled}
-            aria-label={format === "rgb" ? "RGB color" : "HSL color"}
+            aria-label={format === "rgb" ? locale.rgb : locale.hsl}
             onChange={(e) => setComponentDraft(e.target.value)}
             onBlur={commitComponents}
             onKeyDown={(e) => e.key === "Enter" && commitComponents()}
@@ -164,7 +166,7 @@ export function ColorPickerInputs({
           className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
           value={alphaDraft}
           disabled={isDisabled}
-          aria-label="Opacity percent"
+          aria-label={locale.opacityPercent}
           inputMode="numeric"
           onChange={(e) => setAlphaDraft(e.target.value)}
           onBlur={commitAlpha}

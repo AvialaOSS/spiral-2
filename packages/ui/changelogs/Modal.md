@@ -1,5 +1,10 @@
 # Modal
 
+## Unreleased
+
+### Changed
+- 默认关闭按钮文案改由 `LocaleProvider` 提供（`closeLabel` 仍可覆盖）
+
 ## 2.0.0
 
 ### Fixed

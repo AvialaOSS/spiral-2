@@ -1,30 +1,6 @@
-import type { ComponentPropsWithoutRef, HTMLAttributes, ReactNode } from "react";
-
-declare module "@aviala-design/spiral" {
-  export const Modal: React.FC<{
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    children?: ReactNode;
-  }>;
-
-  export const ModalContent: React.ForwardRefExoticComponent<
-    ComponentPropsWithoutRef<"div"> & {
-      size?: "default" | "large";
-      children?: ReactNode;
-    }
-  >;
-
-  export const ModalHeaderText: React.FC<{
-    title: ReactNode;
-    description?: ReactNode;
-  }>;
-
-  export const ModalBody: React.ForwardRefExoticComponent<
-    HTMLAttributes<HTMLDivElement> & { children?: ReactNode }
-  >;
-
-  export const ModalFooter: React.ForwardRefExoticComponent<
-    HTMLAttributes<HTMLDivElement> & { children?: ReactNode }
-  >;
-}
+// DEPRECATED: 该 shim 已停用。
+// @aviala-design/spiral 的 src 现已导出完整的 Modal 类型
+// （playground/docs 的 tsconfig 通过 customConditions: ["development"] 直连 src），
+// 本文件的 declare module 会与真实导出冲突（TS2451）。
+// 确认无误后可直接删除本文件。
+export {};

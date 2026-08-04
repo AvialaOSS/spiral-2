@@ -8,7 +8,9 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from "react";
+import { useRtl } from "../config";
 import { cn } from "../lib/utils";
+import { interpolate, useLocaleMessages } from "../locale";
 import { Button, buttonVariants } from "./button";
 import { Input } from "./input";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
@@ -93,13 +95,21 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       defaultPageSize = 10,
       pageSizeOptions = [10, 20, 50],
       onPageSizeChange,
-      jumpLabel = "跳转至",
-      sizeLabel = "每页",
-      sizeOptionLabel = (size) => `${size} 项`,
+      jumpLabel,
+      sizeLabel,
+      sizeOptionLabel,
       ...props
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Pagination");
+    const rtl = useRtl();
+    const PrevIcon = rtl ? DirectionArrowRightLight : DirectionArrowLeftLight;
+    const NextIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
+    const resolvedJumpLabel = jumpLabel ?? locale.jumpTo;
+    const resolvedSizeLabel = sizeLabel ?? locale.pageSize;
+    const resolvedSizeOptionLabel =
+      sizeOptionLabel ?? ((size: number) => interpolate(locale.items, { size }));
     const [uncontrolledPage, setUncontrolledPage] = useState(defaultPage);
     const [uncontrolledPageSize, setUncontrolledPageSize] = useState(defaultPageSize);
     const [jumpValue, setJumpValue] = useState("");
@@ -133,7 +143,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         ref={ref}
         className={cn("aviala-pagination", className)}
         role="navigation"
-        aria-label={props["aria-label"] ?? "Pagination"}
+        aria-label={props["aria-label"] ?? locale.pagination}
         {...props}
       >
         <div className="aviala-pagination__controls">
@@ -141,9 +151,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             mode="noBackgroundCustom"
             size="regular"
             iconOnly
-            aria-label="Previous page"
+            aria-label={locale.previous}
             disabled={currentPage <= 1}
-            leftIcon={<DirectionArrowLeftLight aria-hidden />}
+            leftIcon={<PrevIcon aria-hidden />}
             onClick={() => setPage(currentPage - 1)}
           />
           <div className="aviala-pagination__pages">
@@ -162,7 +172,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                         buttonVariants({ mode: "noBackgroundCustom", compact: true }),
                         "aviala-pagination__page--ellipsis"
                       )}
-                      aria-label="更多页码"
+                      aria-label={locale.morePages}
                       aria-haspopup="menu"
                     >
                       <Typography level="text" as="span">
@@ -218,9 +228,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             mode="noBackgroundCustom"
             size="regular"
             iconOnly
-            aria-label="Next page"
+            aria-label={locale.next}
             disabled={currentPage >= safePageCount}
-            leftIcon={<DirectionArrowRightLight aria-hidden />}
+            leftIcon={<NextIcon aria-hidden />}
             onClick={() => setPage(currentPage + 1)}
           />
         </div>
@@ -228,14 +238,14 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         {showJump ? (
           <div className="aviala-pagination__jump">
             <Typography level="text" as="span">
-              {jumpLabel}
+              {resolvedJumpLabel}
             </Typography>
             <Input
               className="aviala-pagination__jump-input"
               size="regular"
               fullWidth={false}
               value={jumpValue}
-              placeholder="页码"
+              placeholder={locale.pagePlaceholder}
               inputMode="numeric"
               onChange={(event) => setJumpValue(event.target.value)}
               onKeyDown={(event) => {
@@ -252,7 +262,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         {showSizeChanger ? (
           <div className="aviala-pagination__size">
             <Typography level="text" as="span">
-              {sizeLabel}
+              {resolvedSizeLabel}
             </Typography>
             <Select
               value={String(pageSize)}
@@ -261,7 +271,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
               <SelectTrigger
                 size="regular"
                 className="aviala-pagination__size-select"
-                aria-label="Page size"
+                aria-label={locale.pageSizeAria}
               />
               <SelectContent>
                 <SelectItemGroup>
@@ -271,7 +281,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                       value={String(option)}
                       itemFunction="checkbox"
                     >
-                      {sizeOptionLabel(option)}
+                      {resolvedSizeOptionLabel(option)}
                     </SelectItem>
                   ))}
                 </SelectItemGroup>

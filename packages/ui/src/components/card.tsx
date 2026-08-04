@@ -1,4 +1,5 @@
 import {
+  DirectionArrowLeftLight,
   DirectionArrowRightLight,
   GeneralSetting,
 } from "@aviala-design/icons";
@@ -11,7 +12,9 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { useRtl } from "../config";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Button } from "./button";
 import { Switch, type SwitchProps } from "./switch";
 import { Typeface } from "./typeface";
@@ -80,6 +83,9 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Card");
+    const rtl = useRtl();
+    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const primaryAction =
       action ??
       (
@@ -101,12 +107,12 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
                   mode="default"
                   size="regular"
                   iconOnly
-                  aria-label="More"
+                  aria-label={locale.more}
                   leftIcon={<GeneralSetting aria-hidden />}
                 />
               )}
               <span className="aviala-card__divider" aria-hidden />
-              <DirectionArrowRightLight width={14} height={14} aria-hidden />
+              <ChevronIcon width={14} height={14} aria-hidden />
             </div>
           );
         case "switch":
@@ -195,6 +201,9 @@ export const CardBottom = forwardRef<HTMLDivElement, CardBottomProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Card");
+    const rtl = useRtl();
+    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const primaryAction =
       action ??
       (
@@ -228,12 +237,12 @@ export const CardBottom = forwardRef<HTMLDivElement, CardBottomProps>(
                   mode="default"
                   size="regular"
                   iconOnly
-                  aria-label="More"
+                  aria-label={locale.more}
                   leftIcon={<GeneralSetting aria-hidden />}
                 />
               )}
               <span className="aviala-card__divider" aria-hidden />
-              <DirectionArrowRightLight width={14} height={14} aria-hidden />
+              <ChevronIcon width={14} height={14} aria-hidden />
             </>
           );
       }

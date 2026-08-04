@@ -13,7 +13,7 @@
 }
 
 .aviala-navigation[data-direction="vertical"][data-dividing-line="true"] {
-  border-right: 1px solid var(--navigation-divider);
+  border-inline-end: 1px solid var(--navigation-divider);
 }
 
 .aviala-navigation[data-direction="horizontal"] {
@@ -228,8 +228,8 @@
 }
 
 .aviala-navigation[data-direction="vertical"] .aviala-navigation-item[data-item-type="child"] {
-  padding-left: var(--navigation-item-child-pl, 26px);
-  padding-right: var(--navigation-item-px, 8px);
+  padding-inline-start: var(--navigation-item-child-pl, 26px);
+  padding-inline-end: var(--navigation-item-px, 8px);
 }
 
 .aviala-navigation[data-direction="horizontal"] .aviala-navigation-item {
@@ -243,7 +243,7 @@
   gap: var(--gap-inside, 4px);
   width: 100%;
   text-decoration: none;
-  text-align: left;
+  text-align: start;
 }
 
 .aviala-navigation[data-direction="vertical"] .aviala-navigation-item__control {
@@ -409,7 +409,7 @@
   padding: var(--select-item-py, 4px) var(--select-item-px, 8px);
   color: var(--select-item-fg);
   font-family: inherit;
-  text-align: left;
+  text-align: start;
   text-decoration: none;
   transition:
     background-color 0.15s ease,

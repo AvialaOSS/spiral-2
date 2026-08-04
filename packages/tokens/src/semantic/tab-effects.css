@@ -1,0 +1,261 @@
+/* Tab / TabItem — Figma Structure Navigation → Tab (1860:28603)
+   TabItem nests Button modes (same pattern as NavigationItem). */
+
+:root {
+  --tab-gap: var(--gap-inside, 4px);
+  --tab-px: var(--padding-default, 8px);
+  --tab-list-gap: var(--gap-inside-space, 6px);
+  --tab-list-gap-card: 0px;
+  --tab-slot-gap: var(--gap-component-space, 8px);
+  --tab-item-indicator-space: var(--padding-small, 6px);
+  --tab-item-control-gap: var(--gap-inside, 4px);
+  --tab-item-control-radius: var(--border-radius-small, 8px);
+  --tab-icon-box: 18px;
+  --tab-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --tab-fg: var(--text-text-normal-text-black, #343333);
+  --tab-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  /* Figma Background=Default + Style=Card → control lightBackground-light (#f5f3f3), not whiteonly */
+  --tab-bg-card: var(--control-control-normal-lightbackground-light, #f5f3f3);
+  --tab-card-active-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --tab-card-ear-size: 8px;
+  --tab-indicator-height: 4px;
+  /* Figma Rectangle 1 on active Default TabItem: inset 12px from item edges */
+  --tab-indicator-inset-inline: 12px;
+  --tab-indicator-radius: var(--border-radius-extra-small-2, 6px);
+  --tab-indicator-color: var(--border-border-theme-primary, #ff856b);
+  --tab-transition-duration: 0.3s;
+  --tab-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aviala-tab {
+  box-sizing: border-box;
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: var(--tab-gap);
+  padding-inline: var(--tab-px);
+  background: transparent;
+  color: var(--tab-fg);
+}
+
+.aviala-tab[data-background="default"] {
+  background-color: var(--tab-bg);
+}
+
+.aviala-tab[data-style="card"] {
+  /* Figma Card root uses gap-component-space (8px), not gap-inside (4px). */
+  align-items: flex-end;
+  gap: var(--tab-slot-gap);
+}
+
+/* Figma 1866:38218 — Card + Background=Default is gray bar so white active + ears read. */
+.aviala-tab[data-style="card"][data-background="default"] {
+  background-color: var(--tab-bg-card);
+  padding-top: var(--padding-tiny, 4px);
+  padding-bottom: 0;
+}
+
+.aviala-tab__slot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--tab-slot-gap);
+}
+
+.aviala-tab[data-style="default"] .aviala-tab__slot {
+  padding-bottom: var(--tab-item-indicator-space);
+}
+
+.aviala-tab[data-style="tiled"] .aviala-tab__slot {
+  padding-block: var(--padding-min, 2px);
+}
+
+/* Card slots: Figma aligns to flex-end; Background=Default adds root padding-top instead. */
+.aviala-tab[data-style="card"] .aviala-tab__slot {
+  padding-block: 0;
+}
+
+.aviala-tab__list {
+  position: relative;
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: var(--tab-list-gap);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.aviala-tab__list::-webkit-scrollbar {
+  display: none;
+}
+
+.aviala-tab[data-style="card"] .aviala-tab__list {
+  align-items: flex-end;
+  gap: var(--tab-list-gap-card);
+}
+
+.aviala-tab-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  height: var(--tab-indicator-height);
+  border-radius: var(--tab-indicator-radius) var(--tab-indicator-radius) 0 0;
+  background: var(--tab-indicator-color);
+  opacity: 0;
+  will-change: transform, width;
+  transition:
+    transform var(--tab-transition-duration) var(--tab-transition-easing),
+    width var(--tab-transition-duration) var(--tab-transition-easing),
+    opacity 120ms ease;
+}
+
+.aviala-tab-indicator[data-visible="true"] {
+  opacity: 1;
+}
+
+.aviala-tab-indicator[data-instant="true"] {
+  transition: none;
+}
+
+.aviala-tab-item {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+.aviala-tab[data-style="default"] .aviala-tab-item {
+  padding-bottom: var(--tab-item-indicator-space);
+}
+
+.aviala-tab[data-style="card"] .aviala-tab-item {
+  align-items: flex-end;
+  gap: 0;
+  /* Figma Card inactive TabItem: padding-min (2px); active clears to 0 */
+  padding-inline: var(--padding-min, 2px);
+}
+
+.aviala-tab[data-style="card"] .aviala-tab-item[data-active="true"] {
+  /* Figma active Card: ear(2) + button + ear(2), no outer padding */
+  padding-inline: 0;
+  z-index: 1;
+}
+
+.aviala-tab-item__control {
+  position: relative;
+  z-index: 1;
+  gap: var(--tab-item-control-gap);
+  width: auto;
+  flex: 0 0 auto;
+  text-decoration: none;
+}
+
+/* Tiled active — Button `second` surface (no DOM surface span when using variants) */
+.aviala-tab-item__control.aviala-button--mode-second::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--button-surface-bg, var(--button-second-bg));
+  box-shadow: var(--button-shadow-light);
+  pointer-events: none;
+  transition:
+    filter 250ms ease,
+    background-color 250ms ease;
+}
+
+.aviala-tab-item__control.aviala-button--mode-second:active:not(:disabled)::before {
+  filter: brightness(var(--button-active-brightness, 0.95));
+}
+
+/*
+ * Card active — Figma Button frame: white fill, radii [8,8,0,0], theme text.
+ * Ears are sibling 2×8 frames with 8×8 vectors (1866:38024 / 1866:38019).
+ */
+.aviala-tab[data-style="card"]
+  .aviala-tab-item[data-active="true"]
+  .aviala-tab-item__control.aviala-button {
+  overflow: visible;
+  background-color: var(--tab-card-active-bg);
+  border-radius: var(--tab-item-control-radius) var(--tab-item-control-radius) 0 0;
+}
+
+.aviala-tab[data-style="card"]
+  .aviala-tab-item[data-active="true"]
+  .aviala-tab-item__control.aviala-button:hover:not(:disabled),
+.aviala-tab[data-style="card"]
+  .aviala-tab-item[data-active="true"]
+  .aviala-tab-item__control.aviala-button:active:not(:disabled) {
+  background-color: var(--tab-card-active-bg);
+}
+
+.aviala-tab-item__ear {
+  position: relative;
+  z-index: 0;
+  display: block;
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: 2px;
+  height: var(--tab-card-ear-size);
+  overflow: visible;
+  pointer-events: none;
+  color: var(--tab-card-active-bg);
+}
+
+.aviala-tab-item__ear svg {
+  position: absolute;
+  bottom: 0;
+  width: var(--tab-card-ear-size);
+  height: var(--tab-card-ear-size);
+  display: block;
+  overflow: visible;
+}
+
+/* Start ear hugs the button’s start edge and flares outward */
+.aviala-tab-item__ear[data-side="start"] svg {
+  inset-inline-end: 0;
+}
+
+/* End ear hugs the button’s end edge and flares outward */
+.aviala-tab-item__ear[data-side="end"] svg {
+  inset-inline-start: 0;
+}
+
+/* RTL: flex mirrors ear order; flip vectors so flares still point outward */
+[dir="rtl"] .aviala-tab-item__ear svg {
+  transform: scaleX(-1);
+}
+
+.aviala-tab-item__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: var(--tab-icon-box);
+  height: var(--tab-icon-box);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.aviala-tab-item__icon svg {
+  width: var(--tab-icon-size);
+  height: var(--tab-icon-size);
+  flex-shrink: 0;
+}
+
+.aviala-tab-item__label {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-tab-indicator {
+    transition: none;
+  }
+}

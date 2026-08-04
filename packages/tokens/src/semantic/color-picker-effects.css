@@ -68,16 +68,37 @@
 }
 
 /* Hue / alpha rails reuse the shared Slider thumb + interaction model;
- * only the track fill is ColorPicker-specific (spectrum / opacity). */
+ * track fill is ColorPicker-specific (spectrum / opacity + checkerboard). */
 .aviala-color-picker-slider.aviala-slider {
   width: 100%;
+  --slider-track-height: var(--color-picker-slider-height, 16px);
+  --slider-track-height-big: var(--color-picker-slider-height, 16px);
 }
 
 .aviala-color-picker-slider .aviala-slider__track {
   overflow: hidden;
-  border: 1px solid var(--color-picker-thumb-border, #e2e0e0);
+  /* Prefer inset ring over border so box-sizing doesn't shrink the fill. */
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--color-picker-thumb-border, #e2e0e0);
   background-color: transparent;
   background-image: var(--color-picker-slider-track-bg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.aviala-color-picker-slider[data-kind="alpha"] .aviala-slider__track {
+  /* Gradient on top; checkerboard underneath (must size both layers explicitly —
+   * `auto` can fail to paint the full rail height with multi-layer backgrounds). */
+  background-image:
+    var(--color-picker-slider-track-bg),
+    conic-gradient(
+      #c8c6c6 90deg,
+      #fefcfc 90deg 180deg,
+      #c8c6c6 180deg 270deg,
+      #fefcfc 270deg
+    );
+  background-size: 100% 100%, 8px 8px;
+  background-repeat: no-repeat, repeat;
 }
 
 .aviala-color-picker-slider .aviala-slider__range {
@@ -298,7 +319,7 @@
   min-width: 0;
   flex: 1;
   padding: var(--input-shell-field-py) 0;
-  text-align: left;
+  text-align: start;
   font-size: var(--input-font-size);
   line-height: var(--input-line-height);
 }

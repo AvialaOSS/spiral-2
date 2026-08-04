@@ -50,6 +50,13 @@
   /* noBackgroundCustom — neutral-4 hover, neutral-5 press */
   --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
   --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
+  /* outline / outlineCustom — Figma Mode=Outline(-Custom); 1px outside stroke */
+  --button-outline-border: var(--border-border-normal-primary, #e2e0e0);
+  --button-outline-fg: var(
+    --text-text-theme-primary-black,
+    var(--aviala-primary-primary-10, #bf2300)
+  );
+  --button-outline-custom-fg: var(--text-text-normal-text-black, #343333);
   --button-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
   --button-icon-slot-height: var(--line-height-regular, 1.125rem);
 
@@ -362,6 +369,7 @@
   --color-picker-swatch-input: 18px;
   --color-picker-swatch-button: 26px;
   --color-picker-swatch-button-size: 32px;
+  --color-picker-slider-height: 16px;
   --color-picker-panel-bg: var(--select-menu-bg);
   --color-picker-panel-border: var(--select-menu-border);
   --color-picker-panel-radius: var(--select-menu-radius);
@@ -506,6 +514,32 @@
   --list-item-disabled-opacity: var(--input-disabled-opacity, 0.55);
   --list-separator-my: var(--list-gap);
 
+  /* Tab — Figma Structure Navigation → Tab / TabItem */
+  --tab-gap: var(--gap-inside, 4px);
+  --tab-px: var(--padding-default, 8px);
+  --tab-list-gap: var(--gap-inside-space, 6px);
+  --tab-list-gap-card: 0px;
+  --tab-slot-gap: var(--gap-component-space, 8px);
+  --tab-item-indicator-space: var(--padding-small, 6px);
+  --tab-item-control-gap: var(--gap-inside, 4px);
+  --tab-item-control-radius: var(--border-radius-small, 8px);
+  --tab-icon-box: 18px;
+  --tab-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --tab-fg: var(--text-text-normal-text-black, #343333);
+  --tab-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --tab-bg-card: var(--control-control-normal-lightbackground-light, #f5f3f3);
+  --tab-card-active-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --tab-card-ear-size: 8px;
+  --tab-indicator-height: 4px;
+  --tab-indicator-inset-inline: 12px;
+  --tab-indicator-radius: var(--border-radius-extra-small-2, 6px);
+  --tab-indicator-color: var(--border-border-theme-primary, #ff856b);
+  --tab-transition-duration: var(--navigation-transition-duration, 0.3s);
+  --tab-transition-easing: var(
+    --navigation-transition-easing,
+    cubic-bezier(0.16, 1, 0.3, 1)
+  );
+
   --navigation-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
   --navigation-gap: var(--gap-content-space, 10px);
   --navigation-py: var(--padding-big, 14px);
@@ -531,7 +565,7 @@
   /* Vertical active rail: grow on hover / shrink on press (inset from item edges). */
   --navigation-rail-inset-hover: 3px;
   --navigation-rail-inset-press: 9px;
-  --navigation-rail-left: 1px;
+  --navigation-rail-inline-start: 1px;
   --navigation-rail-width: 3px;
   --navigation-indicator-width-horizontal: 50px;
   --navigation-transition-duration: var(--switch-transition-duration, 0.3s);

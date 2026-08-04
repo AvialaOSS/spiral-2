@@ -4,7 +4,8 @@
     "composite": true,
     "noEmit": false,
     "outDir": "./node_modules/.tmp",
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "customConditions": ["development"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -16,6 +16,7 @@ import {
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
+import { useLocaleMessages } from "../locale";
 import { typographyVariants } from "./typography";
 import { Badge } from "./badge";
 import {
@@ -156,6 +157,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("NumberInput");
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [focused, setFocused] = useState(false);
     const [internalValue, setInternalValue] = useState(() =>
@@ -280,7 +282,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                 disabled ||
                 (max !== undefined && numeric !== null && numeric >= max)
               }
-              aria-label="Increment"
+              aria-label={locale.increment}
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => applyStep(1)}
               {...spiralDebugId("number-input.step-up")}
@@ -295,7 +297,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                 disabled ||
                 (min !== undefined && numeric !== null && numeric <= min)
               }
-              aria-label="Decrement"
+              aria-label={locale.decrement}
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => applyStep(-1)}
               {...spiralDebugId("number-input.step-down")}

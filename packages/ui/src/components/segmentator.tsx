@@ -20,11 +20,13 @@ import { typographyVariants } from "./typography";
 
 /** Figma Components → Basic Input → Segmentator */
 export type SegmentatorMode = "nested" | "tiled";
+export type SegmentatorDirection = "horizontal" | "vertical";
 
 type SegmentatorContextValue = {
   value?: string;
   onValueChange?: (value: string) => void;
   mode: SegmentatorMode;
+  direction: SegmentatorDirection;
   allRound: boolean;
   disabled?: boolean;
   consumeClickRef: RefObject<boolean>;
@@ -123,6 +125,7 @@ type SegmentatorDragState = {
 type SegmentatorPointerDrag = {
   pointerId: number;
   startX: number;
+  startY: number;
   moved: boolean;
   fallback: SegmentatorThumbMetrics;
   previewValue: string | null;
@@ -188,7 +191,10 @@ function measureItemThumbMetrics(
 }
 
 function syncSegmentatorOverflowing(group: HTMLElement) {
-  const overflowing = group.scrollWidth > group.clientWidth + 1;
+  const vertical = group.getAttribute("data-direction") === "vertical";
+  const overflowing = vertical
+    ? group.scrollHeight > group.clientHeight + 1
+    : group.scrollWidth > group.clientWidth + 1;
   if (overflowing) {
     group.setAttribute("data-overflowing", "true");
   } else {
@@ -226,13 +232,43 @@ function findItemAtClientX(
   return nearest;
 }
 
+function findItemAtClientY(
+  items: HTMLButtonElement[],
+  clientY: number
+): HTMLButtonElement | null {
+  for (const item of items) {
+    const rect = item.getBoundingClientRect();
+    if (clientY >= rect.top && clientY <= rect.bottom) return item;
+  }
+
+  let nearest: HTMLButtonElement | null = null;
+  let minDistance = Number.POSITIVE_INFINITY;
+
+  for (const item of items) {
+    const rect = item.getBoundingClientRect();
+    const center = rect.top + rect.height / 2;
+    const distance = Math.abs(clientY - center);
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearest = item;
+    }
+  }
+
+  return nearest;
+}
+
 function getItemCenterX(item: HTMLButtonElement): number {
   const rect = item.getBoundingClientRect();
   return rect.left + rect.width / 2;
 }
 
+function getItemCenterY(item: HTMLButtonElement): number {
+  const rect = item.getBoundingClientRect();
+  return rect.top + rect.height / 2;
+}
+
 /**
- * Map finger X onto the nearest item, with a small tactile offset while stuck.
+ * Map finger onto the nearest item, with a small tactile offset while stuck.
  * Crossing items is a discrete jump in metrics — callers should animate those.
  * Edge limits only apply on the first/last item (outward side); mid-track sticky
  * offset stays free.
@@ -241,28 +277,44 @@ function computeDragThumbMetrics(
   group: HTMLElement,
   items: HTMLButtonElement[],
   clientX: number,
-  fallback: SegmentatorThumbMetrics
+  clientY: number,
+  fallback: SegmentatorThumbMetrics,
+  direction: SegmentatorDirection
 ): { metrics: SegmentatorThumbMetrics; item: HTMLButtonElement | null } {
   if (items.length === 0) {
     return { metrics: fallback, item: null };
   }
 
-  const item = findItemAtClientX(items, clientX);
+  const vertical = direction === "vertical";
+  const item = vertical
+    ? findItemAtClientY(items, clientY)
+    : findItemAtClientX(items, clientX);
   if (!item) {
     return { metrics: fallback, item: null };
   }
 
   const base = measureItemThumbMetrics(item, group);
+  const isFirst = item === items[0];
+  const isLast = item === items[items.length - 1];
+
+  if (vertical) {
+    const center = getItemCenterY(item);
+    const rawOffset = Math.max(
+      -SEGMENTATOR_STICKY_OFFSET_PX,
+      Math.min(SEGMENTATOR_STICKY_OFFSET_PX, clientY - center)
+    );
+    let y = base.y + rawOffset;
+    if (isFirst && y < base.y) y = base.y;
+    if (isLast && y > base.y) y = base.y;
+    return { metrics: { ...base, y }, item };
+  }
+
   const center = getItemCenterX(item);
   const rawOffset = Math.max(
     -SEGMENTATOR_STICKY_OFFSET_PX,
     Math.min(SEGMENTATOR_STICKY_OFFSET_PX, clientX - center)
   );
   let x = base.x + rawOffset;
-
-  const isFirst = item === items[0];
-  const isLast = item === items[items.length - 1];
-  // Only block dragging past the outer edge of the end items.
   if (isFirst && x < base.x) x = base.x;
   if (isLast && x > base.x) x = base.x;
 
@@ -510,8 +562,10 @@ export type SegmentatorGroupProps = Omit<
   defaultValue?: string;
   onValueChange?: (value: string) => void;
   mode?: SegmentatorMode;
+  /** Figma `direction` — horizontal (default) or vertical stack. */
+  direction?: SegmentatorDirection;
   allRound?: boolean;
-  /** When true, the group fills its container and items split the width equally. */
+  /** When true, the group fills its container and items split the main axis equally. */
   equalWidth?: boolean;
   disabled?: boolean;
 };
@@ -524,6 +578,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       defaultValue,
       onValueChange,
       mode = "nested",
+      direction = "horizontal",
       allRound = false,
       equalWidth = false,
       disabled,
@@ -592,7 +647,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
     );
 
     const updateDragThumb = useCallback(
-      (clientX: number) => {
+      (clientX: number, clientY: number) => {
         const group = groupRef.current;
         const drag = pointerDragRef.current;
         if (!group || !drag) return null;
@@ -614,7 +669,9 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           group,
           items,
           clientX,
-          fallback
+          clientY,
+          fallback,
+          direction
         );
         const nextPreviewValue = item?.dataset.value ?? drag.previewValue;
         const itemChanged =
@@ -632,7 +689,10 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
 
         const prev = drag.lastMetrics;
         const jumpDistance = prev
-          ? Math.abs(metrics.x - prev.x) + Math.abs(metrics.width - prev.width)
+          ? Math.abs(metrics.x - prev.x) +
+            Math.abs(metrics.y - prev.y) +
+            Math.abs(metrics.width - prev.width) +
+            Math.abs(metrics.height - prev.height)
           : Number.POSITIVE_INFINITY;
         const settling = performance.now() < (drag.snapUntil ?? 0);
         const shouldAnimate =
@@ -647,7 +707,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
         }
         return item;
       },
-      [writeThumbMetrics, writeThumbMetricsLive]
+      [direction, writeThumbMetrics, writeThumbMetricsLive]
     );
 
     const attachWindowDragListeners = useCallback(
@@ -656,7 +716,11 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           const drag = pointerDragRef.current;
           if (!drag || drag.pointerId !== pointerId) return;
 
-          if (Math.abs(event.clientX - drag.startX) < SEGMENTATOR_DRAG_THRESHOLD_PX) {
+          const delta =
+            direction === "vertical"
+              ? Math.abs(event.clientY - drag.startY)
+              : Math.abs(event.clientX - drag.startX);
+          if (delta < SEGMENTATOR_DRAG_THRESHOLD_PX) {
             return;
           }
 
@@ -665,7 +729,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
             setDragState({ pressing: true, active: true });
           }
           event.preventDefault();
-          updateDragThumb(event.clientX);
+          updateDragThumb(event.clientX, event.clientY);
         };
 
         const onPointerEnd = (event: PointerEvent) => {
@@ -683,7 +747,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           window.removeEventListener("pointercancel", onPointerEnd, { capture: true });
         };
       },
-      [finishPointerInteraction, updateDragThumb]
+      [direction, finishPointerInteraction, updateDragThumb]
     );
 
     const finishPointerDrag = useCallback(
@@ -695,7 +759,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
 
     const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
       if (disabled || !isSegmentatorDragPointer(event.pointerType)) return;
-      // When horizontally overflowing, pan-x owns the gesture — keep tap-to-select only.
+      // When overflowing on the main axis, pan owns the gesture — keep tap-to-select only.
       if (isSegmentatorOverflowing(groupRef.current)) return;
 
       const pressedItem = getPressedItemFromTarget(event.target);
@@ -713,6 +777,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       pointerDragRef.current = {
         pointerId: event.pointerId,
         startX: event.clientX,
+        startY: event.clientY,
         moved: false,
         fallback: metrics,
         previewValue: pressedValue,
@@ -739,11 +804,12 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
             value: currentValue,
             onValueChange: setValue,
             mode,
+            direction,
             allRound,
             disabled,
             consumeClickRef,
           }),
-          [currentValue, setValue, mode, allRound, disabled]
+          [currentValue, setValue, mode, direction, allRound, disabled]
         )}
       >
         <div
@@ -758,6 +824,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           data-all-round={allRound ? "true" : "false"}
           data-equal-width={equalWidth ? "true" : undefined}
           data-mode={mode}
+          data-direction={direction}
           data-dragging={dragState.active ? "true" : undefined}
           data-pressing={dragState.pressing ? "true" : undefined}
           onPointerDown={handlePointerDown}

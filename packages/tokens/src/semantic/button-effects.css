@@ -15,6 +15,12 @@
   --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
   --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
   --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
+  --button-outline-border: var(--border-border-normal-primary, #e2e0e0);
+  --button-outline-fg: var(
+    --text-text-theme-primary-black,
+    var(--aviala-primary-primary-10, #bf2300)
+  );
+  --button-outline-custom-fg: var(--text-text-normal-text-black, #343333);
 
   /* Button size — padding / line-height / radius (height is content-driven) */
   --button-tiny-padding-x: var(--padding-tiny, 4px);
@@ -266,6 +272,53 @@
   background-color: var(--button-no-bg-custom-active);
 }
 
+/* Outline — transparent fill + 1px outside stroke (Figma strokeAlign=OUTSIDE).
+   Pseudo-element stroke keeps keyboard focus box-shadow free; overflow:visible
+   so the outside ring is not clipped. */
+.aviala-button--mode-outline,
+.aviala-button--mode-outlineCustom {
+  overflow: visible;
+  background-color: transparent;
+  transition: background-color 250ms ease;
+}
+
+.aviala-button--mode-outline::after,
+.aviala-button--mode-outlineCustom::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  border-radius: inherit;
+  border: 1px solid var(--button-outline-border);
+  pointer-events: none;
+}
+
+.aviala-button--mode-outline {
+  color: var(--button-outline-fg);
+}
+
+.aviala-button--mode-outlineCustom {
+  color: var(--button-outline-custom-fg);
+}
+
+.aviala-button--mode-outline:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-hover);
+}
+
+.aviala-button--mode-outlineCustom:hover:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-custom-hover);
+}
+
+.aviala-button--mode-outline:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-outline:hover:active:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-active);
+}
+
+.aviala-button--mode-outlineCustom:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-outlineCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+  background-color: var(--button-no-bg-custom-active);
+}
+
 /* Pressed: primary uses p-9 surface; other modes darken via brightness filter */
 .aviala-button--mode-primary:active:not(:disabled),
 .aviala-button--mode-primary:hover:active:not(:disabled):not([aria-busy="true"]) {
@@ -345,6 +398,16 @@
 .aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--text,
 .aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--caption {
   color: var(--button-default-custom-fg);
+}
+
+.aviala-button--mode-outline .aviala-typography.aviala-typography--text,
+.aviala-button--mode-outline .aviala-typography.aviala-typography--caption {
+  color: var(--button-outline-fg);
+}
+
+.aviala-button--mode-outlineCustom .aviala-typography.aviala-typography--text,
+.aviala-button--mode-outlineCustom .aviala-typography.aviala-typography--caption {
+  color: var(--button-outline-custom-fg);
 }
 
 .aviala-button--mode-destructive .aviala-typography.aviala-typography--text,

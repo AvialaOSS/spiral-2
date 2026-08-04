@@ -1,7 +1,12 @@
 import { GeneralSetting } from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { SegmentatorGroup, SegmentatorItem, type SegmentatorMode } from "./segmentator";
+import {
+  SegmentatorGroup,
+  SegmentatorItem,
+  type SegmentatorDirection,
+  type SegmentatorMode,
+} from "./segmentator";
 
 const meta: Meta<typeof SegmentatorGroup> = {
   title: "Basic Input/Segmentator",
@@ -38,6 +43,37 @@ export const Tiled: Story = {
   ),
 };
 
+export const Vertical: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-start gap-6">
+      <SegmentatorGroup direction="vertical" defaultValue="a">
+        <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+          Text
+        </SegmentatorItem>
+        <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+          Text
+        </SegmentatorItem>
+      </SegmentatorGroup>
+      <SegmentatorGroup direction="vertical" mode="tiled" defaultValue="a">
+        <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+          Text
+        </SegmentatorItem>
+        <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+          Text
+        </SegmentatorItem>
+      </SegmentatorGroup>
+      <SegmentatorGroup direction="vertical" defaultValue="a">
+        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
+        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
+      </SegmentatorGroup>
+      <SegmentatorGroup direction="vertical" allRound defaultValue="a">
+        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
+        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
+      </SegmentatorGroup>
+    </div>
+  ),
+};
+
 export const AllRound: Story = {
   render: () => (
     <SegmentatorGroup allRound defaultValue="a">
@@ -59,6 +95,17 @@ export const EqualWidth: Story = {
         <SegmentatorItem value="b">Much longer label</SegmentatorItem>
         <SegmentatorItem value="c">Mid</SegmentatorItem>
       </SegmentatorGroup>
+      <div className="flex h-48 gap-4">
+        <SegmentatorGroup equalWidth direction="vertical" defaultValue="a">
+          <SegmentatorItem value="a">Date</SegmentatorItem>
+          <SegmentatorItem value="b">Time</SegmentatorItem>
+        </SegmentatorGroup>
+        <SegmentatorGroup equalWidth direction="vertical" mode="tiled" defaultValue="a">
+          <SegmentatorItem value="a">Short</SegmentatorItem>
+          <SegmentatorItem value="b">Much longer label</SegmentatorItem>
+          <SegmentatorItem value="c">Mid</SegmentatorItem>
+        </SegmentatorGroup>
+      </div>
     </div>
   ),
 };
@@ -94,26 +141,31 @@ export const IconOnly: Story = {
 };
 
 const modes: SegmentatorMode[] = ["nested", "tiled"];
+const directions: SegmentatorDirection[] = ["horizontal", "vertical"];
 
 export const ModeMatrix: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      {modes.map((mode) => (
-        <div key={mode} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{mode}</span>
-          <SegmentatorGroup mode={mode} defaultValue="a">
-            <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-              Text
-            </SegmentatorItem>
-            <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-              Text
-            </SegmentatorItem>
-            <SegmentatorItem value="c" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-              Text
-            </SegmentatorItem>
-          </SegmentatorGroup>
-        </div>
-      ))}
+      {directions.map((direction) =>
+        modes.map((mode) => (
+          <div key={`${direction}-${mode}`} className="flex flex-col gap-2">
+            <span className="font-mono text-xs text-muted-foreground">
+              {direction} / {mode}
+            </span>
+            <SegmentatorGroup direction={direction} mode={mode} defaultValue="a">
+              <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+                Text
+              </SegmentatorItem>
+              <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+                Text
+              </SegmentatorItem>
+              <SegmentatorItem value="c" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+                Text
+              </SegmentatorItem>
+            </SegmentatorGroup>
+          </div>
+        ))
+      )}
     </div>
   ),
 };
@@ -128,6 +180,17 @@ export const SlidingIndicator: Story = {
           Click segments to see the selected thumb slide between items (520ms soft ease-out with a light overshoot).
         </p>
         <SegmentatorGroup value={value} onValueChange={setValue}>
+          <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>
+            Option A
+          </SegmentatorItem>
+          <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />}>
+            Option B
+          </SegmentatorItem>
+          <SegmentatorItem value="c" leftIcon={<GeneralSetting aria-hidden />}>
+            Option C
+          </SegmentatorItem>
+        </SegmentatorGroup>
+        <SegmentatorGroup direction="vertical" value={value} onValueChange={setValue}>
           <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>
             Option A
           </SegmentatorItem>

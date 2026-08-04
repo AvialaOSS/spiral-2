@@ -14,6 +14,7 @@ import {
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
+import { useLocaleMessages } from "../locale";
 import { typographyVariants } from "./typography";
 import type { InputState } from "./input";
 
@@ -71,6 +72,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Textarea");
     const rootRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [focused, setFocused] = useState(false);
@@ -219,7 +221,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             <button
               type="button"
               className="aviala-textarea__resize-handle"
-              aria-label="Resize textarea"
+              aria-label={locale.resize}
               disabled={disabled}
               tabIndex={disabled ? -1 : 0}
               onPointerDown={handleResizePointerDown}

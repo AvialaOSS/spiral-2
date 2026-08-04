@@ -16,6 +16,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Link } from "./link";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
@@ -130,7 +131,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       showIcon = true,
       dismissible = true,
       onDismiss,
-      closeLabel = "Dismiss alert",
+      closeLabel,
       quickAction,
       onQuickAction,
       action,
@@ -142,6 +143,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Alert");
+    const resolvedCloseLabel = closeLabel ?? locale.close;
     const isSmall = size === "small";
     const resolvedType = type ?? "info";
     const resolvedRole = resolvedType === "error" ? "alert" : "status";
@@ -197,7 +200,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
               mode="noBackgroundCustom"
               iconOnly
               href={onDismiss ? "#" : undefined}
-              aria-label={closeLabel}
+              aria-label={resolvedCloseLabel}
               className="aviala-alert__close"
               leftIcon={<SymbolWrong aria-hidden />}
               onClick={(event) => {

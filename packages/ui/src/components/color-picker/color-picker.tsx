@@ -7,6 +7,7 @@ import {
 } from "react";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";
+import { useLocaleMessages } from "../../locale";
 import { ColorPickerArea } from "./color-picker-area";
 import { ColorPickerContext, useColorPickerContext } from "./color-picker-context";
 import { ColorPickerInputs } from "./color-picker-inputs";
@@ -104,7 +105,9 @@ export type ColorPickerTriggerProps = ComponentPropsWithoutRef<typeof PopoverPri
 export const ColorPickerTrigger = forwardRef<
   HTMLButtonElement,
   ColorPickerTriggerProps
->(({ className, size = "regular", allRound = false, placeholder = "Select color", ...props }, ref) => {
+>(({ className, size = "regular", allRound = false, placeholder, ...props }, ref) => {
+  const locale = useLocaleMessages("ColorPicker");
+  const resolvedPlaceholder = placeholder ?? locale.placeholder;
   const { value, open, disabled } = useColorPickerContext();
 
   return (
@@ -132,7 +135,7 @@ export const ColorPickerTrigger = forwardRef<
           {value ? (
             value.replace(/^#/, "").slice(0, 6).toUpperCase()
           ) : (
-            <span className="aviala-color-picker-trigger__placeholder">{placeholder}</span>
+            <span className="aviala-color-picker-trigger__placeholder">{resolvedPlaceholder}</span>
           )}
         </span>
       </button>

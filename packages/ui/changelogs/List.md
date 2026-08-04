@@ -1,5 +1,13 @@
 # List
 
+## Unreleased
+
+### Changed
+- 默认「更多」aria 文案改由 `LocaleProvider` 提供
+
+### Fixed
+- `action` 类型尾部 chevron 在 RTL 下指向阅读方向前方
+
 ## 2.4.0
 
 ### Added

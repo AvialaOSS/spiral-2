@@ -1,4 +1,8 @@
-import { DirectionArrowRightLight, SymbolMore } from "@aviala-design/icons";
+import {
+  DirectionArrowLeftLight,
+  DirectionArrowRightLight,
+  SymbolMore,
+} from "@aviala-design/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   createContext,
@@ -11,7 +15,9 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { useRtl } from "../config";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Typography, type TypographyLevel } from "./typography";
 
@@ -42,12 +48,13 @@ export type BreadcrumbProps = HTMLAttributes<HTMLElement> &
 
 export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
   ({ className, size = "default", children, ...props }, ref) => {
+    const locale = useLocaleMessages("Breadcrumb");
     const resolvedSize = size ?? "default";
     return (
       <BreadcrumbSizeContext.Provider value={resolvedSize}>
         <nav
           ref={ref}
-          aria-label={props["aria-label"] ?? "Breadcrumb"}
+          aria-label={props["aria-label"] ?? locale.label}
           className={cn(breadcrumbVariants({ size: resolvedSize }), className)}
           data-size={resolvedSize}
           {...props}
@@ -175,6 +182,8 @@ export const BreadcrumbEllipsisItem = forwardRef<
     },
     ref
   ) => {
+    const rtl = useRtl();
+    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const content = (
       <>
         <Typography level="text" as="span" className="aviala-breadcrumb-ellipsis-item__label">
@@ -182,7 +191,7 @@ export const BreadcrumbEllipsisItem = forwardRef<
         </Typography>
         {showChevron ? (
           <span className="aviala-breadcrumb-ellipsis-item__chevron" aria-hidden>
-            <DirectionArrowRightLight width={14} height={14} thickness="Light" />
+            <ChevronIcon width={14} height={14} thickness="Light" />
           </span>
         ) : null}
       </>
@@ -246,6 +255,7 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Breadcrumb");
     const size = useContext(BreadcrumbSizeContext);
     const [uncontrolledActivated, setUncontrolledActivated] = useState(defaultActivated);
     const isControlled = activatedProp !== undefined;
@@ -271,7 +281,7 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
         className="aviala-breadcrumb-ellipsis aviala-focus-ring"
         data-size={size}
         data-activated={activated ? "true" : undefined}
-        aria-label={ariaLabel ?? "Show more breadcrumb items"}
+        aria-label={ariaLabel ?? locale.showMore}
         aria-expanded={menu != null ? activated : undefined}
         aria-haspopup={menu != null ? "menu" : undefined}
         onClick={(event) => {

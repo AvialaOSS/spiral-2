@@ -24,6 +24,8 @@ import { cn } from "../lib/utils";
 
 import { useThemeLayoutKey } from "../theme/theme-provider";
 
+import { forwardChevronSide, useDirection } from "../config";
+
 import { buttonVariants, type ButtonMode } from "./button";
 
 import { Popover } from "./popover";
@@ -141,7 +143,7 @@ function measureNavigationIndicator(
 
   const itemRect = item.getBoundingClientRect();
 
-  const railLeft = readIndicatorToken(group, "--navigation-rail-left", 1);
+  const railInlineStart = readIndicatorToken(group, "--navigation-rail-inline-start", 1);
 
   const railInset = readIndicatorToken(group, "--navigation-rail-inset", 6);
 
@@ -165,8 +167,13 @@ function measureNavigationIndicator(
       inset = readIndicatorToken(group, "--navigation-rail-inset-hover", 3);
     }
 
+    const isRtl = getComputedStyle(group).direction === "rtl";
+    const x = isRtl
+      ? groupRect.width - railWidth - railInlineStart
+      : railInlineStart;
+
     return {
-      x: railLeft,
+      x,
 
       y: itemRect.top - groupRect.top + inset,
 
@@ -1326,7 +1333,7 @@ export type NavigationItemMenuContentProps = ComponentPropsWithoutRef<
   typeof PopoverPrimitive.Content
 >;
 
-/** Flyout surface — right of the item in vertical, below it in horizontal. */
+/** Flyout surface — forward of the item in vertical (LTR right / RTL left), below it in horizontal. */
 
 export const NavigationItemMenuContent = forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
@@ -1352,14 +1359,19 @@ export const NavigationItemMenuContent = forwardRef<
     ref
   ) => {
     const direction = useNavigationDirection();
-
+    const writingDirection = useDirection();
     const menu = useNavigationItemMenuContext("NavigationItemMenuContent");
 
     return (
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           ref={ref}
-          side={side ?? (direction === "vertical" ? "right" : "bottom")}
+          side={
+            side ??
+            (direction === "vertical"
+              ? forwardChevronSide(writingDirection)
+              : "bottom")
+          }
           align={align}
           sideOffset={sideOffset}
           collisionPadding={collisionPadding}
