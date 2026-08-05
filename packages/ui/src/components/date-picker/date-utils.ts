@@ -5,6 +5,7 @@ export type DateRange = {
   to?: Date;
 };
 
+/** @deprecated Prefer `useLocaleMessages("DatePicker").weekdays`. Kept for callers. */
 export const WEEKDAY_LABELS = ["一", "二", "三", "四", "五", "六", "日"] as const;
 
 export type RangeSelectionPosition = "none" | "single" | "head" | "middle" | "last";
@@ -76,7 +77,7 @@ export function getCalendarDays(month: Date): Date[] {
   return days;
 }
 
-export function formatDisplayDate(date: Date, locale = "en-US"): string {
+export function formatDisplayDate(date: Date, locale = "zh-CN"): string {
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "2-digit",

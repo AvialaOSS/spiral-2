@@ -56,6 +56,16 @@ const components = [
     file: "theme/theme-provider.tsx",
     exportName: "ThemeProvider",
   },
+  {
+    key: "LocaleProvider",
+    file: "locale/locale-provider.tsx",
+    exportName: "LocaleProvider",
+  },
+  {
+    key: "ConfigProvider",
+    file: "config/config-provider.tsx",
+    exportName: "ConfigProvider",
+  },
   { key: "Alert", file: "components/alert.tsx", exportName: "Alert" },
   { key: "Feedback", file: "components/feedback.tsx", exportName: "Feedback" },
   {

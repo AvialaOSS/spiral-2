@@ -1,6 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import {
   DirectionArrowDownLight,
+  DirectionArrowLeftLight,
   DirectionArrowRightLight,
   SymbolRight,
   type AvialaIconProps,
@@ -23,6 +24,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { useRtl } from "../config";
 import { Badge } from "./badge";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
@@ -30,6 +32,7 @@ import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizi
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
+import { useLocaleMessages } from "../locale";
 
 /** Figma Components → Information Collect → Cascader Input */
 export type CascaderSize = "regular" | "big";
@@ -159,6 +162,12 @@ function CascaderItemTrailingCheckbox({ selected }: { selected: boolean }) {
   );
 }
 
+function CascaderExpandChevron() {
+  const rtl = useRtl();
+  const Icon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
+  return <Icon level="text" biggerSize aria-hidden />;
+}
+
 function renderFunctionSlot(
   itemFunction: CascaderItemFunction,
   layout: CascaderItemLayout,
@@ -193,9 +202,7 @@ function renderFunctionSlot(
           {selected ? (
             <SymbolRight level="text" biggerSize aria-hidden />
           ) : null}
-          {hasChildren ? (
-            <DirectionArrowRightLight level="text" biggerSize aria-hidden />
-          ) : null}
+          {hasChildren ? <CascaderExpandChevron /> : null}
         </span>
       );
   }
@@ -460,7 +467,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
       leftIcon,
       rightIcon,
       expandIcon,
-      placeholder = "Text",
+      placeholder,
       error = false,
       displayValue,
       separator = "/",
@@ -469,6 +476,8 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Cascader");
+    const resolvedPlaceholder = placeholder ?? locale.placeholder;
     const { open, disabled: disabledContext, size: sizeContext, selectedPath, getOptionAtPath } =
       useCascaderContext();
     const size = sizeProp ?? sizeContext;
@@ -513,7 +522,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
               className={cn("aviala-cascader-trigger__value", typographyVariants({ level: "text" }))}
               data-placeholder={hasValue ? undefined : "true"}
             >
-              {hasValue ? resolvedDisplay : placeholder}
+              {hasValue ? resolvedDisplay : resolvedPlaceholder}
             </span>
           </span>
           {renderSlotIcon(rightIcon, "aviala-cascader-trigger__slot", "cascader.trigger.icon-right")}
@@ -710,6 +719,7 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
       isPathSelected,
       isPathExpanded,
     } = useCascaderContext();
+    const rtl = useRtl();
 
     const path = [...pathPrefix, value];
     const option = getOptionAtPath(path);
@@ -737,13 +747,15 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
       selectPath(path, true);
     };
 
+    const expandKey = rtl ? "ArrowLeft" : "ArrowRight";
+
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
       if (isTitle || isDisabled) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleClick();
       }
-      if (event.key === "ArrowRight" && hasChildren) {
+      if (event.key === expandKey && hasChildren) {
         event.preventDefault();
         expandTo(path);
       }

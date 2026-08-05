@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 
 /** Figma Components → Loading Icon */
 export type LoadingLevel =
@@ -93,11 +94,13 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
       level = "text",
       mode = "theme",
       lineHeightFix = true,
-      label = "Loading",
+      label,
       ...props
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Loading");
+    const resolvedLabel = label ?? locale.label;
     const isDecorative = props["aria-hidden"] === true || props["aria-hidden"] === "true";
 
     return (
@@ -105,7 +108,7 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
         ref={ref}
         className={cn(loadingVariants({ level, mode, lineHeightFix }), className)}
         role={isDecorative ? undefined : "status"}
-        aria-label={isDecorative ? undefined : label}
+        aria-label={isDecorative ? undefined : resolvedLabel}
         aria-live={isDecorative ? undefined : "polite"}
         {...props}
       >

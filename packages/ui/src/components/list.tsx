@@ -1,4 +1,5 @@
 import {
+  DirectionArrowLeftLight,
   DirectionArrowRightLight,
   GeneralSetting,
 } from "@aviala-design/icons";
@@ -12,11 +13,13 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { useRtl } from "../config";
 import { Button } from "./button";
 import { Switch, type SwitchProps } from "./switch";
 import { Typeface } from "./typeface";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 
 /** Figma List item `Type` variant (738:148304, 647:87555) */
 export type ListItemType = "action" | "switch" | "select";
@@ -230,6 +233,9 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("List");
+    const rtl = useRtl();
+    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const isInteractive = interactive ?? (onClick != null || href != null);
     const chevronVisible = showChevron ?? itemType === "action";
 
@@ -243,7 +249,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
 
     const chevron = chevronVisible ? (
       <span className="aviala-list-item__chevron" aria-hidden>
-        <DirectionArrowRightLight width={18} height={18} />
+        <ChevronIcon width={18} height={18} />
       </span>
     ) : null;
 
@@ -269,7 +275,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
                     mode="default"
                     size="regular"
                     iconOnly
-                    aria-label="More"
+                    aria-label={locale.more}
                     leftIcon={<GeneralSetting aria-hidden />}
                   />
                 )}

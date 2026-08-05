@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";
+import { useLocaleMessages } from "../../locale";
 import { clamp01, pureHueHex } from "./color-utils";
 import { useOptionalColorPickerContext } from "./color-picker-context";
 import { usePointerDrag } from "./use-pointer-drag";
@@ -18,6 +19,7 @@ export function ColorPickerArea({
   defaultValue,
   onChange,
 }: ColorPickerAreaProps) {
+  const locale = useLocaleMessages("ColorPicker");
   const ctx = useOptionalColorPickerContext();
   const local = useColorPickerState({
     value: ctx ? undefined : valueProp,
@@ -57,7 +59,7 @@ export function ColorPickerArea({
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         role="slider"
-        aria-label="Saturation and brightness"
+        aria-label={locale.saturationBrightness}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(hsva.s)}

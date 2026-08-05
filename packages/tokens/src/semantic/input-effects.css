@@ -447,7 +447,7 @@
 
 .aviala-textarea__controller {
   position: absolute;
-  right: 4px;
+  inset-inline-end: 4px;
   bottom: 2px;
   z-index: 2;
   display: inline-flex;
@@ -958,7 +958,7 @@
   flex-direction: column;
   justify-content: center;
   padding: var(--input-shell-field-py) 0;
-  text-align: left;
+  text-align: start;
   font-size: var(--input-font-size);
   line-height: var(--input-line-height);
 }
@@ -1089,7 +1089,7 @@
 
 .aviala-select-item[data-layout="people"] {
   align-items: center;
-  padding-left: var(--padding-tiny, 4px);
+  padding-inline-start: var(--padding-tiny, 4px);
 }
 
 .aviala-select-item[data-layout="title"] {
@@ -1199,9 +1199,9 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  border-right: 1px solid var(--select-menu-border);
-  padding-right: var(--select-item-gap, 8px);
+  margin-inline-start: auto;
+  border-inline-end: 1px solid var(--select-menu-border);
+  padding-inline-end: var(--select-item-gap, 8px);
 }
 
 .aviala-select-item__function {
@@ -1220,7 +1220,7 @@
 }
 
 .aviala-select-item:not(:has(.aviala-select-item__more)) .aviala-select-item__function {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 /* Leading form radio — Figma Form-Radio */

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { cn } from "../../lib/utils";
+import { useLocaleMessages } from "../../locale";
 import { useDatePickerContext } from "./date-picker-context";
 import { DatePickerTimeWheelColumn } from "./date-picker-time-wheel";
 
@@ -23,6 +24,7 @@ export function DatePickerMonthYearWheels({
   className,
   layoutKey = 0,
 }: DatePickerMonthYearWheelsProps) {
+  const locale = useLocaleMessages("DatePicker");
   const { viewMonth, setViewMonth, minDate, maxDate } = useDatePickerContext();
   const year = viewMonth.getFullYear();
   const month = viewMonth.getMonth() + 1;
@@ -43,11 +45,11 @@ export function DatePickerMonthYearWheels({
     <div
       className={cn("aviala-datepicker-month", className)}
       role="group"
-      aria-label="选择年月"
+      aria-label={locale.selectYearMonth}
     >
       <div className="aviala-datepicker-month__columns">
         <DatePickerTimeWheelColumn
-          aria-label="年"
+          aria-label={locale.year}
           values={yearValues}
           value={year}
           loop={false}
@@ -56,7 +58,7 @@ export function DatePickerMonthYearWheels({
           onChange={(nextYear) => setYearMonth(nextYear, month)}
         />
         <DatePickerTimeWheelColumn
-          aria-label="月"
+          aria-label={locale.month}
           values={MONTH_VALUES}
           value={month}
           loop={false}

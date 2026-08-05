@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
 
@@ -54,9 +55,9 @@ export const Upload = forwardRef<HTMLDivElement, UploadProps>(
     {
       className,
       style = "default",
-      title = "Drag the file here to upload the file",
-      description = "Or click here to upload",
-      label = "Upload",
+      title,
+      description,
+      label,
       accept,
       multiple,
       disabled,
@@ -70,6 +71,10 @@ export const Upload = forwardRef<HTMLDivElement, UploadProps>(
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Upload");
+    const resolvedTitle = title ?? locale.title;
+    const resolvedDescription = description ?? locale.description;
+    const resolvedLabel = label ?? locale.label;
     const inputRef = useRef<HTMLInputElement>(null);
     const [dragging, setDragging] = useState(false);
     const resolvedStyle = style ?? "default";
@@ -143,12 +148,12 @@ export const Upload = forwardRef<HTMLDivElement, UploadProps>(
           <Typeface
             className="aviala-upload__typeface"
             content="textCaption"
-            primary={title}
-            secondary={description}
+            primary={resolvedTitle}
+            secondary={resolvedDescription}
           />
         ) : (
           <Typography level="text" as="span" className="aviala-upload__label">
-            {label}
+            {resolvedLabel}
           </Typography>
         )}
       </div>

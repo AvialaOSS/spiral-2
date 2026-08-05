@@ -21,6 +21,8 @@ import {
 } from "react";
 import { cn } from "../../lib/utils";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
+import { useRtl } from "../../config";
+import { useLocale, useLocaleMessages } from "../../locale";
 import { typographyVariants } from "../typography";
 import {
   DatePickerProvider,
@@ -48,10 +50,11 @@ import {
   parseDateInput,
   parseDateRangeInput,
   startOfDay,
-  WEEKDAY_LABELS,
   type DateRange,
   type RangeSelectionPosition,
 } from "./date-utils";
+import type { LocaleDatePicker } from "../../locale/interface";
+
 import {
   SegmentatorGroup,
   SegmentatorItem,
@@ -563,8 +566,8 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
       allRound = false,
       leftIcon,
       rightIcon,
-      placeholder = "YYYY-MM-DD",
-      rangePlaceholder = "Start date - End date",
+      placeholder,
+      rangePlaceholder,
       error = false,
       displayValue,
       rangeSeparator = " - ",
@@ -577,6 +580,7 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
     },
     ref
   ) => {
+    const locale = useLocaleMessages("DatePicker");
     const {
       open,
       setOpen,
@@ -591,6 +595,8 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
     } = useDatePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
+    const resolvedPlaceholder = placeholder ?? locale.placeholder;
+    const resolvedRangePlaceholder = rangePlaceholder ?? locale.rangePlaceholder;
     const inputRef = useRef<HTMLInputElement>(null);
     const editingRef = useRef(false);
 
@@ -617,8 +623,11 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
         rangeSeparator
       );
 
-    const defaultPlaceholder = enableTime ? "YYYY-MM-DD HH:mm" : placeholder;
-    const emptyPlaceholder = mode === "range" ? rangePlaceholder : defaultPlaceholder;
+    const defaultPlaceholder = enableTime
+      ? locale.placeholderWithTime
+      : resolvedPlaceholder;
+    const emptyPlaceholder =
+      mode === "range" ? resolvedRangePlaceholder : defaultPlaceholder;
     const formattedText = typeof formatted === "string" ? formatted : null;
     const [draft, setDraft] = useState(formattedText ?? "");
 
@@ -806,18 +815,19 @@ export type DatePickerCalendarProps = {
 function getFooterDateLabel(
   mode: DatePickerMode,
   singleValue: Date | undefined,
-  rangeValue: DateRange
+  rangeValue: DateRange,
+  messages: LocaleDatePicker
 ): string {
   if (mode === "single") {
-    return singleValue ? formatIsoDate(singleValue) : "选择日期";
+    return singleValue ? formatIsoDate(singleValue) : messages.selectDate;
   }
   if (rangeValue.from && rangeValue.to) {
-    return `${formatIsoDate(rangeValue.from)} 至 ${formatIsoDate(rangeValue.to)}`;
+    return `${formatIsoDate(rangeValue.from)}${messages.rangeTo}${formatIsoDate(rangeValue.to)}`;
   }
   if (rangeValue.from) {
-    return `${formatIsoDate(rangeValue.from)} 至 …`;
+    return `${formatIsoDate(rangeValue.from)}${messages.rangeTo}…`;
   }
-  return "选择日期范围";
+  return messages.selectDateRange;
 }
 
 function DatePickerTimePanel() {
@@ -827,6 +837,7 @@ function DatePickerTimePanel() {
 }
 
 function DatePickerPanelFooter() {
+  const locale = useLocaleMessages("DatePicker");
   const {
     mode,
     singleValue,
@@ -851,14 +862,14 @@ function DatePickerPanelFooter() {
         className="aviala-datepicker-footer"
         data-layout={isRangeMode ? "range" : "single"}
         data-active-panel={activePanel}
-        aria-label="日期与时间切换"
+        aria-label={locale.dateTimeSwitch}
       >
         <SegmentatorItem
           value="date"
           leftIcon={<TimeAndDateDate level="text" biggerSize aria-hidden />}
           iconOnly={isRangeMode && panelValue === "time"}
         >
-          {getFooterDateLabel(mode, singleValue, rangeValue)}
+          {getFooterDateLabel(mode, singleValue, rangeValue, locale)}
         </SegmentatorItem>
         <SegmentatorItem
           value="time"
@@ -905,6 +916,11 @@ function prefersReducedMotion(): boolean {
 
 export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const calendarId = useId();
+  const { code } = useLocale();
+  const locale = useLocaleMessages("DatePicker");
+  const rtl = useRtl();
+  const PrevIcon = rtl ? DirectionArrowRight : DirectionArrowLeft;
+  const NextIcon = rtl ? DirectionArrowLeft : DirectionArrowRight;
   const {
     mode,
     viewMonth,
@@ -1075,7 +1091,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const renderDateContent = () => (
     <>
       <div className="aviala-datepicker-calendar__weekdays" aria-hidden>
-        {WEEKDAY_LABELS.map((label) => (
+        {locale.weekdays.map((label) => (
           <span
             key={label}
             className={cn(
@@ -1164,7 +1180,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
                 data-range-pos={rangePos !== "none" ? rangePos : undefined}
                 data-today={isToday ? "true" : undefined}
                 data-disabled={dayDisabled ? "true" : undefined}
-                aria-label={formatDisplayDate(day)}
+                aria-label={formatDisplayDate(day, code)}
                 aria-selected={selected || undefined}
                 aria-disabled={dayDisabled || undefined}
                 disabled={dayDisabled}
@@ -1204,10 +1220,10 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
         <button
           type="button"
           className="aviala-datepicker-calendar__nav aviala-focus-ring"
-          aria-label={isMonthPanel ? "Previous year" : "Previous month"}
+          aria-label={isMonthPanel ? locale.previousYear : locale.previousMonth}
           onClick={() => setViewMonth(addMonths(viewMonth, -stepMonth))}
         >
-          <DirectionArrowLeft level="text" biggerSize aria-hidden />
+          <PrevIcon level="text" biggerSize aria-hidden />
         </button>
         <button
           type="button"
@@ -1218,7 +1234,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           )}
           data-active={isMonthPanel ? "true" : undefined}
           aria-expanded={isMonthPanel}
-          aria-label={isMonthPanel ? "关闭年月选择" : "选择年月"}
+          aria-label={isMonthPanel ? locale.closeMonthYear : locale.selectMonthYear}
           onClick={() => setActivePanel(isMonthPanel ? "date" : "month")}
         >
           <span
@@ -1226,16 +1242,16 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
             className="aviala-datepicker-calendar__title-text"
             data-slide={isMonthPanel ? undefined : monthSlide?.direction}
           >
-            {formatMonthYear(viewMonth)}
+            {formatMonthYear(viewMonth, code)}
           </span>
         </button>
         <button
           type="button"
           className="aviala-datepicker-calendar__nav aviala-focus-ring"
-          aria-label={isMonthPanel ? "Next year" : "Next month"}
+          aria-label={isMonthPanel ? locale.nextYear : locale.nextMonth}
           onClick={() => setViewMonth(addMonths(viewMonth, stepMonth))}
         >
-          <DirectionArrowRight level="text" biggerSize aria-hidden />
+          <NextIcon level="text" biggerSize aria-hidden />
         </button>
       </div>
 
@@ -1279,7 +1295,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     <div
       className={cn("aviala-datepicker-calendar", className)}
       role="application"
-      aria-label="Calendar"
+      aria-label={locale.calendar}
     >
       <div className="aviala-datepicker-calendar__panel-viewport">
         {panelSlide ? (

@@ -23,6 +23,8 @@ export type ButtonMode =
   | "second"
   | "default"
   | "defaultCustom"
+  | "outline"
+  | "outlineCustom"
   | "noBackground"
   | "noBackgroundCustom"
   | "destructive";
@@ -47,6 +49,8 @@ const buttonVariants = cva(
         defaultCustom: "aviala-button--mode-defaultCustom",
         noBackground: "aviala-button--mode-noBackground",
         noBackgroundCustom: "aviala-button--mode-noBackgroundCustom",
+        outline: "aviala-button--mode-outline",
+        outlineCustom: "aviala-button--mode-outlineCustom",
         destructive: "aviala-button--mode-destructive",
       },
       allRound: {
@@ -74,7 +78,7 @@ function resolveMode(
     case "secondary":
       return "second";
     case "outline":
-      return "default";
+      return "outline";
     case "ghost":
       return "noBackground";
     case "destructive":
@@ -121,7 +125,9 @@ type LegacySize = "default" | "sm" | "lg" | "icon";
 function hasSurface(mode: ButtonMode): boolean {
   return (
     mode !== "noBackground" &&
-    mode !== "noBackgroundCustom"
+    mode !== "noBackgroundCustom" &&
+    mode !== "outline" &&
+    mode !== "outlineCustom"
   );
 }
 

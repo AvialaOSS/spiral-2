@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Avatar } from "./avatar";
 import { Typography, type TypographyLevel } from "./typography";
 
@@ -137,12 +138,14 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
       avatarText,
       closable = false,
       onClose,
-      closeLabel = "Remove",
+      closeLabel,
       lineHeightFix,
       ...props
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Tag");
+    const resolvedCloseLabel = closeLabel ?? locale.remove;
     const resolvedLevel = level ?? "caption";
     const resolvedContent = content ?? "text";
     const resolvedLhf = resolveLineHeightFix(resolvedLevel, lineHeightFix);
@@ -191,7 +194,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
         {resolvedContent === "text" ? renderTagIcon(rightIcon, resolvedLevel) : null}
         {closable ? (
           <TagClose
-            aria-label={closeLabel}
+            aria-label={resolvedCloseLabel}
             disabled={disabled}
             onClick={(event) => {
               if (disabled) return;

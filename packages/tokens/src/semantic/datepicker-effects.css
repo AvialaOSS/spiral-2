@@ -123,7 +123,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: left;
+  text-align: start;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -410,8 +410,7 @@
 
 .aviala-datepicker-calendar__grid[data-slide-role="exit"] {
   position: absolute;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   top: 0;
   pointer-events: none;
 }
@@ -430,6 +429,22 @@
 
 .aviala-datepicker-calendar__grid[data-slide-role="exit"][data-slide="prev"] {
   animation: aviala-datepicker-month-to-right 0.28s ease forwards;
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__grid[data-slide-role="enter"][data-slide="next"] {
+  animation-name: aviala-datepicker-month-from-left;
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__grid[data-slide-role="enter"][data-slide="prev"] {
+  animation-name: aviala-datepicker-month-from-right;
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__grid[data-slide-role="exit"][data-slide="next"] {
+  animation-name: aviala-datepicker-month-to-right;
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__grid[data-slide-role="exit"][data-slide="prev"] {
+  animation-name: aviala-datepicker-month-to-left;
 }
 
 .aviala-datepicker-day {
@@ -490,7 +505,7 @@
   content: "";
   position: absolute;
   top: 0;
-  right: calc(var(--datepicker-grid-gap, 4px) * -1);
+  inset-inline-end: calc(var(--datepicker-grid-gap, 4px) * -1);
   width: var(--datepicker-grid-gap, 4px);
   height: 100%;
   background-color: var(--datepicker-day-bg-in-range, #ffdad2);
@@ -502,7 +517,7 @@
   content: "";
   position: absolute;
   top: 0;
-  left: calc(var(--datepicker-grid-gap, 4px) * -1);
+  inset-inline-start: calc(var(--datepicker-grid-gap, 4px) * -1);
   width: var(--datepicker-grid-gap, 4px);
   height: 100%;
   background-color: var(--datepicker-day-bg-in-range, #ffdad2);
@@ -615,15 +630,14 @@
 }
 
 .aviala-datepicker-time__wheel + .aviala-datepicker-time__wheel {
-  border-left: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border-inline-start: 1px solid var(--border-border-normal-light, #f5f3f3);
 }
 
 .aviala-datepicker-time__wheel-highlight {
   position: absolute;
   z-index: 0;
   top: 50%;
-  left: var(--padding-small, 6px);
-  right: var(--padding-small, 6px);
+  inset-inline: var(--padding-small, 6px);
   height: var(--datepicker-time-wheel-item-height, 36px);
   transform: translateY(-50%);
   border-radius: var(--border-radius-extra-small-2, 6px);

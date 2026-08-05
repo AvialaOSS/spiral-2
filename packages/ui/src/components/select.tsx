@@ -2,6 +2,7 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import {
   DirectionArrowDownLight,
+  DirectionArrowLeft,
   DirectionArrowRight,
   SymbolRight,
   UsersUserCircle,
@@ -26,6 +27,7 @@ import {
   type ReactNode,
   isValidElement,
 } from "react";
+import { forwardChevronSide, useDirection, useRtl } from "../config";
 import { Badge } from "./badge";
 import { Link } from "./link";
 import { typographyVariants } from "./typography";
@@ -64,7 +66,7 @@ type SelectSubMenuMarkerProps = {
 type ParsedSelectSubMenu = {
   children: ReactNode;
   className?: string;
-  side: "left" | "right";
+  side?: "left" | "right";
   sideOffset: number;
   portalled: boolean;
 };
@@ -339,7 +341,7 @@ function parseSelectSubItemChildren(children: ReactNode): {
       subMenu = {
         children: child.props.children,
         className: child.props.className,
-        side: child.props.side ?? "right",
+        side: child.props.side,
         sideOffset: child.props.sideOffset ?? 8,
         portalled: child.props.portalled ?? false,
       };
@@ -440,6 +442,12 @@ function SelectItemDefaultAvatar() {
   );
 }
 
+function SelectExpandChevron() {
+  const rtl = useRtl();
+  const Icon = rtl ? DirectionArrowLeft : DirectionArrowRight;
+  return <Icon level="text" biggerSize aria-hidden />;
+}
+
 function renderFunctionSlot(
   itemFunction: SelectItemFunction,
   layout: SelectItemLayout,
@@ -487,7 +495,7 @@ function renderFunctionSlot(
           style={iconLevelCssVarStyle("text", true, "--select-item-function-icon-size")}
           {...spiralDebugId("select.content.item.function")}
         >
-          <DirectionArrowRight level="text" biggerSize aria-hidden />
+          <SelectExpandChevron />
         </span>
       );
   }
@@ -1001,7 +1009,12 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
     const rootRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
-    const side = sideProp ?? subMenu.side;
+    const rtl = useRtl();
+    const direction = useDirection();
+    const expandKey = rtl ? "ArrowLeft" : "ArrowRight";
+    const collapseKey = rtl ? "ArrowRight" : "ArrowLeft";
+
+    const side = sideProp ?? subMenu.side ?? forwardChevronSide(direction);
     const sideOffset = sideOffsetProp ?? subMenu.sideOffset;
     const portalled = portalledProp ?? subMenu.portalled;
 
@@ -1063,7 +1076,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-      if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
+      if (event.key === expandKey || event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleOpen();
       }
@@ -1071,7 +1084,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
         event.preventDefault();
         closeActiveSubItem();
       }
-      if (event.key === "ArrowLeft") {
+      if (event.key === collapseKey) {
         event.preventDefault();
         closeActiveSubItem();
       }

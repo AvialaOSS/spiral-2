@@ -17,6 +17,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Link } from "./link";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
@@ -123,13 +124,15 @@ export const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
       icon,
       showClose = true,
       onClose,
-      closeLabel = "Dismiss",
+      closeLabel,
       action,
       onAction,
       ...props
     },
     ref
   ) => {
+    const locale = useLocaleMessages("Feedback");
+    const resolvedCloseLabel = closeLabel ?? locale.close;
     const resolvedType = type ?? "information";
     const resolvedSize = size ?? "default";
     const mode = resolvedType === "normal" ? "default" : (modeProp ?? "default");
@@ -191,7 +194,7 @@ export const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
               mode="noBackgroundCustom"
               iconOnly
               href={onClose ? "#" : undefined}
-              aria-label={closeLabel}
+              aria-label={resolvedCloseLabel}
               className="aviala-feedback__close"
               leftIcon={<SymbolWrong aria-hidden />}
               onClick={(event) => {

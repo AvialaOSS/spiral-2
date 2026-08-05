@@ -206,7 +206,7 @@ button.aviala-breadcrumb-item:hover {
 .aviala-pagehead__title {
   display: flex;
   min-width: 0;
-  padding-left: var(--pagehead-title-pl, 6px);
+  padding-inline-start: var(--pagehead-title-pl, 6px);
 }
 
 .aviala-pagehead__actions {
@@ -491,5 +491,5 @@ button.aviala-breadcrumb-item:hover {
   display: inline-block;
   width: 0;
   height: var(--card-divider-height, 14px);
-  border-left: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border-inline-start: 1px solid var(--border-border-normal-light, #f5f3f3);
 }

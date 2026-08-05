@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../lib/utils";
+import { useLocaleMessages } from "../locale";
 import { Button } from "./button";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
@@ -152,30 +153,35 @@ export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
       icon,
       showIcon = false,
       showClose = true,
-      closeLabel = "Close dialog",
+      closeLabel,
       ...props
     },
     ref
-  ) => (
-    <div ref={ref} className={cn("aviala-modal__header", className)} {...props}>
-      <div className="aviala-modal__header-row">
-        {showIcon ? renderModalIcon(icon) : null}
-        <div className="aviala-modal__header-main">{children}</div>
-        {showClose ? (
-          <DialogPrimitive.Close asChild>
-            <Button
-              type="button"
-              mode="noBackgroundCustom"
-              iconOnly
-              aria-label={closeLabel}
-              className="aviala-modal__close"
-              leftIcon={<SymbolWrong aria-hidden />}
-            />
-          </DialogPrimitive.Close>
-        ) : null}
+  ) => {
+    const locale = useLocaleMessages("Modal");
+    const resolvedCloseLabel = closeLabel ?? locale.close;
+
+    return (
+      <div ref={ref} className={cn("aviala-modal__header", className)} {...props}>
+        <div className="aviala-modal__header-row">
+          {showIcon ? renderModalIcon(icon) : null}
+          <div className="aviala-modal__header-main">{children}</div>
+          {showClose ? (
+            <DialogPrimitive.Close asChild>
+              <Button
+                type="button"
+                mode="noBackgroundCustom"
+                iconOnly
+                aria-label={resolvedCloseLabel}
+                className="aviala-modal__close"
+                leftIcon={<SymbolWrong aria-hidden />}
+              />
+            </DialogPrimitive.Close>
+          ) : null}
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 );
 ModalHeader.displayName = "ModalHeader";
 

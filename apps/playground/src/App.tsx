@@ -52,6 +52,7 @@ import {
 } from "@aviala-design/spiral";
 import { useId, useState } from "react";
 import { categoryCascaderOptions, regionCascaderOptions } from "./cascader-demo-data";
+import { FormValidationDemo } from "./FormValidationDemo";
 import { ModelManagementModalDemo } from "./ModelManagementModalDemo";
 
 function ThemeSwitcher() {
@@ -939,6 +940,7 @@ export function App() {
         <ButtonDemo />
         <BasicInputControlsDemo />
         <BasicInputDemo />
+        <FormValidationDemo />
         <LoadingDemo />
         <OverlayDemo />
         <ModelManagementModalDemo />

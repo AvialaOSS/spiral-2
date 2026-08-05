@@ -15,6 +15,7 @@ import "@aviala-design/tokens/modal-effects.css";
 import "@aviala-design/tokens/tooltip-effects.css";
 import "@aviala-design/tokens/list-effects.css";
 import "@aviala-design/tokens/navigation-effects.css";
+import "@aviala-design/tokens/tab-effects.css";
 import "@aviala-design/tokens/datepicker-effects.css";
 import "@aviala-design/tokens/feedback-effects.css";
 import "@aviala-design/tokens/alert-effects.css";

@@ -12,7 +12,7 @@ const meta: Meta<typeof ResponsiveTooltip> = {
     docs: {
       description: {
         component:
-          "Same Tooltip content with a device-aware trigger: hover/focus on desktop, tap on touch. To preview the touch branch, enable device emulation (which sets `pointer: coarse`) and reload — the same markup then opens as a Popover on tap.",
+          "Same Tooltip content with a device-aware trigger: hover/focus on desktop, long-press on touch. To preview the touch branch, enable device emulation (which sets `pointer: coarse`) and reload — the same markup then opens as a Popover on long-press (short tap still fires the trigger’s own click).",
       },
     },
   },
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof ResponsiveTooltip>;
 export const Default: Story = {
   render: () => (
     <ResponsiveTooltip content="Tooltip with caption typography">
-      <Button mode="default">Hover (desktop) / Tap (touch)</Button>
+      <Button mode="default">Hover (desktop) / Long-press (touch)</Button>
     </ResponsiveTooltip>
   ),
 };

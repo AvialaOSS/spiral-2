@@ -14,6 +14,8 @@ const meta: Meta<typeof Button> = {
         "second",
         "default",
         "defaultCustom",
+        "outline",
+        "outlineCustom",
         "noBackground",
         "noBackgroundCustom",
         "destructive",
@@ -48,6 +50,16 @@ export const NoBackground: Story = {
 /** Non-theme custom color text/icon — transparent background (Figma `noBackgroundCustom`). */
 export const NoBackgroundCustom: Story = {
   args: { mode: "noBackgroundCustom", children: "Text" },
+};
+
+/** Bordered — theme text (Figma `Outline`). */
+export const Outline: Story = {
+  args: { mode: "outline", children: "Text" },
+};
+
+/** Bordered — neutral text (Figma `Outline-Custom`). */
+export const OutlineCustom: Story = {
+  args: { mode: "outlineCustom", children: "Text" },
 };
 
 export const AllRound: Story = {
@@ -143,6 +155,8 @@ const modes: ButtonMode[] = [
   "second",
   "default",
   "defaultCustom",
+  "outline",
+  "outlineCustom",
   "noBackground",
   "noBackgroundCustom",
 ];
@@ -199,6 +213,8 @@ export const HoverState: Story = {
           "second",
           "default",
           "defaultCustom",
+          "outline",
+          "outlineCustom",
           "noBackground",
           "noBackgroundCustom",
           "destructive",

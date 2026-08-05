@@ -1,5 +1,23 @@
 import { SymbolInformationCircle, SymbolWrongCircle } from "@aviala-design/icons";
-import { forwardRef, useId, type HTMLAttributes, type ReactNode } from "react";
+import {
+  forwardRef,
+  useId,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from "react";
+import {
+  FormProvider,
+  useController,
+  type Control,
+  type ControllerFieldState,
+  type ControllerRenderProps,
+  type FieldPath,
+  type FieldValues,
+  type UseControllerProps,
+  type UseFormStateReturn,
+} from "react-hook-form";
 import { cn } from "../lib/utils";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
@@ -7,7 +25,8 @@ import { Typography } from "./typography";
 /** Figma Components → System Composition → Form (527:57461 / 527:57641) */
 export type FormFieldDirection = "vertical" | "horizontal";
 
-export type FormFieldProps = HTMLAttributes<HTMLDivElement> & {
+/** Layout mode — the original props-driven wrapper */
+export type FormFieldLayoutProps = HTMLAttributes<HTMLDivElement> & {
   label?: ReactNode;
   htmlFor?: string;
   description?: ReactNode;
@@ -18,9 +37,51 @@ export type FormFieldProps = HTMLAttributes<HTMLDivElement> & {
   required?: boolean;
   /** Figma `Direction` — vertical stacks label above control; horizontal places label beside */
   direction?: FormFieldDirection;
+  children?: ReactNode;
 };
 
-export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
+/** Render arguments passed to `render` in react-hook-form mode */
+export type FormFieldRenderProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = {
+  field: ControllerRenderProps<TFieldValues, TName>;
+  fieldState: ControllerFieldState;
+  formState: UseFormStateReturn<TFieldValues>;
+  /**
+   * Auto-generated control id. The field label is already wired to it via
+   * `htmlFor` — pass it to the underlying input (`<Input id={id} />`).
+   */
+  id: string;
+};
+
+/**
+ * react-hook-form mode — bind the field to a form via `name` (+ optional
+ * `control`; falls back to the surrounding `<Form>` context). Validation
+ * errors from the resolver (zod etc.) are rendered automatically unless the
+ * `error` prop overrides them.
+ */
+export type FormFieldControlledProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = Omit<FormFieldLayoutProps, "children" | "htmlFor"> &
+  Pick<
+    UseControllerProps<TFieldValues, TName>,
+    "rules" | "defaultValue" | "shouldUnregister" | "disabled"
+  > & {
+    name: TName;
+    control?: Control<TFieldValues>;
+    render: (props: FormFieldRenderProps<TFieldValues, TName>) => ReactNode;
+    /** Overrides the validation error message shown under the control */
+    error?: ReactNode;
+  };
+
+export type FormFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = FormFieldLayoutProps | FormFieldControlledProps<TFieldValues, TName>;
+
+const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
   (
     {
       className,
@@ -127,4 +188,89 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     );
   }
 );
+FormFieldLayout.displayName = "FormFieldLayout";
+
+const FormFieldControlled = forwardRef<HTMLDivElement, FormFieldControlledProps>(
+  (
+    {
+      control,
+      name,
+      rules,
+      defaultValue,
+      shouldUnregister,
+      disabled,
+      render,
+      error,
+      ...layoutProps
+    },
+    ref
+  ) => {
+    const id = useId();
+    const { field, fieldState, formState } = useController({
+      name,
+      control,
+      rules,
+      defaultValue,
+      shouldUnregister,
+      disabled,
+    });
+    const message = error !== undefined ? error : (fieldState.error?.message ?? null);
+
+    return (
+      <FormFieldLayout ref={ref} {...layoutProps} htmlFor={id} error={message}>
+        {render({ field, fieldState, formState, id })}
+      </FormFieldLayout>
+    );
+  }
+);
+FormFieldControlled.displayName = "FormFieldControlled";
+
+function isControlledProps(
+  props: FormFieldProps
+): props is FormFieldControlledProps {
+  return "render" in props && typeof props.render === "function" && "name" in props;
+}
+
+const FormFieldRoot = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) => {
+  if (isControlledProps(props)) {
+    return <FormFieldControlled ref={ref} {...props} />;
+  }
+  return <FormFieldLayout ref={ref} {...props} />;
+});
+
+/**
+ * FormField — layout wrapper around a form control, or a react-hook-form
+ * bound field when given `name` + `render` (shadcn-style).
+ *
+ * @example Layout mode
+ * <FormField label="Email" htmlFor="email" description="...">
+ *   <Input id="email" />
+ * </FormField>
+ *
+ * @example react-hook-form + zod mode
+ * <Form {...form}>
+ *   <form onSubmit={form.handleSubmit(onSubmit)}>
+ *     <FormField
+ *       control={form.control}
+ *       name="email"
+ *       label="Email"
+ *       render={({ field, fieldState, id }) => (
+ *         <Input id={id} error={fieldState.invalid} {...field} />
+ *       )}
+ *     />
+ *   </form>
+ * </Form>
+ */
+export const FormField = FormFieldRoot as {
+  <
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  >(
+    props: FormFieldProps<TFieldValues, TName> & { ref?: Ref<HTMLDivElement> }
+  ): ReactElement | null;
+  displayName?: string;
+};
 FormField.displayName = "FormField";
+
+/** Alias of react-hook-form's FormProvider — wrap your form with it (shadcn-style `<Form {...form}>`) */
+export const Form = FormProvider;
