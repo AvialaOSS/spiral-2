@@ -93,14 +93,16 @@ export function writeComponentChangelogsJson(registry, outFile) {
 }
 
 /**
- * Stamp all non-empty `## [Unreleased]` blocks to `## {version}`.
+ * Stamp all non-empty Unreleased blocks to `## {version}`.
+ * Accepts both `## [Unreleased]` and `## Unreleased` (legacy).
  * @param {string} version
  * @returns {number} files updated
  */
 export function stampUnreleased(version) {
   if (!existsSync(changelogsDir)) return 0;
 
-  const unreleasedHeading = /^##[ \t]+\[Unreleased\][ \t]*$/m;
+  // Prefer bracketed form in new docs; still stamp the legacy unbracketed heading.
+  const unreleasedHeading = /^##[ \t]+(?:\[Unreleased\]|Unreleased)[ \t]*$/m;
 
   let updated = 0;
   for (const file of readdirSync(changelogsDir)) {
@@ -113,7 +115,7 @@ export function stampUnreleased(version) {
     // Only stamp when Unreleased has at least one bullet before the next ## heading
     // (or end of file). Use (?![\s\S]) for EOF — JS has no \Z end anchor (\Z is literal "Z").
     const unreleasedBlock = before.match(
-      /^##[ \t]+\[Unreleased\][ \t]*\n([\s\S]*?)(?=^##[ \t]|(?![\s\S]))/m,
+      /^##[ \t]+(?:\[Unreleased\]|Unreleased)[ \t]*\n([\s\S]*?)(?=^##[ \t]|(?![\s\S]))/m,
     );
     if (!unreleasedBlock) continue;
     if (!/^[ \t]*-[ \t]+\S/m.test(unreleasedBlock[1])) continue;

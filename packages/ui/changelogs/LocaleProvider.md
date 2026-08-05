@@ -1,6 +1,6 @@
 # LocaleProvider
 
-## Unreleased
+## 2.6.0
 
 ### Added
 - Semi-style `LocaleProvider` with `zhCN` / `enUS` packs, `useLocale` / `useLocaleMessages`, and `${name}` interpolate

@@ -1,6 +1,6 @@
 # CascaderField
 
-## Unreleased
+## 2.6.0
 
 ### Changed
 - 默认 placeholder 改由 `LocaleProvider` 提供

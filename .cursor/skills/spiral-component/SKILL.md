@@ -33,6 +33,8 @@ packages/ui/changelogs/{DisplayName}.md   # e.g. Button.md, DatePickerField.md
 
 Write under `## [Unreleased]` — do **not** hand-fill the next semver. `pnpm run version:packages` stamps Unreleased → the package version after `changeset version`.
 
+Prefer the bracketed heading. Legacy `## Unreleased` (no brackets) is still stamped for compatibility.
+
 ```md
 # Button
 

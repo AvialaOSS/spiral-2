@@ -1,6 +1,6 @@
 # List
 
-## Unreleased
+## 2.6.0
 
 ### Changed
 - 默认「更多」aria 文案改由 `LocaleProvider` 提供
