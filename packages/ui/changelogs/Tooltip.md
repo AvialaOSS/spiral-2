@@ -1,6 +1,6 @@
 # Tooltip
 
-## [Unreleased]
+## 2.6.0
 
 ### Changed
 - `ResponsiveTooltip` 触摸端改为**长按**打开（短按仍触发按钮自身点击）；可用 `longPressMs` 调整按住时长（默认 500ms）

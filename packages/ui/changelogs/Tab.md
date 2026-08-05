@@ -1,6 +1,6 @@
 # Tab
 
-## [Unreleased]
+## 2.6.0
 
 ### Added
 

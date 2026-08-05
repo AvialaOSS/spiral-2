@@ -1,6 +1,6 @@
 # SegmentatorGroup
 
-## [Unreleased]
+## 2.6.0
 
 ### Added
 - `direction`：`horizontal`（默认）/ `vertical`，对齐 Figma SegmentatorGroup；竖向布局下拇指与触控拖选沿主轴（Y）工作
