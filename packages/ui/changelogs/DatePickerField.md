@@ -1,6 +1,6 @@
 # DatePickerField
 
-## Unreleased
+## 2.6.0
 
 ### Changed
 - 周标题、页脚、导航 aria 与 `Intl` 格式化改读当前 locale（默认 zh-CN）

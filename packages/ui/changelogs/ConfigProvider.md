@@ -1,6 +1,6 @@
 # ConfigProvider
 
-## Unreleased
+## 2.6.0
 
 ### Added
 - `ConfigProvider` with `direction` (`ltr` | `rtl`), optional `locale` (nests `LocaleProvider`), and `syncDocumentDir` for portalled overlays

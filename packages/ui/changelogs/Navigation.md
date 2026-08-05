@@ -1,6 +1,6 @@
 # Navigation
 
-## Unreleased
+## 2.6.0
 
 ### Fixed
 - 垂直指示条读取 `--navigation-rail-inline-start`，RTL 下贴在 inline-start 侧

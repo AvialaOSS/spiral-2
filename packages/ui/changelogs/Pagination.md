@@ -1,6 +1,6 @@
 # Pagination
 
-## Unreleased
+## 2.6.0
 
 ### Changed
 - 默认文案改由 `LocaleProvider` 字典提供（`jumpLabel` / `sizeLabel` 等 props 仍可覆盖）
