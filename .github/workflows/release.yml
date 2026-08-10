@@ -70,7 +70,7 @@ jobs:
           steps.changesets.outputs.published == 'true' &&
           (vars.AVIALA_WEBSITE_APP_CLIENT_ID == '' || steps.website-app.outcome != 'success')
         run: |
-          echo "::warning::Docs scaffold dispatch skipped (set AVIALA_WEBSITE_APP_CLIENT_ID + AVIALA_WEBSITE_APP_PRIVATE_KEY). See avialaWebsite/docs/SPIRAL_DOCS_DISPATCH.md"
+          echo "::warning::Docs scaffold dispatch skipped (set AVIALA_WEBSITE_APP_CLIENT_ID + AVIALA_WEBSITE_APP_PRIVATE_KEY). See https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md"
 
       - name: Dispatch docs scaffold on avialaWebsite
         if: steps.changesets.outputs.published == 'true' && steps.website-app.outcome == 'success'
