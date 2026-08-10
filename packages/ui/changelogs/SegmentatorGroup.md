@@ -1,5 +1,11 @@
 # SegmentatorGroup
 
+## 2.7.0
+
+### Changed
+- nested 模式轨道 Hover 使用 `segmentator-bg-hover`（filled-hover）；项级 Hover/Active 仍独立
+- 共享 elevation `BasicShadow-Level4WithLine` 发丝线透明度调整为 18%
+
 ## 2.6.1
 
 ### Changed
