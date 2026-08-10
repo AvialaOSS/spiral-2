@@ -7,34 +7,65 @@
   --text-text-theme-primary-black: var(--aviala-primary-primary-10, #cd3923);
   --text-text-theme-secondary-black: var(--aviala-primary-primary-7, #ff7b5b);
   --text-text-theme-light-black: var(--aviala-primary-primary-5, #ffb19b);
-  --border-border-theme-light: var(--border-border-normal-1, #f6f5f5);
+  --border-border-theme-light: var(--border-border-normal-1, #f9f8f8);
   --border-border-theme-primary: var(--aviala-primary-primary-8, #ff5532);
-  --border-border-normal-1: #f6f5f5;
-  --border-border-normal-2: #ebeaea;
-  --border-border-normal-3: #cdcccc;
+  --border-border-normal-1: #f9f8f8;
+  --border-border-normal-2: #f0efef;
+  --border-border-normal-3: #d6d5d4;
   --control-control-fail-background: var(--aviala-error-error-8, #ff1d4e);
+  --control-control-normal-lightbackground-1: #f0efef;
+  --control-control-normal-lightbackground-2: #e5e4e3;
+  --control-control-normal-background-3: #d6d5d4;
+  --control-control-normal-background-whiteonly: #ffffff;
 
   /* Neutral text series (body copy, labels, icons) */
-  --text-text-normal-text-black: #232222;
-  --text-text-normal-text-caption-black: #595858;
-  --text-text-normal-text-white: #fcfcfc;
-  --text-text-normal-text-caption-white: #fcfcfc;
+  --text-text-normal-text-black: #262525;
+  --text-text-normal-text-caption-black: #616060;
+  --text-text-normal-text-white: #fefdfd;
+  --text-text-normal-text-caption-white: #fefdfd;
+
+  /* Shared elevation — BasicShadow-Level4WithLine */
+  --aviala-shadow-level4-with-line:
+    0 0 1px 0 rgba(0, 0, 0, 0.45),
+    0 6px 18px 0 rgba(0, 0, 0, 0.08);
+
+  /* Shared interaction surfaces — Figma Components 1909:28593 matrix */
+  --aviala-interaction-ghost-hover: var(
+    --aviala-neutral-neutral-3,
+    var(--box-box-normal-lightbackground-white, #f9f8f8)
+  );
+  --aviala-interaction-ghost-active: var(
+    --control-control-normal-lightbackground-1,
+    #f0efef
+  );
+  --aviala-interaction-filled-default: var(
+    --control-control-normal-lightbackground-1,
+    #f0efef
+  );
+  --aviala-interaction-filled-hover: var(
+    --control-control-normal-lightbackground-2,
+    #e5e4e3
+  );
+  --aviala-interaction-filled-active: var(
+    --control-control-normal-background-3,
+    #d6d5d4
+  );
 
   /* shadcn semantic aliases — default typography/surfaces use neutral tokens, not theme tint */
-  --background: var(--normal-background-theme, #f6f5f5);
-  --foreground: var(--text-text-normal-text-black, #232222);
+  --background: var(--normal-background-theme, #f9f8f8);
+  --foreground: var(--text-text-normal-text-black, #262525);
   --primary: var(--control-control-theme-background, #ff5532);
   --primary-foreground: #ffffff;
-  --secondary: var(--control-control-normal-lightbackground-deep, #ebeaea);
-  --secondary-foreground: var(--text-text-normal-text-black, #232222);
-  --muted: var(--control-control-normal-lightbackground-light, #f6f5f5);
-  --muted-foreground: var(--text-text-normal-text-caption-black, #595858);
-  --accent: var(--control-control-normal-lightbackground-light, #f6f5f5);
-  --accent-foreground: var(--text-text-normal-text-black, #232222);
+  --secondary: var(--control-control-normal-lightbackground-2, #e5e4e3);
+  --secondary-foreground: var(--text-text-normal-text-black, #262525);
+  --muted: var(--control-control-normal-lightbackground-1, #f0efef);
+  --muted-foreground: var(--text-text-normal-text-caption-black, #616060);
+  --accent: var(--control-control-normal-lightbackground-1, #f0efef);
+  --accent-foreground: var(--text-text-normal-text-black, #262525);
   --destructive: var(--control-control-fail-background, #ff1d4e);
   --destructive-foreground: #ffffff;
-  --border: var(--border-border-normal-1, #f6f5f5);
-  --input: var(--border-border-normal-1, #f6f5f5);
+  --border: var(--border-border-normal-1, #f9f8f8);
+  --input: var(--border-border-normal-1, #f9f8f8);
   --ring: var(--border-border-theme-primary, #ff5532);
   --card: #ffffff;
   --card-foreground: var(--foreground);
@@ -44,21 +75,25 @@
 }
 
 [data-mode="dark"] {
-  --background: #0d0c0c;
-  --foreground: var(--text-text-normal-text-white, #d9d9d9);
-  --muted-foreground: var(--text-text-normal-text-caption-black, #979797);
-  --secondary-foreground: var(--text-text-normal-text-white, #d9d9d9);
-  --accent-foreground: var(--text-text-normal-text-white, #d9d9d9);
+  --background: #090909;
+  --foreground: var(--text-text-normal-text-white, #d5d5d5);
+  --muted-foreground: var(--text-text-normal-text-caption-black, #8e8e8e);
+  --secondary-foreground: var(--text-text-normal-text-white, #d5d5d5);
+  --accent-foreground: var(--text-text-normal-text-white, #d5d5d5);
   --card: #000000;
   --card-foreground: var(--foreground);
   --popover: var(--card);
   /* Override light :root neutrals — fallbacks alone never win once :root defines the var */
-  --border-border-normal-1: #0d0c0c;
-  --border-border-normal-2: #161616;
-  --border-border-normal-3: #2c2c2c;
+  --border-border-normal-1: #090909;
+  --border-border-normal-2: #121212;
+  --border-border-normal-3: #252525;
   --border-border-theme-light: var(--border-border-normal-1);
   --border: var(--border-border-normal-1);
   --input: var(--border);
-  --muted: var(--control-control-normal-lightbackground-light, #0d0c0c);
-  --accent: var(--control-control-normal-lightbackground-light, #0d0c0c);
+  --control-control-normal-lightbackground-1: #121212;
+  --control-control-normal-lightbackground-2: #1a1a1a;
+  --control-control-normal-background-3: #252525;
+  --muted: var(--control-control-normal-lightbackground-1, #121212);
+  --accent: var(--control-control-normal-lightbackground-1, #121212);
+  --secondary: var(--control-control-normal-lightbackground-2, #1a1a1a);
 }

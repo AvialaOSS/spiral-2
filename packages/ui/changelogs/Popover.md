@@ -1,5 +1,10 @@
 # Popover
 
+## Unreleased
+
+### Changed
+- 浮层阴影统一为 `BasicShadow-Level4WithLine`
+
 ## 2.5.0
 
 ### Added

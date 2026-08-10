@@ -108,11 +108,11 @@
 }
 
 .aviala-badge--style-normal.aviala-badge--secondary {
-  --badge-bg: var(--control-control-normal-lightbackground-deep, #ebeaea);
-  --badge-fg: var(--text-text-normal-text-black, #232222);
+  --badge-bg: var(--control-control-normal-lightbackground-2, #ebeaea);
+  --badge-fg: var(--text-text-normal-text-black, #262525);
 }
 
 .aviala-badge--style-normal.aviala-badge--primary {
-  --badge-bg: var(--control-control-normal-background-deep, #cdcccc);
-  --badge-fg: var(--text-text-normal-text-black, #232222);
+  --badge-bg: var(--control-control-normal-background-3, #d6d5d4);
+  --badge-fg: var(--text-text-normal-text-black, #262525);
 }

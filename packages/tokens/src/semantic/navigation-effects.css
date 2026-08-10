@@ -270,8 +270,12 @@
     background-color 250ms ease;
 }
 
+.aviala-navigation-item__control.aviala-button--mode-second:hover:not(:disabled)::before {
+  background-color: var(--button-second-bg-hover, var(--button-second-bg));
+}
+
 .aviala-navigation-item__control.aviala-button--mode-second:active:not(:disabled)::before {
-  filter: brightness(var(--button-active-brightness, 0.95));
+  background-color: var(--button-second-bg-active, var(--button-second-bg-hover));
 }
 
 .aviala-navigation-item__icon,

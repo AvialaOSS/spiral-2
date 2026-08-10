@@ -2,25 +2,26 @@
 :root {
   /* Hover surface tokens — mirrored from components.css so they resolve when this
      file is imported outside the Tailwind pipeline (styles.css may omit unused :root vars). */
-  --button-primary-bg-hover: var(--aviala-primary-primary-7, #ffab98);
-  --button-primary-bg-active: var(--aviala-primary-primary-9, #e92d00);
+  --button-primary-bg-hover: var(--aviala-primary-primary-9, #e92d00);
+  --button-primary-bg-active: var(--aviala-primary-primary-7, #ff7b5b);
+  --button-destructive-bg-hover: var(--aviala-error-error-9, #e0003d);
+  --button-destructive-bg-active: var(--aviala-error-error-7, #ff6b8a);
   --button-hover-brightness: 1.05;
   --button-active-brightness: 0.95;
   --button-second-bg-hover: var(--aviala-primary-primary-5, #ffc5b9);
-  --button-default-bg-hover: var(--aviala-neutral-neutral-6, #edebeb);
-  --button-no-bg-hover: var(
-    --control-control-theme-lightbackground,
-    var(--aviala-primary-primary-2, #fff9f8)
-  );
-  --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
-  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #f6f5f5);
-  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f6f5f5);
+  --button-second-bg-active: var(--aviala-primary-primary-6, #ffab98);
+  --button-default-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
+  --button-default-bg-active: var(--aviala-interaction-filled-hover, #e5e4e3);
+  --button-no-bg-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
+  --button-no-bg-active: var(--aviala-interaction-ghost-active, #f0efef);
+  --button-no-bg-custom-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
+  --button-no-bg-custom-active: var(--aviala-interaction-ghost-active, #f0efef);
   --button-outline-border: var(--border-border-normal-3, #cdcccc);
   --button-outline-fg: var(
     --text-text-theme-primary-black,
     var(--aviala-primary-primary-10, #bf2300)
   );
-  --button-outline-custom-fg: var(--text-text-normal-text-black, #232222);
+  --button-outline-custom-fg: var(--text-text-normal-text-black, #262525);
 
   /* Button size — padding / line-height / radius (height is content-driven) */
   --button-tiny-padding-x: var(--padding-tiny, 4px);
@@ -228,9 +229,8 @@
   --button-surface-bg: var(--button-primary-bg-hover);
 }
 
-.aviala-button--mode-destructive:hover:not(:disabled):not([aria-busy="true"])
-  .aviala-button-surface {
-  filter: brightness(var(--button-hover-brightness, 1.05));
+.aviala-button--mode-destructive:hover:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-destructive-bg-hover);
 }
 
 .aviala-button--mode-second:hover:not(:disabled):not([aria-busy="true"]) {
@@ -319,23 +319,27 @@
   background-color: var(--button-no-bg-custom-active);
 }
 
-/* Pressed: primary uses p-9 surface; other modes darken via brightness filter */
+/* Pressed: token fill swaps (Figma matrix — no brightness filters) */
 .aviala-button--mode-primary:active:not(:disabled),
 .aviala-button--mode-primary:hover:active:not(:disabled):not([aria-busy="true"]) {
   --button-surface-bg: var(--button-primary-bg-active);
 }
 
-.aviala-button--mode-destructive:active:not(:disabled) .aviala-button-surface,
-.aviala-button--mode-second:active:not(:disabled) .aviala-button-surface,
-.aviala-button--mode-default:active:not(:disabled) .aviala-button-surface,
-.aviala-button--mode-defaultCustom:active:not(:disabled) .aviala-button-surface {
-  filter: brightness(var(--button-active-brightness, 0.95));
+.aviala-button--mode-destructive:active:not(:disabled),
+.aviala-button--mode-destructive:hover:active:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-destructive-bg-active);
 }
 
-.aviala-button--mode-destructive:hover:active:not(:disabled):not([aria-busy="true"])
-  .aviala-button-surface {
-  filter: brightness(var(--button-hover-brightness, 1.05))
-    brightness(var(--button-active-brightness, 0.95));
+.aviala-button--mode-second:active:not(:disabled),
+.aviala-button--mode-second:hover:active:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-second-bg-active);
+}
+
+.aviala-button--mode-default:active:not(:disabled),
+.aviala-button--mode-default:hover:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-defaultCustom:active:not(:disabled),
+.aviala-button--mode-defaultCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+  --button-surface-bg: var(--button-default-bg-active);
 }
 
 /* Icon slot — Figma Basic Input → Button (aligns with input-slot / select-item-function) */

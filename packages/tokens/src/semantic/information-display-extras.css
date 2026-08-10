@@ -15,7 +15,7 @@
   overflow: hidden;
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--avatar-bg, var(--text-text-theme-secondary-black, #ff8368));
-  color: var(--avatar-fg, var(--text-text-normal-text-black, #232222));
+  color: var(--avatar-fg, var(--text-text-normal-text-black, #262525));
   width: var(--avatar-size);
   height: var(--avatar-size);
 }
@@ -91,9 +91,9 @@
   align-items: center;
   gap: var(--tag-gap, 4px);
   border-radius: var(--tag-radius, 6px);
-  border: 1px solid var(--tag-border, var(--border-border-normal-1, #f6f5f5));
+  border: 1px solid var(--tag-border, var(--border-border-normal-1, #f0efef));
   background-color: var(--tag-bg, var(--box-box-normal-background-whiteonly, #ffffff));
-  color: var(--tag-fg, var(--text-text-normal-text-caption-black, #595858));
+  color: var(--tag-fg, var(--text-text-normal-text-caption-black, #616060));
   padding: 0 var(--tag-px, 2px);
   white-space: nowrap;
 }
@@ -169,7 +169,7 @@
   overflow: hidden;
   border-radius: var(--table-radius, var(--border-radius-middle, 10px));
   background-color: var(--table-bg, var(--box-box-normal-lightbackground-white, #ebeaea));
-  border: 1px solid var(--table-border, var(--border-border-normal-1, #f6f5f5));
+  border: 1px solid var(--table-border, var(--border-border-normal-1, #f0efef));
 }
 
 .aviala-table__row {
@@ -180,7 +180,7 @@
 }
 
 .aviala-table__row + .aviala-table__row {
-  border-top: 1px solid var(--table-border, var(--border-border-normal-1, #f6f5f5));
+  border-top: 1px solid var(--table-border, var(--border-border-normal-1, #f0efef));
 }
 
 .aviala-table-head {
@@ -190,7 +190,7 @@
   min-width: 0;
   min-height: var(--table-head-height, 38px);
   padding: var(--table-cell-py, 10px) var(--table-cell-px, 14px);
-  color: var(--table-head-fg, var(--text-text-normal-text-caption-black, #595858));
+  color: var(--table-head-fg, var(--text-text-normal-text-caption-black, #616060));
   background-color: var(--table-head-bg, transparent);
 }
 
@@ -208,7 +208,7 @@
   min-height: var(--table-cell-height, 50px);
   padding: var(--table-cell-py, 10px) var(--table-cell-px, 14px);
   gap: var(--table-cell-gap, 8px);
-  color: var(--table-cell-fg, var(--text-text-normal-text-black, #232222));
+  color: var(--table-cell-fg, var(--text-text-normal-text-black, #262525));
 }
 
 .aviala-table-cell[data-content="checkbox"] {

@@ -186,11 +186,11 @@ function buildAldModeVars(root, modeFile) {
   set("--foreground", g("--text-text-normal-text-black"));
   set("--primary", g("--control-control-theme-background"));
   vars["--primary-foreground"] = "#FFFFFF";
-  set("--secondary", g("--control-control-normal-lightbackground-deep"));
+  set("--secondary", g("--control-control-normal-lightbackground-2"));
   set("--secondary-foreground", g("--text-text-normal-text-black"));
-  set("--muted", g("--control-control-normal-lightbackground-light"));
+  set("--muted", g("--control-control-normal-lightbackground-1"));
   set("--muted-foreground", g("--text-text-normal-text-caption-black"));
-  set("--accent", g("--control-control-normal-lightbackground-light"));
+  set("--accent", g("--control-control-normal-lightbackground-1"));
   set("--accent-foreground", g("--text-text-normal-text-black"));
   set("--destructive", g("--control-control-fail-background"));
   vars["--destructive-foreground"] = "#FFFFFF";

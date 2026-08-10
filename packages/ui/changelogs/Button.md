@@ -1,5 +1,10 @@
 # Button
 
+## Unreleased
+
+### Changed
+- Hover/Active 改为共享交互 token：Primary 悬停加深、按下变浅；Ghost 使用 neutral-3 → lightBackground-1；Default 使用 filled 1→2 阶
+
 ## 2.6.0
 
 ### Added

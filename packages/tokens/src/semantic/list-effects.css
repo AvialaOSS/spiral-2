@@ -69,6 +69,10 @@ a.aviala-list-item {
   background-color: var(--list-item-highlight-bg);
 }
 
+.aviala-list-item[data-interactive="true"]:not([data-disabled]):active {
+  background-color: var(--list-item-active-bg, var(--list-item-highlight-bg));
+}
+
 .aviala-list-item[data-selected="true"] {
   background-color: var(--list-item-selected-bg);
   color: var(--list-item-selected-fg);

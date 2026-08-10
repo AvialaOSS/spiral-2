@@ -101,10 +101,11 @@ function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
     vars[aliasToCssVar(`neutral/neutral-${step}`)] ?? ALD_NEUTRAL_RAMP[mode][step]!;
 
   // ALD token-colors aliases (light/dark resolve via neutral ramp).
-  setAldVar(vars, "control/control-normal-lightBackground-light", neutral(3));
-  setAldVar(vars, "control/control-normal-lightBackground-deep", neutral(4));
+  // lightBackground-1/2 → neutral-4/5; Background-3 → neutral-6
+  setAldVar(vars, "control/control-normal-lightBackground-1", neutral(4));
+  setAldVar(vars, "control/control-normal-lightBackground-2", neutral(5));
   setAldVar(vars, "control/control-normal-Background-whiteOnly", neutral(1));
-  setAldVar(vars, "control/control-normal-Background-deep", neutral(6));
+  setAldVar(vars, "control/control-normal-Background-3", neutral(6));
   setAldVar(vars, "border/border-normal-1", neutral(3));
   setAldVar(vars, "border/border-normal-2", neutral(4));
   setAldVar(vars, "border/border-normal-3", neutral(6));

@@ -14,11 +14,11 @@
      for side + arrow position) — enter scale grows from the invocation point */
   transform-origin: var(--radix-popover-content-transform-origin, 50% 50%);
   max-width: var(--popover-content-max-width, 320px);
-  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f6f5f5));
+  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f0efef));
   border-radius: var(--popover-content-radius, var(--select-menu-radius, 10px));
   background-color: var(--popover-content-bg, var(--select-menu-bg, #ffffff));
-  color: var(--popover-content-fg, var(--select-item-fg, #232222));
-  box-shadow: var(--popover-content-shadow, var(--select-menu-shadow, 0 5px 20px rgba(0, 0, 0, 0.06)));
+  color: var(--popover-content-fg, var(--select-item-fg, #262525));
+  box-shadow: var(--popover-content-shadow, var(--select-menu-shadow, var(--aviala-shadow-level4-with-line)));
   padding: var(--popover-content-py, 8px) var(--popover-content-px, 8px);
 }
 
@@ -69,7 +69,7 @@
 
 .aviala-popover-content__arrow-outline {
   fill: none;
-  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-1, #f6f5f5));
+  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-1, #f0efef));
   stroke-width: 1;
   stroke-linejoin: round;
 }
@@ -173,7 +173,7 @@
   max-width: var(--tooltip-content-max-width, 240px);
   border: none;
   border-radius: var(--tooltip-content-radius, 8px);
-  background-color: var(--tooltip-content-bg, #232222);
+  background-color: var(--tooltip-content-bg, #262525);
   color: var(--tooltip-content-fg, #ffffff);
   box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
   padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
@@ -208,7 +208,7 @@
   height: 5px;
   min-width: 14px;
   min-height: 5px;
-  color: var(--tooltip-content-bg, #232222);
+  color: var(--tooltip-content-bg, #262525);
 }
 
 .aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow,

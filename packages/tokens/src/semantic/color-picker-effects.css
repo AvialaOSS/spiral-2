@@ -15,10 +15,10 @@
   flex-direction: column;
   gap: var(--color-picker-panel-gap, 10px);
   overflow: hidden;
-  border: 1px solid var(--color-picker-panel-border, #f6f5f5);
+  border: 1px solid var(--color-picker-panel-border, #f0efef);
   border-radius: var(--color-picker-panel-radius, 10px);
   background-color: var(--color-picker-panel-bg, #ffffff);
-  box-shadow: var(--color-picker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
+  box-shadow: var(--color-picker-panel-shadow, var(--aviala-shadow-level4-with-line));
   padding: var(--padding-none, 0) var(--padding-none, 0) var(--color-picker-panel-px, 8px);
 }
 
@@ -122,11 +122,11 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--input-radius, 8px);
-  background-color: var(--input-bg-default, #f6f5f5);
+  background-color: var(--input-bg-default, #f0efef);
   box-shadow: var(--input-shell-shadow);
   padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
   gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
-  color: var(--input-fg, #232222);
+  color: var(--input-fg, #262525);
   --input-shell-px: var(--input-px-regular, 10px);
   --input-shell-gap: var(--input-gap-regular, 6px);
   --input-shell-field-py: var(--input-field-py-regular, 6px);
@@ -168,7 +168,7 @@
   font-family: inherit;
   font-size: var(--input-font-size);
   line-height: var(--input-line-height);
-  color: var(--input-fg, #232222);
+  color: var(--input-fg, #262525);
   outline: none;
 }
 
@@ -204,7 +204,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border-border-normal-1, #f6f5f5);
+  border: 1px solid var(--border-border-normal-1, #f0efef);
   border-radius: var(--input-radius, 8px);
   background-color: var(--control-control-normal-background-whiteonly, #ffffff);
   padding: var(--padding-min, 2px);
@@ -240,12 +240,12 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--input-radius, 8px);
-  background-color: var(--input-bg-default, #f6f5f5);
+  background-color: var(--input-bg-default, #f0efef);
   box-shadow: var(--input-shell-shadow, var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04)));
   padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
   gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
   font-family: inherit;
-  color: var(--input-fg, #232222);
+  color: var(--input-fg, #262525);
   --input-shell-px: var(--input-px-regular, 10px);
   --input-shell-gap: var(--input-gap-regular, 6px);
   --input-shell-field-py: var(--input-field-py-regular, 6px);
@@ -296,7 +296,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .aviala-color-picker-trigger:hover:not(:focus-visible):not([data-open="true"]):not([data-disabled="true"]):not(:disabled) {
-    background-color: var(--input-bg-hover, #cdcccc);
+    background-color: var(--input-bg-hover, #e5e4e3);
   }
 }
 

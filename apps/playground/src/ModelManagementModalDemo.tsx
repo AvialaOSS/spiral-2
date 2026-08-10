@@ -87,7 +87,7 @@ function ModelTaskRow({
   onValueChange: (value: string[], selectedOptions?: CascaderOption[]) => void;
 }) {
   return (
-    <Card className="w-full border border-[var(--border-border-normal-1,#f6f5f5)]">
+    <Card className="w-full border border-[var(--border-border-normal-1,#f0efef)]">
       <CardHead
         slotType="select"
         icon={false}
@@ -141,7 +141,7 @@ export function ModelManagementModalDemo() {
           {/* Custom shell: sidebar + content (no full-width ModalHeader — matches product layout) */}
           <div className="flex min-h-[440px] flex-1 overflow-hidden rounded-[inherit]">
             <aside
-              className="flex w-[168px] shrink-0 flex-col gap-[var(--gap-content-space,10px)] border-r border-[var(--border-border-normal-1,#f6f5f5)] bg-[var(--control-normal-lightbackground-light,#f6f5f5)] p-[var(--padding-default,8px)]"
+              className="flex w-[168px] shrink-0 flex-col gap-[var(--gap-content-space,10px)] border-r border-[var(--border-border-normal-1,#f0efef)] bg-[var(--control-control-normal-lightbackground-1,#f0efef)] p-[var(--padding-default,8px)]"
             >
               <Navigation direction="vertical" background="none" className="w-full">
                 <NavigationBrand>
@@ -215,7 +215,7 @@ export function ModelManagementModalDemo() {
                     />
                   ))
                 ) : (
-                  <Stack gap="content" className="rounded-[var(--border-radius-big,12px)] border border-[var(--border-border-normal-1,#f6f5f5)] p-[var(--padding-big,14px)]">
+                  <Stack gap="content" className="rounded-[var(--border-radius-big,12px)] border border-[var(--border-border-normal-1,#f0efef)] p-[var(--padding-big,14px)]">
                     <Typography level="subtitle">
                       {NAV_ITEMS.find((item) => item.id === navId)?.label}
                     </Typography>

@@ -46,6 +46,12 @@ button.aviala-breadcrumb-item {
 a.aviala-breadcrumb-item:hover,
 button.aviala-breadcrumb-item:hover {
   opacity: 1;
+  background-color: var(--aviala-interaction-ghost-hover, #f9f8f8);
+}
+
+a.aviala-breadcrumb-item:active,
+button.aviala-breadcrumb-item:active {
+  background-color: var(--aviala-interaction-ghost-active, #f0efef);
 }
 
 .aviala-breadcrumb-item__icon {
@@ -143,8 +149,8 @@ button.aviala-breadcrumb-item:hover {
 
 .aviala-breadcrumb-ellipsis-item:hover {
   background-color: var(
-    --control-control-normal-lightbackground-light,
-    #f6f5f5
+    --control-control-normal-lightbackground-1,
+    #f0efef
   );
 }
 
@@ -491,5 +497,5 @@ button.aviala-breadcrumb-item:hover {
   display: inline-block;
   width: 0;
   height: var(--card-divider-height, 14px);
-  border-inline-start: 1px solid var(--border-border-normal-1, #f6f5f5);
+  border-inline-start: 1px solid var(--border-border-normal-1, #f0efef);
 }
