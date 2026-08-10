@@ -1,6 +1,6 @@
 # TimePickerField
 
-## [Unreleased]
+## 2.6.1
 
 ### Changed
 - 时分滚轮：鼠标滚轮步进更灵敏，可一次跨多格，并允许打断进行中的平滑滚动

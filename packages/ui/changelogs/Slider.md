@@ -1,6 +1,6 @@
 # Slider
 
-## Unreleased
+## 2.6.1
 
 ### Changed
 - 拇指阴影统一为 `BasicShadow-Level4WithLine`

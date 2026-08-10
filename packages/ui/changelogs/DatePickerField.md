@@ -1,6 +1,6 @@
 # DatePickerField
 
-## [Unreleased]
+## 2.6.1
 
 ### Changed
 - 日历面板上一月 / 下一月导航图标改为 `direction/arrowLeftLight` 与 `direction/arrowRightLight`

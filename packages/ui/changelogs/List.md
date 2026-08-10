@@ -1,6 +1,6 @@
 # List
 
-## Unreleased
+## 2.6.1
 
 ### Changed
 - 可交互行 Hover/Active 对齐共享 filled 交互 token（lightBackground-2 / Background-3）
