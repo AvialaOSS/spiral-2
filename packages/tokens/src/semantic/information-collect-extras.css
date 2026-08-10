@@ -325,6 +325,36 @@
   pointer-events: none;
 }
 
+.aviala-scroll-picker-column__clip {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  inset-inline: var(--scroll-picker-column-px, 6px);
+  height: var(--scroll-picker-item-height, 26px);
+  transform: translateY(-50%);
+  overflow: hidden;
+  border-radius: var(--scroll-picker-item-radius, 6px);
+  pointer-events: none;
+}
+
+.aviala-scroll-picker-column__clip-track {
+  will-change: transform;
+}
+
+.aviala-scroll-picker-column__clip-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-sizing: border-box;
+  height: var(--scroll-picker-item-height, 26px);
+  margin-block: calc(var(--scroll-picker-item-gap, 4px) / 2);
+  padding: var(--scroll-picker-item-py, 4px) var(--scroll-picker-item-px, 8px);
+  font: inherit;
+  color: var(--scroll-picker-item-fg-selected);
+  opacity: 1;
+}
+
 .aviala-scroll-picker-column__scroll {
   position: relative;
   z-index: 1;
@@ -337,6 +367,24 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   outline: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(50% - var(--scroll-picker-item-height, 26px) / 2),
+    transparent calc(50% - var(--scroll-picker-item-height, 26px) / 2),
+    transparent calc(50% + var(--scroll-picker-item-height, 26px) / 2),
+    #000 calc(50% + var(--scroll-picker-item-height, 26px) / 2),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(50% - var(--scroll-picker-item-height, 26px) / 2),
+    transparent calc(50% - var(--scroll-picker-item-height, 26px) / 2),
+    transparent calc(50% + var(--scroll-picker-item-height, 26px) / 2),
+    #000 calc(50% + var(--scroll-picker-item-height, 26px) / 2),
+    #000 100%
+  );
 }
 
 /* Listbox focus ring is clipped by overflow:hidden — paint it on the
@@ -393,11 +441,7 @@ html[data-aviala-kbd]
   background: transparent;
   width: 100%;
   text-align: center;
-}
-
-.aviala-scroll-picker-item[data-selected="true"] {
-  position: relative;
-  z-index: 1;
-  color: var(--scroll-picker-item-fg-selected);
-  opacity: 1;
+  transition:
+    color 0.12s ease,
+    opacity 0.12s ease;
 }

@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import {
-  DirectionArrowLeft,
-  DirectionArrowRight,
+  DirectionArrowLeftLight,
+  DirectionArrowRightLight,
   TimeAndDateClock,
   TimeAndDateDate,
 } from "@aviala-design/icons";
@@ -919,8 +919,8 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const { code } = useLocale();
   const locale = useLocaleMessages("DatePicker");
   const rtl = useRtl();
-  const PrevIcon = rtl ? DirectionArrowRight : DirectionArrowLeft;
-  const NextIcon = rtl ? DirectionArrowLeft : DirectionArrowRight;
+  const PrevIcon = rtl ? DirectionArrowRightLight : DirectionArrowLeftLight;
+  const NextIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
   const {
     mode,
     viewMonth,
@@ -943,6 +943,11 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const dayGridRef = useRef<HTMLDivElement>(null);
   const pendingDayFocusRef = useRef(false);
   const [monthSlide, setMonthSlide] = useState<MonthSlideState | null>(null);
+  /** Remount keys so prev/next icons replay exit→enter after each press. */
+  const [prevNavAnimKey, setPrevNavAnimKey] = useState(0);
+  const [nextNavAnimKey, setNextNavAnimKey] = useState(0);
+  const [prevNavAnimating, setPrevNavAnimating] = useState(false);
+  const [nextNavAnimating, setNextNavAnimating] = useState(false);
   const isMonthPanel = activePanel === "month";
   const isTimePanel = activePanel === "time" && enableTime;
   const targetContentView: CalendarContentView = isMonthPanel ? "month" : "date";
@@ -1221,9 +1226,24 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           type="button"
           className="aviala-datepicker-calendar__nav aviala-focus-ring"
           aria-label={isMonthPanel ? locale.previousYear : locale.previousMonth}
-          onClick={() => setViewMonth(addMonths(viewMonth, -stepMonth))}
+          onClick={() => {
+            if (!prefersReducedMotion()) {
+              setPrevNavAnimKey((n) => n + 1);
+              setPrevNavAnimating(true);
+            }
+            setViewMonth(addMonths(viewMonth, -stepMonth));
+          }}
         >
-          <PrevIcon level="text" biggerSize aria-hidden />
+          <span className="aviala-datepicker-calendar__nav-icon">
+            <span
+              key={prevNavAnimKey}
+              className="aviala-datepicker-calendar__nav-icon-inner"
+              data-anim={prevNavAnimating ? "prev" : undefined}
+              onAnimationEnd={() => setPrevNavAnimating(false)}
+            >
+              <PrevIcon level="text" biggerSize aria-hidden />
+            </span>
+          </span>
         </button>
         <button
           type="button"
@@ -1249,9 +1269,24 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           type="button"
           className="aviala-datepicker-calendar__nav aviala-focus-ring"
           aria-label={isMonthPanel ? locale.nextYear : locale.nextMonth}
-          onClick={() => setViewMonth(addMonths(viewMonth, stepMonth))}
+          onClick={() => {
+            if (!prefersReducedMotion()) {
+              setNextNavAnimKey((n) => n + 1);
+              setNextNavAnimating(true);
+            }
+            setViewMonth(addMonths(viewMonth, stepMonth));
+          }}
         >
-          <NextIcon level="text" biggerSize aria-hidden />
+          <span className="aviala-datepicker-calendar__nav-icon">
+            <span
+              key={nextNavAnimKey}
+              className="aviala-datepicker-calendar__nav-icon-inner"
+              data-anim={nextNavAnimating ? "next" : undefined}
+              onAnimationEnd={() => setNextNavAnimating(false)}
+            >
+              <NextIcon level="text" biggerSize aria-hidden />
+            </span>
+          </span>
         </button>
       </div>
 
