@@ -365,6 +365,7 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   border: 0;
   border-radius: var(--border-radius-small, 8px);
   background: transparent;
@@ -376,6 +377,47 @@
 
 .aviala-datepicker-calendar__nav:hover {
   background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+}
+
+/* Press scale on the icon shell; fly anim runs on the inner so they don't fight. Clip to the button. */
+.aviala-datepicker-calendar__nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease;
+}
+
+.aviala-datepicker-calendar__nav:active:not(:disabled) .aviala-datepicker-calendar__nav-icon {
+  transform: scale(0.82);
+}
+
+/* While flying, drop the press shell so only the inner transform drives the motion. */
+.aviala-datepicker-calendar__nav:has(.aviala-datepicker-calendar__nav-icon-inner[data-anim])
+  .aviala-datepicker-calendar__nav-icon {
+  transform: none;
+  transition: none;
+}
+
+.aviala-datepicker-calendar__nav-icon-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviala-datepicker-calendar__nav-icon-inner[data-anim="prev"] {
+  animation: aviala-datepicker-nav-prev 0.58s cubic-bezier(0.33, 1, 0.4, 1);
+}
+
+.aviala-datepicker-calendar__nav-icon-inner[data-anim="next"] {
+  animation: aviala-datepicker-nav-next 0.58s cubic-bezier(0.33, 1, 0.4, 1);
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__nav-icon-inner[data-anim="prev"] {
+  animation-name: aviala-datepicker-nav-next;
+}
+
+[dir="rtl"] .aviala-datepicker-calendar__nav-icon-inner[data-anim="next"] {
+  animation-name: aviala-datepicker-nav-prev;
 }
 
 .aviala-datepicker-calendar__weekdays {
@@ -645,6 +687,38 @@
   pointer-events: none;
 }
 
+/* Selected-style text clipped to the fixed highlight band; scrolls with the list. */
+.aviala-datepicker-time__wheel-clip {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  inset-inline: var(--padding-small, 6px);
+  height: var(--datepicker-time-wheel-item-height, 36px);
+  transform: translateY(-50%);
+  overflow: hidden;
+  border-radius: var(--border-radius-extra-small-2, 6px);
+  pointer-events: none;
+}
+
+.aviala-datepicker-time__wheel-clip-track {
+  will-change: transform;
+}
+
+.aviala-datepicker-time__wheel-clip-item {
+  display: flex;
+  width: 100%;
+  height: var(--datepicker-time-wheel-item-height, 36px);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* Match wheel-option metrics; only color/opacity differ for the selected band. */
+  padding: 0 var(--padding-small, 6px);
+  font: inherit;
+  line-height: var(--line-height-line-height-regular, 1.125rem);
+  color: var(--datepicker-day-fg-selected, #bf2300);
+  opacity: 1;
+}
+
 /* Listbox focus ring is clipped by overflow:hidden — paint it on the
    selected option layer instead when the column is keyboard-focused. */
 .aviala-datepicker-time__wheel-scroll.aviala-focus-ring:focus,
@@ -664,7 +738,7 @@ html[data-aviala-kbd]
 
 .aviala-datepicker-time__wheel-fade {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: 0;
   right: 0;
   height: var(--datepicker-time-wheel-fade-height, 54px);
@@ -708,6 +782,25 @@ html[data-aviala-kbd]
     (var(--datepicker-time-wheel-height, 180px) - var(--datepicker-time-wheel-item-height, 36px)) /
       2
   );
+  /* Hide dim text inside the highlight band; the clip layer paints selected text there. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(50% - var(--datepicker-time-wheel-item-height, 36px) / 2),
+    transparent calc(50% - var(--datepicker-time-wheel-item-height, 36px) / 2),
+    transparent calc(50% + var(--datepicker-time-wheel-item-height, 36px) / 2),
+    #000 calc(50% + var(--datepicker-time-wheel-item-height, 36px) / 2),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(50% - var(--datepicker-time-wheel-item-height, 36px) / 2),
+    transparent calc(50% - var(--datepicker-time-wheel-item-height, 36px) / 2),
+    transparent calc(50% + var(--datepicker-time-wheel-item-height, 36px) / 2),
+    #000 calc(50% + var(--datepicker-time-wheel-item-height, 36px) / 2),
+    #000 100%
+  );
 }
 
 .aviala-datepicker-time__wheel-scroll::-webkit-scrollbar {
@@ -744,14 +837,6 @@ html[data-aviala-kbd]
   transition:
     color 0.12s ease,
     opacity 0.12s ease;
-}
-
-.aviala-datepicker-time__wheel-option[data-selected="true"] {
-  position: relative;
-  z-index: 1;
-  color: var(--datepicker-day-fg-selected, #bf2300);
-  opacity: 1;
-  font-weight: 500;
 }
 
 .aviala-datepicker-time__wheel-option:hover {
@@ -898,6 +983,52 @@ html[data-aviala-kbd]
   }
 }
 
+/* Prev nav: exit left from pressed scale, then enter from the right. */
+@keyframes aviala-datepicker-nav-prev {
+  0% {
+    opacity: 1;
+    transform: scale(0.82) translateX(0);
+  }
+
+  42% {
+    opacity: 0;
+    transform: scale(0.82) translateX(-120%);
+  }
+
+  42.01% {
+    opacity: 0;
+    transform: scale(0.9) translateX(120%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+/* Next nav: exit right from pressed scale, then enter from the left. */
+@keyframes aviala-datepicker-nav-next {
+  0% {
+    opacity: 1;
+    transform: scale(0.82) translateX(0);
+  }
+
+  42% {
+    opacity: 0;
+    transform: scale(0.82) translateX(120%);
+  }
+
+  42.01% {
+    opacity: 0;
+    transform: scale(0.9) translateX(-120%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
 @keyframes aviala-datepicker-view-exit {
   from {
     opacity: 1;
@@ -933,7 +1064,13 @@ html[data-aviala-kbd]
   .aviala-datepicker-calendar__grid[data-slide-role],
   .aviala-datepicker-calendar__title-text[data-slide],
   .aviala-datepicker-calendar__view[data-view-role],
-  .aviala-datepicker-calendar__panel[data-panel-role] {
+  .aviala-datepicker-calendar__panel[data-panel-role],
+  .aviala-datepicker-calendar__nav-icon-inner[data-anim] {
     animation: none;
+  }
+
+  .aviala-datepicker-calendar__nav:active:not(:disabled)
+    .aviala-datepicker-calendar__nav-icon {
+    transform: none;
   }
 }

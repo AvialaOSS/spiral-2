@@ -11,21 +11,25 @@ import {
 } from "react";
 import { cn } from "../lib/utils";
 import {
+  consumeWheelSteps,
+  nearestLoopIndex,
+  normalizeWheelIndex,
+  recenterLoopIndex,
+  stepLoopRawIndex,
   stickyRoundIndex,
+  WHEEL_ACCUM_IDLE_MS,
+  WHEEL_LOOP_MIDDLE_SECTION,
+  WHEEL_LOOP_SECTIONS,
   WHEEL_SCROLL_END_MS,
   WHEEL_STEP_THRESHOLD_FACTOR,
   WHEEL_STICKY_AMOUNT,
 } from "../lib/sticky-wheel";
 import { typographyVariants } from "./typography";
 
-const LOOP_SECTIONS = 3;
-const MIDDLE_SECTION = 1;
+const LOOP_SECTIONS = WHEEL_LOOP_SECTIONS;
+const MIDDLE_SECTION = WHEEL_LOOP_MIDDLE_SECTION;
 
 /** Figma Components → Information Collect → ScrollPicker (579:88681) */
-
-function normalizeIndex(index: number, length: number): number {
-  return ((index % length) + length) % length;
-}
 
 type ColumnMetrics = {
   /** Distance between the top edges of two consecutive items (height + gap). */
@@ -66,6 +70,10 @@ function fractionalIndexAtScrollTop(metrics: ColumnMetrics, scrollTop: number): 
   return (scrollTop - metrics.originTop) / metrics.pitch;
 }
 
+function readRawIndex(container: HTMLElement, metrics: ColumnMetrics): number {
+  return Math.round(fractionalIndexAtScrollTop(metrics, container.scrollTop));
+}
+
 export type ScrollPickerProps = HTMLAttributes<HTMLDivElement>;
 
 export function ScrollPicker({ className, children, ...props }: ScrollPickerProps) {
@@ -98,12 +106,14 @@ export function ScrollPickerColumn<T = string>({
   getValueKey,
 }: ScrollPickerColumnProps<T>) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const clipTrackRef = useRef<HTMLDivElement>(null);
   const isUserScrollingRef = useRef(false);
   const isProgrammaticScrollRef = useRef(false);
   /** When set, value-driven auto sync must not cancel an in-flight smooth scroll. */
   const smoothTargetValueRef = useRef<T | null>(null);
   const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const wheelAccumRef = useRef(0);
+  const wheelAccumIdleTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const selectedValueRef = useRef(value);
   const reactId = useId();
 
@@ -122,41 +132,51 @@ export function ScrollPickerColumn<T = string>({
     return Array.from({ length: LOOP_SECTIONS }, () => values).flat();
   }, [loop, values]);
 
-  const scrollToIndex = useCallback((index: number, behavior: ScrollBehavior = "auto") => {
+  const syncClipTrack = useCallback(() => {
     const container = scrollRef.current;
-    if (!container) return;
-
-    const metrics = readMetrics(container);
-    if (!metrics) return;
-
-    isProgrammaticScrollRef.current = true;
-    container.scrollTo({ top: scrollTopForIndex(container, metrics, index), behavior });
+    const track = clipTrackRef.current;
+    if (!container || !track) return;
+    // Clip track mirrors the list including spacer pseudo-elements; align the
+    // highlight band to the same content Y as the main scroller's center strip.
+    const band = container.parentElement?.querySelector<HTMLElement>(
+      ".aviala-scroll-picker-column__highlight"
+    );
+    const bandHeight = band?.offsetHeight || 26;
+    const offset = container.scrollTop + (container.clientHeight - bandHeight) / 2;
+    track.style.transform = `translate3d(0, ${-offset}px, 0)`;
   }, []);
 
-  const scrollToValue = useCallback(
-    (nextValue: T, behavior: ScrollBehavior = "smooth") => {
-      if (behavior === "smooth") {
-        smoothTargetValueRef.current = nextValue;
+  const scrollToIndex = useCallback(
+    (index: number, behavior: ScrollBehavior = "auto") => {
+      const container = scrollRef.current;
+      if (!container) return;
+
+      const metrics = readMetrics(container);
+      if (!metrics) return;
+
+      isProgrammaticScrollRef.current = true;
+      container.scrollTo({ top: scrollTopForIndex(container, metrics, index), behavior });
+      if (behavior === "auto") {
+        syncClipTrack();
       } else {
-        smoothTargetValueRef.current = null;
+        requestAnimationFrame(syncClipTrack);
       }
-      const valueIndex = getIndex(nextValue);
-      const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
-      scrollToIndex(targetIndex, behavior);
     },
-    [getIndex, loop, scrollToIndex, values.length]
+    [syncClipTrack]
   );
 
   const settleScroll = useCallback(() => {
     const container = scrollRef.current;
-    if (!container || isProgrammaticScrollRef.current) {
-      isProgrammaticScrollRef.current = false;
+    if (!container) return;
+
+    const wasProgrammatic = isProgrammaticScrollRef.current;
+    isProgrammaticScrollRef.current = false;
+
+    const metrics = readMetrics(container);
+    if (!metrics || values.length === 0) {
       smoothTargetValueRef.current = null;
       return;
     }
-
-    const metrics = readMetrics(container);
-    if (!metrics || values.length === 0) return;
 
     const lastIndex = values.length - 1;
     const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
@@ -177,14 +197,27 @@ export function ScrollPickerColumn<T = string>({
     }
 
     const valueIndex = loop
-      ? normalizeIndex(rawIndex, values.length)
+      ? normalizeWheelIndex(rawIndex, values.length)
       : Math.min(Math.max(rawIndex, 0), lastIndex);
     const nextValue = values[valueIndex];
 
-    const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
+    const targetIndex = loop
+      ? recenterLoopIndex(rawIndex, values.length, MIDDLE_SECTION)
+      : valueIndex;
     const targetTop = scrollTopForIndex(container, metrics, targetIndex);
     const section = loop ? Math.floor(rawIndex / values.length) : MIDDLE_SECTION;
     const needsLoopRecenter = loop && section !== MIDDLE_SECTION;
+
+    if (wasProgrammatic) {
+      if (needsLoopRecenter) {
+        isProgrammaticScrollRef.current = true;
+        container.scrollTop = targetTop;
+      }
+      smoothTargetValueRef.current = null;
+      syncClipTrack();
+      return;
+    }
+
     const needsSnap = Math.abs(container.scrollTop - targetTop) > 1;
 
     if (needsLoopRecenter) {
@@ -205,16 +238,18 @@ export function ScrollPickerColumn<T = string>({
     }
     isUserScrollingRef.current = false;
     wheelAccumRef.current = 0;
-  }, [loop, onChange, values]);
+    syncClipTrack();
+  }, [loop, onChange, syncClipTrack, values]);
 
   const handleScroll = useCallback(() => {
+    syncClipTrack();
     if (isProgrammaticScrollRef.current) return;
     isUserScrollingRef.current = true;
     if (scrollEndTimerRef.current) {
       clearTimeout(scrollEndTimerRef.current);
     }
     scrollEndTimerRef.current = setTimeout(settleScroll, WHEEL_SCROLL_END_MS);
-  }, [settleScroll]);
+  }, [settleScroll, syncClipTrack]);
 
   useLayoutEffect(() => {
     if (isUserScrollingRef.current) return;
@@ -233,13 +268,28 @@ export function ScrollPickerColumn<T = string>({
     if (!metrics) return;
 
     const valueIndex = getIndex(value);
-    const targetIndex = loop ? values.length * MIDDLE_SECTION + valueIndex : valueIndex;
+    const currentRaw = readRawIndex(container, metrics);
+    const currentValueIndex = loop
+      ? normalizeWheelIndex(currentRaw, values.length)
+      : Math.min(Math.max(currentRaw, 0), values.length - 1);
+
+    if (currentValueIndex === valueIndex) {
+      syncClipTrack();
+      return;
+    }
+
+    const targetIndex = loop
+      ? nearestLoopIndex(currentRaw, valueIndex, values.length, LOOP_SECTIONS)
+      : valueIndex;
     const targetTop = scrollTopForIndex(container, metrics, targetIndex);
 
-    if (Math.abs(container.scrollTop - targetTop) <= 1) return;
+    if (Math.abs(container.scrollTop - targetTop) <= 1) {
+      syncClipTrack();
+      return;
+    }
 
     scrollToIndex(targetIndex, "auto");
-  }, [getIndex, loop, scrollToIndex, value, values.length]);
+  }, [getIndex, loop, scrollToIndex, syncClipTrack, value, values.length]);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -267,31 +317,58 @@ export function ScrollPickerColumn<T = string>({
 
     const onWheel = (event: WheelEvent) => {
       event.preventDefault();
-      if (isProgrammaticScrollRef.current || values.length === 0) return;
+      if (values.length === 0) return;
 
       const metrics = readMetrics(container);
       if (!metrics) return;
 
-      wheelAccumRef.current += event.deltaY;
+      if (wheelAccumIdleTimerRef.current) {
+        clearTimeout(wheelAccumIdleTimerRef.current);
+      }
+      wheelAccumIdleTimerRef.current = setTimeout(() => {
+        wheelAccumRef.current = 0;
+      }, WHEEL_ACCUM_IDLE_MS);
+
       const threshold = metrics.pitch * WHEEL_STEP_THRESHOLD_FACTOR;
-      if (Math.abs(wheelAccumRef.current) < threshold) return;
+      const { nextAccum, steps } = consumeWheelSteps(
+        wheelAccumRef.current,
+        event.deltaY,
+        threshold
+      );
+      wheelAccumRef.current = nextAccum;
+      if (steps === 0) return;
 
-      const direction = wheelAccumRef.current > 0 ? 1 : -1;
-      wheelAccumRef.current = 0;
-
-      const currentIndex = getIndex(selectedValueRef.current);
-      const nextIndex = loop
-        ? normalizeIndex(currentIndex + direction, values.length)
-        : Math.min(Math.max(currentIndex + direction, 0), values.length - 1);
-      if (nextIndex === currentIndex) return;
+      const currentRaw = readRawIndex(container, metrics);
+      let targetRaw: number;
+      if (loop) {
+        if (Math.floor(currentRaw / values.length) !== MIDDLE_SECTION) {
+          isProgrammaticScrollRef.current = true;
+          container.scrollTop = scrollTopForIndex(
+            container,
+            metrics,
+            recenterLoopIndex(currentRaw, values.length, MIDDLE_SECTION)
+          );
+        }
+        targetRaw = stepLoopRawIndex(
+          readRawIndex(container, metrics),
+          steps,
+          values.length,
+          LOOP_SECTIONS,
+          MIDDLE_SECTION
+        ).rawIndex;
+      } else {
+        targetRaw = Math.min(Math.max(currentRaw + steps, 0), values.length - 1);
+        if (targetRaw === currentRaw) return;
+      }
 
       if (scrollEndTimerRef.current) {
         clearTimeout(scrollEndTimerRef.current);
       }
 
-      const nextValue = values[nextIndex];
+      const nextValue = values[normalizeWheelIndex(targetRaw, values.length)];
       isUserScrollingRef.current = false;
-      scrollToValue(nextValue, "smooth");
+      smoothTargetValueRef.current = nextValue;
+      scrollToIndex(targetRaw, "smooth");
       if (!Object.is(nextValue, selectedValueRef.current)) {
         onChange(nextValue);
       }
@@ -300,37 +377,52 @@ export function ScrollPickerColumn<T = string>({
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       container.removeEventListener("wheel", onWheel);
+      if (wheelAccumIdleTimerRef.current) {
+        clearTimeout(wheelAccumIdleTimerRef.current);
+      }
     };
-  }, [getIndex, loop, onChange, scrollToValue, values]);
+  }, [loop, onChange, scrollToIndex, values]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const currentIndex = getIndex(selectedValueRef.current);
-    let nextIndex: number | null = null;
+    const container = scrollRef.current;
+    if (!container || values.length === 0) return;
+
+    const metrics = readMetrics(container);
+    if (!metrics) return;
+
+    const currentRaw = readRawIndex(container, metrics);
+    let targetRaw: number | null = null;
 
     switch (event.key) {
       case "ArrowUp":
-        nextIndex = loop
-          ? normalizeIndex(currentIndex - 1, values.length)
-          : Math.max(currentIndex - 1, 0);
+        targetRaw = loop
+          ? stepLoopRawIndex(currentRaw, -1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          : Math.max(currentRaw - 1, 0);
         break;
       case "ArrowDown":
-        nextIndex = loop
-          ? normalizeIndex(currentIndex + 1, values.length)
-          : Math.min(currentIndex + 1, values.length - 1);
+        targetRaw = loop
+          ? stepLoopRawIndex(currentRaw, 1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          : Math.min(currentRaw + 1, values.length - 1);
         break;
       case "Home":
-        nextIndex = 0;
+        targetRaw = loop
+          ? nearestLoopIndex(currentRaw, 0, values.length, LOOP_SECTIONS, -1)
+          : 0;
         break;
       case "End":
-        nextIndex = values.length - 1;
+        targetRaw = loop
+          ? nearestLoopIndex(currentRaw, values.length - 1, values.length, LOOP_SECTIONS, 1)
+          : values.length - 1;
         break;
       default:
         return;
     }
 
     event.preventDefault();
-    const nextValue = values[nextIndex];
-    scrollToValue(nextValue, "smooth");
+    const nextValue = values[normalizeWheelIndex(targetRaw, values.length)];
+    isUserScrollingRef.current = false;
+    smoothTargetValueRef.current = nextValue;
+    scrollToIndex(targetRaw, "smooth");
     if (!Object.is(nextValue, selectedValueRef.current)) {
       onChange(nextValue);
     }
@@ -354,20 +446,24 @@ export function ScrollPickerColumn<T = string>({
         >
           <ul className="aviala-scroll-picker-column__list">
             {repeatedValues.map((itemValue, index) => {
-              const isSelected = Object.is(itemValue, value);
-              const valueIndex = loop ? normalizeIndex(index, values.length) : index;
+              const isCommitted = Object.is(itemValue, value);
+              const valueIndex = loop ? normalizeWheelIndex(index, values.length) : index;
               const optionId = `${reactId}-${loop ? index : valueIndex}`;
               const key =
                 getValueKey?.(itemValue, index) ??
                 `${String(itemValue)}-${index}`;
+              const useSelectedId =
+                isCommitted && (!loop || Math.floor(index / values.length) === MIDDLE_SECTION);
 
               return (
                 <li key={key} className="contents">
                   <ScrollPickerItem
-                    id={isSelected ? selectedOptionId : optionId}
-                    selected={isSelected}
+                    id={useSelectedId ? selectedOptionId : optionId}
+                    selected={isCommitted}
                     onSelect={() => {
-                      scrollToValue(itemValue, "smooth");
+                      isUserScrollingRef.current = false;
+                      smoothTargetValueRef.current = itemValue;
+                      scrollToIndex(index, "smooth");
                       if (!Object.is(itemValue, selectedValueRef.current)) {
                         onChange(itemValue);
                       }
@@ -379,6 +475,28 @@ export function ScrollPickerColumn<T = string>({
               );
             })}
           </ul>
+        </div>
+        <div className="aviala-scroll-picker-column__clip" aria-hidden>
+          <div ref={clipTrackRef} className="aviala-scroll-picker-column__clip-track">
+            <div className="aviala-scroll-picker-column__list">
+              {repeatedValues.map((itemValue, index) => {
+                const key =
+                  getValueKey?.(itemValue, index) ??
+                  `clip-${String(itemValue)}-${index}`;
+                return (
+                  <div
+                    key={key}
+                    className={cn(
+                      "aviala-scroll-picker-column__clip-item",
+                      typographyVariants({ level: "text" })
+                    )}
+                  >
+                    {formatValue ? formatValue(itemValue) : String(itemValue)}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
