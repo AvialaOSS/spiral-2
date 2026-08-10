@@ -1,5 +1,22 @@
 # @aviala-design/spiral
 
+## 2.7.0
+
+### Minor Changes
+
+- 59d55c4: Align Progress bar/ring geometry and track colors to Figma 589:55818 (6/8px bars, lightBackground-1 track, type-colored ring tracks).
+- 7f99e83: Align Table to Figma with sticky header, cell caption / icon-place / grabber layouts, and grid border tokens.
+
+### Patch Changes
+
+- be58b17: Center Checkbox indeterminate mark by absolutely positioning the indicator and hiding the check icon in the indeterminate state.
+- 4be83f2: Add nested Segmentator track hover (`segmentator-bg-hover`) and soften Level4WithLine hairline to 18% opacity.
+- Updated dependencies [be58b17]
+- Updated dependencies [59d55c4]
+- Updated dependencies [4be83f2]
+- Updated dependencies [7f99e83]
+  - @aviala-design/tokens@2.5.2
+
 ## 2.6.2
 
 ### Patch Changes
