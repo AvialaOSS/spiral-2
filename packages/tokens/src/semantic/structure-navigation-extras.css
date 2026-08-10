@@ -144,7 +144,7 @@ button.aviala-breadcrumb-item:hover {
 .aviala-breadcrumb-ellipsis-item:hover {
   background-color: var(
     --control-control-normal-lightbackground-light,
-    #f5f3f3
+    #f6f5f5
   );
 }
 
@@ -491,5 +491,5 @@ button.aviala-breadcrumb-item:hover {
   display: inline-block;
   width: 0;
   height: var(--card-divider-height, 14px);
-  border-inline-start: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border-inline-start: 1px solid var(--border-border-normal-1, #f6f5f5);
 }

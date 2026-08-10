@@ -13,14 +13,14 @@
     var(--aviala-primary-primary-2, #fff9f8)
   );
   --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
-  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
-  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
-  --button-outline-border: var(--border-border-normal-primary, #e2e0e0);
+  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #f6f5f5);
+  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f6f5f5);
+  --button-outline-border: var(--border-border-normal-3, #cdcccc);
   --button-outline-fg: var(
     --text-text-theme-primary-black,
     var(--aviala-primary-primary-10, #bf2300)
   );
-  --button-outline-custom-fg: var(--text-text-normal-text-black, #343333);
+  --button-outline-custom-fg: var(--text-text-normal-text-black, #232222);
 
   /* Button size — padding / line-height / radius (height is content-driven) */
   --button-tiny-padding-x: var(--padding-tiny, 4px);

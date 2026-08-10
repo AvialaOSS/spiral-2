@@ -1,10 +1,10 @@
 /* ColorPicker — Figma Information Collect → ColorPicker */
 :root {
   --color-picker-checkerboard: conic-gradient(
-      var(--color-picker-checkerboard-light, #e2e0e0) 90deg,
-      var(--color-picker-checkerboard-dark, #fefcfc) 90deg 180deg,
-      var(--color-picker-checkerboard-light, #e2e0e0) 180deg 270deg,
-      var(--color-picker-checkerboard-dark, #fefcfc) 270deg
+      var(--color-picker-checkerboard-light, #cdcccc) 90deg,
+      var(--color-picker-checkerboard-dark, #ffffff) 90deg 180deg,
+      var(--color-picker-checkerboard-light, #cdcccc) 180deg 270deg,
+      var(--color-picker-checkerboard-dark, #ffffff) 270deg
     )
     0 0 / 8px 8px;
 }
@@ -15,9 +15,9 @@
   flex-direction: column;
   gap: var(--color-picker-panel-gap, 10px);
   overflow: hidden;
-  border: 1px solid var(--color-picker-panel-border, #f5f3f3);
+  border: 1px solid var(--color-picker-panel-border, #f6f5f5);
   border-radius: var(--color-picker-panel-radius, 10px);
-  background-color: var(--color-picker-panel-bg, #fefcfc);
+  background-color: var(--color-picker-panel-bg, #ffffff);
   box-shadow: var(--color-picker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
   padding: var(--padding-none, 0) var(--padding-none, 0) var(--color-picker-panel-px, 8px);
 }
@@ -79,7 +79,7 @@
   overflow: hidden;
   /* Prefer inset ring over border so box-sizing doesn't shrink the fill. */
   border: 0;
-  box-shadow: inset 0 0 0 1px var(--color-picker-thumb-border, #e2e0e0);
+  box-shadow: inset 0 0 0 1px var(--color-picker-thumb-border, #cdcccc);
   background-color: transparent;
   background-image: var(--color-picker-slider-track-bg);
   background-size: 100% 100%;
@@ -93,9 +93,9 @@
     var(--color-picker-slider-track-bg),
     conic-gradient(
       #c8c6c6 90deg,
-      #fefcfc 90deg 180deg,
+      #ffffff 90deg 180deg,
       #c8c6c6 180deg 270deg,
-      #fefcfc 270deg
+      #ffffff 270deg
     );
   background-size: 100% 100%, 8px 8px;
   background-repeat: no-repeat, repeat;
@@ -122,11 +122,11 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--input-radius, 8px);
-  background-color: var(--input-bg-default, #f5f3f3);
+  background-color: var(--input-bg-default, #f6f5f5);
   box-shadow: var(--input-shell-shadow);
   padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
   gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
-  color: var(--input-fg, #343333);
+  color: var(--input-fg, #232222);
   --input-shell-px: var(--input-px-regular, 10px);
   --input-shell-gap: var(--input-gap-regular, 6px);
   --input-shell-field-py: var(--input-field-py-regular, 6px);
@@ -137,7 +137,7 @@
 }
 
 .aviala-color-picker-field:focus-within {
-  background-color: var(--input-bg-activated, #fefcfc);
+  background-color: var(--input-bg-activated, #ffffff);
   box-shadow: var(
     --input-shell-focus-shadow,
     inset 0 0 0 1px var(--input-border-activated, var(--primary)),
@@ -168,7 +168,7 @@
   font-family: inherit;
   font-size: var(--input-font-size);
   line-height: var(--input-line-height);
-  color: var(--input-fg, #343333);
+  color: var(--input-fg, #232222);
   outline: none;
 }
 
@@ -204,16 +204,16 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border: 1px solid var(--border-border-normal-1, #f6f5f5);
   border-radius: var(--input-radius, 8px);
-  background-color: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  background-color: var(--control-control-normal-background-whiteonly, #ffffff);
   padding: var(--padding-min, 2px);
   cursor: pointer;
   transition: border-color 0.15s ease;
 }
 
 .aviala-color-pick-button:hover:not(:disabled) {
-  border-color: var(--border-border-normal-primary, #e2e0e0);
+  border-color: var(--border-border-normal-3, #cdcccc);
 }
 
 .aviala-color-pick-button:disabled {
@@ -240,12 +240,12 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--input-radius, 8px);
-  background-color: var(--input-bg-default, #f5f3f3);
+  background-color: var(--input-bg-default, #f6f5f5);
   box-shadow: var(--input-shell-shadow, var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04)));
   padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
   gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
   font-family: inherit;
-  color: var(--input-fg, #343333);
+  color: var(--input-fg, #232222);
   --input-shell-px: var(--input-px-regular, 10px);
   --input-shell-gap: var(--input-gap-regular, 6px);
   --input-shell-field-py: var(--input-field-py-regular, 6px);
@@ -274,7 +274,7 @@
 }
 
 .aviala-color-picker-trigger[data-open="true"] {
-  background-color: var(--input-bg-activated, #fefcfc);
+  background-color: var(--input-bg-activated, #ffffff);
   box-shadow: var(
     --input-shell-focus-shadow,
     inset 0 0 0 1px var(--input-border-activated, var(--primary)),
@@ -284,7 +284,7 @@
 }
 
 .aviala-color-picker-trigger:focus-visible {
-  background-color: var(--input-bg-activated, #fefcfc);
+  background-color: var(--input-bg-activated, #ffffff);
   outline: none;
 }
 
@@ -296,7 +296,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .aviala-color-picker-trigger:hover:not(:focus-visible):not([data-open="true"]):not([data-disabled="true"]):not(:disabled) {
-    background-color: var(--input-bg-hover, #e2e0e0);
+    background-color: var(--input-bg-hover, #cdcccc);
   }
 }
 

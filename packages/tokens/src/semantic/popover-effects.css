@@ -14,10 +14,10 @@
      for side + arrow position) — enter scale grows from the invocation point */
   transform-origin: var(--radix-popover-content-transform-origin, 50% 50%);
   max-width: var(--popover-content-max-width, 320px);
-  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f5f3f3));
+  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f6f5f5));
   border-radius: var(--popover-content-radius, var(--select-menu-radius, 10px));
-  background-color: var(--popover-content-bg, var(--select-menu-bg, #fefcfc));
-  color: var(--popover-content-fg, var(--select-item-fg, #343333));
+  background-color: var(--popover-content-bg, var(--select-menu-bg, #ffffff));
+  color: var(--popover-content-fg, var(--select-item-fg, #232222));
   box-shadow: var(--popover-content-shadow, var(--select-menu-shadow, 0 5px 20px rgba(0, 0, 0, 0.06)));
   padding: var(--popover-content-py, 8px) var(--popover-content-px, 8px);
 }
@@ -64,12 +64,12 @@
   height: 5px;
   min-width: 16px;
   min-height: 5px;
-  color: var(--popover-content-bg, var(--select-menu-bg, #fefcfc));
+  color: var(--popover-content-bg, var(--select-menu-bg, #ffffff));
 }
 
 .aviala-popover-content__arrow-outline {
   fill: none;
-  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-light, #f5f3f3));
+  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-1, #f6f5f5));
   stroke-width: 1;
   stroke-linejoin: round;
 }
@@ -173,8 +173,8 @@
   max-width: var(--tooltip-content-max-width, 240px);
   border: none;
   border-radius: var(--tooltip-content-radius, 8px);
-  background-color: var(--tooltip-content-bg, #343333);
-  color: var(--tooltip-content-fg, #fefcfc);
+  background-color: var(--tooltip-content-bg, #232222);
+  color: var(--tooltip-content-fg, #ffffff);
   box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
   padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
 }
@@ -208,7 +208,7 @@
   height: 5px;
   min-width: 14px;
   min-height: 5px;
-  color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-bg, #232222);
 }
 
 .aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow,

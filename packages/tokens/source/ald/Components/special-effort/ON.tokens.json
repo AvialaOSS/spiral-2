@@ -5,11 +5,11 @@
       "colorSpace": "srgb",
       "components": [
         1,
-        0.9098039269447327,
-        0.8941176533699036
+        0.8509804010391235,
+        0.8117647171020508
       ],
       "alpha": 1,
-      "hex": "#FFE8E4"
+      "hex": "#FFD9CF"
     },
     "$extensions": {
       "com.figma.variableId": "VariableID:1416:20308",

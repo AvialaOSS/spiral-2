@@ -56,11 +56,11 @@
   --typography-caption-weight-number: var(--font-weight-light, 300);
 
   --typography-title-fg: var(--text-text-normal-title-black, #000000);
-  --typography-title-fg-white: var(--text-text-normal-title-white, #fefcfc);
-  --typography-body-fg: var(--text-text-normal-text-black, #343333);
-  --typography-body-fg-white: var(--text-text-normal-text-white, #fefcfc);
-  --typography-caption-fg: var(--text-text-normal-text-caption-black, #858484);
-  --typography-caption-fg-white: var(--text-text-normal-text-caption-white, #fefcfc);
+  --typography-title-fg-white: var(--text-text-normal-title-white, #ffffff);
+  --typography-body-fg: var(--text-text-normal-text-black, #232222);
+  --typography-body-fg-white: var(--text-text-normal-text-white, #ffffff);
+  --typography-caption-fg: var(--text-text-normal-text-caption-black, #595858);
+  --typography-caption-fg-white: var(--text-text-normal-text-caption-white, #ffffff);
 
   --typeface-gap: var(--gap-none, 0);
 }

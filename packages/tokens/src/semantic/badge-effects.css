@@ -64,7 +64,7 @@
 
 .aviala-badge--style-theme.aviala-badge--primary {
   --badge-bg: var(--box-box-theme-primarybackground, #ff5532);
-  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --badge-fg: var(--text-text-normal-text-caption-white, #ffffff);
 }
 
 .aviala-badge--style-info.aviala-badge--secondary {
@@ -74,7 +74,7 @@
 
 .aviala-badge--style-info.aviala-badge--primary {
   --badge-bg: var(--box-box-infomation-primarybackground, #66b6fa);
-  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --badge-fg: var(--text-text-normal-text-caption-white, #ffffff);
 }
 
 .aviala-badge--style-fail.aviala-badge--secondary {
@@ -84,7 +84,7 @@
 
 .aviala-badge--style-fail.aviala-badge--primary {
   --badge-bg: var(--box-box-fail-primarybackground, #f41544);
-  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --badge-fg: var(--text-text-normal-text-caption-white, #ffffff);
 }
 
 .aviala-badge--style-warning.aviala-badge--secondary {
@@ -94,7 +94,7 @@
 
 .aviala-badge--style-warning.aviala-badge--primary {
   --badge-bg: var(--box-box-warning-primarybackground, #ec8b09);
-  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --badge-fg: var(--text-text-normal-text-caption-white, #ffffff);
 }
 
 .aviala-badge--style-success.aviala-badge--secondary {
@@ -104,15 +104,15 @@
 
 .aviala-badge--style-success.aviala-badge--primary {
   --badge-bg: var(--box-box-success-primarybackground, #70b450);
-  --badge-fg: var(--text-text-normal-text-caption-white, #fefcfc);
+  --badge-fg: var(--text-text-normal-text-caption-white, #ffffff);
 }
 
 .aviala-badge--style-normal.aviala-badge--secondary {
-  --badge-bg: var(--control-control-normal-lightbackground-deep, #fdfbfb);
-  --badge-fg: var(--text-text-normal-text-black, #343333);
+  --badge-bg: var(--control-control-normal-lightbackground-deep, #ebeaea);
+  --badge-fg: var(--text-text-normal-text-black, #232222);
 }
 
 .aviala-badge--style-normal.aviala-badge--primary {
-  --badge-bg: var(--control-control-normal-background-deep, #e2e0e0);
-  --badge-fg: var(--text-text-normal-text-black, #343333);
+  --badge-bg: var(--control-control-normal-background-deep, #cdcccc);
+  --badge-fg: var(--text-text-normal-text-black, #232222);
 }

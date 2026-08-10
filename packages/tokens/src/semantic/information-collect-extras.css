@@ -3,7 +3,7 @@
 /* —— Slider (384:21585) ——
  * Default: 6px track, 14px white thumb + 8px core.
  * Big: 10px track (same fill tokens, no stroke), 16px thumb + 10px core.
- * Track ON: border-normal-primary; OFF: border-normal-light.
+ * Track ON: border-normal-3; OFF: border-normal-1.
  */
 .aviala-slider {
   position: relative;
@@ -151,8 +151,8 @@
 .aviala-slider__value-tooltip__surface {
   max-width: var(--tooltip-content-max-width, 240px);
   border-radius: var(--tooltip-content-radius, 8px);
-  background-color: var(--tooltip-content-bg, #343333);
-  color: var(--tooltip-content-fg, #fefcfc);
+  background-color: var(--tooltip-content-bg, #232222);
+  color: var(--tooltip-content-fg, #ffffff);
   box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
   padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
   white-space: nowrap;
@@ -160,7 +160,7 @@
 
 .aviala-slider__value-tooltip__arrow {
   display: flex;
-  color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-bg, #232222);
   margin-top: -1px;
 }
 

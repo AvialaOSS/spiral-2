@@ -2,23 +2,23 @@
 
 :root {
   --link-fg-theme: var(--text-text-theme-primary-black, #bf2300);
-  --link-fg-custom: var(--text-text-normal-text-black, #343333);
+  --link-fg-custom: var(--text-text-normal-text-black, #232222);
   --button-no-bg-hover: var(
     --control-control-theme-lightbackground,
     var(--aviala-primary-primary-2, #fff9f8)
   );
   --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
-  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
-  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
+  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #f6f5f5);
+  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f6f5f5);
 
   --switch-width: 34px;
   --switch-height-regular: 22px;
   --switch-height-small: 20px;
-  --switch-track-bg: var(--control-control-normal-background-deep, #e2e0e0);
+  --switch-track-bg: var(--control-control-normal-background-deep, #cdcccc);
   --switch-hover-bg: var(--aviala-neutral-neutral-8, #d2d0d0);
   --switch-press-bg: var(--aviala-neutral-neutral-9, #bebcbc);
   --switch-checked-bg: var(--control-control-theme-background, #ff5532);
-  --switch-thumb-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  --switch-thumb-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
   --switch-thumb-size-regular: 18px;
   --switch-thumb-size-small: 16px;
@@ -56,10 +56,10 @@
     ),
     linear-gradient(90deg, var(--switch-checked-bg) 0%, var(--switch-checked-bg) 100%);
 
-  --segmentator-bg: var(--control-control-normal-lightbackground-light, #f5f3f3);
-  --segmentator-selected-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  --segmentator-bg: var(--control-control-normal-lightbackground-light, #f6f5f5);
+  --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --segmentator-selected-fg: var(--text-text-theme-primary-black, #bf2300);
-  --segmentator-fg: var(--text-text-normal-text-black, #343333);
+  --segmentator-fg: var(--text-text-normal-text-black, #232222);
   --segmentator-tiled-bg: var(--box-box-theme-secondarybackground, #ffdad2);
   --segmentator-shadow-selected: 0 4px 8px rgba(0, 0, 0, 0.06);
   --segmentator-shadow-tiled: inset 0 -0.5px 0 rgba(0, 0, 0, 0.04);
@@ -193,7 +193,7 @@
   align-self: stretch;
   width: 1px;
   flex-shrink: 0;
-  background: var(--border-border-normal-primary, #e2e0e0);
+  background: var(--border-border-normal-3, #cdcccc);
 }
 
 .aviala-anchor-item[data-activated="true"] .aviala-anchor-item__rail {
@@ -214,7 +214,7 @@
 }
 
 .aviala-anchor-item .aviala-typography {
-  color: var(--text-text-normal-text-black, #343333);
+  color: var(--text-text-normal-text-black, #232222);
 }
 
 .aviala-anchor-item[data-activated="false"] .aviala-typography {

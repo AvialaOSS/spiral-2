@@ -11,8 +11,8 @@
   transform-origin: var(--radix-tooltip-content-transform-origin, 50% 50%);
   max-width: var(--tooltip-content-max-width, 240px);
   border-radius: var(--tooltip-content-radius, 8px);
-  background-color: var(--tooltip-content-bg, #343333);
-  color: var(--tooltip-content-fg, #fefcfc);
+  background-color: var(--tooltip-content-bg, #232222);
+  color: var(--tooltip-content-fg, #ffffff);
   box-shadow: var(--tooltip-content-shadow, 0 4px 12px rgba(0, 0, 0, 0.12));
   padding: var(--tooltip-content-py, 4px) var(--tooltip-content-px, 8px);
 }
@@ -34,7 +34,7 @@
   height: 5px;
   min-width: 14px;
   min-height: 5px;
-  color: var(--tooltip-content-bg, #343333);
+  color: var(--tooltip-content-bg, #232222);
 }
 
 /* Root fade — Radix Presence waits for animationend on Content, not child surface */

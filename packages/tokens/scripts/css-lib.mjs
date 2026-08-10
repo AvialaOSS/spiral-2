@@ -164,6 +164,7 @@ function buildAldModeVars(root, modeFile) {
     vars["--aviala-" + path.replace(/\//g, "-").toLowerCase()] = hex;
   }
 
+  // Semantic + control tokens live in token-colors (control collection merged in).
   const semantic = flattenColorTokens(
     readJson(join(aldRoot, "token-colors/Default.tokens.json"))
   );
@@ -172,24 +173,14 @@ function buildAldModeVars(root, modeFile) {
     if (hex) vars[pathToVar(path)] = hex;
   }
 
-  // The control file is flat (keys already start with "control-"); force the
-  // "control/" group so names match the semantic layer (--control-control-*).
-  const control = flattenColorTokens(
-    readJson(join(aldRoot, "control/default.tokens.json"))
-  );
-  for (const [path, token] of Object.entries(control)) {
-    const hex = resolveToken(token, primitives);
-    if (hex) vars["--control-" + path.replace(/\//g, "-").toLowerCase()] = hex;
-  }
-
   // shadcn aliases — emitted as literal hex so the frozen theme is fully
   // self-contained and overrides the generic [data-mode="dark"] fallbacks.
   const g = (name) => vars[name];
   const set = (key, value) => {
     if (value) vars[key] = value;
   };
-  // ALD has no `border-theme-light`; the real neutral border is `border-normal-light`.
-  set("--border-border-theme-light", g("--border-border-normal-light"));
+  // ALD has no `border-theme-light`; map to the lightest neutral border step.
+  set("--border-border-theme-light", g("--border-border-normal-1"));
 
   set("--background", g("--normal-background-theme"));
   set("--foreground", g("--text-text-normal-text-black"));
@@ -203,8 +194,8 @@ function buildAldModeVars(root, modeFile) {
   set("--accent-foreground", g("--text-text-normal-text-black"));
   set("--destructive", g("--control-control-fail-background"));
   vars["--destructive-foreground"] = "#FFFFFF";
-  set("--border", g("--border-border-normal-light"));
-  set("--input", g("--border-border-normal-light"));
+  set("--border", g("--border-border-normal-1"));
+  set("--input", g("--border-border-normal-1"));
   set("--ring", g("--border-border-theme-primary"));
   // --card / --popover stay neutral surfaces (inherited from the base layer);
   // ALD has no dedicated neutral card token and box-theme-*Background is the

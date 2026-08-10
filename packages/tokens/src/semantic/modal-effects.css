@@ -36,10 +36,10 @@
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  border: 1px solid var(--modal-content-border, var(--border-border-normal-light, #f5f3f3));
+  border: 1px solid var(--modal-content-border, var(--border-border-normal-1, #f6f5f5));
   border-radius: var(--modal-content-radius, var(--border-radius-big, 12px));
-  background-color: var(--modal-content-bg, var(--box-box-normal-background-whiteonly, #fefcfc));
-  color: var(--modal-content-fg, var(--text-text-normal-text-black, #343333));
+  background-color: var(--modal-content-bg, var(--box-box-normal-background-whiteonly, #ffffff));
+  color: var(--modal-content-fg, var(--text-text-normal-text-black, #232222));
   box-shadow: var(--modal-content-shadow, 0 8px 24px 2px rgba(0, 0, 0, 0.06));
 }
 
@@ -57,7 +57,7 @@
 
 .aviala-modal__header {
   flex-shrink: 0;
-  background-color: var(--modal-header-bg, var(--modal-content-bg, #fefcfc));
+  background-color: var(--modal-header-bg, var(--modal-content-bg, #ffffff));
   padding-block: var(--modal-header-py, 0);
   padding-inline: var(--modal-header-pl, var(--padding-big, 14px))
     var(--modal-header-pr, var(--padding-small, 6px));
@@ -107,13 +107,13 @@
 }
 
 .aviala-modal__description {
-  color: var(--modal-description-fg, var(--text-text-normal-text-caption-black, #858484));
+  color: var(--modal-description-fg, var(--text-text-normal-text-caption-black, #595858));
 }
 
 .aviala-modal__close {
   flex-shrink: 0;
   align-self: center;
-  color: var(--modal-close-fg, var(--text-text-normal-text-caption-black, #858484));
+  color: var(--modal-close-fg, var(--text-text-normal-text-caption-black, #595858));
 }
 
 .aviala-modal__close svg {
@@ -125,8 +125,8 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
-  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-light, #f5f3f3));
-  background-color: var(--modal-body-bg, var(--modal-content-bg, #fefcfc));
+  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-1, #f6f5f5));
+  background-color: var(--modal-body-bg, var(--modal-content-bg, #ffffff));
   padding: var(--modal-section-py, var(--padding-default, 8px))
     var(--modal-section-px, var(--padding-big, 14px));
 }
@@ -141,8 +141,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--modal-footer-actions-gap, var(--gap-component-space, 8px));
-  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-light, #f5f3f3));
-  background-color: var(--modal-footer-bg, var(--modal-content-bg, #fefcfc));
+  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-1, #f6f5f5));
+  background-color: var(--modal-footer-bg, var(--modal-content-bg, #ffffff));
   padding: var(--modal-section-py, var(--padding-default, 8px))
     var(--modal-section-px, var(--padding-big, 14px));
 }
