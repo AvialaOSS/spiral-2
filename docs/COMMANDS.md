@@ -289,4 +289,4 @@ Changesets 配置（`.changeset/config.json`）忽略 `@spiral/playground` 与 `
 | `AVIALA_WEBSITE_APP_PRIVATE_KEY` | Secret | 跨仓 docs scaffold（App private key `.pem`） |
 | `FIGMA_ACCESS_TOKEN` | Secret | Icons Sync / 本地 `pnpm icons:export`（CI/Release 不调 Figma） |
 
-跨仓 dispatch 配置说明见 `avialaWebsite/docs/SPIRAL_DOCS_DISPATCH.md`。
+跨仓 dispatch 配置说明见 https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md。
