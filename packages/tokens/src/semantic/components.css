@@ -337,15 +337,16 @@
   --tag-radius: var(--border-radius-extra-small-2, 6px);
   --tag-disabled-opacity: var(--transparency-disable, 0.55);
 
+  /* Progress — Figma 589:55818 (bar 6/8px, track lightBackground-1, ring 16/24) */
   --progress-gap: var(--gap-inside-space, 6px);
   --progress-bar-width: 80px;
-  --progress-bar-height: 4px;
-  --progress-bar-height-big: 6px;
+  --progress-bar-height: 6px;
+  --progress-bar-height-big: 8px;
   --progress-label-width: 22px;
   --progress-label-fg: var(--text-text-normal-text-caption-black, #616060);
-  --progress-track-bg: var(--box-box-normal-background-whiteonly, #ffffff);
-  --progress-track-border: var(--border-border-normal-1, #f0efef);
+  --progress-track-bg: var(--control-control-normal-lightbackground-1, #f0efef);
   --progress-ring-size: 16px;
+  --progress-ring-stroke: 2px;
 
   --scroll-size: 10px;
   --scroll-size-small: 8px;
