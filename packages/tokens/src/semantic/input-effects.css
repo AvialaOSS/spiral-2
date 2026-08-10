@@ -741,7 +741,8 @@
 }
 
 .aviala-checkbox__indicator {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: inline-flex;
   align-items: center;
@@ -810,6 +811,11 @@
 
 .aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--indeterminate {
   display: inline-flex;
+}
+
+/* Check SVG stays in the flex row at opacity 0 and offsets the mark — hide it while indeterminate */
+.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--check {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

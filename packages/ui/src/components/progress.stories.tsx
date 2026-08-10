@@ -17,19 +17,41 @@ export default meta;
 type Story = StoryObj<typeof Progress>;
 
 export const Bar: Story = {
-  args: { shape: "bar", value: 75, type: "default" },
+  args: { shape: "bar", value: 75, type: "default", size: "default" },
+};
+
+export const BarBig: Story = {
+  args: { shape: "bar", value: 75, type: "default", size: "big" },
 };
 
 export const Ring: Story = {
-  args: { shape: "ring", value: 60, size: "big" },
+  args: { shape: "ring", value: 75, type: "default", size: "big" },
 };
 
-export const States: Story = {
+/** Figma Progress matrix (589:55818) */
+export const FigmaMatrix: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <Progress value={75} type="default" />
-      <Progress value={100} type="success" />
-      <Progress value={40} type="fail" />
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <Progress shape="bar" size="default" type="default" value={75} />
+        <Progress shape="bar" size="default" type="success" value={100} />
+        <Progress shape="bar" size="default" type="fail" value={75} />
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <Progress shape="bar" size="big" type="default" value={75} />
+        <Progress shape="bar" size="big" type="success" value={100} />
+        <Progress shape="bar" size="big" type="fail" value={75} />
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <Progress shape="ring" size="big" type="default" value={75} />
+        <Progress shape="ring" size="big" type="success" value={100} />
+        <Progress shape="ring" size="big" type="fail" value={75} />
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <Progress shape="ring" size="default" type="default" value={75} />
+        <Progress shape="ring" size="default" type="success" value={100} />
+        <Progress shape="ring" size="default" type="fail" value={75} />
+      </div>
     </div>
   ),
 };
