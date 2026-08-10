@@ -651,11 +651,14 @@
 .aviala-segmentator-item[data-mode="nested"] {
   gap: var(--segmentator-item-gap);
   padding: var(--segmentator-item-nested-padding-y) var(--segmentator-item-nested-padding-x);
+  /* Match sliding thumb radius (selected indicator), including hover/focus fills */
+  border-radius: var(--segmentator-item-nested-radius);
 }
 
 .aviala-segmentator-item[data-mode="tiled"] {
   gap: var(--segmentator-item-gap);
   padding: var(--segmentator-item-tiled-padding-y) var(--segmentator-item-tiled-padding-x);
+  border-radius: var(--segmentator-item-tiled-radius);
 }
 
 .aviala-segmentator-item .aviala-typography {
@@ -679,24 +682,14 @@
 }
 
 .aviala-segmentator-item[data-mode="nested"][data-selected="true"] {
-  border-radius: var(--segmentator-item-nested-radius);
   color: var(--segmentator-selected-fg);
-}
-
-.aviala-segmentator-item[data-mode="nested"][data-selected="false"] {
-  border-radius: var(--segmentator-group-radius);
 }
 
 .aviala-segmentator-item[data-all-round="true"] {
   border-radius: var(--border-radius-allround, 99px);
 }
 
-.aviala-segmentator-item[data-mode="tiled"][data-selected="false"] {
-  border-radius: var(--segmentator-item-tiled-radius);
-}
-
 .aviala-segmentator-item[data-mode="tiled"][data-selected="true"] {
-  border-radius: var(--segmentator-item-tiled-radius);
   color: var(--segmentator-selected-fg);
 }
 
