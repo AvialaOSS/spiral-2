@@ -170,7 +170,7 @@ pnpm changeset                   # 记录版本变更
 # 合并到 main 后由 release.yml 发布到 npm
 ```
 
-随后在 `avialaWebsite` 仓库执行 `npm update @aviala-design/spiral` 并推送即可。
+发布成功后 Spiral2 会向 avialaWebsite 派发 `spiral-released`：脚手架自动开 docs PR（manifest / stubs、workspace 依赖 + lockfile bump）。人工按 bot checklist 补文档后把 manifest 标为 `ready` 并更新 `default`。详见 `avialaWebsite/docs/SPIRAL_DOCS_DISPATCH.md`。
 
 ### 图标同步（Figma → 代码）
 
@@ -230,15 +230,14 @@ node scripts/figma-export/export-icons.mjs --no-clean   # 保留旧 raw SVG（�
 
 ### CI（`.github/workflows/ci.yml`）
 
-触发：`push` / `pull_request` → `main`（Node 20 + pnpm 9）
+触发：`push` / `pull_request` → `main`（Node 22 + pnpm 9）
 
 | 步骤 | 命令 / 动作 |
 |---|---|
 | 准备 ALD | 若存在 sibling `../ALD` 则复制；否则使用已提交的 `source/ald` |
 | 安装 | `pnpm install --frozen-lockfile` |
-| 导出图标 | `pnpm icons:export`（需 `FIGMA_ACCESS_TOKEN`） |
 | 同步 ALD | `pnpm sync:ald \|\| true` |
-| 构建 | `pnpm build` |
+| 构建 | `pnpm build`（icons 从已提交的 `packages/icons/src` 构建，**不调 Figma**） |
 | 类型检查 | `pnpm typecheck` |
 
 ### Release（`.github/workflows/release.yml`）
@@ -248,9 +247,9 @@ node scripts/figma-export/export-icons.mjs --no-clean   # 保留旧 raw SVG（�
 | 步骤 | 命令 |
 |---|---|
 | 安装 | `pnpm install --frozen-lockfile` |
-| 导出图标 | `pnpm icons:export`（需 `FIGMA_ACCESS_TOKEN`） |
-| 构建可发布包 | `pnpm --filter @aviala-design/tokens --filter @aviala-design/icons --filter @aviala-design/spiral build` |
-| 版本 PR / 发布 | `pnpm changeset version`、`pnpm changeset publish` |
+| 版本 PR 或发布 | `changesets/action`：`version:packages` 或 `release:publish` |
+| `release:publish` | build tokens → icons `build:release` → spiral → `changeset publish`（**不调 Figma**） |
+| Docs scaffold | 若发布了 `@aviala-design/spiral`，用 GitHub App token 向 avialaWebsite 派发 `spiral-released` |
 
 发布走 **npm Trusted Publishing（OIDC）**，工作流声明 `id-token: write` 并升级 npm，因此 **CI 不需要 `NPM_TOKEN`**；新包需先在 npmjs.com → Settings → Trusted publishing 配置。
 
