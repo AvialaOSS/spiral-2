@@ -76,6 +76,7 @@
     );
 
   --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --segmentator-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
   --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --segmentator-selected-fg: var(--text-text-theme-primary-black, #bf2300);
   --segmentator-fg: var(--text-text-normal-text-black, #262525);
@@ -428,6 +429,17 @@
 .aviala-segmentator-group[data-mode="nested"] {
   padding: var(--segmentator-group-padding);
   background-color: var(--segmentator-bg);
+  transition: background-color 0.15s ease;
+}
+
+/* Figma 1920:3466 — group track → filled-hover; item-level hover/active stay separate */
+@media (hover: hover) and (pointer: fine) {
+  .aviala-segmentator-group[data-mode="nested"]:hover {
+    background-color: var(
+      --segmentator-bg-hover,
+      var(--aviala-interaction-filled-hover, #e5e4e3)
+    );
+  }
 }
 
 .aviala-segmentator-group[data-mode="tiled"] {

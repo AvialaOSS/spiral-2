@@ -298,6 +298,7 @@
   --link-fg-custom: var(--text-text-normal-text-black, var(--button-default-custom-fg));
 
   --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --segmentator-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
   --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --segmentator-selected-fg: var(--text-text-theme-primary-black, var(--button-no-bg-fg));
   --segmentator-fg: var(--text-text-normal-text-black, var(--button-default-custom-fg));

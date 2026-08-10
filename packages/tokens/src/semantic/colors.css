@@ -26,7 +26,7 @@
 
   /* Shared elevation — BasicShadow-Level4WithLine */
   --aviala-shadow-level4-with-line:
-    0 0 1px 0 rgba(0, 0, 0, 0.45),
+    0 0 1px 0 rgb(0 0 0 / 18%),
     0 6px 18px 0 rgba(0, 0, 0, 0.08);
 
   /* Shared interaction surfaces — Figma Components 1909:28593 matrix */
