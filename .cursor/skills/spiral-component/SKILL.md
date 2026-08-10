@@ -13,7 +13,7 @@ description: How to add or modify Spiral 2 React components aligned with Aviala 
 4. Base on Radix primitives where applicable (shadcn pattern)
 5. Add `*.stories.tsx` under `packages/ui/src/components/`
 6. Export from `packages/ui/src/index.ts`
-7. If the change is user-visible: update `packages/ui/changelogs/{DisplayName}.md` **and** add a changeset
+7. If the change is user-visible: update `packages/ui/changelogs/{DisplayName}.md` **and** add a changeset — follow skill `spiral-changelog` for Unreleased / Chinese bullets / stamping rules
 
 ## File layout
 
