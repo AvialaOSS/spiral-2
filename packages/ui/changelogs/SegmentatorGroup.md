@@ -1,9 +1,12 @@
 # SegmentatorGroup
 
-## Unreleased
+## [Unreleased]
 
 ### Changed
 - 未选项 Hover/Active 使用共享 filled 交互 token
+
+### Fixed
+- nested 模式下未选项圆角改为与滑动指示器一致（`segmentator-item-nested-radius`），避免 hover / focus 填充与选中拇指圆角不一致
 
 ## 2.6.0
 
