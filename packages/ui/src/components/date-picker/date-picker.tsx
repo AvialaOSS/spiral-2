@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import {
-  DirectionArrowLeft,
-  DirectionArrowRight,
+  DirectionArrowLeftLight,
+  DirectionArrowRightLight,
   TimeAndDateClock,
   TimeAndDateDate,
 } from "@aviala-design/icons";
@@ -919,8 +919,8 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const { code } = useLocale();
   const locale = useLocaleMessages("DatePicker");
   const rtl = useRtl();
-  const PrevIcon = rtl ? DirectionArrowRight : DirectionArrowLeft;
-  const NextIcon = rtl ? DirectionArrowLeft : DirectionArrowRight;
+  const PrevIcon = rtl ? DirectionArrowRightLight : DirectionArrowLeftLight;
+  const NextIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
   const {
     mode,
     viewMonth,
