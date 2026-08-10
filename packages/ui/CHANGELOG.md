@@ -1,5 +1,13 @@
 # @aviala-design/spiral
 
+## 2.6.2
+
+### Patch Changes
+
+- 9d54c05: Align List item dividers to Figma `border/border-normal-2` (was `border-normal-1`).
+- Updated dependencies [9d54c05]
+  - @aviala-design/tokens@2.5.1
+
 ## 2.6.1
 
 ### Patch Changes
