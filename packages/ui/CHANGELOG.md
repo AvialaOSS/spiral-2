@@ -1,5 +1,18 @@
 # @aviala-design/spiral
 
+## 2.6.1
+
+### Patch Changes
+
+- e60b1fb: Fix component changelogs that shipped as `Unreleased` in 2.6.0: stamp now accepts legacy `## Unreleased` (without brackets) and those entries are labeled `2.6.0`.
+- 11ea089: Align Segmentator nested unselected item radius with the sliding thumb (`segmentator-item-nested-radius`).
+- 8feb56d: 再同步 NewAvialaDesignToken：中性色重调；`control` light/deep 更名为 `1/2/3`；统一 `BasicShadow-Level4WithLine`；按 Figma 交互矩阵对齐全库 Hover/Active/Focus（优先 Button/Input/Switch/Segmentator/List）。
+- 6b67c5b: Improve picker wheels: multi-step mouse wheel, shortest-path loop wrapping, and selected chrome that scrolls with the active item.
+- Updated dependencies [f3a62a1]
+- Updated dependencies [11ea089]
+- Updated dependencies [8feb56d]
+  - @aviala-design/tokens@2.5.0
+
 ## 2.6.0
 
 ### Minor Changes

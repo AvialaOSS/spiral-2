@@ -1,5 +1,16 @@
 # @aviala-design/tokens
 
+## 2.5.0
+
+### Minor Changes
+
+- f3a62a1: 同步新版 Aviala Design Colors / token-colors：更新中性与语义色阶；`border-normal-light|primary` 更名为 `border-normal-1|3`；`control` 并入 token-colors（`lightBackground-whiteOnly` → `Background-whiteOnly`）。
+- 8feb56d: 再同步 NewAvialaDesignToken：中性色重调；`control` light/deep 更名为 `1/2/3`；统一 `BasicShadow-Level4WithLine`；按 Figma 交互矩阵对齐全库 Hover/Active/Focus（优先 Button/Input/Switch/Segmentator/List）。
+
+### Patch Changes
+
+- 11ea089: Align Segmentator nested unselected item radius with the sliding thumb (`segmentator-item-nested-radius`).
+
 ## 2.4.0
 
 ### Minor Changes

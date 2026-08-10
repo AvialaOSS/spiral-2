@@ -1,6 +1,6 @@
 # Tab
 
-## Unreleased
+## 2.6.1
 
 ### Changed
 - Tiled active Hover/Active 改为 second 面 token 换色

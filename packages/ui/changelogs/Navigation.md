@@ -1,6 +1,6 @@
 # Navigation
 
-## Unreleased
+## 2.6.1
 
 ### Changed
 - 激活项 second 面 Hover/Active 改为 token 换色（不再依赖 brightness）
