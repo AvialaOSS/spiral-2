@@ -61,21 +61,9 @@ async function fetchSvgUrlsWithRetry(client, fileKey, nodeIds, batchSize = 20) {
   const urls = new Map();
   for (let i = 0; i < nodeIds.length; i += batchSize) {
     const batch = nodeIds.slice(i, i + batchSize);
-    let attempt = 0;
-    while (attempt < 6) {
-      try {
-        const batchUrls = await client.fetchSvgUrls(fileKey, batch, batchSize);
-        for (const [id, url] of batchUrls.entries()) urls.set(id, url);
-        break;
-      } catch (err) {
-        attempt += 1;
-        const wait = Math.min(30_000, 2_000 * 2 ** attempt);
-        console.warn(`  rate limited batch ${i / batchSize + 1}, retry in ${wait}ms (${attempt}/6)`);
-        await sleep(wait);
-        if (attempt >= 6) throw err;
-      }
-    }
-    await sleep(350);
+    const { urls: batchUrls } = await client.fetchSvgUrls(fileKey, batch, batchSize);
+    for (const [id, url] of batchUrls.entries()) urls.set(id, url);
+    await sleep(500);
   }
   return urls;
 }

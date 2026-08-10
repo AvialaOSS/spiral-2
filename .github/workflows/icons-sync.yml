@@ -49,6 +49,8 @@ jobs:
           ICONS_MODE: ${{ inputs.mode }}
           ICONS_CATEGORY: ${{ inputs.category }}
           ICONS_NAME: ${{ inputs.name }}
+          # Fail the job on any skipped SVG / rate-limit exhaustion; do not open a partial PR.
+          ICONS_NON_INTERACTIVE: "1"
         run: pnpm icons:export
 
       - name: Build icon React components from raw/
