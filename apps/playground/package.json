@@ -10,9 +10,11 @@
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
+    "@aviala-design/color": "^0.5.15",
     "@aviala-design/icons": "workspace:*",
     "@aviala-design/spiral": "workspace:*",
     "@aviala-design/tokens": "workspace:*",
+    "colord": "^2.9.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
