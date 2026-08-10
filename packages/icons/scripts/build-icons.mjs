@@ -76,6 +76,9 @@ function collectSvgFiles(dir, relativeDir = "") {
 
   const files = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    // Export staging scratch — never treat as icon sources.
+    if (entry.name === ".staging") continue;
+
     const relativePath = relativeDir ? `${relativeDir}/${entry.name}` : entry.name;
     const absolutePath = join(dir, entry.name);
 

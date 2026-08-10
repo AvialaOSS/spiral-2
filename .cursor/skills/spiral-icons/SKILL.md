@@ -16,6 +16,8 @@ Normal `pnpm build`, CI, and Release **do not** call Figma. Sync icons only when
 
 ## Figma source model
 
+Discovery uses the **published library catalog** of the Icons file (`FIGMA_FILE_ICONS`). New icons must be **Publish library**’d in Figma before they appear in export. SVG bytes are rendered from the **live file**.
+
 Icons live in **component sets**:
 
 | Layer | Example |
@@ -39,6 +41,8 @@ import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 |---|---|---|
 | `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium` |
 | `mode` | `default` \| `fill` | `default` |
+| `Icon` `size` | number \| CSS length | typography token when unset |
+| `Icon` `level` | `display` \| `headline1` \| `headline2` \| `title` \| `subtitle` \| `text` \| `caption` | — (maps to icon size tokens) |
 
 Component name = PascalCase of icon `name` (`direction_arrowLeft` → `DirectionArrowLeft`).
 
@@ -47,13 +51,15 @@ Missing variant combinations fall back to `Medium/default`, then any available v
 ## Pipeline
 
 ```bash
-pnpm icons:export       # clean raw/ then export → raw/{category}/
+pnpm icons:export       # stage → promote into raw/{category}/
 pnpm icons:build        # raw → React components (full replace of generated set)
 pnpm icons:build:merge  # raw → React (update icons present in raw/; keep others)
 pnpm icons:sync         # export + build:icons + build:release (tsup)
 ```
 
-Each full export **wipes `packages/icons/raw/` first** (unless `--no-clean`) so deduped `-2` / `-3` files from prior runs do not linger as legacy components.
+Export writes to `raw/.staging/` first and promotes only after success (or after interactive skip). Abort / rate-limit exhaustion leave existing `raw/` unchanged. Full promote replaces `raw/` (unless `--no-clean`).
+
+Local TTY: recoverable failures (null URL / download error) prompt `(r)etry` / `(s)kip` / `(a)bort`. CI and `--non-interactive` treat remaining failures as abort (`exit 1`). Rate-limit exhaustion always hard-fails.
 
 ### Optional export filters
 
@@ -64,7 +70,9 @@ Each full export **wipes `packages/icons/raw/` first** (unless `--no-clean`) so 
 | `--category=` / `ICONS_CATEGORY` | `direction,ai` |
 | `--name=` or `--only=` / `ICONS_NAME` | `direction_arrowLeft` |
 | `--dry-run` | list matches, write nothing |
-| `--no-clean` | do not wipe `raw/` before write |
+| `--no-clean` | merge into existing `raw/` on promote |
+| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; failures abort |
+| `--max-retries=` / `ICONS_MAX_RETRIES` | 429 retry budget (default 6) |
 
 ```bash
 pnpm icons:export --category=direction --thickness=Regular
@@ -76,7 +84,7 @@ After a **filtered** export, use `pnpm icons:build:merge` so other committed ico
 
 ### GitHub Actions
 
-Workflow **Icons Sync** (`.github/workflows/icons-sync.yml`): `workflow_dispatch` with the same optional filters → Figma export → build → PR with `packages/icons/src/**` only (never `raw/`).
+Workflow **Icons Sync** (`.github/workflows/icons-sync.yml`): `workflow_dispatch` with the same optional filters → Figma export (`ICONS_NON_INTERACTIVE=1`, fails on skips / rate-limit exhaustion) → build → PR with `packages/icons/src/**` only (never `raw/`).
 
 Commit generated **src**, add a changeset for `@aviala-design/icons`, then follow the normal Version → Publish path (still no Figma on publish).
 
@@ -106,7 +114,7 @@ src/catalog.ts                                        # committed
 
 ## Rules
 
-- Figma artboard is **120×120**; build normalizes SVG `viewBox` to `0 0 120 120` (and strips fixed width/height) — set size via props (`width`, `height`, or `Icon` `size`)
+- Figma artboard is **120×120**; build normalizes SVG `viewBox` to `0 0 120 120` (and strips fixed width/height) — set size via props (`width`, `height`, `Icon` `size`, or `Icon` `level`)
 - Parse variant strings order-independently (`parseVariantName`)
 - Never use canvas frame names for export
 - SVGR → `currentColor`

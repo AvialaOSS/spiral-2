@@ -19,6 +19,8 @@ src/catalog.ts                                        # committed
 
 ## Figma → React model
 
+Sync discovers icons from the **published library catalog** of the Icons Figma file (`FIGMA_FILE_ICONS`), then renders SVGs from the **live file**. New or renamed component sets appear in export only after **Publish library** in Figma.
+
 Icons live in Figma **component sets**:
 
 | Layer | Example |
@@ -64,13 +66,20 @@ Optional file key override: `FIGMA_FILE_ICONS` (default is in `.env.example`). N
 From the **repo root**:
 
 ```bash
-pnpm icons:export       # clean raw/ then export → raw/{category}/
+pnpm icons:export       # stage → promote into raw/{category}/ (preserves raw/ on abort)
 pnpm icons:build        # raw → React components (full replace of generated set)
 pnpm icons:build:merge  # raw → React (update icons present in raw/; keep others)
 pnpm icons:sync         # export + build:icons + build:release (tsup)
 ```
 
-Each full export **wipes `raw/` first** (unless `--no-clean`) so deduped `-2` / `-3` files from prior runs do not linger as legacy components.
+Exports write to `raw/.staging/` first, then promote into `raw/` only after success (or after you choose to skip remaining failures). Abort or rate-limit exhaustion leaves the previous `raw/` untouched. Full promote **replaces** `raw/` contents (unless `--no-clean`) so deduped `-2` / `-3` files from prior runs do not linger.
+
+### Failure handling
+
+| Situation | Local (TTY) | CI / `--non-interactive` / `ICONS_NON_INTERACTIVE=1` |
+|---|---|---|
+| Null SVG URL or download error | Continue; then prompt `(r)etry` / `(s)kip` / `(a)bort` | Fail job (`exit 1`); do not promote |
+| Rate limit (429) retries exhausted | Hard fail; do not promote | Hard fail; do not promote |
 
 ### Optional export filters
 
@@ -81,7 +90,9 @@ Each full export **wipes `raw/` first** (unless `--no-clean`) so deduped `-2` / 
 | `--category=` / `ICONS_CATEGORY` | `direction,ai` |
 | `--name=` or `--only=` / `ICONS_NAME` | `direction_arrowLeft` |
 | `--dry-run` | list matches, write nothing |
-| `--no-clean` | do not wipe `raw/` before write |
+| `--no-clean` | merge into existing `raw/` on promote (not recommended for full sync) |
+| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; remaining failures abort |
+| `--max-retries=` / `ICONS_MAX_RETRIES` | 429 retry budget (default 6) |
 
 ```bash
 pnpm icons:export --category=direction --thickness=Regular
@@ -123,9 +134,10 @@ Then commit `src`, add a changeset, and publish as above.
 Workflow **[Icons Sync](../../.github/workflows/icons-sync.yml)** (`workflow_dispatch`):
 
 1. Actions → **Icons Sync** → run with optional thickness / mode / category / name filters
-2. Job exports from Figma, builds React components (merge when any filter is set, full replace otherwise)
-3. Opens a PR that touches `packages/icons/src/**` only
-4. Add a changeset for `@aviala-design/icons` on that PR before merge if it should publish
+2. Job exports from Figma in non-interactive mode (any skipped SVG or rate-limit exhaustion fails the job — no partial PR)
+3. Builds React components (merge when any filter is set, full replace otherwise)
+4. Opens a PR that touches `packages/icons/src/**` only
+5. Add a changeset for `@aviala-design/icons` on that PR before merge if it should publish
 
 Repository secret required: `FIGMA_ACCESS_TOKEN`.
 

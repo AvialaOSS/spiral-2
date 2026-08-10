@@ -52,7 +52,7 @@ pnpm --filter <包名> <script>
 | `pnpm typecheck` | Turbo 运行各包 `typecheck`（依赖上游 `build`） |
 | `pnpm clean` | Turbo 清理各包产物，并删除根 `node_modules` |
 | `pnpm sync:ald` | 从本地 ALD 仓库复制 token 到 `packages/tokens/source/ald` |
-| `pnpm icons:export` | 从 Figma 导出 SVG 到 `packages/icons/raw/` |
+| `pnpm icons:export` | 从 Icons File **已发布 library catalog** 导出 SVG（经 `raw/.staging/` 再 promote）；TTY 可对失败项 retry/skip/abort |
 | `pnpm icons:export:dry` | 图标导出预检（不写入文件） |
 | `pnpm icons:build` | 仅运行 `@aviala-design/icons` 的 SVGR 构建 |
 | `pnpm icons:sync` | 图标导出 + `@aviala-design/icons` 完整构建 |
