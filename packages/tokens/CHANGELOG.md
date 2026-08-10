@@ -1,5 +1,11 @@
 # @aviala-design/tokens
 
+## 2.5.1
+
+### Patch Changes
+
+- 9d54c05: Align List item dividers to Figma `border/border-normal-2` (was `border-normal-1`).
+
 ## 2.5.0
 
 ### Minor Changes

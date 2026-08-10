@@ -1,6 +1,6 @@
 # List
 
-## [Unreleased]
+## 2.6.2
 
 ### Fixed
 - 行间顶部分割线与尾部竖向分隔线颜色对齐 Figma `border/border-normal-2`（此前误用 `border-normal-1`，中性色重调后几乎不可见）
