@@ -1,5 +1,10 @@
 # SegmentatorGroup
 
+## Unreleased
+
+### Changed
+- 未选项 Hover/Active 使用共享 filled 交互 token
+
 ## 2.6.0
 
 ### Added

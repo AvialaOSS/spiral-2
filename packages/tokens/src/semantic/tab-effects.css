@@ -12,11 +12,11 @@
   --tab-item-control-radius: var(--border-radius-small, 8px);
   --tab-icon-box: 18px;
   --tab-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
-  --tab-fg: var(--text-text-normal-text-black, #343333);
-  --tab-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
-  /* Figma Background=Default + Style=Card → control lightBackground-light (#f5f3f3), not whiteonly */
-  --tab-bg-card: var(--control-control-normal-lightbackground-light, #f5f3f3);
-  --tab-card-active-bg: var(--box-box-normal-background-whiteonly, #fefcfc);
+  --tab-fg: var(--text-text-normal-text-black, #262525);
+  --tab-bg: var(--box-box-normal-background-whiteonly, #ffffff);
+  /* Figma Background=Default + Style=Card → control lightBackground-1 (#f0efef), not whiteonly */
+  --tab-bg-card: var(--control-control-normal-lightbackground-1, #f0efef);
+  --tab-card-active-bg: var(--box-box-normal-background-whiteonly, #ffffff);
   --tab-card-ear-size: 8px;
   --tab-indicator-height: 4px;
   /* Figma Rectangle 1 on active Default TabItem: inset 12px from item edges */
@@ -169,8 +169,12 @@
     background-color 250ms ease;
 }
 
+.aviala-tab-item__control.aviala-button--mode-second:hover:not(:disabled)::before {
+  background-color: var(--button-second-bg-hover, var(--button-second-bg));
+}
+
 .aviala-tab-item__control.aviala-button--mode-second:active:not(:disabled)::before {
-  filter: brightness(var(--button-active-brightness, 0.95));
+  background-color: var(--button-second-bg-active, var(--button-second-bg-hover));
 }
 
 /*

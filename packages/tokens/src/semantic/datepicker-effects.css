@@ -169,10 +169,10 @@
   width: var(--datepicker-panel-width, 290px);
   flex-direction: column;
   gap: var(--padding-tiny, 4px);
-  border: 1px solid var(--datepicker-panel-border, #f5f3f3);
+  border: 1px solid var(--datepicker-panel-border, #f0efef);
   border-radius: var(--datepicker-panel-radius, 10px);
-  background-color: var(--datepicker-panel-bg, #fefcfc);
-  box-shadow: var(--datepicker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
+  background-color: var(--datepicker-panel-bg, #ffffff);
+  box-shadow: var(--datepicker-panel-shadow, var(--aviala-shadow-level4-with-line));
   padding: 0;
 }
 
@@ -306,10 +306,10 @@
   display: flex;
   width: var(--datepicker-panel-width, 290px);
   flex-direction: column;
-  border: 1px solid var(--datepicker-panel-border, #f5f3f3);
+  border: 1px solid var(--datepicker-panel-border, #f0efef);
   border-radius: var(--datepicker-panel-radius, 10px);
-  background-color: var(--datepicker-panel-bg, #fefcfc);
-  box-shadow: var(--datepicker-panel-shadow, 0 5px 20px rgba(0, 0, 0, 0.06));
+  background-color: var(--datepicker-panel-bg, #ffffff);
+  box-shadow: var(--datepicker-panel-shadow, var(--aviala-shadow-level4-with-line));
 }
 
 .aviala-timepicker-panel .aviala-datepicker-time {
@@ -334,17 +334,17 @@
   background: transparent;
   padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
   text-align: center;
-  color: var(--datepicker-header-fg, #343333);
+  color: var(--datepicker-header-fg, #262525);
   overflow: hidden;
   transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-calendar__title:hover {
-  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+  background-color: var(--datepicker-day-bg-hover, #f0efef);
 }
 
 .aviala-datepicker-calendar__title[data-active="true"] {
-  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+  background-color: var(--datepicker-day-bg-hover, #f0efef);
 }
 
 .aviala-datepicker-calendar__title-text {
@@ -368,14 +368,14 @@
   border: 0;
   border-radius: var(--border-radius-small, 8px);
   background: transparent;
-  color: var(--datepicker-header-fg, #343333);
+  color: var(--datepicker-header-fg, #262525);
   padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
   /* Match Button noBackground hover fade */
   transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-calendar__nav:hover {
-  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+  background-color: var(--datepicker-day-bg-hover, #f0efef);
 }
 
 .aviala-datepicker-calendar__weekdays {
@@ -383,7 +383,7 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--datepicker-grid-gap, 4px);
   border-radius: var(--border-radius-extra-small-2, 6px);
-  background-color: var(--datepicker-weekday-bg, #fdfbfb);
+  background-color: var(--datepicker-weekday-bg, #f9f8f8);
   padding: 0;
 }
 
@@ -392,7 +392,7 @@
   height: var(--datepicker-weekday-height, 18px);
   align-items: center;
   justify-content: center;
-  color: var(--datepicker-weekday-fg, #858484);
+  color: var(--datepicker-weekday-fg, #616060);
 }
 
 .aviala-datepicker-calendar__grid-viewport {
@@ -459,14 +459,14 @@
   border: 0;
   border-radius: var(--datepicker-day-radius, 8px);
   background: transparent;
-  color: var(--datepicker-day-fg, #343333);
+  color: var(--datepicker-day-fg, #262525);
   padding: var(--padding-min, 2px) var(--padding-small, 6px);
   /* Match Button noBackground hover fade */
   transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-day:not([data-range-pos]):not([data-selected="true"]):hover:not(:disabled) {
-  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+  background-color: var(--datepicker-day-bg-hover, #f0efef);
 }
 
 .aviala-datepicker-day__label {
@@ -549,7 +549,7 @@
   width: 100%;
   min-width: var(--datepicker-trigger-min-width, 46px);
   border-radius: var(--border-radius-small, 8px);
-  background-color: var(--datepicker-footer-bg, #f5f3f3);
+  background-color: var(--datepicker-footer-bg, #f0efef);
   padding: var(--padding-min, 2px);
 }
 
@@ -591,7 +591,7 @@
 .aviala-datepicker-time__title {
   flex: 1 1 0%;
   min-width: 0;
-  color: var(--datepicker-header-fg, #343333);
+  color: var(--datepicker-header-fg, #262525);
 }
 
 .aviala-datepicker-time__close {
@@ -603,13 +603,13 @@
   border: 0;
   border-radius: var(--border-radius-small, 8px);
   background: transparent;
-  color: var(--datepicker-header-fg, #343333);
+  color: var(--datepicker-header-fg, #262525);
   padding: var(--padding-tiny, 4px) var(--padding-littlesmall, 7px);
   transition: background-color 250ms ease;
 }
 
 .aviala-datepicker-time__close:hover {
-  background-color: var(--datepicker-day-bg-hover, #f5f3f3);
+  background-color: var(--datepicker-day-bg-hover, #f0efef);
 }
 
 .aviala-datepicker-time__columns {
@@ -630,7 +630,7 @@
 }
 
 .aviala-datepicker-time__wheel + .aviala-datepicker-time__wheel {
-  border-inline-start: 1px solid var(--border-border-normal-light, #f5f3f3);
+  border-inline-start: 1px solid var(--border-border-normal-1, #f0efef);
 }
 
 .aviala-datepicker-time__wheel-highlight {
@@ -675,7 +675,7 @@ html[data-aviala-kbd]
   top: 0;
   background: linear-gradient(
     to bottom,
-    var(--datepicker-panel-bg, #fefcfc) 0%,
+    var(--datepicker-panel-bg, #ffffff) 0%,
     transparent 100%
   );
 }
@@ -684,7 +684,7 @@ html[data-aviala-kbd]
   bottom: 0;
   background: linear-gradient(
     to top,
-    var(--datepicker-panel-bg, #fefcfc) 0%,
+    var(--datepicker-panel-bg, #ffffff) 0%,
     transparent 100%
   );
 }
@@ -736,7 +736,7 @@ html[data-aviala-kbd]
   border: 0;
   border-radius: var(--border-radius-extra-small-2, 6px);
   background: transparent;
-  color: var(--datepicker-day-fg, #343333);
+  color: var(--datepicker-day-fg, #262525);
   padding: 0 var(--padding-small, 6px);
   font: inherit;
   line-height: var(--line-height-line-height-regular, 1.125rem);

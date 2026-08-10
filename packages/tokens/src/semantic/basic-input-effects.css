@@ -2,23 +2,22 @@
 
 :root {
   --link-fg-theme: var(--text-text-theme-primary-black, #bf2300);
-  --link-fg-custom: var(--text-text-normal-text-black, #343333);
-  --button-no-bg-hover: var(
-    --control-control-theme-lightbackground,
-    var(--aviala-primary-primary-2, #fff9f8)
-  );
-  --button-no-bg-active: var(--aviala-primary-primary-5, #ffc5b9);
-  --button-no-bg-custom-hover: var(--aviala-neutral-neutral-4, #faf8f8);
-  --button-no-bg-custom-active: var(--aviala-neutral-neutral-5, #f5f3f3);
+  --link-fg-custom: var(--text-text-normal-text-black, #262525);
+  --button-no-bg-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
+  --button-no-bg-active: var(--aviala-interaction-ghost-active, #f0efef);
+  --button-no-bg-custom-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
+  --button-no-bg-custom-active: var(--aviala-interaction-ghost-active, #f0efef);
 
   --switch-width: 34px;
   --switch-height-regular: 22px;
   --switch-height-small: 20px;
-  --switch-track-bg: var(--control-control-normal-background-deep, #e2e0e0);
-  --switch-hover-bg: var(--aviala-neutral-neutral-8, #d2d0d0);
-  --switch-press-bg: var(--aviala-neutral-neutral-9, #bebcbc);
+  --switch-track-bg: var(--control-control-normal-background-3, #d6d5d4);
+  --switch-hover-bg: var(--aviala-neutral-neutral-7, #c4c2c2);
+  --switch-press-bg: var(--aviala-neutral-neutral-8, #afadad);
   --switch-checked-bg: var(--control-control-theme-background, #ff5532);
-  --switch-thumb-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  --switch-checked-bg-hover: var(--button-primary-bg-hover, #e92d00);
+  --switch-checked-bg-active: var(--button-primary-bg-active, #ff7b5b);
+  --switch-thumb-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
   --switch-thumb-size-regular: 18px;
   --switch-thumb-size-small: 16px;
@@ -55,15 +54,36 @@
       transparent 36%
     ),
     linear-gradient(90deg, var(--switch-checked-bg) 0%, var(--switch-checked-bg) 100%);
+  --switch-checked-surface-hover: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
+      transparent 36%
+    ),
+    linear-gradient(
+      90deg,
+      var(--switch-checked-bg-hover, #e92d00) 0%,
+      var(--switch-checked-bg-hover, #e92d00) 100%
+    );
+  --switch-checked-surface-active: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
+      transparent 36%
+    ),
+    linear-gradient(
+      90deg,
+      var(--switch-checked-bg-active, #ff7b5b) 0%,
+      var(--switch-checked-bg-active, #ff7b5b) 100%
+    );
 
-  --segmentator-bg: var(--control-control-normal-lightbackground-light, #f5f3f3);
-  --segmentator-selected-bg: var(--control-control-normal-lightbackground-whiteonly, #fefcfc);
+  --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
   --segmentator-selected-fg: var(--text-text-theme-primary-black, #bf2300);
-  --segmentator-fg: var(--text-text-normal-text-black, #343333);
+  --segmentator-fg: var(--text-text-normal-text-black, #262525);
   --segmentator-tiled-bg: var(--box-box-theme-secondarybackground, #ffdad2);
   --segmentator-shadow-selected: 0 4px 8px rgba(0, 0, 0, 0.06);
   --segmentator-shadow-tiled: inset 0 -0.5px 0 rgba(0, 0, 0, 0.04);
-  --segmentator-item-hover-bg: var(--aviala-neutral-neutral-6, #edebeb);
+  --segmentator-item-hover-bg: var(--aviala-interaction-filled-hover, #e5e4e3);
+  --segmentator-item-active-bg: var(--aviala-interaction-filled-active, #d6d5d4);
   --segmentator-press-scale: 0.98;
   --segmentator-press-height-scale: 0.88;
   --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.52s);
@@ -193,7 +213,7 @@
   align-self: stretch;
   width: 1px;
   flex-shrink: 0;
-  background: var(--border-border-normal-primary, #e2e0e0);
+  background: var(--border-border-normal-3, #d6d5d4);
 }
 
 .aviala-anchor-item[data-activated="true"] .aviala-anchor-item__rail {
@@ -214,7 +234,7 @@
 }
 
 .aviala-anchor-item .aviala-typography {
-  color: var(--text-text-normal-text-black, #343333);
+  color: var(--text-text-normal-text-black, #262525);
 }
 
 .aviala-anchor-item[data-activated="false"] .aviala-typography {
@@ -350,13 +370,13 @@
   );
 }
 
-/* hover / press — mirrors Button noBackgroundCustom (unchecked) and primary brightness (checked) */
+/* hover / press — Figma matrix fill swaps (unchecked deepen; checked primary steps) */
 @media (hover: hover) and (pointer: fine) {
   .aviala-switch[data-state="unchecked"]:hover:not(:disabled) {
     background-color: var(--switch-hover-bg);
   }
   .aviala-switch[data-state="checked"]:hover:not(:disabled) .aviala-switch__surface {
-    filter: brightness(var(--button-hover-brightness, 1.05));
+    background-image: var(--switch-checked-surface-hover);
   }
 }
 
@@ -364,7 +384,7 @@
   background-color: var(--switch-press-bg);
 }
 .aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__surface {
-  filter: brightness(var(--button-active-brightness, 0.95));
+  background-image: var(--switch-checked-surface-active);
 }
 
 /* ---- Segmentator ---- */
@@ -614,8 +634,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .aviala-segmentator-item[data-selected="false"]:hover:not(:disabled) {
-    background-color: var(--segmentator-item-hover-bg, var(--aviala-neutral-neutral-6, #edebeb));
+    background-color: var(--segmentator-item-hover-bg, #e5e4e3);
   }
+}
+
+.aviala-segmentator-item[data-selected="false"]:active:not(:disabled) {
+  background-color: var(--segmentator-item-active-bg, #d6d5d4);
 }
 
 .aviala-segmentator-item:disabled {

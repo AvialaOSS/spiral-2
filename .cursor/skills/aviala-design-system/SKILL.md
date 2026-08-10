@@ -16,11 +16,13 @@ description: Aviala Design system conventions for Spiral 2 — tokens, Figma fil
 ## ALD tokens
 
 Local export: `packages/tokens/source/ald/` (sync via `pnpm sync:ald`).
+`control/*` lives in `Components/token-colors/` (no separate control collection).
 
 Semantic step mapping (designer-defined):
 - Primary backgrounds/borders → step **8**
 - Text primary → step **10**, secondary → **7**, light → **5**
 - Secondary backgrounds → **4**, light → **2**
+- Neutral borders → `border-normal-1|2|3` (aliases neutral **3|4|6**)
 
 ## Packages
 

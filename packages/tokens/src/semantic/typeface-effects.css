@@ -164,5 +164,5 @@
 
 /* Surface carries typography classes directly — caption fg would override tooltip token */
 .aviala-tooltip-content__surface.aviala-typography {
-  color: var(--tooltip-content-fg, #fefcfc);
+  color: var(--tooltip-content-fg, #ffffff);
 }

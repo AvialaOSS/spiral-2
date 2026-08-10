@@ -100,31 +100,21 @@ function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
   const neutral = (step: number) =>
     vars[aliasToCssVar(`neutral/neutral-${step}`)] ?? ALD_NEUTRAL_RAMP[mode][step]!;
 
-  setAldVar(
-    vars,
-    "control/control-normal-lightBackground-light",
-    mode === "dark" ? "#3d3d3d" : "#f5f3f3"
-  );
-  setAldVar(
-    vars,
-    "control/control-normal-lightBackground-deep",
-    mode === "dark" ? "#2a2a2a" : "#fdfbfb"
-  );
-  setAldVar(
-    vars,
-    "control/control-normal-lightBackground-whiteOnly",
-    mode === "dark" ? "#242424" : "#ffffff"
-  );
-  // ALD aliases control-normal-Background-deep → neutral-7
-  setAldVar(vars, "control/control-normal-Background-deep", neutral(7));
-  setAldVar(vars, "border/border-normal-light", mode === "dark" ? "#3d3d3d" : neutral(5));
-  setAldVar(vars, "border/border-normal-primary", mode === "dark" ? "#2c2c2c" : neutral(7));
-  setAldVar(vars, "box/box-theme-primaryBackground", mode === "dark" ? "#242424" : "#ffffff");
-  setAldVar(vars, "text/text-normal-text-white", "#fefcfc");
-  setAldVar(vars, "text/text-normal-text-black", mode === "dark" ? "#e8e8e8" : "#343333");
-  setAldVar(vars, "text/text-normal-text-caption-black", mode === "dark" ? "#a8a8a8" : "#858484");
-  setAldVar(vars, "text/text-normal-text-caption-white", "#fefcfc");
-  setAldVar(vars, "normal-background-theme", mode === "dark" ? "#1a1a1a" : "#FAF8F8");
+  // ALD token-colors aliases (light/dark resolve via neutral ramp).
+  // lightBackground-1/2 → neutral-4/5; Background-3 → neutral-6
+  setAldVar(vars, "control/control-normal-lightBackground-1", neutral(4));
+  setAldVar(vars, "control/control-normal-lightBackground-2", neutral(5));
+  setAldVar(vars, "control/control-normal-Background-whiteOnly", neutral(1));
+  setAldVar(vars, "control/control-normal-Background-3", neutral(6));
+  setAldVar(vars, "border/border-normal-1", neutral(3));
+  setAldVar(vars, "border/border-normal-2", neutral(4));
+  setAldVar(vars, "border/border-normal-3", neutral(6));
+  setAldVar(vars, "box/box-theme-primaryBackground", neutral(1));
+  setAldVar(vars, "text/text-normal-text-white", neutral(2));
+  setAldVar(vars, "text/text-normal-text-black", neutral(13));
+  setAldVar(vars, "text/text-normal-text-caption-black", neutral(11));
+  setAldVar(vars, "text/text-normal-text-caption-white", neutral(2));
+  setAldVar(vars, "normal-background-theme", neutral(3));
 }
 
 /** Primary-tinted ALD semantic tokens — follow palette steps (Figma token-colors). */

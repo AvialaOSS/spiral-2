@@ -149,11 +149,11 @@
 }
 
 .aviala-form__message--info {
-  color: var(--text-text-normal-text-caption-black, #858484);
+  color: var(--text-text-normal-text-caption-black, #616060);
 }
 
 .aviala-form__message--info .aviala-form__message-icon {
-  color: var(--text-text-normal-text-caption-black, #858484);
+  color: var(--text-text-normal-text-caption-black, #616060);
 }
 
 /* Scroll — Figma System Composition → Scroll (301:6312) */
@@ -161,7 +161,7 @@
 .aviala-scroll {
   overflow: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--scroll-thumb-bg, var(--control-control-normal-background-deep, #e2e0e0))
+  scrollbar-color: var(--scroll-thumb-bg, var(--control-control-normal-background-3, #d6d5d4))
     transparent;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .aviala-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--scroll-thumb-bg, var(--control-control-normal-background-deep, #e2e0e0));
+  background-color: var(--scroll-thumb-bg, var(--control-control-normal-background-3, #d6d5d4));
   border-radius: var(--border-radius-allround, 99px);
   border: var(--scroll-thumb-inset, 2px) solid transparent;
   background-clip: content-box;

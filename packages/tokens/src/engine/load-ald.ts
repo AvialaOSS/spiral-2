@@ -67,23 +67,6 @@ function loadSemanticColors(palette: Record<string, string>): ThemeVars {
   return vars;
 }
 
-function loadControlColors(palette: Record<string, string>): ThemeVars {
-  // The control export is flat (keys already start with "control-"); force the
-  // "control/" group so names match the semantic layer (--control-control-*).
-  const tokens = flattenTokens(
-    readJson("Components/control/default.tokens.json"),
-    "control"
-  );
-  const vars: ThemeVars = {};
-
-  for (const [path, token] of Object.entries(tokens)) {
-    const hex = resolveTokenHex(token, palette);
-    if (hex) vars[tokenPathToCssVar(path)] = hex;
-  }
-
-  return vars;
-}
-
 /**
  * Match build-css.mjs `leafToVar`: emit the leaf key only (e.g. size/size-regular
  * → --size-regular), not the duplicated group prefix (--size-size-regular).
@@ -147,8 +130,8 @@ export function loadAldTheme(
 ): ThemeVars {
   const palette = loadPrimitivePalette(mode);
   return {
+    // token-colors includes control/* (merged from the former control collection).
     ...loadSemanticColors(palette),
-    ...loadControlColors(palette),
     ...loadBaseNumbers(density),
     ...loadFontWeights(),
     "--aviala-mode": mode,
