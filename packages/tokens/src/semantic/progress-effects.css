@@ -4,6 +4,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--progress-gap, var(--gap-inside-space, 6px));
+  /* Fill / ring stroke by type */
+  --progress-fill-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --progress-ring-track: var(--box-box-theme-lightbackground, #ffe9e3);
 }
 
 .aviala-progress--shape-bar {
@@ -14,15 +17,14 @@
   position: relative;
   flex: 1 1 auto;
   min-width: 0;
-  height: var(--progress-bar-height, 4px);
+  height: var(--progress-bar-height, 6px);
   overflow: hidden;
   border-radius: var(--border-radius-allround, 99px);
-  background-color: var(--progress-track-bg, var(--box-box-normal-background-whiteonly, #ffffff));
-  border: 1px solid var(--progress-track-border, var(--border-border-normal-1, #f0efef));
+  background-color: var(--progress-track-bg, var(--control-control-normal-lightbackground-1, #f0efef));
 }
 
-.aviala-progress--size-big .aviala-progress__track {
-  height: var(--progress-bar-height-big, 6px);
+.aviala-progress--size-big.aviala-progress--shape-bar .aviala-progress__track {
+  height: var(--progress-bar-height-big, 8px);
 }
 
 .aviala-progress__fill {
@@ -53,10 +55,11 @@
   display: block;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .aviala-progress__ring-track {
-  stroke: var(--progress-track-border, var(--border-border-normal-1, #f0efef));
+  stroke: var(--progress-ring-track);
 }
 
 .aviala-progress__ring-fill {
@@ -66,12 +69,15 @@
 
 .aviala-progress--type-default {
   --progress-fill-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --progress-ring-track: var(--box-box-theme-lightbackground, #ffe9e3);
 }
 
 .aviala-progress--type-success {
   --progress-fill-bg: var(--box-box-success-primarybackground, #70b450);
+  --progress-ring-track: var(--box-box-success-primarybackground, #70b450);
 }
 
 .aviala-progress--type-fail {
   --progress-fill-bg: var(--box-box-fail-primarybackground, #f41544);
+  --progress-ring-track: var(--box-box-fail-lightbackground, #ffe7e5);
 }

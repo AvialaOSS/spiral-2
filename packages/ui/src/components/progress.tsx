@@ -64,11 +64,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const resolvedSize = size ?? "default";
     const resolvedShape = shape ?? "bar";
     const displayLabel = label ?? `${Math.round(percent)}%`;
-    /* Figma ring sizes: default 16px / big 24px (--progress-ring-size) */
+    /* Figma ring: default 16 / big 24; stroke 2; radius = half − stroke/2 */
     const diameter = resolvedSize === "big" ? 24 : 16;
-    const radius = diameter / 2;
+    const center = diameter / 2;
     const stroke = 2;
-    const normalizedRadius = radius - stroke;
+    const normalizedRadius = center - stroke / 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     const strokeDashoffset = circumference - (percent / 100) * circumference;
 
@@ -115,30 +115,30 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         ) : (
           <svg
             className="aviala-progress__ring"
-            width={radius * 2}
-            height={radius * 2}
-            viewBox={`0 0 ${radius * 2} ${radius * 2}`}
+            width={diameter}
+            height={diameter}
+            viewBox={`0 0 ${diameter} ${diameter}`}
             aria-hidden
           >
             <circle
               className="aviala-progress__ring-track"
-              cx={radius}
-              cy={radius}
+              cx={center}
+              cy={center}
               r={normalizedRadius}
               fill="none"
               strokeWidth={stroke}
             />
             <circle
               className="aviala-progress__ring-fill"
-              cx={radius}
-              cy={radius}
+              cx={center}
+              cy={center}
               r={normalizedRadius}
               fill="none"
               strokeWidth={stroke}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={strokeDashoffset}
               strokeLinecap="round"
-              transform={`rotate(-90 ${radius} ${radius})`}
+              transform={`rotate(-90 ${center} ${center})`}
             />
           </svg>
         )}
