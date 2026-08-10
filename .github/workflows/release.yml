@@ -51,18 +51,33 @@ jobs:
           # Configure each package on npmjs.com → Settings → Trusted publishing.
 
       # Cross-repo: notify avialaWebsite to open a docs-coverage PR.
-      # Requires secret AVIALA_WEBSITE_TOKEN (fine-grained PAT on avialaWebsite,
-      # Contents: Read and write) — default GITHUB_TOKEN cannot dispatch other repos.
+      # GitHub App installed on avialaWebsite (Contents: R/W). Mint a short-lived
+      # installation token — default GITHUB_TOKEN cannot dispatch other repos.
+      # Spiral2 secrets/vars: AVIALA_WEBSITE_APP_CLIENT_ID + AVIALA_WEBSITE_APP_PRIVATE_KEY
+      - name: Create token for avialaWebsite
+        id: website-app
+        if: steps.changesets.outputs.published == 'true' && vars.AVIALA_WEBSITE_APP_CLIENT_ID != ''
+        continue-on-error: true
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AVIALA_WEBSITE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AVIALA_WEBSITE_APP_PRIVATE_KEY }}
+          owner: AvialaOSS
+          repositories: avialaWebsite
+
+      - name: Warn if docs dispatch credentials missing or token failed
+        if: >
+          steps.changesets.outputs.published == 'true' &&
+          (vars.AVIALA_WEBSITE_APP_CLIENT_ID == '' || steps.website-app.outcome != 'success')
+        run: |
+          echo "::warning::Docs scaffold dispatch skipped (set AVIALA_WEBSITE_APP_CLIENT_ID + AVIALA_WEBSITE_APP_PRIVATE_KEY). See https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md"
+
       - name: Dispatch docs scaffold on avialaWebsite
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.changesets.outputs.published == 'true' && steps.website-app.outcome == 'success'
         env:
-          GH_TOKEN: ${{ secrets.AVIALA_WEBSITE_TOKEN }}
+          GH_TOKEN: ${{ steps.website-app.outputs.token }}
           PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
         run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo "::warning::AVIALA_WEBSITE_TOKEN not set; skip docs scaffold dispatch."
-            exit 0
-          fi
           VERSION=$(node -e '
             const pkgs = JSON.parse(process.env.PUBLISHED_PACKAGES || "[]");
             const spiral = pkgs.find((p) => p.name === "@aviala-design/spiral");

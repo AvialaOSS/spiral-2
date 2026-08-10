@@ -280,9 +280,13 @@ Changesets 配置（`.changeset/config.json`）忽略 `@spiral/playground` 与 `
 | `ICONS_MODE` | 否 | 导出过滤器，如 `default` |
 | `ALD_PATH` | 否 | 本地 ALD 仓库路径（默认见 `.env.example`） |
 
-**CI / Release secrets（GitHub Actions）：**
+**CI / Release secrets & vars（GitHub Actions）：**
 
-| Secret | 用途 |
-|---|---|
-| `GITHUB_TOKEN` | Changesets 创建版本 PR |
-| `FIGMA_ACCESS_TOKEN` | CI / Release 中的 `pnpm icons:export`（在仓库 Settings → Secrets and variables → Actions 中配置同名 Secret） |
+| Name | 类型 | 用途 |
+|---|---|---|
+| `GITHUB_TOKEN` | 内置 | Changesets 创建版本 PR |
+| `AVIALA_WEBSITE_APP_CLIENT_ID` | Variable | 跨仓 docs scaffold（GitHub App Client ID） |
+| `AVIALA_WEBSITE_APP_PRIVATE_KEY` | Secret | 跨仓 docs scaffold（App private key `.pem`） |
+| `FIGMA_ACCESS_TOKEN` | Secret | Icons Sync / 本地 `pnpm icons:export`（CI/Release 不调 Figma） |
+
+跨仓 dispatch 配置说明见 https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md。
