@@ -356,18 +356,23 @@
   --scroll-thumb-inset: 2px;
   --scroll-thumb-inset-small: 1px;
 
-  --table-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
+  --table-bg: var(--box-box-normal-background-whiteonly, #ffffff);
+  --table-head-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --table-border: var(--border-border-normal-1, #f0efef);
   --table-radius: var(--border-radius-middle, 10px);
   --table-head-height: 38px;
   --table-cell-height: 50px;
   --table-cell-px: var(--padding-big, 14px);
+  --table-cell-px-end: var(--padding-middle, 10px);
   --table-cell-py: var(--padding-default, 8px);
+  --table-head-py: var(--padding-middle, 10px);
   --table-cell-gap: var(--gap-component-space, 8px);
   --table-checkbox-col-width: 40px;
   --table-cell-icon-size: var(--icon-size-text-bigger, 1rem);
-  --table-head-fg: var(--text-text-normal-text-caption-black, #616060);
+  --table-icon-place-size: 36px;
+  --table-head-fg: var(--text-text-normal-text-black, #262525);
   --table-cell-fg: var(--text-text-normal-text-black, #262525);
+  --table-cell-caption-fg: var(--text-text-normal-text-caption-black, #616060);
 
   --color-picker-panel-width: 370px;
   --color-picker-area-height: 160px;
