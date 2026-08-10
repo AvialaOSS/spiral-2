@@ -500,7 +500,8 @@
   --list-item-content-py: var(--padding-default, 8px);
   --list-item-content-pr: var(--padding-big, 14px);
   --list-item-content-gap: var(--gap-content-space, 10px);
-  --list-item-border: var(--border-border-normal-1, #f0efef);
+  /* Figma List item Content top border + last separator: border/border-normal-2 */
+  --list-item-border: var(--border-border-normal-2, #f0efef);
   --list-item-icon-shaped-size: 36px;
   --list-item-icon-default-size: 22px;
   --list-item-icon-shaped-bg: var(--box-box-theme-primarybackground, #ff5532);
