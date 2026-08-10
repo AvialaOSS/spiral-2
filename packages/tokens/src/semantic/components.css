@@ -51,7 +51,7 @@
   --button-no-bg-custom-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
   --button-no-bg-custom-active: var(--aviala-interaction-ghost-active, #f0efef);
   /* outline / outlineCustom — Figma Mode=Outline(-Custom); 1px outside stroke */
-  --button-outline-border: var(--border-border-normal-3, #cdcccc);
+  --button-outline-border: var(--border-border-normal-3, #d6d5d4);
   --button-outline-fg: var(
     --text-text-theme-primary-black,
     var(--aviala-primary-primary-10, #bf2300)
@@ -258,7 +258,7 @@
   --checkbox-check-easing: cubic-bezier(0.873, 0, 0, 1);
   --checkbox-surface-easing: ease;
   --checkbox-bg-unchecked: var(--control-control-normal-background-whiteonly, #ffffff);
-  --checkbox-border-unchecked: var(--border-border-normal-3, #cdcccc);
+  --checkbox-border-unchecked: var(--border-border-normal-3, #d6d5d4);
   --checkbox-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
   --checkbox-checked-icon: var(--control-control-normal-background-whiteonly, #ffffff);
   --checkbox-indeterminate-bg: var(--box-box-theme-secondarybackground, #ffdad2);
@@ -317,7 +317,7 @@
   --segmentator-haptic-press-ms: 20;
   --segmentator-haptic-select-ms: 16;
 
-  --badge-bg: var(--control-control-normal-lightbackground-2, #ebeaea);
+  --badge-bg: var(--control-control-normal-lightbackground-2, #e5e4e3);
   --badge-gap: var(--padding-min, 2px);
   --badge-px: var(--padding-tiny, 4px);
   --badge-radius: var(--border-radius-extra-small-2, 6px);
@@ -354,7 +354,7 @@
   --scroll-thumb-inset: 2px;
   --scroll-thumb-inset-small: 1px;
 
-  --table-bg: var(--box-box-normal-lightbackground-white, #ebeaea);
+  --table-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --table-border: var(--border-border-normal-1, #f0efef);
   --table-radius: var(--border-radius-middle, 10px);
   --table-head-height: 38px;
@@ -379,8 +379,8 @@
   --color-picker-panel-shadow: var(--select-menu-shadow);
   --color-picker-panel-gap: var(--gap-content-space, 10px);
   --color-picker-panel-px: var(--padding-default, 8px);
-  --color-picker-thumb-border: var(--border-border-normal-3, #cdcccc);
-  --color-picker-checkerboard-light: #cdcccc;
+  --color-picker-thumb-border: var(--border-border-normal-3, #d6d5d4);
+  --color-picker-checkerboard-light: #d6d5d4;
   --color-picker-checkerboard-dark: #ffffff;
 
   --datepicker-trigger-min-width: 46px;
@@ -394,7 +394,7 @@
   --datepicker-panel-py: var(--padding-default, 8px);
   --datepicker-header-gap: 5px;
   --datepicker-header-fg: var(--select-item-fg);
-  --datepicker-weekday-bg: var(--box-box-normal-lightbackground-white, #ebeaea);
+  --datepicker-weekday-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --datepicker-weekday-height: 18px;
   --datepicker-weekday-fg: var(--select-label-fg);
   --datepicker-grid-gap: 4px;
@@ -487,7 +487,7 @@
   --tooltip-content-max-width: 240px;
   --tooltip-content-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
-  --list-bg: var(--box-box-normal-lightbackground-white, #ebeaea);
+  --list-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --list-gap: var(--gap-component-space, 8px);
   --list-title-px: 12px;
   --list-title-fg: var(--text-text-normal-text-black, #262525);
@@ -663,7 +663,7 @@
   --alert-success-bg-light: var(--box-box-success-secondarybackground, #dff6ce);
   --alert-success-border: var(--border-border-success-primary, #70b450);
   --alert-neutral-bg-default: var(--box-box-normal-background-whiteonly, #ffffff);
-  --alert-neutral-bg-light: var(--box-box-normal-lightbackground-white, #ebeaea);
+  --alert-neutral-bg-light: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --alert-neutral-border: var(--border-border-normal-1, #f0efef);
   --alert-info-icon-fg: var(--text-text-infomation-primary-black, #3489c8);
   --alert-warning-icon-fg: var(--text-text-warning-primary-black, #ab6200);
@@ -695,7 +695,7 @@
   --slider-pad-y: var(--padding-tinyer, 3px);
   /* Default & Big tracks share fill tokens; Big only differs by height/thumb.
    * Track fill ON: border-normal-3; OFF: border-normal-1. No stroke. */
-  --slider-track-bg: var(--border-border-normal-3, #cdcccc);
+  --slider-track-bg: var(--border-border-normal-3, #d6d5d4);
   --slider-range-bg: var(--box-box-theme-primarybackground, #ff5532);
   --slider-thumb-bg: var(--box-box-normal-background-whiteonly, #ffffff);
   --slider-thumb-core: var(--box-box-theme-primarybackground, #ff5532);
@@ -805,7 +805,7 @@
   --pagination-size-select-width: 77px;
 
   /* Card — Figma Structure Navigation → Card (738:145715) */
-  --card-bg: var(--box-box-normal-lightbackground-white, #ebeaea);
+  --card-bg: var(--box-box-normal-lightbackground-white, #f9f8f8);
   --card-radius: var(--border-radius-middle, 10px);
   --card-px: var(--padding-big, 14px);
   --card-gap: var(--gap-content-space, 10px);

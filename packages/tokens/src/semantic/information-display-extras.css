@@ -168,7 +168,7 @@
   width: 100%;
   overflow: hidden;
   border-radius: var(--table-radius, var(--border-radius-middle, 10px));
-  background-color: var(--table-bg, var(--box-box-normal-lightbackground-white, #ebeaea));
+  background-color: var(--table-bg, var(--box-box-normal-lightbackground-white, #f9f8f8));
   border: 1px solid var(--table-border, var(--border-border-normal-1, #f0efef));
 }
 

@@ -16,7 +16,7 @@
   --button-no-bg-active: var(--aviala-interaction-ghost-active, #f0efef);
   --button-no-bg-custom-hover: var(--aviala-interaction-ghost-hover, #f9f8f8);
   --button-no-bg-custom-active: var(--aviala-interaction-ghost-active, #f0efef);
-  --button-outline-border: var(--border-border-normal-3, #cdcccc);
+  --button-outline-border: var(--border-border-normal-3, #d6d5d4);
   --button-outline-fg: var(
     --text-text-theme-primary-black,
     var(--aviala-primary-primary-10, #bf2300)

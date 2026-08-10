@@ -108,7 +108,7 @@
 }
 
 .aviala-badge--style-normal.aviala-badge--secondary {
-  --badge-bg: var(--control-control-normal-lightbackground-2, #ebeaea);
+  --badge-bg: var(--control-control-normal-lightbackground-2, #e5e4e3);
   --badge-fg: var(--text-text-normal-text-black, #262525);
 }
 

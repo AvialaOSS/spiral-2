@@ -213,7 +213,7 @@
   align-self: stretch;
   width: 1px;
   flex-shrink: 0;
-  background: var(--border-border-normal-3, #cdcccc);
+  background: var(--border-border-normal-3, #d6d5d4);
 }
 
 .aviala-anchor-item[data-activated="true"] .aviala-anchor-item__rail {

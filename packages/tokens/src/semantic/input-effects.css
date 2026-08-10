@@ -1185,7 +1185,7 @@
   justify-content: center;
   overflow: hidden;
   border-radius: var(--border-radius-allround, 99px);
-  background-color: var(--control-control-normal-lightbackground-2, #ebeaea);
+  background-color: var(--control-control-normal-lightbackground-2, #e5e4e3);
   color: var(--select-label-fg);
 }
 

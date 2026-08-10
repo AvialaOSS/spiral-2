@@ -383,7 +383,7 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--datepicker-grid-gap, 4px);
   border-radius: var(--border-radius-extra-small-2, 6px);
-  background-color: var(--datepicker-weekday-bg, #ebeaea);
+  background-color: var(--datepicker-weekday-bg, #f9f8f8);
   padding: 0;
 }
 
