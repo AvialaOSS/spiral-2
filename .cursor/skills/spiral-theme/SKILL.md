@@ -25,10 +25,14 @@ Uses `@aviala-design/color` `palette.generate()` with **designer step map** (8/1
 
 ## Static ALD theme
 
+Node-only entry (reads `packages/tokens/source/ald/`):
+
 ```ts
-import { loadAldTheme } from "@aviala-design/tokens";
+import { loadAldTheme } from "@aviala-design/tokens/node";
 const vars = loadAldTheme("light");
 ```
+
+Browser apps use `generateTheme` / `ThemeProvider` / CSS imports (`styles.css`, `ald-theme.css`), not `loadAldTheme`.
 
 ## Forbidden
 

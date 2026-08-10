@@ -32,4 +32,4 @@ Semantic step mapping (designer-defined):
 
 - Never hardcode colors; use CSS variables from `@aviala-design/tokens`
 - Never import `lucide-react`
-- MVP order: **Basic Input** → **System Composition** (Components Figma)
+- New components: follow Components Figma section order — prefer **Basic Input**, then **System Composition**, then later sections

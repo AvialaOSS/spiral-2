@@ -7,7 +7,7 @@ description: How to add or modify Spiral 2 React components aligned with Aviala 
 
 ## Steps
 
-1. Read component spec from Components Figma (`aykyMmGyzVPkAsf8oRBZg0`) — start with **Basic Input**, then **System Composition**
+1. Read component spec from Components Figma (`aykyMmGyzVPkAsf8oRBZg0`) — when prioritizing new work, prefer **Basic Input**, then **System Composition**
 2. Map variants to `@aviala-design/tokens` CSS variables (no magic numbers)
 3. Use `@aviala-design/icons` for icons
 4. Base on Radix primitives where applicable (shadcn pattern)
@@ -17,13 +17,16 @@ description: How to add or modify Spiral 2 React components aligned with Aviala 
 
 ## File layout
 
+Default is **flat** files (not a per-component folder):
+
 ```
-packages/ui/src/components/{name}/
-  {name}.tsx
-  {name}.stories.tsx
+packages/ui/src/components/{name}.tsx
+packages/ui/src/components/{name}.stories.tsx
 
 packages/ui/changelogs/{DisplayName}.md   # e.g. Button.md, DatePickerField.md
 ```
+
+Use a subfolder only for compound components that already do (e.g. `color-picker/`, `date-picker/`, `time-picker/`).
 
 `DisplayName` must match the docs `nav.component` / export name (`Button`, `SegmentatorGroup`, `CascaderField`, …).
 

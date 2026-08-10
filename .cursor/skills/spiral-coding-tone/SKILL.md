@@ -11,7 +11,7 @@ description: >-
 
 ## Code
 
-- Match existing `packages/ui` structure and naming (`{name}/{name}.tsx`, stories beside source).
+- Match existing `packages/ui` structure: flat `components/{name}.tsx` + `{name}.stories.tsx` (subfolders only for compound components like `date-picker/`).
 - Style via `@aviala-design/tokens` CSS variables — no magic hex/rgb.
 - Icons from `@aviala-design/icons` only — no `lucide-react`, no inline SVG.
 - Prefer Radix / shadcn patterns already used in the package.
