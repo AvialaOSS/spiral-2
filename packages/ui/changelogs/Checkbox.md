@@ -1,5 +1,10 @@
 # Checkbox
 
+## 2.7.0
+
+### Fixed
+- 半选（`indeterminate`）时内部标记未居中：勾选 SVG 在 `opacity: 0` 下仍占 flex 布局宽度，现改为半选态隐藏勾选图标并将 indicator 绝对铺满
+
 ## 2.5.0
 
 ### Added
