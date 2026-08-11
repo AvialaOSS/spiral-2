@@ -288,10 +288,14 @@
   --switch-thumb-travel-small: calc(
     var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-small)
   );
-  --switch-transition-duration: 0.3s;
-  --switch-transition-easing: ease-in-out;
-  --switch-press-transition-duration: 0.2s;
-  --switch-thumb-press-scale: 1.28;
+  --switch-transition-duration: 0.26s;
+  --switch-thumb-lead-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --switch-thumb-trail-ease: cubic-bezier(0.35, 0, 0.15, 1);
+  --switch-transition-easing: var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1));
+  --switch-press-transition-duration: 0.12s;
+  --switch-press-transition-easing: cubic-bezier(0.2, 0, 0.2, 1);
+  --switch-track-transition-duration: 0.22s;
+  --switch-thumb-press-scale: 1.2;
   --switch-disabled-opacity: 0.55;
 
   --link-fg-theme: var(--text-text-theme-primary-black, var(--button-no-bg-fg));
@@ -583,7 +587,8 @@
   --navigation-rail-inline-start: 1px;
   --navigation-rail-width: 3px;
   --navigation-indicator-width-horizontal: 50px;
-  --navigation-transition-duration: var(--switch-transition-duration, 0.3s);
+  /* Keep Navigation timing independent of Switch micro-interaction tokens. */
+  --navigation-transition-duration: 0.3s;
   /* Snappy ease-out: most travel happens early, then settles hard. */
   --navigation-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
   --navigation-icon-box: var(--line-height-regular, 1.125rem);

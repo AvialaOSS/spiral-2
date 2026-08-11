@@ -53,9 +53,9 @@ export const AnimationDemo: Story = {
     return (
       <div className="flex max-w-sm flex-col gap-6">
         <p className="text-sm text-muted-foreground">
-          Press and hold the thumb to see the pill stretch (width grows toward the toggle direction;
-          ends stay fully rounded). Release or click to toggle — the thumb slides with a 300ms
-          ease-in-out transition (Figma SMART_ANIMATE spec).
+          Press and hold for a light directional stretch. Toggle to slide — the thumb uses paired
+          inset transitions (260ms) so it elongates slightly mid-travel and can reverse mid-flight
+          if you interrupt.
         </p>
         <div className="flex flex-col gap-3">
           <label className="flex items-center gap-3 text-sm">
