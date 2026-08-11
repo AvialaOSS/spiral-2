@@ -1,5 +1,11 @@
 # @aviala-design/spiral
 
+## 2.7.1
+
+### Patch Changes
+
+- 48eca2e: Backfill Chinese component changelogs for Checkbox, SegmentatorGroup, Progress, and Table 2.7.0 notes.
+
 ## 2.7.0
 
 ### Minor Changes
