@@ -36,6 +36,7 @@ import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizi
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
+import { useResolvedControlError } from "./form-field";
 
 /** Figma Components → Information Collect → Select */
 export type SelectSize = "regular" | "big";
@@ -656,12 +657,13 @@ export const SelectTrigger = forwardRef<
       rightIcon,
       expandIcon,
       placeholder,
-      error = false,
+      error,
       ...props
     },
     ref
   ) => {
     const dismissContext = useContext(SelectDismissContext);
+    const resolvedError = useResolvedControlError(error);
 
     return (
     <SelectPrimitive.Trigger
@@ -678,7 +680,8 @@ export const SelectTrigger = forwardRef<
       className={cn("aviala-select-trigger aviala-focus-ring", className)}
       data-size={size}
       data-all-round={allRound ? "true" : "false"}
-      data-error={error ? "true" : undefined}
+      data-error={resolvedError ? "true" : undefined}
+      aria-invalid={resolvedError || undefined}
       {...spiralDebugId("select.trigger")}
       {...props}
     >

@@ -17,6 +17,7 @@ import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
 import { typographyVariants } from "./typography";
 import type { InputState } from "./input";
+import { useResolvedControlError } from "./form-field";
 
 /** Figma Components → Information Collect → TextareaInput (301:6320) */
 export type TextareaSize = "regular" | "big";
@@ -60,7 +61,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       rightIcon,
       showController: showControllerProp,
       maxLength,
-      error = false,
+      error,
       disabled,
       value,
       defaultValue,
@@ -83,6 +84,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const resolvedValue = value !== undefined ? String(value) : internalValue;
     const displayLength = resolvedValue.length;
     const inputState = resolveTextareaState(resolvedValue, undefined, focused);
+    const resolvedError = useResolvedControlError(error);
 
     const setTextareaRef = useCallback(
       (node: HTMLTextAreaElement | null) => {
@@ -170,7 +172,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         className={cn("aviala-textarea", className)}
         data-size={resolvedSize}
         data-input-state={inputState}
-        data-error={error ? "true" : undefined}
+        data-error={resolvedError ? "true" : undefined}
         data-has-controller={showController ? "true" : undefined}
         data-disabled={disabled ? "true" : undefined}
         data-resizing={resizing ? "true" : undefined}
@@ -187,7 +189,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             maxLength={maxLength}
             value={value}
             defaultValue={defaultValue}
-            aria-invalid={error || undefined}
+            aria-invalid={resolvedError || undefined}
             className={cn("aviala-textarea__input", typographyVariants({ level: "text" }))}
             onChange={(event) => {
               if (value === undefined) {

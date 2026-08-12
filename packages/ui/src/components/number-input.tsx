@@ -24,6 +24,7 @@ import {
   type InputSize,
   type InputState,
 } from "./input";
+import { useResolvedControlError } from "./form-field";
 
 /** Figma Components → Information Collect → NumberInput (197:3237) */
 export type NumberInputStyle = "default" | "monospaced";
@@ -141,7 +142,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       rightBadge,
       showControls = true,
       fullWidth = true,
-      error = false,
+      error,
       disabled,
       value,
       defaultValue,
@@ -170,6 +171,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         : String(value)
       : internalValue;
     const inputState = resolveInputState(resolvedValue, undefined, focused);
+    const resolvedError = useResolvedControlError(error);
     const numeric = parseNumeric(resolvedValue);
     const stepAmount = Number.isFinite(step) && step !== 0 ? Math.abs(step) : 1;
 
@@ -200,7 +202,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         data-all-round={allRound ? "true" : undefined}
         data-input-state={inputState}
         data-input-style={inputStyle}
-        data-error={error ? "true" : undefined}
+        data-error={resolvedError ? "true" : undefined}
         data-disabled={disabled ? "true" : undefined}
         {...spiralDebugId("number-input")}
       >
@@ -223,7 +225,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             step={stepAmount}
             min={min}
             max={max}
-            aria-invalid={error || undefined}
+            aria-invalid={resolvedError || undefined}
             className={cn(
               typographyVariants({ level: "text" }),
               "aviala-number-input__input w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,#343333)] outline-none",

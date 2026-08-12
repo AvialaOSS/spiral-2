@@ -1,7 +1,10 @@
 import { SymbolInformationCircle, SymbolWrongCircle } from "@aviala-design/icons";
 import {
+  createContext,
   forwardRef,
+  useContext,
   useId,
+  useMemo,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
@@ -24,6 +27,22 @@ import { Typography } from "./typography";
 
 /** Figma Components → System Composition → Form (527:57461 / 527:57641) */
 export type FormFieldDirection = "vertical" | "horizontal";
+
+type FormFieldControlContextValue = {
+  /** True when FormField is showing an error tip (layout `error` or RHF message). */
+  invalid: boolean;
+};
+
+const FormFieldControlContext = createContext<FormFieldControlContextValue | null>(null);
+
+/**
+ * Resolve a control `error` prop against the surrounding FormField.
+ * Explicit `error={true|false}` wins; otherwise inherits FormField tip invalidity.
+ */
+export function useResolvedControlError(errorProp?: boolean): boolean {
+  const ctx = useContext(FormFieldControlContext);
+  return errorProp ?? ctx?.invalid ?? false;
+}
 
 /** Layout mode — the original props-driven wrapper */
 export type FormFieldLayoutProps = HTMLAttributes<HTMLDivElement> & {
@@ -59,7 +78,8 @@ export type FormFieldRenderProps<
  * react-hook-form mode — bind the field to a form via `name` (+ optional
  * `control`; falls back to the surrounding `<Form>` context). Validation
  * errors from the resolver (zod etc.) are rendered automatically unless the
- * `error` prop overrides them.
+ * `error` prop overrides them. Nested controls inherit the invalid state via
+ * context unless they set an explicit `error` prop.
  */
 export type FormFieldControlledProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -101,6 +121,8 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
     const reactId = useId();
     const labelId = `${reactId}-label`;
     const hasLabel = label != null && label !== "";
+    const invalid = Boolean(error);
+    const controlContext = useMemo(() => ({ invalid }), [invalid]);
     const labelNode =
       hasLabel || description ? (
         htmlFor ? (
@@ -155,7 +177,9 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
       >
         {labelNode}
         <div className="aviala-form__content">
-          {children}
+          <FormFieldControlContext.Provider value={controlContext}>
+            {children}
+          </FormFieldControlContext.Provider>
           {error ? (
             <div className="aviala-form__message aviala-form__message--error" role="alert">
               <SymbolWrongCircle
@@ -242,8 +266,12 @@ const FormFieldRoot = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) =>
  * FormField — layout wrapper around a form control, or a react-hook-form
  * bound field when given `name` + `render` (shadcn-style).
  *
+ * When an error tip is shown, nested Spiral controls that support `error`
+ * (Input, Textarea, SelectTrigger, …) inherit the invalid state unless they
+ * set an explicit `error` prop.
+ *
  * @example Layout mode
- * <FormField label="Email" htmlFor="email" description="...">
+ * <FormField label="Email" htmlFor="email" error="Required">
  *   <Input id="email" />
  * </FormField>
  *
@@ -254,8 +282,8 @@ const FormFieldRoot = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) =>
  *       control={form.control}
  *       name="email"
  *       label="Email"
- *       render={({ field, fieldState, id }) => (
- *         <Input id={id} error={fieldState.invalid} {...field} />
+ *       render={({ field, id }) => (
+ *         <Input id={id} {...field} />
  *       )}
  *     />
  *   </form>
