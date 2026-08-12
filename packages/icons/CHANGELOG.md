@@ -1,5 +1,11 @@
 # @aviala-design/icons
 
+## 2.3.0
+
+### Minor Changes
+
+- e72725c: Add `EditBold` and `EditUnderline` from the Icons Figma library for text formatting toolbars.
+
 ## 2.2.0
 
 ### Minor Changes

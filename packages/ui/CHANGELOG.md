@@ -1,5 +1,13 @@
 # @aviala-design/spiral
 
+## 2.7.2
+
+### Patch Changes
+
+- e72725c: FormField error tips now sync invalid styling to nested input-series controls via context; explicit `error` on the control still wins.
+- Updated dependencies [e72725c]
+  - @aviala-design/icons@2.3.0
+
 ## 2.7.1
 
 ### Patch Changes
