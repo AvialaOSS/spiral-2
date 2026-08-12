@@ -156,6 +156,7 @@ export {
   type FormFieldControlledProps,
   type FormFieldRenderProps,
   type FormFieldDirection,
+  useResolvedControlError,
 } from "./components/form-field";
 export {
   Typography,

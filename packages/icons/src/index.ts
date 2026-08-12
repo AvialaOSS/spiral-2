@@ -132,6 +132,7 @@ export { DirectionFold, type DirectionFoldProps } from "./components/DirectionFo
 export { DirectionUnfold, type DirectionUnfoldProps } from "./components/DirectionUnfold";
 export { EditAddMore, type EditAddMoreProps } from "./components/EditAddMore";
 export { EditAdjust, type EditAdjustProps } from "./components/EditAdjust";
+export { EditBold, type EditBoldProps } from "./components/EditBold";
 export { EditColorPicker, type EditColorPickerProps } from "./components/EditColorPicker";
 export { EditContrast, type EditContrastProps } from "./components/EditContrast";
 export { EditCopy, type EditCopyProps } from "./components/EditCopy";
@@ -156,6 +157,7 @@ export { EditRedo, type EditRedoProps } from "./components/EditRedo";
 export { EditSave, type EditSaveProps } from "./components/EditSave";
 export { EditScreenshot, type EditScreenshotProps } from "./components/EditScreenshot";
 export { EditSeparatorLine, type EditSeparatorLineProps } from "./components/EditSeparatorLine";
+export { EditUnderline, type EditUnderlineProps } from "./components/EditUnderline";
 export { EditUndo, type EditUndoProps } from "./components/EditUndo";
 export { FilesDocFile, type FilesDocFileProps } from "./components/FilesDocFile";
 export { FilesFolder, type FilesFolderProps } from "./components/FilesFolder";

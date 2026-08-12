@@ -16,6 +16,7 @@ import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useLocaleMessages } from "../../locale";
 import { formatTimeValue } from "../date-picker/date-utils";
 import { typographyVariants } from "../typography";
+import { useResolvedControlError } from "../form-field";
 import {
   TimePickerProvider,
   useTimePickerContext,
@@ -148,7 +149,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
       leftIcon,
       rightIcon,
       placeholder,
-      error = false,
+      error,
       displayValue,
       disabled: disabledProp,
       ...props
@@ -159,6 +160,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
     const { open, disabled: disabledContext, size: sizeContext, value } = useTimePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
+    const resolvedError = useResolvedControlError(error);
     const resolvedPlaceholder = placeholder ?? locale.placeholder;
     const formatted =
       displayValue !== undefined
@@ -175,7 +177,7 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
-          data-error={error ? "true" : undefined}
+          data-error={resolvedError ? "true" : undefined}
           disabled={disabled}
           aria-expanded={open}
           aria-haspopup="dialog"

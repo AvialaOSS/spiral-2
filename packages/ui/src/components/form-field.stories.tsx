@@ -125,8 +125,8 @@ const ProfileFormDemo = () => {
           label="Username"
           description="Your public display name."
           required
-          render={({ field, fieldState, id }) => (
-            <Input id={id} placeholder="aviala" error={fieldState.invalid} {...field} />
+          render={({ field, id }) => (
+            <Input id={id} placeholder="aviala" {...field} />
           )}
         />
         <FormField
@@ -135,8 +135,8 @@ const ProfileFormDemo = () => {
           label="Email"
           description="We never share your email."
           required
-          render={({ field, fieldState, id }) => (
-            <Input id={id} type="email" placeholder="you@example.com" error={fieldState.invalid} {...field} />
+          render={({ field, id }) => (
+            <Input id={id} type="email" placeholder="you@example.com" {...field} />
           )}
         />
         <FormField
@@ -144,8 +144,8 @@ const ProfileFormDemo = () => {
           name="bio"
           label="Bio"
           description="Tell us a little about yourself."
-          render={({ field, fieldState, id }) => (
-            <Textarea id={id} rows={3} error={fieldState.invalid} {...field} />
+          render={({ field, id }) => (
+            <Textarea id={id} rows={3} {...field} />
           )}
         />
         <div className="flex gap-2">

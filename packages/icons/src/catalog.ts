@@ -119,6 +119,7 @@ import { DirectionFold, type DirectionFoldProps } from "./components/DirectionFo
 import { DirectionUnfold, type DirectionUnfoldProps } from "./components/DirectionUnfold";
 import { EditAddMore, type EditAddMoreProps } from "./components/EditAddMore";
 import { EditAdjust, type EditAdjustProps } from "./components/EditAdjust";
+import { EditBold, type EditBoldProps } from "./components/EditBold";
 import { EditColorPicker, type EditColorPickerProps } from "./components/EditColorPicker";
 import { EditContrast, type EditContrastProps } from "./components/EditContrast";
 import { EditCopy, type EditCopyProps } from "./components/EditCopy";
@@ -143,6 +144,7 @@ import { EditRedo, type EditRedoProps } from "./components/EditRedo";
 import { EditSave, type EditSaveProps } from "./components/EditSave";
 import { EditScreenshot, type EditScreenshotProps } from "./components/EditScreenshot";
 import { EditSeparatorLine, type EditSeparatorLineProps } from "./components/EditSeparatorLine";
+import { EditUnderline, type EditUnderlineProps } from "./components/EditUnderline";
 import { EditUndo, type EditUndoProps } from "./components/EditUndo";
 import { FilesDocFile, type FilesDocFileProps } from "./components/FilesDocFile";
 import { FilesFolder, type FilesFolderProps } from "./components/FilesFolder";
@@ -483,6 +485,7 @@ export const iconCatalog = [
   { name: "DirectionUnfold", iconName: "direction_Unfold", file: "direction_Unfold", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "direction", component: DirectionUnfold },
   { name: "EditAddMore", iconName: "edit_addMore", file: "edit_addMore", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditAddMore },
   { name: "EditAdjust", iconName: "edit_adjust", file: "edit_adjust", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditAdjust },
+  { name: "EditBold", iconName: "edit_bold", file: "edit_bold", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "edit", component: EditBold },
   { name: "EditColorPicker", iconName: "edit_colorPicker", file: "edit_colorPicker", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "edit", component: EditColorPicker },
   { name: "EditContrast", iconName: "edit_contrast", file: "edit_contrast", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditContrast },
   { name: "EditCopy", iconName: "edit_copy", file: "edit_copy", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditCopy },
@@ -507,6 +510,7 @@ export const iconCatalog = [
   { name: "EditSave", iconName: "edit_save", file: "edit_save", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditSave },
   { name: "EditScreenshot", iconName: "edit_screenshot", file: "edit_screenshot", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "edit", component: EditScreenshot },
   { name: "EditSeparatorLine", iconName: "edit_separatorLine", file: "edit_separatorLine", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "edit", component: EditSeparatorLine },
+  { name: "EditUnderline", iconName: "edit_underline", file: "edit_underline", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "edit", component: EditUnderline },
   { name: "EditUndo", iconName: "edit_undo", file: "edit_undo", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "edit", component: EditUndo },
   { name: "FilesDocFile", iconName: "files_docFile", file: "files_docFile", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "files", component: FilesDocFile },
   { name: "FilesFolder", iconName: "files_folder", file: "files_folder", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "files", component: FilesFolder },

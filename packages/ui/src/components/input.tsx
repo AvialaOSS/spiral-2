@@ -11,6 +11,7 @@ import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
 import { Badge } from "./badge";
+import { useResolvedControlError } from "./form-field";
 
 /** Figma Components → Information Collect → BaseInput */
 export type InputSize = "regular" | "big";
@@ -77,7 +78,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       leftBadge,
       rightBadge,
       fullWidth = true,
-      error = false,
+      error,
       disabled,
       type = "text",
       value,
@@ -93,6 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [internalValue, setInternalValue] = useState(() => String(defaultValue ?? ""));
     const resolvedValue = value !== undefined ? String(value) : internalValue;
     const inputState = resolveInputState(resolvedValue, undefined, focused);
+    const resolvedError = useResolvedControlError(error);
 
     return (
       <div
@@ -100,7 +102,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         data-size={size}
         data-all-round={allRound ? "true" : undefined}
         data-input-state={inputState}
-        data-error={error ? "true" : undefined}
+        data-error={resolvedError ? "true" : undefined}
         data-disabled={disabled ? "true" : undefined}
         {...spiralDebugId("input")}
       >
@@ -117,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             value={value}
             defaultValue={defaultValue}
-            aria-invalid={error || undefined}
+            aria-invalid={resolvedError || undefined}
             className={cn(
               typographyVariants({ level: "text" }),
               "w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,#343333)] outline-none",

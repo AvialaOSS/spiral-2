@@ -33,6 +33,7 @@ import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
+import { useResolvedControlError } from "./form-field";
 
 /** Figma Components → Information Collect → Cascader Input */
 export type CascaderSize = "regular" | "big";
@@ -468,7 +469,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
       rightIcon,
       expandIcon,
       placeholder,
-      error = false,
+      error,
       displayValue,
       separator = "/",
       disabled: disabledProp,
@@ -482,6 +483,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
       useCascaderContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
+    const resolvedError = useResolvedControlError(error);
 
     const labels = selectedPath
       .map((_, index) => getOptionAtPath(selectedPath.slice(0, index + 1))?.label)
@@ -509,7 +511,7 @@ export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProp
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
-          data-error={error ? "true" : undefined}
+          data-error={resolvedError ? "true" : undefined}
           disabled={disabled}
           aria-expanded={open}
           aria-haspopup="listbox"
