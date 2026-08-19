@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useLocaleMessages } from "../../locale";
 import { formatTimeValue } from "../date-picker/date-utils";
@@ -225,6 +226,7 @@ export const TimePickerContent = forwardRef<
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const content = (
       <PopoverPrimitive.Content
         ref={ref}
@@ -238,7 +240,11 @@ export const TimePickerContent = forwardRef<
     );
 
     if (!portalled) return content;
-    return <PopoverPrimitive.Portal>{content}</PopoverPrimitive.Portal>;
+    return (
+      <PopoverPrimitive.Portal container={overlayContainer}>
+        {content}
+      </PopoverPrimitive.Portal>
+    );
   }
 );
 TimePickerContent.displayName = "TimePickerContent";

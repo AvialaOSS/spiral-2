@@ -825,4 +825,38 @@
   --card-fg: var(--text-text-normal-text-black, #262525);
   --card-divider-height: 14px;
   --card-trailing-gap: 10px;
+
+  /* Video — Figma Information Display → Video (1958:1400) */
+  --video-width: 800px;
+  --video-height: 450px;
+  --video-radius: var(--border-radius-big, 12px);
+  --video-bg: var(--normal-background-theme, var(--box-box-normal-lightbackground-white, #f9f8f8));
+  --video-border: var(--border-border-normal-1, #f9f8f8);
+  --video-bar-height: 46px;
+  --video-bar-padding: var(--padding-default, 8px);
+  --video-bar-gap: var(--gap-component-space, 8px);
+  --video-bar-group-gap: var(--gap-inside, 4px);
+  --video-bar-progress-gap: 10px;
+  --video-bar-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --video-bar-light-inset: var(--padding-big, 14px);
+  --video-bar-light-radius: var(--border-radius-allround, 99px);
+  --video-bar-light-shadow: var(--aviala-shadow-level4-with-line);
+  /* Light floating bar — frosted material over <video> (Figma fill luminosity ≈ glass) */
+  --video-bar-light-blur: 24px;
+  --video-bar-light-bg: color-mix(
+    in srgb,
+    var(--video-bar-bg, var(--control-control-normal-lightbackground-1, #f0efef)) 72%,
+    transparent
+  );
+  --video-settings-width: 200px;
+  --video-settings-gap: var(--gap-component-space, 8px);
+  --video-settings-row-gap: var(--gap-inside-space, 6px);
+  --video-settings-padding: var(--padding-middle, 10px);
+  --video-speed-min-width: 48px;
+  --video-speed-item-width: 160px;
+  --video-volume-slider-size: 96px;
+  /* Letterbox / pillarbox behind media — ALD box-normal-Background-blackOnly */
+  --video-stage-bg: var(--box-box-normal-background-blackonly, #000000);
+  --video-controls-hide-duration: 0.28s;
+  --video-controls-hide-easing: cubic-bezier(0.33, 1, 0.68, 1);
 }

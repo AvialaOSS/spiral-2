@@ -31,6 +31,7 @@ import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
+import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
 import { useResolvedControlError } from "./form-field";
@@ -566,6 +567,7 @@ export const CascaderContent = forwardRef<HTMLDivElement, CascaderContentProps>(
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const content = (
       <PopoverPrimitive.Content
         ref={ref}
@@ -580,7 +582,11 @@ export const CascaderContent = forwardRef<HTMLDivElement, CascaderContentProps>(
     );
 
     if (!portalled) return content;
-    return <PopoverPrimitive.Portal>{content}</PopoverPrimitive.Portal>;
+    return (
+      <PopoverPrimitive.Portal container={overlayContainer}>
+        {content}
+      </PopoverPrimitive.Portal>
+    );
   }
 );
 CascaderContent.displayName = "CascaderContent";

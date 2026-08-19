@@ -14,10 +14,7 @@ import { typographyVariants } from "./typography";
 export type SliderSize = "default" | "big";
 export type SliderType = "default" | "range";
 
-type SliderRootProps = Omit<
-  ComponentPropsWithoutRef<typeof SliderPrimitive.Root>,
-  "orientation"
->;
+type SliderRootProps = ComponentPropsWithoutRef<typeof SliderPrimitive.Root>;
 type SliderPointerHandler = SliderRootProps["onPointerMove"];
 
 const sliderVariants = cva("aviala-slider", {
@@ -41,6 +38,8 @@ export type SliderProps = SliderRootProps &
   VariantProps<typeof sliderVariants> & {
     /** Figma `Type` — single thumb vs range (two thumbs) */
     type?: SliderType;
+    /** Figma volume popover and other vertical tracks — `horizontal` (default) or `vertical`. */
+    orientation?: "horizontal" | "vertical";
     /**
      * When true, hovering a thumb (and while dragging it) shows a value
      * tooltip bound to that thumb.

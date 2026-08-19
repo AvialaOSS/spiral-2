@@ -173,6 +173,7 @@ import { GeneralExpandSidebar, type GeneralExpandSidebarProps } from "./componen
 import { GeneralFastForward15s, type GeneralFastForward15sProps } from "./components/GeneralFastForward15s";
 import { GeneralFilter, type GeneralFilterProps } from "./components/GeneralFilter";
 import { GeneralFilterSlash, type GeneralFilterSlashProps } from "./components/GeneralFilterSlash";
+import { GeneralFullScreen, type GeneralFullScreenProps } from "./components/GeneralFullScreen";
 import { GeneralGrabber, type GeneralGrabberProps } from "./components/GeneralGrabber";
 import { GeneralHeadphoneActiveNoiseCancellation, type GeneralHeadphoneActiveNoiseCancellationProps } from "./components/GeneralHeadphoneActiveNoiseCancellation";
 import { GeneralHeadphoneActiveNoiseCancellationOFF, type GeneralHeadphoneActiveNoiseCancellationOFFProps } from "./components/GeneralHeadphoneActiveNoiseCancellationOFF";
@@ -539,6 +540,7 @@ export const iconCatalog = [
   { name: "GeneralFastForward15s", iconName: "general_fastForward15s", file: "general_fastForward15s", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralFastForward15s },
   { name: "GeneralFilter", iconName: "general_filter", file: "general_filter", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralFilter },
   { name: "GeneralFilterSlash", iconName: "general_filterSlash", file: "general_filterSlash", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralFilterSlash },
+  { name: "GeneralFullScreen", iconName: "general_fullScreen", file: "general_fullScreen", thicknesses: ["Bold","Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralFullScreen },
   { name: "GeneralGrabber", iconName: "general_grabber", file: "general_grabber", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default"] as IconMode[], category: "general", component: GeneralGrabber },
   { name: "GeneralHeadphoneActiveNoiseCancellation", iconName: "general_headphoneActiveNoiseCancellation", file: "general_headphoneActiveNoiseCancellation", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHeadphoneActiveNoiseCancellation },
   { name: "GeneralHeadphoneActiveNoiseCancellationOFF", iconName: "general_headphoneActiveNoiseCancellationOFF", file: "general_headphoneActiveNoiseCancellationOFF", thicknesses: ["Light","Medium","Regular"] as IconThickness[], modes: ["default","fill"] as IconMode[], category: "general", component: GeneralHeadphoneActiveNoiseCancellationOFF },

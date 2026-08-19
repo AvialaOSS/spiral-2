@@ -2,6 +2,7 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
+import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { OverlayPointerSvg, TOOLTIP_POINTER } from "./overlay-pointer";
 
 /** Default show delay — 300ms per ALD / Radix convention. */
@@ -73,8 +74,11 @@ export const TooltipContent = forwardRef<
       ...props
     },
     ref
-  ) => (
-    <TooltipPrimitive.Portal>
+  ) => {
+    const overlayContainer = useOverlayPortalContainer();
+
+    return (
+    <TooltipPrimitive.Portal container={overlayContainer}>
       <TooltipPrimitive.Content
         ref={ref}
         sideOffset={sideOffset}
@@ -106,6 +110,7 @@ export const TooltipContent = forwardRef<
         ) : null}
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
-  )
+    );
+  }
 );
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;

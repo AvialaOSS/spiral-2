@@ -1,5 +1,11 @@
 # Popover
 
+## [Unreleased]
+
+### Fixed
+- 箭头 outline 路径恢复填充（去掉 `fill: none`），与面板底色一致，描边仍保留
+- 浮层 Portal 挂到全屏元素或 Modal 容器，避免全屏 / 对话框内看不见、点不到
+
 ## 2.6.1
 
 ### Changed

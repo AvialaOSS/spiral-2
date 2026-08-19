@@ -19,6 +19,10 @@ import "@aviala-design/tokens/feedback-effects.css";
 import "@aviala-design/tokens/navigation-effects.css";
 import "@aviala-design/tokens/tab-effects.css";
 import "@aviala-design/tokens/structure-navigation-extras.css";
+import "@aviala-design/tokens/information-display-extras.css";
+import "@aviala-design/tokens/information-collect-extras.css";
+import "@aviala-design/tokens/progress-effects.css";
+import "@aviala-design/tokens/video-effects.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

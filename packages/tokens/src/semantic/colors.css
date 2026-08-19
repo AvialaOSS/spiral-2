@@ -17,6 +17,10 @@
   --control-control-normal-lightbackground-2: #e5e4e3;
   --control-control-normal-background-3: #d6d5d4;
   --control-control-normal-background-whiteonly: #ffffff;
+  --box-box-normal-background-whiteonly: #ffffff;
+  --box-box-normal-background-blackonly: #000000;
+  --box-box-normal-lightbackground-white: #f9f8f8;
+  --box-box-normal-lightbackground-black: #262525;
 
   /* Neutral text series (body copy, labels, icons) */
   --text-text-normal-text-black: #262525;

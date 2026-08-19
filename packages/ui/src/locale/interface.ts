@@ -49,6 +49,29 @@ export type LocaleUpload = {
   description: string;
 };
 
+export type LocaleVideo = {
+  play: string;
+  pause: string;
+  previous: string;
+  next: string;
+  speed: string;
+  speedAdjust: string;
+  /** Template: `${rate}` */
+  speedRate: string;
+  mute: string;
+  unmute: string;
+  volume: string;
+  settings: string;
+  fullscreen: string;
+  exitFullscreen: string;
+  settingsTitle: string;
+  aspectRatio: string;
+  aspectOriginal: string;
+  aspectStretch: string;
+  aspectFill: string;
+  volumeBalance: string;
+};
+
 export type LocaleColorPicker = {
   placeholder: string;
   hue: string;
@@ -67,6 +90,7 @@ export type Locale = {
   TimePicker: LocaleTimePicker;
   Pagination: LocalePagination;
   Upload: LocaleUpload;
+  Video: LocaleVideo;
   Modal: { close: string };
   Feedback: { close: string };
   Alert: { close: string };

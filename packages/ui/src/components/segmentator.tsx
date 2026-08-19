@@ -175,18 +175,54 @@ function applyDragPreview(group: HTMLElement, activeItem: HTMLButtonElement | nu
   }
 }
 
+/** Layout offset of `el` relative to `ancestor`'s padding edge (ignores CSS transforms). */
+function offsetRelativeTo(el: HTMLElement, ancestor: HTMLElement): { x: number; y: number } {
+  if (el.offsetParent === ancestor) {
+    return { x: el.offsetLeft, y: el.offsetTop };
+  }
+
+  // A transformed ancestor (Popover enter scale) becomes offsetParent and skips `group`.
+  const shared = el.offsetParent;
+  if (shared && ancestor.offsetParent === shared) {
+    return {
+      x: el.offsetLeft - ancestor.offsetLeft - ancestor.clientLeft,
+      y: el.offsetTop - ancestor.offsetTop - ancestor.clientTop,
+    };
+  }
+
+  let x = 0;
+  let y = 0;
+  let node: HTMLElement | null = el;
+  while (node && node !== ancestor) {
+    x += node.offsetLeft;
+    y += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  if (node === ancestor) {
+    return { x, y };
+  }
+
+  const groupRect = ancestor.getBoundingClientRect();
+  const elRect = el.getBoundingClientRect();
+  const scaleX = ancestor.offsetWidth > 0 ? groupRect.width / ancestor.offsetWidth : 1;
+  const scaleY = ancestor.offsetHeight > 0 ? groupRect.height / ancestor.offsetHeight : 1;
+  return {
+    x: scaleX === 0 ? 0 : (elRect.left - groupRect.left) / scaleX,
+    y: scaleY === 0 ? 0 : (elRect.top - groupRect.top) / scaleY,
+  };
+}
+
 function measureItemThumbMetrics(
   item: HTMLButtonElement,
   group: HTMLElement
 ): SegmentatorThumbMetrics {
-  const groupRect = group.getBoundingClientRect();
-  const itemRect = item.getBoundingClientRect();
-  // Absolute thumb lives in the group's content box — include scroll offsets.
+  const { x, y } = offsetRelativeTo(item, group);
+  // Absolute thumb lives in the group's padding box — include scroll offsets.
   return {
-    x: itemRect.left - groupRect.left + group.scrollLeft,
-    y: itemRect.top - groupRect.top + group.scrollTop,
-    width: itemRect.width,
-    height: itemRect.height,
+    x: x + group.scrollLeft,
+    y: y + group.scrollTop,
+    width: item.offsetWidth,
+    height: item.offsetHeight,
   };
 }
 
@@ -526,6 +562,13 @@ function useSegmentatorThumb(
     };
     group.addEventListener("scroll", onScroll, { passive: true });
 
+    const overlaySurface = group.closest(".aviala-popover-content__surface");
+    const onOverlayAnimationEnd = (event: Event) => {
+      if (event.target !== overlaySurface) return;
+      updateOverflowAndThumb();
+    };
+    overlaySurface?.addEventListener("animationend", onOverlayAnimationEnd);
+
     const layoutObserver = new MutationObserver(() => {
       requestAnimationFrame(updateOverflowAndThumb);
     });
@@ -538,6 +581,7 @@ function useSegmentatorThumb(
       observer.disconnect();
       layoutObserver.disconnect();
       group.removeEventListener("scroll", onScroll);
+      overlaySurface?.removeEventListener("animationend", onOverlayAnimationEnd);
     };
   }, [groupRef, remeasureThumb]);
 

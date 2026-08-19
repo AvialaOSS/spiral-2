@@ -50,6 +50,7 @@
     "./information-display-extras.css": "./dist/information-display-extras.css",
     "./information-collect-extras.css": "./dist/information-collect-extras.css",
     "./structure-navigation-extras.css": "./dist/structure-navigation-extras.css",
+    "./video-effects.css": "./dist/video-effects.css",
     "./node": {
       "types": "./dist/node.d.ts",
       "import": "./dist/node.js"
