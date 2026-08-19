@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+import { forwardRef, useId, type CSSProperties, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 import { useLocaleMessages } from "../locale";
 
@@ -58,7 +58,7 @@ export function loadingLevelForButtonSize(size: LoadingButtonSize): LoadingLevel
   return BUTTON_SIZE_TO_LOADING_LEVEL[size];
 }
 
-/** Conic ring fill — inline so theme tokens apply reliably (CSS vars do not inherit into foreignObject). */
+/** Conic fill — inline so theme tokens still apply inside SVG foreignObject. */
 function loadingRingStyle(mode: LoadingMode): CSSProperties {
   const conic = (fg: string): CSSProperties => ({
     background: `conic-gradient(from 90deg, color-mix(in srgb, ${fg} 0%, transparent) 0deg, ${fg} 360deg)`,
@@ -100,6 +100,7 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
     ref
   ) => {
     const locale = useLocaleMessages("Loading");
+    const ringMaskId = `aviala-loading-ring-${useId().replace(/:/g, "")}`;
     const resolvedLabel = label ?? locale.label;
     const isDecorative = props["aria-hidden"] === true || props["aria-hidden"] === "true";
 
@@ -113,7 +114,20 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
         {...props}
       >
         <span className="aviala-loading__icon" aria-hidden>
-          <span className="aviala-loading__ring" style={loadingRingStyle(mode ?? "theme")} />
+          <svg className="aviala-loading__ring">
+            <defs>
+              <mask id={ringMaskId} maskUnits="userSpaceOnUse">
+                <circle className="aviala-loading__path" cx="50%" cy="50%" fill="none" stroke="#fff" />
+              </mask>
+            </defs>
+            <foreignObject width="100%" height="100%" mask={`url(#${ringMaskId})`}>
+              <div
+                xmlns="http://www.w3.org/1999/xhtml"
+                className="aviala-loading__conic"
+                style={loadingRingStyle(mode ?? "theme")}
+              />
+            </foreignObject>
+          </svg>
         </span>
       </span>
     );
