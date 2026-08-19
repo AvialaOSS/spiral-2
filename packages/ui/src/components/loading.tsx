@@ -121,11 +121,7 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
               </mask>
             </defs>
             <foreignObject width="100%" height="100%" mask={`url(#${ringMaskId})`}>
-              <div
-                xmlns="http://www.w3.org/1999/xhtml"
-                className="aviala-loading__conic"
-                style={loadingRingStyle(mode ?? "theme")}
-              />
+              <div className="aviala-loading__conic" style={loadingRingStyle(mode ?? "theme")} />
             </foreignObject>
           </svg>
         </span>
