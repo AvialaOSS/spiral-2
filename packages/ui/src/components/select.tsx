@@ -587,6 +587,8 @@ function getComponentDisplayName(type: unknown): string | undefined {
   return undefined;
 }
 
+export { getComponentDisplayName };
+
 function isSelectGroupElement(child: ReactNode): boolean {
   if (!isValidElement(child)) return false;
   if (child.type === SelectGroup) return true;

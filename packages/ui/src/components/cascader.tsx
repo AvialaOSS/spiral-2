@@ -1083,4 +1083,4 @@ export function CascaderField({
   );
 }
 
-export { getLabelsForPath, getOptionsAtPath, findOptionPath as getOptionAtPath };
+export { findOptionPath, getLabelsForPath, getOptionsAtPath, isPathOnSelectedPath };

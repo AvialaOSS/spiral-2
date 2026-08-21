@@ -314,4 +314,5 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 );
 NumberInput.displayName = "NumberInput";
 
+export { parseNumeric, clamp, stepValue, decimalPlaces, resolveInputState };
 export { numberInputRootVariants };
