@@ -25,4 +25,6 @@ packages/tokens/src/**/*.js.map
 
 # Local agent workspace memory + sandbox temp dirs (never commit)
 .workbuddy/
+.qoder/better-harness/
 _tmp_*
+
