@@ -5,10 +5,6 @@ import { resolveIconVariant } from "../resolve-variant";
 import type { AvialaIconProps } from "../types";
 import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS } from "../types";
 
-const BoldDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M101 22C101 20.3431 99.6569 19 98 19H22C20.3431 19 19 20.3431 19 22V98C19 99.6569 20.3431 101 22 101H98C99.6569 101 101 99.6569 101 98V22ZM111 98C111 105.18 105.18 111 98 111H22C14.8203 111 9 105.18 9 98V22C9 14.8203 14.8203 9 22 9H98C105.18 9 111 14.8203 111 22V98Z" fill="currentColor" /></svg>;
-
-const BoldFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M98 9C105.18 9 111 14.8203 111 22V98C111 105.18 105.18 111 98 111H22C14.8203 111 9 105.18 9 98V22C9 14.8203 14.8203 9 22 9H98Z" fill="currentColor" /></svg>;
-
 const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M98 11C104.075 11 109 15.9249 109 22V98C109 104.075 104.075 109 98 109H22C15.9249 109 11 104.075 11 98V22C11 15.9249 15.9249 11 22 11H98ZM22 17C19.2386 17 17 19.2386 17 22V98C17 100.761 19.2386 103 22 103H98C100.761 103 103 100.761 103 98V22C103 19.2386 100.761 17 98 17H22Z" fill="currentColor" /></svg>;
 
 const LightFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M98 11C104.075 11 109 15.9249 109 22V98C109 104.075 104.075 109 98 109H22C15.9249 109 11 104.075 11 98V22C11 15.9249 15.9249 11 22 11H98Z" fill="currentColor" /></svg>;
@@ -22,10 +18,6 @@ const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120
 const RegularFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M98 10C104.627 10 110 15.3726 110 22V98C110 104.627 104.627 110 98 110H22C15.3726 110 10 104.627 10 98V22C10 15.3726 15.3726 10 22 10H98Z" fill="currentColor" /></svg>;
 
 const variants = {
-  Bold: {
-    default: BoldDefault,
-    fill: BoldFill,
-  },
   Light: {
     default: LightDefault,
     fill: LightFill,
