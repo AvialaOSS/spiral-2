@@ -258,6 +258,7 @@ const components = [
   { key: "Scroll", file: "components/scroll.tsx", exportName: "Scroll" },
   { key: "Slider", file: "components/slider.tsx", exportName: "Slider" },
   { key: "Upload", file: "components/upload.tsx", exportName: "Upload" },
+  { key: "Video", file: "components/video/video.tsx", exportName: "Video" },
   {
     key: "ScrollPicker",
     file: "components/scroll-picker.tsx",

@@ -6,6 +6,7 @@ export type {
   LocalePagination,
   LocaleTimePicker,
   LocaleUpload,
+  LocaleVideo,
 } from "./interface";
 export { interpolate } from "./interpolate";
 export { LocaleProvider, type LocaleProviderProps } from "./locale-provider";

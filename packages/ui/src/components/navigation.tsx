@@ -21,6 +21,7 @@ import {
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 
 import { cn } from "../lib/utils";
+import { useOverlayPortalContainer } from "../overlay/overlay-container";
 
 import { useThemeLayoutKey } from "../theme/theme-provider";
 
@@ -1358,12 +1359,13 @@ export const NavigationItemMenuContent = forwardRef<
 
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const direction = useNavigationDirection();
     const writingDirection = useDirection();
     const menu = useNavigationItemMenuContext("NavigationItemMenuContent");
 
     return (
-      <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Portal container={overlayContainer}>
         <PopoverPrimitive.Content
           ref={ref}
           side={

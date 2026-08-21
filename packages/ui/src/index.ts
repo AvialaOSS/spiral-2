@@ -29,6 +29,11 @@ export {
   type Direction,
   type PhysicalSide,
 } from "./config";
+export {
+  OverlayContainerProvider,
+  useOverlayPortalContainer,
+  type OverlayContainerProviderProps,
+} from "./overlay/overlay-container";
 
 export { Button, buttonVariants, type ButtonProps, type ButtonMode, type ButtonSize } from "./components/button";
 export { Input, inputRootVariants, type InputProps, type InputSize } from "./components/input";
@@ -397,6 +402,17 @@ export {
 } from "./components/tab";
 export { Slider, type SliderProps, type SliderSize, type SliderType } from "./components/slider";
 export { Upload, type UploadProps, type UploadStyle } from "./components/upload";
+export {
+  Video,
+  formatVideoTime,
+  parseVideoTime,
+  videoObjectFitToCss,
+  DEFAULT_PLAYBACK_RATES,
+  type VideoProps,
+  type VideoHandle,
+  type VideoAppearance,
+  type VideoObjectFit,
+} from "./components/video";
 export {
   ScrollPicker,
   ScrollPickerColumn,

@@ -186,6 +186,7 @@ export { GeneralExpandSidebar, type GeneralExpandSidebarProps } from "./componen
 export { GeneralFastForward15s, type GeneralFastForward15sProps } from "./components/GeneralFastForward15s";
 export { GeneralFilter, type GeneralFilterProps } from "./components/GeneralFilter";
 export { GeneralFilterSlash, type GeneralFilterSlashProps } from "./components/GeneralFilterSlash";
+export { GeneralFullScreen, type GeneralFullScreenProps } from "./components/GeneralFullScreen";
 export { GeneralGrabber, type GeneralGrabberProps } from "./components/GeneralGrabber";
 export { GeneralHeadphoneActiveNoiseCancellation, type GeneralHeadphoneActiveNoiseCancellationProps } from "./components/GeneralHeadphoneActiveNoiseCancellation";
 export { GeneralHeadphoneActiveNoiseCancellationOFF, type GeneralHeadphoneActiveNoiseCancellationOFFProps } from "./components/GeneralHeadphoneActiveNoiseCancellationOFF";

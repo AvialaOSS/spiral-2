@@ -20,6 +20,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useRtl } from "../../config";
 import { useLocale, useLocaleMessages } from "../../locale";
@@ -792,6 +793,7 @@ export const DatePickerContent = forwardRef<
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const content = (
       <PopoverPrimitive.Content
         ref={ref}
@@ -805,7 +807,11 @@ export const DatePickerContent = forwardRef<
     );
 
     if (!portalled) return content;
-    return <PopoverPrimitive.Portal>{content}</PopoverPrimitive.Portal>;
+    return (
+      <PopoverPrimitive.Portal container={overlayContainer}>
+        {content}
+      </PopoverPrimitive.Portal>
+    );
   }
 );
 DatePickerContent.displayName = "DatePickerContent";

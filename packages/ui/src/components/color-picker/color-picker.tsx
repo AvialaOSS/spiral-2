@@ -7,6 +7,7 @@ import {
 } from "react";
 import { spiralDebugId } from "../../lib/spiral-debug";
 import { cn } from "../../lib/utils";
+import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { useLocaleMessages } from "../../locale";
 import { ColorPickerArea } from "./color-picker-area";
 import { ColorPickerContext, useColorPickerContext } from "./color-picker-context";
@@ -169,10 +170,11 @@ export const ColorPickerContent = forwardRef<HTMLDivElement, ColorPickerContentP
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const { presets, onPresetsChange, maxPresets, disabled } = useColorPickerContext();
 
     return (
-      <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Portal container={overlayContainer}>
         <PopoverPrimitive.Content
           ref={ref}
           align={align}

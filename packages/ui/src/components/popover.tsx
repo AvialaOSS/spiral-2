@@ -7,6 +7,7 @@ import {
 } from "react";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
+import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { OverlayPointerSvg, POPOVER_POINTER, TOOLTIP_POINTER } from "./overlay-pointer";
 
 export type PopoverProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>;
@@ -94,6 +95,7 @@ export const PopoverContent = forwardRef<
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const isDefaultAppearance = appearance === "default";
     const surfaceLevel =
       level ?? (appearance === "tooltip" ? "caption" : "text");
@@ -138,7 +140,11 @@ export const PopoverContent = forwardRef<
 
     if (!portalled) return content;
 
-    return <PopoverPrimitive.Portal>{content}</PopoverPrimitive.Portal>;
+    return (
+      <PopoverPrimitive.Portal container={overlayContainer}>
+        {content}
+      </PopoverPrimitive.Portal>
+    );
   }
 );
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;

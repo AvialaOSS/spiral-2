@@ -9,6 +9,7 @@ const meta: Meta<typeof Slider> = {
     argTypes: {
     size: { control: "select", options: ["default", "big"] },
     type: { control: "select", options: ["default", "range"] },
+    orientation: { control: "select", options: ["horizontal", "vertical"] },
     disabled: { control: "boolean" },
     showValueTooltip: { control: "boolean" },
   },
@@ -27,6 +28,15 @@ export const Big: Story = {
 
 export const Range: Story = {
   args: { size: "default", type: "range", defaultValue: [20, 70] },
+};
+
+export const Vertical: Story = {
+  args: {
+    size: "default",
+    orientation: "vertical",
+    defaultValue: [70],
+    style: { height: 96 },
+  },
 };
 
 export const SizeMatrix: Story = {

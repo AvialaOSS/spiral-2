@@ -68,7 +68,7 @@
 }
 
 .aviala-popover-content__arrow-outline {
-  fill: none;
+  /* fill: none; — keep fill so the caret body matches the panel (outline stroke still draws) */
   stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-1, #f0efef));
   stroke-width: 1;
   stroke-linejoin: round;

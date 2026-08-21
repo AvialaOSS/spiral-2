@@ -35,6 +35,7 @@ import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
+import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useResolvedControlError } from "./form-field";
 
@@ -742,6 +743,7 @@ export const SelectContent = forwardRef<
     },
     ref
   ) => {
+    const overlayContainer = useOverlayPortalContainer();
     const subMenuLayer = useSelectSubMenuLayer();
     const dismissContext = useContext(SelectDismissContext);
 
@@ -785,7 +787,11 @@ export const SelectContent = forwardRef<
 
     if (!portalled) return content;
 
-    return <SelectPrimitive.Portal>{content}</SelectPrimitive.Portal>;
+    return (
+      <SelectPrimitive.Portal container={overlayContainer}>
+        {content}
+      </SelectPrimitive.Portal>
+    );
   }
 );
 SelectContent.displayName = SelectPrimitive.Content.displayName;
@@ -1001,6 +1007,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
       isSubItemOpen,
       isSubItemExiting,
     } = useSelectSubMenuContext();
+    const overlayContainer = useOverlayPortalContainer();
     const { itemChildren, subMenu } = parseSelectSubItemChildren(children);
 
     if (!subMenu) {
@@ -1179,7 +1186,13 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
           onPointerLeave={handlePointerLeave}
         >
           <PopoverPrimitive.Anchor asChild>{itemRow}</PopoverPrimitive.Anchor>
-          {portalled ? <PopoverPrimitive.Portal>{flyout}</PopoverPrimitive.Portal> : flyout}
+          {portalled ? (
+            <PopoverPrimitive.Portal container={overlayContainer}>
+              {flyout}
+            </PopoverPrimitive.Portal>
+          ) : (
+            flyout
+          )}
         </div>
       </PopoverPrimitive.Root>
     );

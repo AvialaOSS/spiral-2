@@ -1,5 +1,10 @@
 # Slider
 
+## [Unreleased]
+
+### Added
+- `orientation`：`horizontal`（默认）/ `vertical`，竖向轨道用于 Video 音量弹出层等场景
+
 ## 2.6.1
 
 ### Changed

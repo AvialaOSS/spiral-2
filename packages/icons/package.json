@@ -25,7 +25,7 @@
     "raw"
   ],
   "scripts": {
-    "build": "node scripts/build-icons.mjs && tsup",
+    "build": "node scripts/build-icons.mjs --merge && tsup",
     "build:icons": "node scripts/build-icons.mjs",
     "build:release": "tsup",
     "dev": "tsup --watch",

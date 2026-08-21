@@ -5,12 +5,15 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  useState,
   type ComponentPropsWithoutRef,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  type Ref,
 } from "react";
 import { cn } from "../lib/utils";
+import { OverlayContainerProvider } from "../overlay/overlay-container";
 import { useLocaleMessages } from "../locale";
 import { Button } from "./button";
 import { Typeface } from "./typeface";
@@ -32,6 +35,15 @@ const modalContentVariants = cva("aviala-modal-content", {
     size: "default",
   },
 });
+
+function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
+  if (!ref) return;
+  if (typeof ref === "function") {
+    ref(value);
+    return;
+  }
+  (ref as { current: T | null }).current = value;
+}
 
 function renderModalIcon(node: ReactNode): ReactNode {
   if (!node) return null;
@@ -102,17 +114,24 @@ export const ModalContent = forwardRef<
     },
     ref
   ) => {
+    const [overlayContainer, setOverlayContainer] =
+      useState<HTMLElement | null>(null);
     // Overlay + Content must be direct Portal children (not a Fragment) so Radix
     // Presence can keep each mounted through the exit `data-state="closed"` animation.
     const overlay = showOverlay ? <ModalOverlay /> : null;
     const panel = (
       <DialogPrimitive.Content
-        ref={ref}
+        ref={(node) => {
+          assignRef(ref, node);
+          setOverlayContainer(node);
+        }}
         className={cn(modalContentVariants({ size }), className)}
         onOpenAutoFocus={onOpenAutoFocus}
         {...props}
       >
-        <div className="aviala-modal-content__surface">{children}</div>
+        <OverlayContainerProvider container={overlayContainer}>
+          <div className="aviala-modal-content__surface">{children}</div>
+        </OverlayContainerProvider>
       </DialogPrimitive.Content>
     );
 
