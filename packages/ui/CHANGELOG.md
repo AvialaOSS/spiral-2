@@ -1,5 +1,23 @@
 # @aviala-design/spiral
 
+## 2.8.0
+
+### Minor Changes
+
+- ca0e535: Add `Video` player with Default/Light bars. Speed uses a Select-style popover; volume uses a vertical Slider popover. Control bars can auto-hide via `autoHideControls`. Transport controls use animated SVGs with `currentColor`.
+
+### Patch Changes
+
+- 63b8a8b: Render the Loading spinner as an SVG 2px stroke (Figma r15−r13) so the inner edge stays hard.
+- ca0e535: Portal Select, Cascader, DatePicker, TimePicker, ColorPicker, Navigation, Popover, and Tooltip into the fullscreen element or Modal content so overlays stay visible and interactive.
+- ca0e535: Fix Video Light bar centering/frosted material, restore Popover arrow outline fill, and keep Segmentator thumb aligned inside scaled overlays.
+- Updated dependencies [ca0e535]
+- Updated dependencies [63b8a8b]
+- Updated dependencies [ca0e535]
+- Updated dependencies [ca0e535]
+  - @aviala-design/icons@2.4.0
+  - @aviala-design/tokens@2.5.3
+
 ## 2.7.2
 
 ### Patch Changes

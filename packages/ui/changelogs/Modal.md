@@ -1,6 +1,6 @@
 # Modal
 
-## [Unreleased]
+## 2.8.0
 
 ### Fixed
 - Modal 内的 Popover / Select / Tooltip 等浮层改为挂到对话框内容节点，避免被遮罩挡住或因 `body` 的 `pointer-events` 无法交互

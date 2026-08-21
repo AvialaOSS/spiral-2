@@ -1,6 +1,6 @@
 # SegmentatorGroup
 
-## [Unreleased]
+## 2.8.0
 
 ### Fixed
 - 指示器改用布局 offset 测量，避免 Popover 入场 `scale` 让 `getBoundingClientRect` 叠乘导致拇指偏移（点选后才复位）

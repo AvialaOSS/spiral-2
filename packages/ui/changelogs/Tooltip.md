@@ -1,6 +1,6 @@
 # Tooltip
 
-## [Unreleased]
+## 2.8.0
 
 ### Fixed
 - Portal 挂到全屏元素或 Modal 容器，避免被对话框遮罩挡住
