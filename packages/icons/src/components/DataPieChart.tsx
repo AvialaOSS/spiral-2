@@ -5,10 +5,6 @@ import { resolveIconVariant } from "../resolve-variant";
 import type { AvialaIconProps } from "../types";
 import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS } from "../types";
 
-const BoldDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M60 4C90.9279 4 116 29.0721 116 60C116 90.9279 90.9279 116 60 116C29.0721 116 4 90.9279 4 60C4 29.0721 29.0721 4 60 4ZM14 60C14 85.4051 34.5949 106 60 106C83.7155 106 103.237 88.0531 105.729 65H68C60.8203 65 55 59.1797 55 52V14.2705C31.9469 16.7625 14 36.2845 14 60ZM65 52C65 53.6569 66.3431 55 68 55H105.729C103.414 33.5893 86.4107 16.5849 65 14.2705V52Z" fill="currentColor" /></svg>;
-
-const BoldFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M55 52C55 59.1797 60.8203 65 68 65H115.78C113.251 93.5856 89.2429 116 60 116C29.0721 116 4 90.9279 4 60C4 30.7571 26.4144 6.74898 55 4.21973V52Z" fill="currentColor" /><path d="M65 4.21973C91.9384 6.60324 113.397 28.0616 115.78 55H68C66.3431 55 65 53.6569 65 52V4.21973Z" fill="currentColor" /></svg>;
-
 const LightDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M60 5C90.3757 5 115 29.6243 115 60C115 90.3757 90.3757 115 60 115C29.6243 115 5 90.3757 5 60C5 29.6243 29.6243 5 60 5ZM11 60C11 87.062 32.938 109 60 109C86.0546 109 107.359 88.6648 108.909 63H68C61.9249 63 57 58.0751 57 52V11.0908C31.3352 12.6409 11 33.9454 11 60ZM63 52C63 54.7614 65.2386 57 68 57H108.909C107.419 32.3275 87.6725 12.581 63 11.0908V52Z" fill="currentColor" /></svg>;
 
 const LightFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M63 5.08008C90.9873 6.5845 113.415 29.0127 114.919 57H68C65.2386 57 63 54.7614 63 52V5.08008Z" fill="currentColor" /><path d="M57 52C57 58.0751 61.9249 63 68 63H114.919C113.361 91.9805 89.3691 115 60 115C29.6243 115 5 90.3757 5 60C5 30.6309 28.0194 6.63789 57 5.08008V52Z" fill="currentColor" /></svg>;
@@ -22,10 +18,6 @@ const RegularDefault = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120
 const RegularFill = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M64 5.14355C91.1873 7.0976 112.902 28.8127 114.856 56H68C65.7909 56 64 54.2091 64 52V5.14355Z" fill="currentColor" /><path d="M56 52C56 58.6274 61.3726 64 68 64H114.856C112.807 92.5083 89.0305 115 60 115C29.6243 115 5 90.3757 5 60C5 30.9695 27.4917 7.19255 56 5.14355V52Z" fill="currentColor" /></svg>;
 
 const variants = {
-  Bold: {
-    default: BoldDefault,
-    fill: BoldFill,
-  },
   Light: {
     default: LightDefault,
     fill: LightFill,

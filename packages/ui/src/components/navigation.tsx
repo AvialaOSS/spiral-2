@@ -33,7 +33,7 @@ import { Popover } from "./popover";
 
 import { Typography } from "./typography";
 
-function navigationItemButtonMode(active: boolean): ButtonMode {
+export function navigationItemButtonMode(active: boolean): ButtonMode {
   return active ? "second" : "noBackgroundCustom";
 }
 
@@ -52,7 +52,7 @@ function useNavigationDirection() {
   return useContext(NavigationDirectionContext);
 }
 
-type IndicatorMetrics = {
+export type IndicatorMetrics = {
   x: number;
 
   y: number;
@@ -68,7 +68,7 @@ const NAVIGATION_ANIMATION_MS_FALLBACK = 300;
 
 const NAVIGATION_ANIMATION_EASING_FALLBACK = "cubic-bezier(0.16, 1, 0.3, 1)";
 
-function parseDurationMs(value: string): number {
+export function parseDurationMs(value: string): number {
   const trimmed = value.trim();
 
   if (!trimmed) return NAVIGATION_ANIMATION_MS_FALLBACK;
@@ -256,11 +256,11 @@ function measureIndicatorFromElement(
 }
 
 /** Matches the `--navigation-transition-easing` fallback cubic-bezier(0.16, 1, 0.3, 1). */
-function easeOutQuint(t: number) {
+export function easeOutQuint(t: number) {
   return 1 - Math.pow(1 - t, 5);
 }
 
-function metricsApproxEqual(
+export function metricsApproxEqual(
   a: IndicatorMetrics,
   b: IndicatorMetrics,
   epsilon = 0.5

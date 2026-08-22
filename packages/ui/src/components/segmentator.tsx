@@ -81,7 +81,7 @@ function useSegmentatorState(
   return [current, setValue] as const;
 }
 
-type SegmentatorThumbMetrics = {
+export type SegmentatorThumbMetrics = {
   x: number;
   y: number;
   width: number;
@@ -147,7 +147,7 @@ function buildThumbStyle(): CSSProperties {
   };
 }
 
-function isSegmentatorDragPointer(pointerType: string): boolean {
+export function isSegmentatorDragPointer(pointerType: string): boolean {
   if (pointerType === "touch" || pointerType === "pen") return true;
   if (typeof window === "undefined") return false;
   return window.matchMedia("(hover: none), (pointer: coarse)").matches;
@@ -394,7 +394,7 @@ function applyThumbMetricsLive(el: HTMLSpanElement, metrics: SegmentatorThumbMet
   el.style.setProperty("--segmentator-thumb-y", `${metrics.y}px`);
 }
 
-function metricsApproxEqual(
+export function metricsApproxEqual(
   a: SegmentatorThumbMetrics,
   b: SegmentatorThumbMetrics,
   epsilon = 0.5
