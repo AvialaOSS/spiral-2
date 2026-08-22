@@ -28,22 +28,36 @@
   --switch-thumb-travel-small: calc(
     var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-small)
   );
-  /* Figma Switch prototype: SMART_ANIMATE, EASE_IN_AND_OUT, 300ms (node 141:252) */
-  --switch-transition-duration: 0.3s;
-  --switch-transition-easing: ease-in-out;
-  --switch-press-transition-duration: 0.2s;
-  --switch-thumb-press-scale: 1.28;
+  /*
+   * Fluid thumb: animate inset-inline-start/end with asymmetric easing so the
+   * leading edge leads mid-travel (stretch). Transitions stay interruptible.
+   */
+  --switch-transition-duration: 0.26s;
+  /* Front-loaded lead + lightly delayed trail — crisp without a mushy mid-hold. */
+  --switch-thumb-lead-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --switch-thumb-trail-ease: cubic-bezier(0.35, 0, 0.15, 1);
+  --switch-transition-easing: var(--switch-thumb-lead-ease);
+  --switch-press-transition-duration: 0.12s;
+  --switch-press-transition-easing: cubic-bezier(0.2, 0, 0.2, 1);
+  /* Track fill softens slower than the thumb press so press feedback is not flashy. */
+  --switch-track-transition-duration: 0.22s;
+  --switch-thumb-press-scale: 1.2;
+  --switch-thumb-size: var(--switch-thumb-size-regular);
+  --switch-thumb-press-width: calc(
+    var(--switch-thumb-size) * var(--switch-thumb-press-scale, 1.2)
+  );
+  /* Legacy aliases kept for consumers that still reference size-specific vars. */
   --switch-thumb-press-width-regular: calc(
-    var(--switch-thumb-size-regular) * var(--switch-thumb-press-scale, 1.28)
+    var(--switch-thumb-size-regular) * var(--switch-thumb-press-scale, 1.2)
   );
   --switch-thumb-press-width-small: calc(
-    var(--switch-thumb-size-small) * var(--switch-thumb-press-scale, 1.28)
+    var(--switch-thumb-size-small) * var(--switch-thumb-press-scale, 1.2)
   );
   --switch-thumb-press-expand-regular: calc(
-    var(--switch-thumb-size-regular) * (var(--switch-thumb-press-scale, 1.28) - 1)
+    var(--switch-thumb-size-regular) * (var(--switch-thumb-press-scale, 1.2) - 1)
   );
   --switch-thumb-press-expand-small: calc(
-    var(--switch-thumb-size-small) * (var(--switch-thumb-press-scale, 1.28) - 1)
+    var(--switch-thumb-size-small) * (var(--switch-thumb-press-scale, 1.2) - 1)
   );
   /* Segmentator thumb slide: longer settle with soft ease-out overshoot */
   --segmentator-transition-duration: 0.52s;
@@ -74,6 +88,12 @@
       var(--switch-checked-bg-active, #ff7b5b) 0%,
       var(--switch-checked-bg-active, #ff7b5b) 100%
     );
+  /* Gloss only — solid fill uses background-color so hover/press can ease. */
+  --switch-checked-gloss: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
+    transparent 36%
+  );
 
   --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
   --segmentator-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
@@ -261,7 +281,8 @@
   border-radius: var(--border-radius-allround, 99px);
   padding: var(--padding-min, 2px);
   background-color: var(--switch-track-bg);
-  transition: background-color 0.15s ease;
+  transition: background-color var(--switch-track-transition-duration, 0.22s)
+    var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
 .aviala-switch:disabled {
@@ -279,8 +300,13 @@
   inset: 0;
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 0.15s ease;
-  background-image: var(--switch-checked-surface);
+  background-color: var(--switch-checked-bg);
+  background-image: var(--switch-checked-gloss);
+  transition:
+    opacity var(--switch-transition-duration, 0.26s)
+      var(--switch-transition-easing, cubic-bezier(0.16, 1, 0.3, 1)),
+    background-color var(--switch-track-transition-duration, 0.22s)
+      var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
 .aviala-switch[data-state="checked"] .aviala-switch__surface {
@@ -288,87 +314,70 @@
 }
 
 .aviala-switch__thumb {
-  position: relative;
+  position: absolute;
   z-index: 1;
-  display: block;
   box-sizing: border-box;
-  flex-shrink: 0;
-  width: var(--switch-thumb-size-regular);
-  height: var(--switch-thumb-size-regular);
+  top: var(--switch-padding, 2px);
+  bottom: var(--switch-padding, 2px);
+  /* Resting width = thumb size via start/end insets (fluid stretch mid-travel). */
+  inset-inline-start: var(--switch-padding, 2px);
+  inset-inline-end: calc(
+    100% - var(--switch-padding, 2px) - var(--switch-thumb-size, var(--switch-thumb-size-regular))
+  );
+  width: auto;
+  height: auto;
   border-radius: var(--border-radius-allround, 99px);
   background-color: var(--switch-thumb-bg);
   box-shadow: var(--switch-thumb-shadow);
-  transform: translateX(0);
-  transition:
-    transform var(--switch-transition-duration, 0.3s)
-      var(--switch-transition-easing, ease-in-out),
-    width var(--switch-transition-duration, 0.3s)
-      var(--switch-transition-easing, ease-in-out);
+  transition-property: inset-inline-start, inset-inline-end;
+  transition-duration: var(--switch-transition-duration, 0.26s),
+    var(--switch-transition-duration, 0.26s);
+  /* Turning off: inline-start leads, inline-end trails. */
+  transition-timing-function: var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+    var(--switch-thumb-trail-ease, cubic-bezier(0.35, 0, 0.15, 1));
 }
 
 .aviala-switch[data-state="checked"] .aviala-switch__thumb {
-  transform: translateX(var(--switch-thumb-travel-regular));
+  inset-inline-start: calc(
+    100% - var(--switch-padding, 2px) - var(--switch-thumb-size, var(--switch-thumb-size-regular))
+  );
+  inset-inline-end: var(--switch-padding, 2px);
+  /* Turning on: inline-end leads, inline-start trails → mid-travel pill stretch. */
+  transition-timing-function: var(--switch-thumb-trail-ease, cubic-bezier(0.35, 0, 0.15, 1)),
+    var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-[dir="rtl"] .aviala-switch[data-state="checked"] .aviala-switch__thumb {
-  transform: translateX(calc(-1 * var(--switch-thumb-travel-regular)));
-}
-
+/* Press: grow toward the toggle direction (trailing edge stays put). */
 .aviala-switch[data-state="unchecked"]:active:not(:disabled) .aviala-switch__thumb {
-  width: var(--switch-thumb-press-width-regular);
-  transform: translateX(0);
-  transition-duration: var(--switch-press-transition-duration, 0.2s);
+  inset-inline-end: calc(
+    100% - var(--switch-padding, 2px) - var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
+  );
+  transition-duration: var(--switch-press-transition-duration, 0.12s),
+    var(--switch-press-transition-duration, 0.12s);
+  transition-timing-function: var(
+      --switch-press-transition-easing,
+      cubic-bezier(0.2, 0, 0.2, 1)
+    ),
+    var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
 .aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__thumb {
-  width: var(--switch-thumb-press-width-regular);
-  transform: translateX(
-    calc(var(--switch-thumb-travel-regular) - var(--switch-thumb-press-expand-regular))
+  inset-inline-start: calc(
+    100% - var(--switch-padding, 2px) - var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
   );
-  transition-duration: var(--switch-press-transition-duration, 0.2s);
-}
-
-[dir="rtl"] .aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__thumb {
-  transform: translateX(
-    calc(-1 * (var(--switch-thumb-travel-regular) - var(--switch-thumb-press-expand-regular)))
-  );
+  transition-duration: var(--switch-press-transition-duration, 0.12s),
+    var(--switch-press-transition-duration, 0.12s);
+  transition-timing-function: var(
+      --switch-press-transition-easing,
+      cubic-bezier(0.2, 0, 0.2, 1)
+    ),
+    var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
 .aviala-switch--small {
   height: var(--switch-height-small);
-}
-
-.aviala-switch--small .aviala-switch__thumb {
-  width: var(--switch-thumb-size-small);
-  height: var(--switch-thumb-size-small);
-}
-
-.aviala-switch--small[data-state="checked"] .aviala-switch__thumb {
-  transform: translateX(var(--switch-thumb-travel-small));
-}
-
-[dir="rtl"] .aviala-switch--small[data-state="checked"] .aviala-switch__thumb {
-  transform: translateX(calc(-1 * var(--switch-thumb-travel-small)));
-}
-
-.aviala-switch--small[data-state="unchecked"]:active:not(:disabled) .aviala-switch__thumb {
-  width: var(--switch-thumb-press-width-small);
-  transform: translateX(0);
-  transition-duration: var(--switch-press-transition-duration, 0.2s);
-}
-
-.aviala-switch--small[data-state="checked"]:active:not(:disabled) .aviala-switch__thumb {
-  width: var(--switch-thumb-press-width-small);
-  transform: translateX(
-    calc(var(--switch-thumb-travel-small) - var(--switch-thumb-press-expand-small))
-  );
-  transition-duration: var(--switch-press-transition-duration, 0.2s);
-}
-
-[dir="rtl"] .aviala-switch--small[data-state="checked"]:active:not(:disabled) .aviala-switch__thumb {
-  transform: translateX(
-    calc(-1 * (var(--switch-thumb-travel-small) - var(--switch-thumb-press-expand-small)))
-  );
+  --switch-thumb-size: var(--switch-thumb-size-small);
+  --switch-thumb-press-width: var(--switch-thumb-press-width-small);
 }
 
 /* hover / press — Figma matrix fill swaps (unchecked deepen; checked primary steps) */
@@ -377,7 +386,7 @@
     background-color: var(--switch-hover-bg);
   }
   .aviala-switch[data-state="checked"]:hover:not(:disabled) .aviala-switch__surface {
-    background-image: var(--switch-checked-surface-hover);
+    background-color: var(--switch-checked-bg-hover);
   }
 }
 
@@ -385,7 +394,7 @@
   background-color: var(--switch-press-bg);
 }
 .aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__surface {
-  background-image: var(--switch-checked-surface-active);
+  background-color: var(--switch-checked-bg-active);
 }
 
 /* ---- Segmentator ---- */
