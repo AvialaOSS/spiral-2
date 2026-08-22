@@ -1,5 +1,11 @@
 # @aviala-design/icons
 
+## 2.4.0
+
+### Minor Changes
+
+- ca0e535: Add `GeneralFullScreen` from the Icons Figma library for video and media expand controls.
+
 ## 2.3.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 # Popover
 
-## [Unreleased]
+## 2.8.0
 
 ### Fixed
 - 箭头 outline 路径恢复填充（去掉 `fill: none`），与面板底色一致，描边仍保留

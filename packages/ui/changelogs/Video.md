@@ -1,6 +1,6 @@
 # Video
 
-## [Unreleased]
+## 2.8.0
 
 ### Added
 - 新增 `Video` 视频播放器，对齐 Figma Information Display → Video（`Style=default` / `light`）
