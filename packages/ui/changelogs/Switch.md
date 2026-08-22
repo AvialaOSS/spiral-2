@@ -1,6 +1,6 @@
 # Switch
 
-## [Unreleased]
+## 2.8.1
 
 ### Changed
 - 拇指改为可打断的流体滑动（`inset-inline` 配对过渡，约 260ms），移动中轻微拉长，连点可从当前进度反转

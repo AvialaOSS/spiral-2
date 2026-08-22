@@ -1,5 +1,13 @@
 # @aviala-design/spiral
 
+## 2.8.1
+
+### Patch Changes
+
+- de1fac4: Polish Switch thumb motion with an interruptible fluid inset slide and smoother checked-track press tint.
+- Updated dependencies [de1fac4]
+  - @aviala-design/tokens@2.5.4
+
 ## 2.8.0
 
 ### Minor Changes
