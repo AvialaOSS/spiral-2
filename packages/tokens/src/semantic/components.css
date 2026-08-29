@@ -487,6 +487,36 @@
   --modal-close-fg: var(--text-text-normal-text-caption-black, #616060);
   --modal-description-fg: var(--text-text-normal-text-caption-black, #616060);
 
+  /* Drawer — Figma Components → Drawer (2051:26823) */
+  --drawer-overlay-bg: rgba(0, 0, 0, 0.4);
+  --drawer-inset: var(--padding-large, 18px);
+  --drawer-content-width: 310px;
+  --drawer-content-max-width: calc(100vw - 36px);
+  --drawer-content-max-height-edge: 400px;
+  --drawer-content-bg: var(--box-box-normal-background-whiteonly, #ffffff);
+  --drawer-content-fg: var(--text-text-normal-text-black, #262525);
+  --drawer-content-border: var(--border-border-normal-1, #f0efef);
+  --drawer-content-radius: var(--border-radius-big, 12px);
+  --drawer-content-shadow: var(--aviala-shadow-level5);
+  --drawer-header-bg: var(--drawer-content-bg);
+  --drawer-header-pl: var(--padding-big, 14px);
+  --drawer-header-pr: var(--padding-small, 6px);
+  --drawer-header-py: var(--gap-none, 0);
+  --drawer-header-main-py: var(--padding-middle, 10px);
+  --drawer-header-gap: var(--gap-content-space, 10px);
+  --drawer-section-padding: var(--padding-big, 14px);
+  --drawer-section-border: var(--border-border-normal-1, #f0efef);
+  --drawer-body-bg: var(--drawer-content-bg);
+  --drawer-footer-bg: var(--drawer-content-bg);
+  --drawer-footer-actions-gap: var(--gap-component-space, 8px);
+  --drawer-icon-size: var(--size-semilarge, 1.375rem);
+  --drawer-icon-slot-size: var(--size-semilarge, 1.375rem);
+  --drawer-icon-py: var(--padding-min, 2px);
+  --drawer-icon-fg: var(--text-text-normal-text-black, #262525);
+  --drawer-close-icon-size: var(--size-middle, 1rem);
+  --drawer-close-fg: var(--text-text-normal-text-caption-black, #616060);
+  --drawer-description-fg: var(--text-text-normal-text-caption-black, #616060);
+
   --tooltip-content-bg: var(--text-text-normal-text-black, var(--aviala-neutral-neutral-10, #262525));
   --tooltip-content-fg: var(
     --control-control-normal-background-whiteonly,

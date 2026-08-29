@@ -69,6 +69,9 @@ const zhCN: Locale = {
   Modal: {
     close: "关闭对话框",
   },
+  Drawer: {
+    close: "关闭抽屉",
+  },
   Feedback: {
     close: "关闭",
   },

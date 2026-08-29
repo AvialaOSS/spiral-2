@@ -12,6 +12,7 @@ import "@aviala-design/tokens/typeface-effects.css";
 import "@aviala-design/tokens/cascader-effects.css";
 import "@aviala-design/tokens/popover-effects.css";
 import "@aviala-design/tokens/modal-effects.css";
+import "@aviala-design/tokens/drawer-effects.css";
 import "@aviala-design/tokens/tooltip-effects.css";
 import "@aviala-design/tokens/list-effects.css";
 import "@aviala-design/tokens/navigation-effects.css";

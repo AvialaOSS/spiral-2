@@ -231,6 +231,23 @@ const components = [
     ],
   },
   {
+    key: "Drawer",
+    file: "components/drawer.tsx",
+    exportName: "Drawer",
+    parts: [
+      { exportName: "DrawerTrigger" },
+      { exportName: "DrawerOverlay" },
+      { exportName: "DrawerContent" },
+      { exportName: "DrawerHeader" },
+      { exportName: "DrawerHeaderText" },
+      { exportName: "DrawerTitle" },
+      { exportName: "DrawerDescription" },
+      { exportName: "DrawerBody" },
+      { exportName: "DrawerFooter" },
+      { exportName: "DrawerClose" },
+    ],
+  },
+  {
     key: "Tooltip",
     file: "components/tooltip.tsx",
     exportName: "Tooltip",

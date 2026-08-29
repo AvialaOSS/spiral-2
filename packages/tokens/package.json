@@ -36,6 +36,7 @@
     "./cascader-effects.css": "./dist/cascader-effects.css",
     "./popover-effects.css": "./dist/popover-effects.css",
     "./modal-effects.css": "./dist/modal-effects.css",
+    "./drawer-effects.css": "./dist/drawer-effects.css",
     "./tooltip-effects.css": "./dist/tooltip-effects.css",
     "./list-effects.css": "./dist/list-effects.css",
     "./datepicker-effects.css": "./dist/datepicker-effects.css",
