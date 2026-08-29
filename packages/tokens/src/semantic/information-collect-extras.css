@@ -236,6 +236,14 @@
   transition: none;
 }
 
+/* After orientation rules: skip value transitions until first layout so
+ * mount/remount does not ease from the unset (0) inset to the real value. */
+.aviala-slider:not([data-value-transition="true"]) .aviala-slider__range,
+.aviala-slider:not([data-value-transition="true"])
+  > span:has(> .aviala-slider__thumb) {
+  transition: none;
+}
+
 /* —— Upload (527:56238 / 527:56237) —— */
 .aviala-upload {
   position: relative;

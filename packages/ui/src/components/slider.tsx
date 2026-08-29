@@ -2,6 +2,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   forwardRef,
+  useLayoutEffect,
   useState,
   type ComponentPropsWithoutRef,
   type ReactNode,
@@ -146,6 +147,7 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
       onLostPointerCapture,
       showValueTooltip = false,
       formatValueTooltip,
+      orientation,
       ...props
     },
     ref
@@ -167,10 +169,37 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
     const [activeThumbIndex, setActiveThumbIndex] = useState<number | null>(
       null
     );
+    // Keep value transitions off until Radix has painted the real thumb/range
+    // insets — otherwise remount/reload animates from the unset (0) position.
+    // Gate is keyed by type/orientation so Root remounts and axis swaps stay instant.
+    const valueTransitionAxisKey = `${resolvedType}:${orientation ?? "horizontal"}`;
+    const [valueTransitionGate, setValueTransitionGate] = useState({
+      axisKey: valueTransitionAxisKey,
+      ready: false,
+    });
+    const valueTransitionReady =
+      valueTransitionGate.axisKey === valueTransitionAxisKey &&
+      valueTransitionGate.ready;
     const [uncontrolledValue, setUncontrolledValue] = useState<number[]>(
       resolvedDefaultValue
     );
     const currentValues = value ?? uncontrolledValue;
+
+    useLayoutEffect(() => {
+      let frame2 = 0;
+      const frame1 = requestAnimationFrame(() => {
+        frame2 = requestAnimationFrame(() => {
+          setValueTransitionGate({
+            axisKey: valueTransitionAxisKey,
+            ready: true,
+          });
+        });
+      });
+      return () => {
+        cancelAnimationFrame(frame1);
+        cancelAnimationFrame(frame2);
+      };
+    }, [valueTransitionAxisKey]);
 
     const handleValueChange = (next: number[]) => {
       if (value == null) setUncontrolledValue(next);
@@ -234,7 +263,9 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
         data-type={resolvedType}
         data-disabled={disabled ? "true" : undefined}
         data-dragging={isDragging ? "true" : undefined}
+        data-value-transition={valueTransitionReady ? "true" : undefined}
         data-value-tooltip={showValueTooltip ? "true" : undefined}
+        orientation={orientation}
         onValueChange={handleValueChange}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
