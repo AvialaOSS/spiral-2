@@ -1,0 +1,328 @@
+/* Drawer — Figma Components → Drawer (2051:26823) */
+
+.aviala-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: var(--drawer-overlay-bg, rgba(0, 0, 0, 0.4));
+}
+
+.aviala-drawer-overlay[data-state="open"] {
+  animation: aviala-drawer-overlay-in 0.2s ease;
+}
+
+.aviala-drawer-overlay[data-state="closed"] {
+  animation: aviala-drawer-overlay-out 0.15s ease forwards;
+}
+
+.aviala-drawer-content {
+  position: fixed;
+  z-index: 51;
+  display: flex;
+  outline: none;
+}
+
+.aviala-drawer-content--position-right {
+  top: var(--drawer-inset, var(--padding-large, 18px));
+  right: var(--drawer-inset, var(--padding-large, 18px));
+  bottom: var(--drawer-inset, var(--padding-large, 18px));
+  width: min(var(--drawer-content-width, 310px), var(--drawer-content-max-width, calc(100vw - 36px)));
+}
+
+.aviala-drawer-content--position-left {
+  top: var(--drawer-inset, var(--padding-large, 18px));
+  left: var(--drawer-inset, var(--padding-large, 18px));
+  bottom: var(--drawer-inset, var(--padding-large, 18px));
+  width: min(var(--drawer-content-width, 310px), var(--drawer-content-max-width, calc(100vw - 36px)));
+}
+
+.aviala-drawer-content--position-top {
+  top: var(--drawer-inset, var(--padding-large, 18px));
+  left: 50%;
+  width: min(var(--drawer-content-width, 310px), var(--drawer-content-max-width, calc(100vw - 36px)));
+  max-height: var(--drawer-content-max-height-edge, 400px);
+  transform: translateX(-50%);
+}
+
+.aviala-drawer-content--position-bottom {
+  bottom: var(--drawer-inset, var(--padding-large, 18px));
+  left: 50%;
+  width: min(var(--drawer-content-width, 310px), var(--drawer-content-max-width, calc(100vw - 36px)));
+  max-height: var(--drawer-content-max-height-edge, 400px);
+  transform: translateX(-50%);
+}
+
+.aviala-drawer-content__surface {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-height: inherit;
+  overflow: hidden;
+  border: 1px solid var(--drawer-content-border, var(--border-border-normal-1, #f0efef));
+  border-radius: var(--drawer-content-radius, var(--border-radius-big, 12px));
+  background-color: var(--drawer-content-bg, var(--box-box-normal-background-whiteonly, #ffffff));
+  color: var(--drawer-content-fg, var(--text-text-normal-text-black, #262525));
+  box-shadow: var(--drawer-content-shadow, var(--aviala-shadow-level5));
+}
+
+.aviala-drawer-content--position-right[data-state="open"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-in-right 0.22s ease;
+}
+
+.aviala-drawer-content--position-left[data-state="open"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-in-left 0.22s ease;
+}
+
+.aviala-drawer-content--position-top[data-state="open"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-in-top 0.22s ease;
+}
+
+.aviala-drawer-content--position-bottom[data-state="open"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-in-bottom 0.22s ease;
+}
+
+.aviala-drawer-content[data-state="closed"] {
+  animation: aviala-drawer-presence-out 0.15s ease forwards;
+}
+
+.aviala-drawer-content--position-right[data-state="closed"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-out-right 0.15s ease forwards;
+}
+
+.aviala-drawer-content--position-left[data-state="closed"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-out-left 0.15s ease forwards;
+}
+
+.aviala-drawer-content--position-top[data-state="closed"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-out-top 0.15s ease forwards;
+}
+
+.aviala-drawer-content--position-bottom[data-state="closed"] .aviala-drawer-content__surface {
+  animation: aviala-drawer-content-out-bottom 0.15s ease forwards;
+}
+
+.aviala-drawer__header {
+  flex-shrink: 0;
+  background-color: var(--drawer-header-bg, var(--drawer-content-bg, #ffffff));
+  padding-block: var(--drawer-header-py, 0);
+  padding-inline: var(--drawer-header-pl, var(--padding-big, 14px))
+    var(--drawer-header-pr, var(--padding-small, 6px));
+}
+
+.aviala-drawer__header-row {
+  display: flex;
+  align-items: center;
+  gap: var(--drawer-header-gap, var(--gap-content-space, 10px));
+}
+
+.aviala-drawer__header-main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  padding-block: var(--drawer-header-main-py, var(--padding-middle, 10px));
+}
+
+.aviala-drawer__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--drawer-icon-slot-size, var(--size-semilarge, 1.375rem));
+  height: var(--drawer-icon-slot-size, var(--size-semilarge, 1.375rem));
+  color: var(--drawer-icon-fg, var(--text-text-normal-text-black, #262525));
+}
+
+.aviala-drawer__icon svg {
+  width: var(--drawer-icon-size, var(--size-semilarge, 1.375rem));
+  height: var(--drawer-icon-size, var(--size-semilarge, 1.375rem));
+}
+
+.aviala-drawer__header-typeface {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-none, 0);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aviala-drawer__title,
+.aviala-drawer__description {
+  display: block;
+}
+
+.aviala-drawer__description {
+  color: var(--drawer-description-fg, var(--text-text-normal-text-caption-black, #616060));
+}
+
+.aviala-drawer__close {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--drawer-close-fg, var(--text-text-normal-text-caption-black, #616060));
+}
+
+.aviala-drawer__close svg {
+  width: var(--drawer-close-icon-size, var(--size-middle, 1rem));
+  height: var(--drawer-close-icon-size, var(--size-middle, 1rem));
+}
+
+.aviala-drawer__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border-top: 1px solid var(--drawer-section-border, var(--border-border-normal-1, #f0efef));
+  background-color: var(--drawer-body-bg, var(--drawer-content-bg, #ffffff));
+  padding: var(--drawer-section-padding, var(--padding-big, 14px));
+}
+
+.aviala-drawer__body-typeface .aviala-typeface__line:first-child .aviala-typography {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.aviala-drawer__footer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--drawer-footer-actions-gap, var(--gap-component-space, 8px));
+  border-top: 1px solid var(--drawer-section-border, var(--border-border-normal-1, #f0efef));
+  background-color: var(--drawer-footer-bg, var(--drawer-content-bg, #ffffff));
+  padding: var(--drawer-section-padding, var(--padding-big, 14px));
+}
+
+@keyframes aviala-drawer-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aviala-drawer-overlay-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes aviala-drawer-content-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-drawer-content-out-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
+
+@keyframes aviala-drawer-content-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviala-drawer-content-out-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
+@keyframes aviala-drawer-content-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-drawer-content-out-top {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes aviala-drawer-content-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aviala-drawer-content-out-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes aviala-drawer-presence-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviala-drawer-overlay[data-state="open"],
+  .aviala-drawer-overlay[data-state="closed"],
+  .aviala-drawer-content[data-state="open"] .aviala-drawer-content__surface,
+  .aviala-drawer-content[data-state="closed"],
+  .aviala-drawer-content[data-state="closed"] .aviala-drawer-content__surface {
+    animation: none;
+  }
+}

@@ -33,6 +33,9 @@
     0 0 1px 0 rgb(0 0 0 / 18%),
     0 6px 18px 0 rgba(0, 0, 0, 0.08);
 
+  /* Shared elevation — BasicShadow-Level5 */
+  --aviala-shadow-level5: 0 8px 24px 2px rgba(0, 0, 0, 0.06);
+
   /* Shared interaction surfaces — Figma Components 1909:28593 matrix */
   --aviala-interaction-ghost-hover: var(
     --aviala-neutral-neutral-3,

@@ -92,6 +92,7 @@ export type Locale = {
   Upload: LocaleUpload;
   Video: LocaleVideo;
   Modal: { close: string };
+  Drawer: { close: string };
   Feedback: { close: string };
   Alert: { close: string };
   ColorPicker: LocaleColorPicker;

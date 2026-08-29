@@ -69,6 +69,9 @@ const enUS: Locale = {
   Modal: {
     close: "Close dialog",
   },
+  Drawer: {
+    close: "Close drawer",
+  },
   Feedback: {
     close: "Dismiss",
   },
