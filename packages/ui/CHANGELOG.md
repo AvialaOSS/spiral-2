@@ -1,5 +1,18 @@
 # @aviala-design/spiral
 
+## 2.9.0
+
+### Minor Changes
+
+- 91f2b00: Add `Drawer` overlay panel with left/right/top/bottom positions, matching Figma Components → Drawer. Tokens gain `drawer-effects.css` and BasicShadow-Level5 elevation.
+
+  Skip Slider thumb/range position transitions until after first layout so remount and reload no longer animate from the unset position to the current value.
+
+### Patch Changes
+
+- Updated dependencies [91f2b00]
+  - @aviala-design/tokens@2.5.5
+
 ## 2.8.1
 
 ### Patch Changes
