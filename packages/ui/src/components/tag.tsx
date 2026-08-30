@@ -27,7 +27,7 @@ const tagVariants = cva("aviala-tag", {
       text: "aviala-tag--level-text",
     },
     content: {
-      text: "aviala-tag--content-text",
+      text: "",
       people: "aviala-tag--content-people",
     },
     lineHeightFix: {

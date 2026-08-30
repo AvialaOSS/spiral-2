@@ -9,7 +9,7 @@ export type ScrollOrientation = "vertical" | "horizontal";
 const scrollVariants = cva("aviala-scroll", {
   variants: {
     size: {
-      default: "aviala-scroll--size-default",
+      default: "",
       small: "aviala-scroll--size-small",
     },
     orientation: {

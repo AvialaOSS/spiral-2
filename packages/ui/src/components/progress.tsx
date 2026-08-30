@@ -16,7 +16,7 @@ const progressVariants = cva("aviala-progress", {
       fail: "aviala-progress--type-fail",
     },
     size: {
-      default: "aviala-progress--size-default",
+      default: "",
       big: "aviala-progress--size-big",
     },
     shape: {
