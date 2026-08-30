@@ -112,13 +112,7 @@ function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode
   if (leading === "none") return null;
 
   const iconSize = leading === "shaped" ? 20 : 22;
-  const content =
-    node ??
-    (leading === "shaped" ? (
-      <GeneralSetting aria-hidden />
-    ) : (
-      <GeneralSetting aria-hidden />
-    ));
+  const content = node ?? <GeneralSetting aria-hidden />;
 
   const rendered =
     isValidElement(content) && typeof content.type !== "string"
