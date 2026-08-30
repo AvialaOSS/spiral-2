@@ -1,7 +1,10 @@
 import { memo, useId, useLayoutEffect, useRef } from "react";
-import { VIDEO_ANIMATED_ICON_MARKUP } from "./video-animated-icon-markup";
+import {
+  VIDEO_ANIMATED_ICON_MARKUP,
+  type VideoAnimatedIconName,
+} from "./animated-icon-markup";
 
-export type VideoAnimatedIconName = keyof typeof VIDEO_ANIMATED_ICON_MARKUP;
+export type { VideoAnimatedIconName };
 
 /** Morph finishes around 25% of the 2s delivered timeline. */
 export const VIDEO_TRANSPORT_ANIMATION_MS = 550;
@@ -60,6 +63,13 @@ function mirrorSkipGlyphs(layer: HTMLElement) {
   }
 }
 
+/**
+ * `innerHTML` is safe here: the markup comes from the build-time
+ * `animated-icon-markup` modules, never from props or user input. It is injected
+ * imperatively (rather than rendered as JSX) so the delivered `<style>` blocks and
+ * SMIL/CSS animations stay intact; `__UID__` is namespaced per instance so the
+ * animation ids of sibling icons cannot collide.
+ */
 function injectMarkup(
   layer: HTMLElement,
   name: VideoAnimatedIconName,
