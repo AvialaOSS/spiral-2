@@ -39,6 +39,7 @@
     "build": "tsup && node scripts/copy-css.mjs && node scripts/generate-props.mjs && node scripts/aggregate-changelogs.mjs",
     "build:styles": "node scripts/copy-css.mjs",
     "changelog:aggregate": "node scripts/aggregate-changelogs.mjs",
+    "changelog:check": "node scripts/check-changelog-pairing.mjs",
     "changelog:stamp": "node scripts/stamp-unreleased.mjs",
     "dev": "tsup --watch",
     "test": "vitest run",

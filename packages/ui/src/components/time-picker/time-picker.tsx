@@ -3,15 +3,14 @@ import { TimeAndDateClock } from "@aviala-design/icons";
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useMemo,
-  useRef,
   useState,
   type ButtonHTMLAttributes,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useCloseSuppression } from "../../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useLocaleMessages } from "../../locale";
@@ -56,8 +55,6 @@ export function TimePicker({
 }: TimePickerProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [internalValue, setInternalValue] = useState<TimePickerValue>(defaultValue);
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
 
   const isOpenControlled = openProp !== undefined;
   const open = isOpenControlled ? openProp : internalOpen;
@@ -73,42 +70,17 @@ export function TimePicker({
     [onValueChange, valueProp]
   );
 
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) {
-      pointerDownCloseRef.current = false;
-      return;
-    }
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
+  const { shouldCommitOpenChange } = useCloseSuppression({ open, disabled });
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (disabled && nextOpen) return;
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isOpenControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [disabled, isOpenControlled, onOpenChange]
+    [isOpenControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   const contextValue = useMemo(

@@ -20,6 +20,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useCloseSuppression } from "../../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useRtl } from "../../config";
@@ -225,20 +226,11 @@ export function DatePicker(props: DatePickerProps) {
     getInitialViewMonth(mode, singleValue, mode === "range" ? rangeValue : undefined)
   );
   const [focusedDay, setFocusedDay] = useState<Date | null>(null);
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
 
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
+  const { shouldCommitOpenChange } = useCloseSuppression({ open, disabled });
 
   useEffect(() => {
     if (!open) {
-      pointerDownCloseRef.current = false;
       setRangeDraftFrom(undefined);
       setActivePanel("date");
       return;
@@ -252,29 +244,17 @@ export function DatePicker(props: DatePickerProps) {
       if (rangeAnchor) return startOfDay(rangeAnchor);
       return startOfDay(new Date());
     });
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
   }, [mode, open, rangeValue.from, rangeValue.to, singleValue]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (disabled && nextOpen) return;
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isOpenControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [disabled, isOpenControlled, onOpenChange]
+    [isOpenControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   const commitSingle = useCallback(
