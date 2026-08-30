@@ -29,6 +29,7 @@
     "build:icons": "node scripts/build-icons.mjs",
     "build:release": "tsup",
     "dev": "tsup --watch",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist src/components src/catalog.ts"
   },

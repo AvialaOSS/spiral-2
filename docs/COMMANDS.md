@@ -48,7 +48,10 @@ pnpm --filter <包名> <script>
 |---|---|
 | `pnpm build` | Turbo 并行构建全部 workspace（`dependsOn: ^build`） |
 | `pnpm dev` | Turbo 启动各包 `dev`（持久任务，不缓存） |
-| `pnpm lint` | Turbo 运行各包 `lint`（**当前无子包定义 `lint` script**） |
+| `pnpm lint` | Turbo 运行各包 `eslint .`，再补跑根 `scripts/` 与 `eslint.config.mjs`（见 [LINTING.md](./LINTING.md)） |
+| `pnpm lint:fix` | 单次全仓 `eslint --fix` |
+| `pnpm format` | `prettier --write .` |
+| `pnpm format:check` | `prettier --check .`（CI 门禁） |
 | `pnpm typecheck` | Turbo 运行各包 `typecheck`（依赖上游 `build`） |
 | `pnpm clean` | Turbo 清理各包产物，并删除根 `node_modules` |
 | `pnpm sync:ald` | 从本地 ALD 仓库复制 token 到 `packages/tokens/source/ald` |
@@ -82,6 +85,7 @@ Storybook 8 组件预览。
 |---|---|
 | `pnpm --filter @spiral/docs dev` | Storybook 开发，**http://localhost:6006** |
 | `pnpm --filter @spiral/docs build` | 构建静态 Storybook（`storybook-static/`） |
+| `pnpm --filter @spiral/docs lint` | ESLint（含 `.storybook/`） |
 | `pnpm --filter @spiral/docs typecheck` | TypeScript 检查 |
 
 ### `@spiral/playground`（`apps/playground`）
@@ -93,6 +97,7 @@ Storybook 8 组件预览。
 | `pnpm --filter @spiral/playground dev` | Vite 开发服务器，**http://localhost:5173** |
 | `pnpm --filter @spiral/playground build` | `tsc -b` + Vite 生产构建 |
 | `pnpm --filter @spiral/playground preview` | 预览生产构建 |
+| `pnpm --filter @spiral/playground lint` | ESLint |
 | `pnpm --filter @spiral/playground typecheck` | TypeScript 项目引用检查 |
 
 ---
@@ -107,6 +112,7 @@ React 组件库（源码在 `packages/ui`，包名 `@aviala-design/spiral`）。
 |---|---|
 | `pnpm --filter @aviala-design/spiral build` | tsup 打包 + 复制 CSS 到 `dist/` + 生成 `dist/props.json` |
 | `pnpm --filter @aviala-design/spiral dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/spiral lint` | ESLint |
 | `pnpm --filter @aviala-design/spiral typecheck` | TypeScript 检查 |
 | `pnpm --filter @aviala-design/spiral clean` | 删除 `dist/` |
 
@@ -120,6 +126,7 @@ ALD 设计 token 与主题引擎。
 |---|---|
 | `pnpm --filter @aviala-design/tokens build` | tsup 打包 + 生成 CSS 产物（`build-css.mjs`） |
 | `pnpm --filter @aviala-design/tokens dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/tokens lint` | ESLint |
 | `pnpm --filter @aviala-design/tokens typecheck` | TypeScript 检查 |
 | `pnpm --filter @aviala-design/tokens clean` | 删除 `dist/` |
 
@@ -136,6 +143,7 @@ Figma 图标 → SVGR → React 组件。
 | `pnpm --filter @aviala-design/icons build` | SVGR 生成组件 + tsup 打包 |
 | `pnpm --filter @aviala-design/icons build:icons` | 仅 SVGR 步骤（根 `icons:build` 调用此命令） |
 | `pnpm --filter @aviala-design/icons dev` | tsup watch 模式 |
+| `pnpm --filter @aviala-design/icons lint` | ESLint（跳过 SVGR 产物） |
 | `pnpm --filter @aviala-design/icons typecheck` | TypeScript 检查 |
 | `pnpm --filter @aviala-design/icons clean` | 删除 `dist/`、`src/components/`、`src/catalog.ts` |
 
@@ -197,6 +205,9 @@ pnpm install --frozen-lockfile
 pnpm sync:ald || true            # CI 无 ALD 时跳过
 pnpm build
 pnpm typecheck
+pnpm lint
+pnpm format:check
+pnpm test
 ```
 
 ---
@@ -239,6 +250,9 @@ node scripts/figma-export/export-icons.mjs --no-clean   # 保留旧 raw SVG（�
 | 同步 ALD | `pnpm sync:ald \|\| true` |
 | 构建 | `pnpm build`（icons 从已提交的 `packages/icons/src` 构建，**不调 Figma**） |
 | 类型检查 | `pnpm typecheck` |
+| Lint | `pnpm lint`（零 error 门禁，warning 见 [LINTING.md](./LINTING.md)） |
+| 格式检查 | `pnpm format:check` |
+| 测试 | `pnpm test` |
 
 ### Release（`.github/workflows/release.yml`）
 

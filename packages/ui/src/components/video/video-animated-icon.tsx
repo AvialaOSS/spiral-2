@@ -102,8 +102,11 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
 
   const isPlayPause = name === "play" || name === "pause";
 
+  // Inject once per instance. Transport buttons keep a stable kind
+  // (play/pause pair vs skip); later name flips are handled below.
   useLayoutEffect(() => {
-    if (isPlayPause) {
+    const currentName = nameRef.current;
+    if (currentName === "play" || currentName === "pause") {
       const playLayer = playLayerRef.current;
       const pauseLayer = pauseLayerRef.current;
       if (!playLayer || !pauseLayer) return;
@@ -113,7 +116,7 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
       freezeAtEnd(pauseLayer);
       setLayerRest(playLayer, true);
       setLayerRest(pauseLayer, true);
-      const initial = nameRef.current === "pause" ? "pause" : "play";
+      const initial = currentName === "pause" ? "pause" : "play";
       shownRef.current = initial;
       setLayerActive(playLayer, initial === "play");
       setLayerActive(pauseLayer, initial === "pause");
@@ -121,12 +124,11 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     }
     const layer = singleLayerRef.current;
     if (!layer) return;
-    injectMarkup(layer, name, uid);
+    injectMarkup(layer, currentName, uid);
     freezeAtEnd(layer);
     setLayerRest(layer, true);
-    shownRef.current = name;
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount only
-  }, []);
+    shownRef.current = currentName;
+  }, [uid]);
 
   useLayoutEffect(() => {
     if (playToken === 0) return;
@@ -155,8 +157,10 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
       // not `name`, which can still be the previous state when the token fires.
       const from = shownRef.current === "pause" ? "pause" : "play";
       const to: "play" | "pause" = from === "play" ? "pause" : "play";
-      const incoming = to === "pause" ? pauseLayerRef.current : playLayerRef.current;
-      const outgoing = to === "pause" ? playLayerRef.current : pauseLayerRef.current;
+      const incoming =
+        to === "pause" ? pauseLayerRef.current : playLayerRef.current;
+      const outgoing =
+        to === "pause" ? playLayerRef.current : pauseLayerRef.current;
       if (!incoming || !outgoing) {
         lockRef.current = false;
         return;
@@ -196,8 +200,10 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     if (shownRef.current === name) return;
     if (name !== "play" && name !== "pause") return;
 
-    const incoming = name === "pause" ? pauseLayerRef.current : playLayerRef.current;
-    const outgoing = name === "pause" ? playLayerRef.current : pauseLayerRef.current;
+    const incoming =
+      name === "pause" ? pauseLayerRef.current : playLayerRef.current;
+    const outgoing =
+      name === "pause" ? playLayerRef.current : pauseLayerRef.current;
     if (!incoming || !outgoing) return;
     freezeAtEnd(incoming);
     setLayerActive(incoming, true);

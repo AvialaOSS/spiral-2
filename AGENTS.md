@@ -35,7 +35,9 @@ spiral2/
 pnpm build              # turbo run build (all packages)
 pnpm dev                # turbo run dev (all packages, watch mode)
 pnpm typecheck          # turbo run typecheck
-pnpm lint               # turbo run lint
+pnpm lint               # eslint, zero-error gate (see docs/LINTING.md)
+pnpm format             # prettier --write .
+pnpm format:check       # prettier --check .
 
 # Per-package (filter)
 pnpm --filter @aviala-design/spiral build
@@ -85,7 +87,7 @@ Feature branch + changeset → merge to main → `pnpm version:packages` creates
 ## CI
 
 GitHub Actions (`.github/workflows/`):
-- **CI** (`ci.yml`): build + typecheck on push/PR to main.
+- **CI** (`ci.yml`): build + typecheck + lint + format:check + test on push/PR to main.
 - **Icons Sync** (`icons-sync.yml`): manual Figma export → build → PR.
 - **Release** (`release.yml`): changeset-based publish.
 
