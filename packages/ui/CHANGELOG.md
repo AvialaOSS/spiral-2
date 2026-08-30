@@ -1,5 +1,43 @@
 # @aviala-design/spiral
 
+## 3.0.0
+
+### Major Changes
+
+- 96c12fc: Move `Form` and `FormField` to the `@aviala-design/spiral/form` subpath entry.
+
+  The main entry no longer references `react-hook-form`, so consumers without that
+  peer installed can import from `@aviala-design/spiral` again. `react-hook-form`
+  stays on `>=7.50` and is now marked optional — it is only required by `/form`.
+
+  Migration: `import { Form, FormField } from "@aviala-design/spiral/form";`
+
+### Minor Changes
+
+- 33fd505: Stop rendering placeholder copy when content props are missing.
+
+  - `Typeface`: no fallback `Text` lines when no content is provided
+  - `CascaderOptionsMenu`: new optional `groupTitle`; the hardcoded `Title` group header is gone
+  - `Select` / `Cascader` items: `showBadge` without `badge` renders no Badge; `showMoreFunction` without `moreAction` renders no trailing slot
+  - `CardHead` / `CardBottom` / `ListItem`: `actionLabel` no longer defaults to `Text`; the primary action button is omitted when neither `actionLabel` nor `action` is provided
+  - `TableCell`: no placeholder Badge for `content="badge"`, and the `people` avatar falls back to a `users_user` icon instead of the letter `A`
+
+- 9b803f1: Replace `role="application"` panels with real widget semantics and fill in the missing keyboard models.
+
+  - `DatePickerCalendar` / `TimePickerPanel`: `role="application"` is gone (`role="group"` instead), and the day grid gains `role="row"` wrappers so its existing gridcell + arrow / Home / End / PageUp / PageDown model is exposed correctly
+  - `SegmentatorGroup`: a true radiogroup — roving tabindex (only the checked item is a tab stop), arrow keys move and select along the group's axis (RTL mirrored), Home / End jump to the ends
+  - `VideoSpeed`: listbox roving tabindex plus Up / Down / Home / End and `aria-activedescendant`
+  - `ListItem`: interactive rows without `href` are now focusable (`tabIndex`, `role="button"`, Enter / Space); nested controls keep their own activation and the `href` anchor branch is unchanged
+  - `ScrollPickerColumn`: a non-looping column pinned to either end no longer calls `preventDefault` on wheel, so the page keeps scrolling
+  - `CascaderItem`: Up / Down / Home / End move focus within a column, skipping titles and disabled rows
+  - `SelectSubItem`: Up / Down / Home / End across menu rows (including mixed Radix items), expand key opens the sub-menu and moves focus into it, collapse key / Esc returns focus to the parent row
+
+### Patch Changes
+
+- 3c7f23a: Remove ghost BEM class outputs that had no matching CSS (Progress, Scroll, Breadcrumb, Modal, Tag, Slider, Avatar, Pagination ellipsis, Loading mode, ConfigProvider), emit the documented `aviala-link--caption` / `aviala-link--text` level classes on Link, and replace hardcoded colors with token variables. Adds `--loading-mask-reveal` so the Loading ring mask no longer needs an inline hex. No visual change.
+- Updated dependencies [3c7f23a]
+  - @aviala-design/tokens@2.6.0
+
 ## 2.9.0
 
 ### Minor Changes

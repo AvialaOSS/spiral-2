@@ -1,6 +1,6 @@
 # DatePickerField
 
-## [Unreleased]
+## 3.0.0
 
 ### Fixed
 - 日历面板不再使用 `role="application"`，改为 `role="group"`，屏幕阅读器恢复常规浏览模式

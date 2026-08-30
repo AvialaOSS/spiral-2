@@ -1,6 +1,6 @@
 # Form
 
-## [Unreleased]
+## 3.0.0
 
 ### Changed
 - **BREAKING** `Form` 与 `FormField` 移至子路径入口 `@aviala-design/spiral/form`，主入口不再导出它们。迁移方式：`import { Form, FormField } from "@aviala-design/spiral/form";`。
