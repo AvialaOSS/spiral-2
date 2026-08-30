@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, type HTMLAttributes } from "react";
+import { createElement, forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 
 /** Figma Components → System Composition → Typography (128:85) */
@@ -57,17 +57,20 @@ export const Typography = forwardRef<HTMLSpanElement, TypographyProps>(
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : Tag;
+    const hostProps = {
+      ...props,
+      ref,
+      className: cn(typographyVariants({ level }), className),
+      "data-content": content,
+      "data-tone": tone === "white" ? "white" : undefined,
+    };
 
-    return (
-      <Comp
-        ref={ref as never}
-        className={cn(typographyVariants({ level }), className)}
-        data-content={content}
-        data-tone={tone === "white" ? "white" : undefined}
-        {...props}
-      />
-    );
+    if (asChild) return <Slot {...hostProps} />;
+
+    // JSX resolves a union `as` tag to the intersection of every member's props,
+    // which no single element ref can satisfy. createElement keeps the ref typed
+    // as HTMLElement.
+    return createElement(Tag, hostProps);
   }
 );
 Typography.displayName = "Typography";

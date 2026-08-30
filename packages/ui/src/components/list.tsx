@@ -9,6 +9,7 @@ import {
   isValidElement,
   type ComponentPropsWithoutRef,
   type HTMLAttributes,
+  type KeyboardEvent,
   type ReactElement,
   type ReactNode,
   type Ref,
@@ -49,9 +50,7 @@ export type ListTitleProps = HTMLAttributes<HTMLDivElement>;
 export const ListTitle = forwardRef<HTMLDivElement, ListTitleProps>(
   ({ className, children, ...props }, ref) => (
     <div ref={ref} className={cn("aviala-list-title", className)} {...props}>
-      <span className={cn(typographyVariants({ level: "text" }))}>
-        {children}
-      </span>
+      <span className={cn(typographyVariants({ level: "text" }))}>{children}</span>
     </div>
   )
 );
@@ -62,12 +61,7 @@ export type ListGroupProps = HTMLAttributes<HTMLDivElement>;
 /** Figma List card container — rounded white surface for items */
 export const ListGroup = forwardRef<HTMLDivElement, ListGroupProps>(
   ({ className, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("aviala-list-group", className)}
-      role="list"
-      {...props}
-    >
+    <div ref={ref} className={cn("aviala-list-group", className)} role="list" {...props}>
       {children}
     </div>
   )
@@ -81,11 +75,7 @@ export type ListItemGroupProps = {
 };
 
 /** Convenience wrapper — titled list section (Figma List title + card) */
-export function ListItemGroup({
-  label,
-  children,
-  className,
-}: ListItemGroupProps) {
+export function ListItemGroup({ label, children, className }: ListItemGroupProps) {
   return (
     <div className={cn("aviala-list", className)}>
       {label != null ? <ListTitle>{label}</ListTitle> : null}
@@ -114,47 +104,27 @@ export type ListSeparatorProps = HTMLAttributes<HTMLHRElement>;
 /** Horizontal separator between list groups */
 export const ListSeparator = forwardRef<HTMLHRElement, ListSeparatorProps>(
   ({ className, ...props }, ref) => (
-    <hr
-      ref={ref}
-      className={cn("aviala-list-separator", className)}
-      {...props}
-    />
+    <hr ref={ref} className={cn("aviala-list-separator", className)} {...props} />
   )
 );
 ListSeparator.displayName = "ListSeparator";
 
-function renderLeadingIcon(
-  node: ReactNode,
-  leading: ListItemLeading
-): ReactNode {
+function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode {
   if (leading === "none") return null;
 
   const iconSize = leading === "shaped" ? 20 : 22;
-  const content =
-    node ??
-    (leading === "shaped" ? (
-      <GeneralSetting aria-hidden />
-    ) : (
-      <GeneralSetting aria-hidden />
-    ));
+  const content = node ?? <GeneralSetting aria-hidden />;
 
   const rendered =
     isValidElement(content) && typeof content.type !== "string"
-      ? cloneElement(
-          content as ReactElement<{
-            width?: number;
-            height?: number;
-            className?: string;
-          }>,
-          {
-            width: iconSize,
-            height: iconSize,
-            className: cn(
-              (content as ReactElement<{ className?: string }>).props.className,
-              "shrink-0"
-            ),
-          }
-        )
+      ? cloneElement(content as ReactElement<{ width?: number; height?: number; className?: string }>, {
+          width: iconSize,
+          height: iconSize,
+          className: cn(
+            (content as ReactElement<{ className?: string }>).props.className,
+            "shrink-0"
+          ),
+        })
       : content;
 
   return (
@@ -238,7 +208,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       icon,
       title,
       subtitle,
-      actionLabel = "Text",
+      actionLabel,
       action,
       secondaryAction,
       select,
@@ -254,27 +224,24 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       target,
       rel,
       onClick,
+      onKeyDown,
       ...props
     },
     ref
   ) => {
     const locale = useLocaleMessages("List");
     const rtl = useRtl();
-    const ChevronIcon = rtl
-      ? DirectionArrowLeftLight
-      : DirectionArrowRightLight;
+    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const isInteractive = interactive ?? (onClick != null || href != null);
     const chevronVisible = showChevron ?? itemType === "action";
 
-    const primaryAction = action ?? (
-      <Button
-        mode="primary"
-        size="regular"
-        leftIcon={<GeneralSetting aria-hidden />}
-      >
-        {actionLabel}
-      </Button>
-    );
+    const primaryAction =
+      action ??
+      (actionLabel != null ? (
+        <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
+          {actionLabel}
+        </Button>
+      ) : null);
 
     const chevron = chevronVisible ? (
       <span className="aviala-list-item__chevron" aria-hidden>
@@ -354,11 +321,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
         <div className="aviala-list-item__body">
           <div className="aviala-list-item__content">
             <div className="aviala-list-item__head">
-              <Typeface
-                content="textCaption"
-                primary={title}
-                secondary={subtitle}
-              />
+              <Typeface content="textCaption" primary={title} secondary={subtitle} />
             </div>
             {trailingNode}
           </div>
@@ -376,6 +339,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
           target={target}
           rel={rel}
           onClick={onClick as ComponentPropsWithoutRef<"a">["onClick"]}
+          onKeyDown={onKeyDown as ComponentPropsWithoutRef<"a">["onKeyDown"]}
           {...sharedData}
           {...(props as ComponentPropsWithoutRef<"a">)}
         >
@@ -384,12 +348,30 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       );
     }
 
+    // Without an href the row is a plain div, so it needs the full button
+    // contract: a tab stop, a button role, and Enter/Space activation.
+    const activatable = isInteractive && !disabled;
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+      if (!activatable || event.defaultPrevented) return;
+      if (event.key !== "Enter" && event.key !== " ") return;
+      // Nested controls (Switch, Button, Select) keep their own activation.
+      if (event.target !== event.currentTarget) return;
+
+      event.preventDefault();
+      event.currentTarget.click();
+    };
+
     return (
       <div
         ref={ref}
-        role="listitem"
+        role={activatable ? "button" : "listitem"}
+        tabIndex={activatable ? 0 : undefined}
+        aria-disabled={isInteractive && disabled ? true : undefined}
         className={sharedClassName}
         onClick={disabled ? undefined : onClick}
+        onKeyDown={handleKeyDown}
         {...sharedData}
         {...props}
       >

@@ -727,6 +727,8 @@
 
   /* Loading Icon — Figma 30×30 artboard uses 2px ring (r15 − r13) */
   --loading-ring-stroke: 2px;
+  /* Mask luminance channel, not a theme color: white keeps the ring revealed. */
+  --loading-mask-reveal: #ffffff;
   --loading-fg-theme: var(
     --control-control-theme-background,
     var(--button-primary-bg)

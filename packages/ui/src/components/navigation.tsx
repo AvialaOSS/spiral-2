@@ -1,9 +1,8 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-
 import { Slot } from "@radix-ui/react-slot";
-
 import {
   createContext,
+  createElement,
   forwardRef,
   useCallback,
   useContext,
@@ -19,18 +18,12 @@ import {
   type RefObject,
 } from "react";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
-
 import { useThemeLayoutKey } from "../theme/theme-provider";
-
 import { forwardChevronSide, useDirection } from "../config";
-
 import { buttonVariants, type ButtonMode } from "./button";
-
 import { Popover } from "./popover";
-
 import { Typography } from "./typography";
 
 export function navigationItemButtonMode(active: boolean): ButtonMode {
@@ -38,11 +31,9 @@ export function navigationItemButtonMode(active: boolean): ButtonMode {
 }
 
 /** Figma Navigation `Background` variant (624:61777) */
-
 export type NavigationBackground = "none" | "default";
 
 /** Figma Navigation `direction` variant */
-
 export type NavigationDirection = "horizontal" | "vertical";
 
 const NavigationDirectionContext =
@@ -54,13 +45,9 @@ function useNavigationDirection() {
 
 export type IndicatorMetrics = {
   x: number;
-
   y: number;
-
   width: number;
-
   height: number;
-
   visible: boolean;
 };
 
@@ -70,47 +57,36 @@ const NAVIGATION_ANIMATION_EASING_FALLBACK = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 export function parseDurationMs(value: string): number {
   const trimmed = value.trim();
-
   if (!trimmed) return NAVIGATION_ANIMATION_MS_FALLBACK;
-
   if (trimmed.endsWith("ms"))
     return parseFloat(trimmed) || NAVIGATION_ANIMATION_MS_FALLBACK;
-
   if (trimmed.endsWith("s")) {
     return (parseFloat(trimmed) || 0.3) * 1000;
   }
-
   const parsed = parseFloat(trimmed);
-
   return Number.isFinite(parsed) ? parsed : NAVIGATION_ANIMATION_MS_FALLBACK;
 }
 
 function getNavigationAnimationTiming(el: HTMLElement) {
   const style = getComputedStyle(el);
-
   const durationMs = parseDurationMs(
     style.getPropertyValue("--navigation-transition-duration")
   );
-
   const easing =
     style.getPropertyValue("--navigation-transition-easing").trim() ||
     NAVIGATION_ANIMATION_EASING_FALLBACK;
-
   return { durationMs, easing };
 }
 
 function readIndicatorToken(el: HTMLElement, name: string, fallback: number) {
   const value = getComputedStyle(el).getPropertyValue(name).trim();
-
   const parsed = parseFloat(value);
-
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function isInsideCollapsedGroup(item: HTMLElement): boolean {
   return (
-    item.closest('.aviala-navigation-item-group[data-expanded="false"]') !==
-    null
+    item.closest('.aviala-navigation-item-group[data-expanded="false"]') !== null
   );
 }
 
@@ -122,47 +98,30 @@ function findActiveNavigationItem(group: HTMLElement): HTMLElement | null {
   ).filter((item) => !isInsideCollapsedGroup(item));
 
   if (activeItems.length === 0) return null;
-
   const activeChild = activeItems.find(
     (item) => item.getAttribute("data-item-type") === "child"
   );
-
   return activeChild ?? activeItems[0]!;
 }
 
 function measureNavigationIndicator(
   group: HTMLElement,
-
   direction: NavigationDirection
 ): IndicatorMetrics | null {
   const item = findActiveNavigationItem(group);
-
   if (!item) {
     return { x: 0, y: 0, width: 0, height: 0, visible: false };
   }
-
   const groupRect = group.getBoundingClientRect();
-
   const itemRect = item.getBoundingClientRect();
-
-  const railInlineStart = readIndicatorToken(
-    group,
-    "--navigation-rail-inline-start",
-    1
-  );
-
+  const railInlineStart = readIndicatorToken(group, "--navigation-rail-inline-start", 1);
   const railInset = readIndicatorToken(group, "--navigation-rail-inset", 6);
-
   const railWidth = readIndicatorToken(group, "--navigation-rail-width", 3);
-
   const horizontalWidth = readIndicatorToken(
     group,
-
     "--navigation-indicator-width-horizontal",
-
     50
   );
-
   if (direction === "vertical") {
     let inset = railInset;
 
@@ -172,36 +131,24 @@ function measureNavigationIndicator(
     } else if (item.matches(":hover")) {
       inset = readIndicatorToken(group, "--navigation-rail-inset-hover", 3);
     }
-
     const isRtl = getComputedStyle(group).direction === "rtl";
     const x = isRtl
       ? groupRect.width - railWidth - railInlineStart
       : railInlineStart;
-
     return {
       x,
-
       y: itemRect.top - groupRect.top + inset,
-
       width: railWidth,
-
       height: Math.max(0, itemRect.height - inset * 2),
-
       visible: true,
     };
   }
-
   const itemCenterX = itemRect.left + itemRect.width / 2;
-
   return {
     x: itemCenterX - groupRect.left - horizontalWidth / 2,
-
     y: itemRect.bottom - groupRect.top - railWidth,
-
     width: horizontalWidth,
-
     height: railWidth,
-
     visible: true,
   };
 }
@@ -212,50 +159,34 @@ function resetIndicatorMotion(el: HTMLSpanElement) {
 
 function applyIndicatorMetrics(
   el: HTMLSpanElement,
-
   metrics: IndicatorMetrics,
-
   instant = false
 ) {
   resetIndicatorMotion(el);
-
   if (instant) {
     el.setAttribute("data-instant", "true");
   }
-
   el.style.width = `${metrics.width}px`;
-
   el.style.height = `${metrics.height}px`;
-
   el.style.transform = `translate(${metrics.x}px, ${metrics.y}px)`;
-
   el.dataset.visible = metrics.visible ? "true" : "false";
-
   if (instant) {
     void el.offsetWidth;
-
     el.removeAttribute("data-instant");
   }
 }
 
 function measureIndicatorFromElement(
   indicatorEl: HTMLElement,
-
   groupEl: HTMLElement
 ): IndicatorMetrics {
   const groupRect = groupEl.getBoundingClientRect();
-
   const indicatorRect = indicatorEl.getBoundingClientRect();
-
   return {
     x: indicatorRect.left - groupRect.left,
-
     y: indicatorRect.top - groupRect.top,
-
     width: indicatorRect.width,
-
     height: indicatorRect.height,
-
     visible: indicatorEl.dataset.visible === "true",
   };
 }
@@ -335,9 +266,7 @@ function runIndicatorAnimation(
     el.removeAttribute("data-instant");
     syncIndicator(next, true);
   };
-
   animation.addEventListener("finish", finish, { once: true });
-
   return () => {
     animation.removeEventListener("finish", finish);
   };
@@ -345,40 +274,28 @@ function runIndicatorAnimation(
 
 function useNavigationIndicator(
   groupRef: RefObject<HTMLDivElement | null>,
-
   direction: NavigationDirection,
-
   layoutKey: string | null
 ) {
   const indicatorRef = useRef<HTMLSpanElement | null>(null);
-
   const metricsRef = useRef<IndicatorMetrics | null>(null);
-
   const animationRef = useRef<Animation | null>(null);
-
   const animationGenerationRef = useRef(0);
-
   const isAnimatingRef = useRef(false);
-
   const layoutTrackingFrameRef = useRef<number | null>(null);
-
   const isLayoutTrackingRef = useRef(false);
-
   const isInitialMount = useRef(true);
   const [activeRevision, setActiveRevision] = useState(0);
 
   const measureIndicator = useCallback((): IndicatorMetrics | null => {
     const group = groupRef.current;
-
     if (!group) return null;
-
     return measureNavigationIndicator(group, direction);
   }, [direction, groupRef]);
 
   const syncIndicator = useCallback(
     (metrics: IndicatorMetrics, instant = false) => {
       metricsRef.current = metrics;
-
       const el = indicatorRef.current;
 
       if (el) applyIndicatorMetrics(el, metrics, instant);
@@ -391,23 +308,16 @@ function useNavigationIndicator(
       cancelAnimationFrame(layoutTrackingFrameRef.current);
       layoutTrackingFrameRef.current = null;
     }
-
     isLayoutTrackingRef.current = false;
   }, []);
 
   const remeasureIndicator = useCallback(() => {
     if (isLayoutTrackingRef.current) return;
-
     const metrics = measureIndicator();
-
     if (!metrics) return;
-
     animationRef.current?.cancel();
-
     animationRef.current = null;
-
     isAnimatingRef.current = false;
-
     syncIndicator(metrics, true);
   }, [measureIndicator, syncIndicator]);
 
@@ -429,11 +339,9 @@ function useNavigationIndicator(
     animationRef.current?.cancel();
     animationRef.current = null;
     isAnimatingRef.current = false;
-
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     if (prefersReducedMotion) {
       const metrics = measureIndicator();
       if (metrics) syncIndicator(metrics, true);
@@ -457,10 +365,8 @@ function useNavigationIndicator(
       const final = measureIndicator();
       if (final) syncIndicator(final, true);
     };
-
     const tick = (now: number) => {
       if (!isLayoutTrackingRef.current) return;
-
       const progress = Math.min(1, (now - startTime) / durationMs);
 
       if (progress >= 1) {
@@ -507,52 +413,37 @@ function useNavigationIndicator(
 
   const onIndicatorRef = useCallback((node: HTMLSpanElement | null) => {
     indicatorRef.current = node;
-
     if (node && metricsRef.current && isInitialMount.current) {
       applyIndicatorMetrics(node, metricsRef.current, true);
-
       isInitialMount.current = false;
     }
   }, []);
 
   useLayoutEffect(() => {
     const group = groupRef.current;
-
     const next = measureIndicator();
-
     if (!next) return;
-
     const el = indicatorRef.current;
-
     if (isInitialMount.current) {
       metricsRef.current = next;
-
       if (el) {
         applyIndicatorMetrics(el, next, true);
-
         isInitialMount.current = false;
       }
 
       return;
     }
-
     if (isLayoutTrackingRef.current) return;
-
     if (!el || !group) {
       syncIndicator(next, true);
-
       return;
     }
-
     const generation = ++animationGenerationRef.current;
-
     const hadActiveAnimation = animationRef.current != null;
-
     const start =
       hadActiveAnimation || isAnimatingRef.current
         ? measureIndicatorFromElement(el, group)
-        : (metricsRef.current ?? next);
-
+        : metricsRef.current ?? next;
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -600,32 +491,26 @@ function useNavigationIndicator(
           mutation.attributeName === "data-expanded" &&
           mutation.target instanceof HTMLElement
       );
-
       if (expandCollapseChanged) {
         startExpandCollapseTracking();
       }
-
       setActiveRevision((revision) => revision + 1);
     });
-
     observer.observe(group, {
       subtree: true,
-
       attributes: true,
-
       attributeFilter: ["data-active", "data-expanded"],
-
       childList: true,
     });
-
     const resizeObserver = new ResizeObserver(() => {
       remeasureIndicator();
     });
-
     resizeObserver.observe(group);
 
     group
-      .querySelectorAll<HTMLElement>(".aviala-navigation-item-group__inner")
+      .querySelectorAll<HTMLElement>(
+        ".aviala-navigation-item-group__inner"
+      )
       .forEach((inner) => {
         resizeObserver.observe(inner);
       });
@@ -677,13 +562,9 @@ function useNavigationIndicator(
 
     const refreshInteractionMetrics = () => {
       if (isLayoutTrackingRef.current || isAnimatingRef.current) return;
-
       const metrics = measureIndicator();
       if (!metrics) return;
-      if (
-        metricsRef.current &&
-        metricsApproxEqual(metrics, metricsRef.current)
-      ) {
+      if (metricsRef.current && metricsApproxEqual(metrics, metricsRef.current)) {
         return;
       }
 
@@ -709,16 +590,12 @@ function useNavigationIndicator(
 }
 
 /** Figma Structure Navigation → Navigation root (624:92194) */
-
 export type NavigationProps = HTMLAttributes<HTMLElement> & {
   as?: "nav" | "div";
-
   background?: NavigationBackground;
-
   direction?: NavigationDirection;
 
   /** Figma `Dividing line` variant */
-
   dividingLine?: boolean;
 };
 
@@ -726,39 +603,34 @@ export const Navigation = forwardRef<HTMLElement, NavigationProps>(
   (
     {
       className,
-
-      as: Tag = "nav",
-
+      as = "nav",
       background = "default",
-
       direction = "vertical",
-
       dividingLine = false,
-
       ...props
     },
-
     ref
   ) => (
     <NavigationDirectionContext.Provider value={direction}>
-      <Tag
-        ref={ref as never}
-        className={cn("aviala-navigation", className)}
-        data-background={background}
-        data-direction={direction}
-        data-dividing-line={dividingLine ? "true" : "false"}
-        {...props}
-      />
+      {/* JSX resolves a union `as` tag to the intersection of every member's props,
+          which no single element ref can satisfy. createElement keeps the ref
+          typed as HTMLElement. */}
+      {createElement(as, {
+        ...props,
+        ref,
+        className: cn("aviala-navigation", className),
+        "data-background": background,
+        "data-direction": direction,
+        "data-dividing-line": dividingLine ? "true" : "false",
+      })}
     </NavigationDirectionContext.Provider>
   )
 );
-
 Navigation.displayName = "Navigation";
 
 export type NavigationBrandProps = HTMLAttributes<HTMLDivElement>;
 
 /** Figma Navigation Items `Content=Brand` (624:119379) */
-
 export const NavigationBrand = forwardRef<HTMLDivElement, NavigationBrandProps>(
   ({ className, ...props }, ref) => (
     <div
@@ -768,7 +640,6 @@ export const NavigationBrand = forwardRef<HTMLDivElement, NavigationBrandProps>(
     />
   )
 );
-
 NavigationBrand.displayName = "NavigationBrand";
 
 export type NavigationBrandTitleProps = Omit<
@@ -776,7 +647,6 @@ export type NavigationBrandTitleProps = Omit<
   "children"
 > & {
   asChild?: boolean;
-
   children: ReactNode;
 };
 
@@ -789,10 +659,7 @@ export const NavigationBrandTitle = forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn(
-        "aviala-navigation-brand__title aviala-focus-ring",
-        className
-      )}
+      className={cn("aviala-navigation-brand__title aviala-focus-ring", className)}
       {...props}
     >
       {asChild ? (
@@ -805,7 +672,6 @@ export const NavigationBrandTitle = forwardRef<
     </Comp>
   );
 });
-
 NavigationBrandTitle.displayName = "NavigationBrandTitle";
 
 export type NavigationSectionProps = HTMLAttributes<HTMLDivElement> & {
@@ -813,7 +679,6 @@ export type NavigationSectionProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 /** Section label — docs grouping above tab items */
-
 export const NavigationSection = forwardRef<
   HTMLDivElement,
   NavigationSectionProps
@@ -828,21 +693,16 @@ export const NavigationSection = forwardRef<
     </Typography>
   </div>
 ));
-
 NavigationSection.displayName = "NavigationSection";
 
 export type NavigationGroupProps = HTMLAttributes<HTMLDivElement>;
 
 /** Figma Navigation Tab Items Group (1651:20222) */
-
 export const NavigationGroup = forwardRef<HTMLDivElement, NavigationGroupProps>(
   ({ className, children, ...props }, ref) => {
     const direction = useNavigationDirection();
-
     const layoutKey = useThemeLayoutKey();
-
     const groupRef = useRef<HTMLDivElement>(null);
-
     const onIndicatorRef = useNavigationIndicator(
       groupRef,
       direction,
@@ -859,7 +719,6 @@ export const NavigationGroup = forwardRef<HTMLDivElement, NavigationGroupProps>(
           ref.current = node;
         }
       },
-
       [ref]
     );
 
@@ -875,13 +734,11 @@ export const NavigationGroup = forwardRef<HTMLDivElement, NavigationGroupProps>(
           aria-hidden
           data-visible="false"
         />
-
         {children}
       </div>
     );
   }
 );
-
 NavigationGroup.displayName = "NavigationGroup";
 
 export type NavigationItemGroupProps = HTMLAttributes<HTMLDivElement> & {
@@ -890,7 +747,6 @@ export type NavigationItemGroupProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 /** Figma Navigation Vertical Tab Child Items Group (643:127007) */
-
 export const NavigationItemGroup = forwardRef<
   HTMLDivElement,
   NavigationItemGroupProps
@@ -915,7 +771,9 @@ export const NavigationItemGroup = forwardRef<
     <div
       ref={ref}
       className={cn("aviala-navigation-item-group", className)}
-      data-expanded={isCollapsible ? (expanded ? "true" : "false") : undefined}
+      data-expanded={
+        isCollapsible ? (expanded ? "true" : "false") : undefined
+      }
       aria-hidden={isCollapsed ? true : undefined}
       {...props}
     >
@@ -929,32 +787,23 @@ export const NavigationItemGroup = forwardRef<
     </div>
   );
 });
-
 NavigationItemGroup.displayName = "NavigationItemGroup";
 
 /** Figma Navigation Items `Type` variant */
-
 export type NavigationItemType = "default" | "child";
 
 export type NavigationItemProps = ComponentPropsWithoutRef<"a"> & {
   /** Figma `Starting=Active` — also inferred from `aria-current="page"` */
-
   active?: boolean;
-
   itemType?: NavigationItemType;
-
   leftIcon?: ReactNode;
-
   rightIcon?: ReactNode;
-
   asChild?: boolean;
-
   children: ReactNode;
 };
 
 function renderItemIcon(node: ReactNode): ReactNode {
   if (!node) return null;
-
   const content = cloneAvialaIconElement(node, {
     level: "text",
     biggerSize: true,
@@ -964,7 +813,6 @@ function renderItemIcon(node: ReactNode): ReactNode {
 }
 
 /** Figma Navigation Items `Content=Tab Item` (624:119382, 624:119385, 643:118728) */
-
 export const NavigationItem = forwardRef<
   HTMLAnchorElement,
   NavigationItemProps
@@ -972,36 +820,24 @@ export const NavigationItem = forwardRef<
   (
     {
       className,
-
       active,
-
       itemType = "default",
-
       leftIcon,
-
       rightIcon,
-
       asChild = false,
-
       children,
-
       "aria-current": ariaCurrent,
-
       ...props
     },
-
     ref
   ) => {
     const Comp = asChild ? Slot : "a";
-
     const isActive = active ?? ariaCurrent === "page";
-
     const mode = navigationItemButtonMode(isActive);
 
     const controlContent = (
       <>
         {renderItemIcon(leftIcon)}
-
         <Typography
           level="text"
           as="span"
@@ -1009,7 +845,6 @@ export const NavigationItem = forwardRef<
         >
           {children}
         </Typography>
-
         {rightIcon ? (
           <span className="aviala-navigation-item__chevron">
             {renderItemIcon(rightIcon)}
@@ -1040,13 +875,11 @@ export const NavigationItem = forwardRef<
     );
   }
 );
-
 NavigationItem.displayName = "NavigationItem";
 
 export type NavigationActionsProps = HTMLAttributes<HTMLDivElement>;
 
 /** Figma Navigation Items `Content=Aciton Group` (624:119388) */
-
 export const NavigationActions = forwardRef<
   HTMLDivElement,
   NavigationActionsProps
@@ -1059,7 +892,6 @@ export const NavigationActions = forwardRef<
     {children}
   </div>
 ));
-
 NavigationActions.displayName = "NavigationActions";
 
 export type NavigationActionsSlotProps = HTMLAttributes<HTMLDivElement>;
@@ -1074,7 +906,6 @@ export const NavigationActionsSlot = forwardRef<
     {...props}
   />
 ));
-
 NavigationActionsSlot.displayName = "NavigationActionsSlot";
 
 /* -------------------------------------------------------------------------
@@ -1088,17 +919,11 @@ const NAVIGATION_MENU_CLOSE_DELAY_MS = 150;
 
 type NavigationItemMenuContextValue = {
   value: string | undefined;
-
   hasSelection: boolean;
-
   select: (value: string) => void;
-
   openMenu: (viaHover: boolean) => void;
-
   scheduleClose: () => void;
-
   cancelClose: () => void;
-
   openedByHoverRef: RefObject<boolean>;
 };
 
@@ -1107,7 +932,6 @@ const NavigationItemMenuContext =
 
 function useNavigationItemMenuContext(component: string) {
   const context = useContext(NavigationItemMenuContext);
-
   if (!context) {
     throw new Error(`${component} must be used within <NavigationItemMenu>`);
   }
@@ -1118,51 +942,33 @@ function useNavigationItemMenuContext(component: string) {
 export type NavigationItemMenuProps = {
   /** Selected child value — similar to Select `value`. */
   value?: string;
-
   defaultValue?: string;
-
   onValueChange?: (value: string) => void;
-
   open?: boolean;
-
   onOpenChange?: (open: boolean) => void;
-
   children: ReactNode;
 };
 
 export function NavigationItemMenu({
   value: valueProp,
-
   defaultValue,
-
   onValueChange,
-
   open: openProp,
-
   onOpenChange,
-
   children,
 }: NavigationItemMenuProps) {
   const [internalValue, setInternalValue] = useState(defaultValue);
-
   const isValueControlled = valueProp !== undefined;
-
   const value = isValueControlled ? valueProp : internalValue;
-
   const [internalOpen, setInternalOpen] = useState(false);
-
   const isOpenControlled = openProp !== undefined;
-
   const open = isOpenControlled ? openProp : internalOpen;
-
   const closeTimerRef = useRef<number | null>(null);
-
   const openedByHoverRef = useRef(false);
 
   const setOpen = useCallback(
     (nextOpen: boolean) => {
       if (!isOpenControlled) setInternalOpen(nextOpen);
-
       onOpenChange?.(nextOpen);
     },
     [isOpenControlled, onOpenChange]
@@ -1171,7 +977,6 @@ export function NavigationItemMenu({
   const cancelClose = useCallback(() => {
     if (closeTimerRef.current != null) {
       window.clearTimeout(closeTimerRef.current);
-
       closeTimerRef.current = null;
     }
   }, []);
@@ -1179,9 +984,7 @@ export function NavigationItemMenu({
   const openMenu = useCallback(
     (viaHover: boolean) => {
       cancelClose();
-
       openedByHoverRef.current = viaHover;
-
       setOpen(true);
     },
     [cancelClose, setOpen]
@@ -1189,10 +992,8 @@ export function NavigationItemMenu({
 
   const scheduleClose = useCallback(() => {
     cancelClose();
-
     closeTimerRef.current = window.setTimeout(() => {
       closeTimerRef.current = null;
-
       setOpen(false);
     }, NAVIGATION_MENU_CLOSE_DELAY_MS);
   }, [cancelClose, setOpen]);
@@ -1200,11 +1001,8 @@ export function NavigationItemMenu({
   const select = useCallback(
     (nextValue: string) => {
       if (!isValueControlled) setInternalValue(nextValue);
-
       onValueChange?.(nextValue);
-
       cancelClose();
-
       setOpen(false);
     },
     [cancelClose, isValueControlled, onValueChange, setOpen]
@@ -1215,17 +1013,11 @@ export function NavigationItemMenu({
   const contextValue = useMemo<NavigationItemMenuContextValue>(
     () => ({
       value,
-
       hasSelection: value != null && value !== "",
-
       select,
-
       openMenu,
-
       scheduleClose,
-
       cancelClose,
-
       openedByHoverRef,
     }),
     [cancelClose, openMenu, scheduleClose, select, value]
@@ -1257,16 +1049,12 @@ export type NavigationItemMenuTriggerProps = Omit<
 > & {
   /** Defaults to highlighted when the menu has a selected child. */
   active?: boolean;
-
   leftIcon?: ReactNode;
-
   rightIcon?: ReactNode;
-
   children: ReactNode;
 };
 
 /** Parent item — renders as a Navigation tab item and anchors the flyout. */
-
 export const NavigationItemMenuTrigger = forwardRef<
   HTMLButtonElement,
   NavigationItemMenuTriggerProps
@@ -1274,22 +1062,15 @@ export const NavigationItemMenuTrigger = forwardRef<
   (
     {
       className,
-
       active,
-
       leftIcon,
-
       rightIcon,
-
       children,
-
       ...props
     },
-
     ref
   ) => {
     const menu = useNavigationItemMenuContext("NavigationItemMenuTrigger");
-
     const isActive = active ?? menu.hasSelection;
 
     const mode = navigationItemButtonMode(isActive);
@@ -1314,7 +1095,6 @@ export const NavigationItemMenuTrigger = forwardRef<
             {...props}
           >
             {renderItemIcon(leftIcon)}
-
             <Typography
               level="text"
               as="span"
@@ -1322,7 +1102,6 @@ export const NavigationItemMenuTrigger = forwardRef<
             >
               {children}
             </Typography>
-
             {rightIcon ? (
               <span className="aviala-navigation-item__chevron">
                 {renderItemIcon(rightIcon)}
@@ -1334,7 +1113,6 @@ export const NavigationItemMenuTrigger = forwardRef<
     );
   }
 );
-
 NavigationItemMenuTrigger.displayName = "NavigationItemMenuTrigger";
 
 export type NavigationItemMenuContentProps = ComponentPropsWithoutRef<
@@ -1342,7 +1120,6 @@ export type NavigationItemMenuContentProps = ComponentPropsWithoutRef<
 >;
 
 /** Flyout surface — forward of the item in vertical (LTR right / RTL left), below it in horizontal. */
-
 export const NavigationItemMenuContent = forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   NavigationItemMenuContentProps
@@ -1350,20 +1127,13 @@ export const NavigationItemMenuContent = forwardRef<
   (
     {
       className,
-
       side,
-
       align = "start",
-
       sideOffset = 6,
-
       collisionPadding = 8,
-
       onOpenAutoFocus,
-
       ...props
     },
-
     ref
   ) => {
     const overlayContainer = useOverlayPortalContainer();
@@ -1399,7 +1169,6 @@ export const NavigationItemMenuContent = forwardRef<
     );
   }
 );
-
 NavigationItemMenuContent.displayName = "NavigationItemMenuContent";
 
 export type NavigationItemMenuItemProps = Omit<
@@ -1410,16 +1179,12 @@ export type NavigationItemMenuItemProps = Omit<
 
   /** Defaults to highlighted when it matches the menu value. */
   selected?: boolean;
-
   leftIcon?: ReactNode;
-
   rightIcon?: ReactNode;
-
   children: ReactNode;
 };
 
 /** Child option — highlighted when selected, no check icon by default. */
-
 export const NavigationItemMenuItem = forwardRef<
   HTMLButtonElement,
   NavigationItemMenuItemProps
@@ -1427,24 +1192,15 @@ export const NavigationItemMenuItem = forwardRef<
   (
     {
       className,
-
       value,
-
       selected,
-
       leftIcon,
-
       rightIcon,
-
       disabled,
-
       onClick,
-
       children,
-
       ...props
     },
-
     ref
   ) => {
     const menu = useNavigationItemMenuContext("NavigationItemMenuItem");
@@ -1471,7 +1227,6 @@ export const NavigationItemMenuItem = forwardRef<
         {...props}
       >
         {renderItemIcon(leftIcon)}
-
         <Typography
           level="text"
           as="span"
@@ -1479,7 +1234,6 @@ export const NavigationItemMenuItem = forwardRef<
         >
           {children}
         </Typography>
-
         {rightIcon ? (
           <span className="aviala-navigation-menu-item__trailing">
             {renderItemIcon(rightIcon)}
@@ -1489,5 +1243,4 @@ export const NavigationItemMenuItem = forwardRef<
     );
   }
 );
-
 NavigationItemMenuItem.displayName = "NavigationItemMenuItem";

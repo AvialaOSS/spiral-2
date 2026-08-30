@@ -1,3 +1,4 @@
+import { UsersUser } from "@aviala-design/icons";
 import {
   cloneElement,
   forwardRef,
@@ -86,6 +87,17 @@ function renderCellIcon(node: ReactNode, sized = true): ReactNode {
       : node;
 
   return <span className="aviala-table-cell__icon">{content}</span>;
+}
+
+function TableCellDefaultAvatar() {
+  return (
+    <Avatar
+      content="icon"
+      level="text"
+      lineHeightFix={false}
+      icon={<UsersUser aria-hidden />}
+    />
+  );
 }
 
 function renderTextBlock(text: ReactNode, caption?: ReactNode) {
@@ -237,36 +249,30 @@ export const TableCell = forwardRef<HTMLDivElement, TableCellProps>(
               )}
             </>
           );
-        case "icon-place+text":
+        case "icon-place+text": {
+          const iconPlaceNode = iconPlace ?? renderCellIcon(icon, false);
           return (
             <>
               {grabber}
               {renderCellBody(
                 <>
-                  <span className="aviala-table-cell__icon-place">
-                    {iconPlace ?? renderCellIcon(icon, false) ?? (
-                      <Avatar content="text" level="text" lineHeightFix={false}>
-                        A
-                      </Avatar>
-                    )}
-                  </span>
+                  {iconPlaceNode != null ? (
+                    <span className="aviala-table-cell__icon-place">{iconPlaceNode}</span>
+                  ) : null}
                   {renderTextBlock(text, caption)}
                 </>,
                 actions
               )}
             </>
           );
+        }
         case "people":
           return (
             <>
               {grabber}
               {renderCellBody(
                 <>
-                  {people ?? (
-                    <Avatar content="text" level="text" lineHeightFix={false}>
-                      A
-                    </Avatar>
-                  )}
+                  {people ?? <TableCellDefaultAvatar />}
                   {renderTextBlock(text, caption)}
                 </>,
                 actions
@@ -278,11 +284,12 @@ export const TableCell = forwardRef<HTMLDivElement, TableCellProps>(
             <>
               {grabber}
               {renderCellBody(
-                badge ?? (
-                  <Badge style="theme" level="caption">
-                    {badgeLabel ?? "Text"}
-                  </Badge>
-                ),
+                badge ??
+                  (badgeLabel != null ? (
+                    <Badge style="theme" level="caption">
+                      {badgeLabel}
+                    </Badge>
+                  ) : null),
                 actions
               )}
             </>

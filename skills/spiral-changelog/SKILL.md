@@ -18,6 +18,33 @@ description: >-
 
 Also follow `skills/spiral-component` for component layout and exports.
 
+## Two tracks, both required
+
+A user-visible change in `packages/ui` needs an entry in **both** places. They are
+not alternatives and neither one generates the other.
+
+| | `packages/ui/changelogs/{DisplayName}.md` | `.changeset/*.md` |
+|---|---|---|
+| Audience | Component consumers, on the docs site | Package consumers, on npm |
+| Granularity | One file per component (`Button`, `SegmentatorGroup`, …) | One file per change set, lists packages + bump type |
+| Language | Chinese bullets, English section titles | English summary |
+| Versioning | Written under `## [Unreleased]`; `pnpm version:packages` stamps the heading | `changeset version` picks the semver bump and writes `packages/ui/CHANGELOG.md` |
+| Consumed by | `pnpm --filter @aviala-design/spiral build` → `dist/component-changelogs.json` → avialaWebsite | Changesets CLI during release |
+| Lifetime | Permanent history, kept in git | Deleted by `changeset version` once consumed |
+
+Practical consequences:
+
+- A changeset without a component changelog entry ships to npm but leaves the docs
+  site component history with a gap.
+- A component changelog entry without a changeset never gets a version stamped, so
+  it sits under `[Unreleased]` indefinitely.
+- Internal-only work (refactors, tooling, CI) needs **neither** — but if you add a
+  changeset for it, keep it `patch` and skip the component changelog.
+
+Run `pnpm changelog:check` to see whether the two tracks are paired. It warns and
+exits 0 by default; `pnpm changelog:check -- --strict` fails instead, for use in a
+hook.
+
 ## Rules
 
 1. File: `packages/ui/changelogs/{DisplayName}.md` — `DisplayName` matches docs nav / export (`Button`, `SegmentatorGroup`, `CascaderField`, …).
@@ -59,3 +86,4 @@ After writing or editing a changelog entry:
 2. Confirm section titles are English (`Added` / `Changed` / `Fixed` / `Removed` / `Deprecated`) and bullet body is Chinese with English identifiers.
 3. Run `pnpm --filter @aviala-design/spiral build` — build must succeed and emit `dist/component-changelogs.json`.
 4. Confirm a matching changeset exists (`.changeset/*.md`) if the change is publishable.
+5. Run `pnpm changelog:check` — it reports when only one of the two tracks was updated.

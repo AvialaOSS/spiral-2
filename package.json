@@ -15,6 +15,7 @@
     "icons:build": "pnpm --filter @aviala-design/icons run build:icons",
     "icons:build:merge": "pnpm --filter @aviala-design/icons exec node ./scripts/build-icons.mjs --merge",
     "icons:sync": "node scripts/figma-export/export-icons.mjs && pnpm --filter @aviala-design/icons run build:icons && pnpm --filter @aviala-design/icons run build:release",
+    "changelog:check": "pnpm --filter @aviala-design/spiral run changelog:check",
     "version:packages": "changeset version && pnpm --filter @aviala-design/spiral run changelog:stamp",
     "release:publish": "pnpm --filter @aviala-design/tokens build && pnpm --filter @aviala-design/icons run build:release && pnpm --filter @aviala-design/spiral build && pnpm changeset publish",
     "sync:ald": "node scripts/sync-ald.mjs",

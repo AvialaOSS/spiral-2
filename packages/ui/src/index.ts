@@ -179,16 +179,10 @@ export {
   type SegmentatorMode,
   type SegmentatorDirection,
 } from "./components/segmentator";
-export {
-  Form,
-  FormField,
-  type FormFieldProps,
-  type FormFieldLayoutProps,
-  type FormFieldControlledProps,
-  type FormFieldRenderProps,
-  type FormFieldDirection,
-  useResolvedControlError,
-} from "./components/form-field";
+// Form / FormField moved to `@aviala-design/spiral/form` — they depend on the
+// `react-hook-form` peer. `useResolvedControlError` stays here because the
+// controls in this entry use it and it needs no peer dependency.
+export { useResolvedControlError } from "./components/form-field-context";
 export {
   Typography,
   typographyVariants,

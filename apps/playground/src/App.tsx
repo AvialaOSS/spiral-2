@@ -7,7 +7,6 @@ import {
   Button,
   Checkbox,
   Fieldset,
-  FormField,
   Input,
   InputGroup,
   InputGroupAddon,
@@ -54,6 +53,7 @@ import {
   useTheme,
   type HueFamily,
 } from "@aviala-design/spiral";
+import { FormField } from "@aviala-design/spiral/form";
 import { useId, useState } from "react";
 import {
   categoryCascaderOptions,

@@ -1,10 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  forwardRef,
-  useId,
-  type CSSProperties,
-  type HTMLAttributes,
-} from "react";
+import { forwardRef, useId, type CSSProperties, type HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 import { useLocaleMessages } from "../locale";
 
@@ -31,13 +26,6 @@ const loadingVariants = cva("aviala-loading", {
       text: "aviala-loading--level-text",
       caption: "aviala-loading--level-caption",
     },
-    mode: {
-      theme: "aviala-loading--mode-theme",
-      themeText: "aviala-loading--mode-themeText",
-      black: "aviala-loading--mode-black",
-      white: "aviala-loading--mode-white",
-      inherit: "aviala-loading--mode-inherit",
-    },
     lineHeightFix: {
       true: "aviala-loading--line-height-fix",
       false: "",
@@ -45,7 +33,6 @@ const loadingVariants = cva("aviala-loading", {
   },
   defaultVariants: {
     level: "text",
-    mode: "theme",
     lineHeightFix: true,
   },
 });
@@ -59,9 +46,7 @@ const BUTTON_SIZE_TO_LOADING_LEVEL = {
 
 export type LoadingButtonSize = keyof typeof BUTTON_SIZE_TO_LOADING_LEVEL;
 
-export function loadingLevelForButtonSize(
-  size: LoadingButtonSize
-): LoadingLevel {
+export function loadingLevelForButtonSize(size: LoadingButtonSize): LoadingLevel {
   return BUTTON_SIZE_TO_LOADING_LEVEL[size];
 }
 
@@ -90,6 +75,8 @@ function loadingRingStyle(mode: LoadingMode): CSSProperties {
 
 export type LoadingProps = HTMLAttributes<HTMLSpanElement> &
   VariantProps<typeof loadingVariants> & {
+    /** Ring color source; applied through the inline conic gradient, not a class. */
+    mode?: LoadingMode;
     /** Accessible name; omit when decorative (`aria-hidden`). */
     label?: string;
   };
@@ -109,16 +96,12 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
     const locale = useLocaleMessages("Loading");
     const ringMaskId = `aviala-loading-ring-${useId().replace(/:/g, "")}`;
     const resolvedLabel = label ?? locale.label;
-    const isDecorative =
-      props["aria-hidden"] === true || props["aria-hidden"] === "true";
+    const isDecorative = props["aria-hidden"] === true || props["aria-hidden"] === "true";
 
     return (
       <span
         ref={ref}
-        className={cn(
-          loadingVariants({ level, mode, lineHeightFix }),
-          className
-        )}
+        className={cn(loadingVariants({ level, lineHeightFix }), className)}
         role={isDecorative ? undefined : "status"}
         aria-label={isDecorative ? undefined : resolvedLabel}
         aria-live={isDecorative ? undefined : "polite"}
@@ -128,24 +111,11 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
           <svg className="aviala-loading__ring">
             <defs>
               <mask id={ringMaskId} maskUnits="userSpaceOnUse">
-                <circle
-                  className="aviala-loading__path"
-                  cx="50%"
-                  cy="50%"
-                  fill="none"
-                  stroke="#fff"
-                />
+                <circle className="aviala-loading__path" cx="50%" cy="50%" fill="none" />
               </mask>
             </defs>
-            <foreignObject
-              width="100%"
-              height="100%"
-              mask={`url(#${ringMaskId})`}
-            >
-              <div
-                className="aviala-loading__conic"
-                style={loadingRingStyle(mode ?? "theme")}
-              />
+            <foreignObject width="100%" height="100%" mask={`url(#${ringMaskId})`}>
+              <div className="aviala-loading__conic" style={loadingRingStyle(mode ?? "theme")} />
             </foreignObject>
           </svg>
         </span>

@@ -27,7 +27,7 @@ const MODAL_ICON_SIZE = 16;
 const modalContentVariants = cva("aviala-modal-content", {
   variants: {
     size: {
-      default: "aviala-modal-content--size-default",
+      default: "",
       large: "aviala-modal-content--size-large",
     },
   },

@@ -81,6 +81,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 
     const sharedClassName = cn(
       "aviala-link aviala-focus-ring",
+      `aviala-link--${resolvedLevel}`,
       iconOnly ? "aviala-link--icon-only" : undefined,
       className
     );
@@ -129,10 +130,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         )}
         {!iconOnly && children !== undefined && children !== null && (
           <span
-            className={cn(
-              "aviala-link__label relative shrink-0",
-              levelStyles[resolvedLevel].className
-            )}
+            className={cn("relative shrink-0", levelStyles[resolvedLevel].className)}
           >
             {children}
           </span>

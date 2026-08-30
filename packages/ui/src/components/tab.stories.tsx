@@ -96,6 +96,7 @@ export const Tiled: Story = {
 
 export const Card: Story = {
   render: () => (
+    // Demo fixture: hex is only a story backdrop fallback, not a component style.
     <div className="rounded-md bg-[var(--box-box-theme-secondarybackground,#ffe9e5)] p-4">
       <DemoTab style="card" />
     </div>
@@ -126,6 +127,7 @@ export const StyleMatrix: Story = {
           </span>
           <div
             className={
+              // Demo fixture: hex is only a story backdrop fallback, not a component style.
               style === "card"
                 ? "rounded-md bg-[var(--box-box-theme-secondarybackground,#ffe9e5)] p-3"
                 : undefined

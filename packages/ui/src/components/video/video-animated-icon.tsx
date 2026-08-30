@@ -1,7 +1,10 @@
 import { memo, useId, useLayoutEffect, useRef } from "react";
-import { VIDEO_ANIMATED_ICON_MARKUP } from "./video-animated-icon-markup";
+import {
+  VIDEO_ANIMATED_ICON_MARKUP,
+  type VideoAnimatedIconName,
+} from "./animated-icon-markup";
 
-export type VideoAnimatedIconName = keyof typeof VIDEO_ANIMATED_ICON_MARKUP;
+export type { VideoAnimatedIconName };
 
 /** Morph finishes around 25% of the 2s delivered timeline. */
 export const VIDEO_TRANSPORT_ANIMATION_MS = 550;
@@ -60,6 +63,13 @@ function mirrorSkipGlyphs(layer: HTMLElement) {
   }
 }
 
+/**
+ * `innerHTML` is safe here: the markup comes from the build-time
+ * `animated-icon-markup` modules, never from props or user input. It is injected
+ * imperatively (rather than rendered as JSX) so the delivered `<style>` blocks and
+ * SMIL/CSS animations stay intact; `__UID__` is namespaced per instance so the
+ * animation ids of sibling icons cannot collide.
+ */
 function injectMarkup(
   layer: HTMLElement,
   name: VideoAnimatedIconName,
@@ -102,11 +112,8 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
 
   const isPlayPause = name === "play" || name === "pause";
 
-  // Inject once per instance. Transport buttons keep a stable kind
-  // (play/pause pair vs skip); later name flips are handled below.
   useLayoutEffect(() => {
-    const currentName = nameRef.current;
-    if (currentName === "play" || currentName === "pause") {
+    if (isPlayPause) {
       const playLayer = playLayerRef.current;
       const pauseLayer = pauseLayerRef.current;
       if (!playLayer || !pauseLayer) return;
@@ -116,7 +123,7 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
       freezeAtEnd(pauseLayer);
       setLayerRest(playLayer, true);
       setLayerRest(pauseLayer, true);
-      const initial = currentName === "pause" ? "pause" : "play";
+      const initial = nameRef.current === "pause" ? "pause" : "play";
       shownRef.current = initial;
       setLayerActive(playLayer, initial === "play");
       setLayerActive(pauseLayer, initial === "pause");
@@ -124,11 +131,11 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     }
     const layer = singleLayerRef.current;
     if (!layer) return;
-    injectMarkup(layer, currentName, uid);
+    injectMarkup(layer, name, uid);
     freezeAtEnd(layer);
     setLayerRest(layer, true);
-    shownRef.current = currentName;
-  }, [uid]);
+    shownRef.current = name;
+  }, []);
 
   useLayoutEffect(() => {
     if (playToken === 0) return;
@@ -157,10 +164,8 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
       // not `name`, which can still be the previous state when the token fires.
       const from = shownRef.current === "pause" ? "pause" : "play";
       const to: "play" | "pause" = from === "play" ? "pause" : "play";
-      const incoming =
-        to === "pause" ? pauseLayerRef.current : playLayerRef.current;
-      const outgoing =
-        to === "pause" ? playLayerRef.current : pauseLayerRef.current;
+      const incoming = to === "pause" ? pauseLayerRef.current : playLayerRef.current;
+      const outgoing = to === "pause" ? playLayerRef.current : pauseLayerRef.current;
       if (!incoming || !outgoing) {
         lockRef.current = false;
         return;
@@ -200,10 +205,8 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     if (shownRef.current === name) return;
     if (name !== "play" && name !== "pause") return;
 
-    const incoming =
-      name === "pause" ? pauseLayerRef.current : playLayerRef.current;
-    const outgoing =
-      name === "pause" ? playLayerRef.current : pauseLayerRef.current;
+    const incoming = name === "pause" ? pauseLayerRef.current : playLayerRef.current;
+    const outgoing = name === "pause" ? playLayerRef.current : pauseLayerRef.current;
     if (!incoming || !outgoing) return;
     freezeAtEnd(incoming);
     setLayerActive(incoming, true);

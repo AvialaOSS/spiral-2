@@ -19,7 +19,7 @@ type Story = StoryObj<typeof Input>;
 
 export const Empty: Story = {
   args: {
-    placeholder: "Text",
+    placeholder: "请输入项目名称",
     leftIcon: <GeneralSetting aria-hidden />,
     rightIcon: <GeneralSetting aria-hidden />,
   },
@@ -27,7 +27,7 @@ export const Empty: Story = {
 
 export const Filled: Story = {
   args: {
-    defaultValue: "Text",
+    defaultValue: "季度经营分析报告",
     leftIcon: <GeneralSetting aria-hidden />,
     rightIcon: <GeneralSetting aria-hidden />,
   },
@@ -41,7 +41,7 @@ export const EmptyVsFilled: Story = {
           Empty (placeholder 60%)
         </span>
         <Input
-          placeholder="Text"
+          placeholder="请输入项目名称"
           leftIcon={<GeneralSetting aria-hidden />}
           rightIcon={<GeneralSetting aria-hidden />}
         />
@@ -51,7 +51,7 @@ export const EmptyVsFilled: Story = {
           Filled (100%)
         </span>
         <Input
-          defaultValue="Text"
+          defaultValue="季度经营分析报告"
           leftIcon={<GeneralSetting aria-hidden />}
           rightIcon={<GeneralSetting aria-hidden />}
         />
@@ -63,7 +63,7 @@ export const EmptyVsFilled: Story = {
 export const Big: Story = {
   args: {
     size: "big",
-    placeholder: "Text",
+    placeholder: "请输入项目名称",
     leftIcon: <GeneralSetting aria-hidden />,
     rightIcon: <GeneralSetting aria-hidden />,
   },
@@ -72,7 +72,7 @@ export const Big: Story = {
 export const AllRound: Story = {
   args: {
     allRound: true,
-    placeholder: "Text",
+    placeholder: "搜索文档",
     leftIcon: <GeneralSetting aria-hidden />,
     rightIcon: <GeneralSetting aria-hidden />,
   },
@@ -80,7 +80,7 @@ export const AllRound: Story = {
 
 export const Disabled: Story = {
   args: {
-    placeholder: "Text",
+    placeholder: "当前不可编辑",
     disabled: true,
     leftIcon: <GeneralSetting aria-hidden />,
     rightIcon: <GeneralSetting aria-hidden />,
@@ -89,7 +89,7 @@ export const Disabled: Story = {
 
 export const Error: Story = {
   args: {
-    placeholder: "Text",
+    placeholder: "请输入有效的邮箱地址",
     error: true,
     leftIcon: <GeneralSetting aria-hidden />,
   },

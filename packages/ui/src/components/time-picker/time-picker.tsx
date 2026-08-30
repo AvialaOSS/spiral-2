@@ -3,21 +3,20 @@ import { TimeAndDateClock } from "@aviala-design/icons";
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useMemo,
-  useRef,
   useState,
   type ButtonHTMLAttributes,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useCloseSuppression } from "../../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useLocaleMessages } from "../../locale";
 import { formatTimeValue } from "../date-picker/date-utils";
 import { typographyVariants } from "../typography";
-import { useResolvedControlError } from "../form-field";
+import { useResolvedControlError } from "../form-field-context";
 import {
   TimePickerProvider,
   useTimePickerContext,
@@ -41,6 +40,7 @@ export type TimePickerProps = {
   className?: string;
 };
 
+
 export function TimePicker({
   children,
   value: valueProp,
@@ -54,10 +54,7 @@ export function TimePicker({
   className,
 }: TimePickerProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [internalValue, setInternalValue] =
-    useState<TimePickerValue>(defaultValue);
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
+  const [internalValue, setInternalValue] = useState<TimePickerValue>(defaultValue);
 
   const isOpenControlled = openProp !== undefined;
   const open = isOpenControlled ? openProp : internalOpen;
@@ -73,47 +70,17 @@ export function TimePicker({
     [onValueChange, valueProp]
   );
 
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) {
-      pointerDownCloseRef.current = false;
-      return;
-    }
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () =>
-      document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
+  const { shouldCommitOpenChange } = useCloseSuppression({ open, disabled });
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (disabled && nextOpen) return;
-      if (
-        !nextOpen &&
-        windowBlurCloseRef.current &&
-        !pointerDownCloseRef.current
-      ) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isOpenControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [disabled, isOpenControlled, onOpenChange]
+    [isOpenControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   const contextValue = useMemo(
@@ -129,21 +96,14 @@ export function TimePicker({
 
   return (
     <TimePickerProvider value={contextValue}>
-      <PopoverPrimitive.Root
-        open={open}
-        onOpenChange={handleOpenChange}
-        modal={false}
-      >
+      <PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} modal={false}>
         <div className={cn("inline-flex", className)}>{children}</div>
       </PopoverPrimitive.Root>
     </TimePickerProvider>
   );
 }
 
-export type TimePickerTriggerProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "value"
-> & {
+export type TimePickerTriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value"> & {
   size?: TimePickerSize;
   allRound?: boolean;
   leftIcon?: ReactNode;
@@ -153,10 +113,7 @@ export type TimePickerTriggerProps = Omit<
   displayValue?: string | null;
 };
 
-export const TimePickerTrigger = forwardRef<
-  HTMLButtonElement,
-  TimePickerTriggerProps
->(
+export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTriggerProps>(
   (
     {
       className,
@@ -173,12 +130,7 @@ export const TimePickerTrigger = forwardRef<
     ref
   ) => {
     const locale = useLocaleMessages("TimePicker");
-    const {
-      open,
-      disabled: disabledContext,
-      size: sizeContext,
-      value,
-    } = useTimePickerContext();
+    const { open, disabled: disabledContext, size: sizeContext, value } = useTimePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
     const resolvedError = useResolvedControlError(error);
@@ -194,10 +146,7 @@ export const TimePickerTrigger = forwardRef<
         <button
           ref={ref}
           type="button"
-          className={cn(
-            "aviala-timepicker-trigger aviala-focus-ring",
-            className
-          )}
+          className={cn("aviala-timepicker-trigger aviala-focus-ring", className)}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
@@ -208,9 +157,7 @@ export const TimePickerTrigger = forwardRef<
           {...props}
         >
           {renderSlotIcon(
-            leftIcon ?? (
-              <TimeAndDateClock level="text" biggerSize aria-hidden />
-            ),
+            leftIcon ?? <TimeAndDateClock level="text" biggerSize aria-hidden />,
             "aviala-timepicker-trigger__slot"
           )}
           <span className="aviala-timepicker-trigger__field">
@@ -232,9 +179,7 @@ export const TimePickerTrigger = forwardRef<
 );
 TimePickerTrigger.displayName = "TimePickerTrigger";
 
-export type TimePickerContentProps = ComponentPropsWithoutRef<
-  typeof PopoverPrimitive.Content
-> & {
+export type TimePickerContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
   portalled?: boolean;
 };
 
@@ -284,10 +229,13 @@ export function TimePickerPanel({ className }: TimePickerPanelProps) {
   const locale = useLocaleMessages("TimePicker");
   const { value, setValue } = useTimePickerContext();
 
+  // Hour/minute wheels already expose listbox + aria-activedescendant + Up/Down/
+  // Home/End. The panel is a group so those widgets stay in browse mode; a
+  // panel-level listbox would fight the two independent spin columns.
   return (
     <div
       className={cn("aviala-timepicker-panel", className)}
-      role="application"
+      role="group"
       aria-label={locale.panel}
     >
       <TimePickerWheels value={value} onChange={setValue} />
@@ -295,10 +243,7 @@ export function TimePickerPanel({ className }: TimePickerPanelProps) {
   );
 }
 
-export type TimePickerFieldProps = Omit<
-  TimePickerTriggerProps,
-  "displayValue"
-> & {
+export type TimePickerFieldProps = Omit<TimePickerTriggerProps, "displayValue"> & {
   contentClassName?: string;
   panelClassName?: string;
   value?: TimePickerValue;

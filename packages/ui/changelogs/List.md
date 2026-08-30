@@ -1,5 +1,14 @@
 # List
 
+## [Unreleased]
+
+### Fixed
+- 可交互的 `ListItem`（传入 `onClick` 或 `interactive`）现在可以获得焦点：补上 `tabIndex`、`role="button"` 与 Enter / Space 触发，行内 Switch、Button、Select 等控件仍各自响应按键
+- `disabled` 的可交互行标记 `aria-disabled`；`href` 链接行的行为保持不变
+
+### Removed
+- `ListItem` `actionLabel` 的 `Text` 默认值；未传 `actionLabel` 且未传 `action` 时不再渲染主操作按钮
+
 ## 2.6.2
 
 ### Fixed

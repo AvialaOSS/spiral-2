@@ -55,9 +55,6 @@ function resolveLineHeightFix(
 ): BadgeLineHeightFix {
   if (lineHeightFix === false || lineHeightFix === "off") return "off";
   if (lineHeightFix === "subtitle") return "subtitle";
-  if (lineHeightFix === "text" || lineHeightFix === true) {
-    return level === "text" ? "subtitle" : "text";
-  }
   return level === "text" ? "subtitle" : "text";
 }
 

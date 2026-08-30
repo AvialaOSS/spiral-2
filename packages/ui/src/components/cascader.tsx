@@ -28,16 +28,15 @@ import { useRtl } from "../config";
 import { Badge } from "./badge";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-import {
-  iconLevelCssVarStyle,
-  iconSlotCssVarStyle,
-} from "../lib/icon-slot-sizing";
+import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
+import { focusRovingSibling, resolveRovingMove } from "../lib/roving-focus";
 import { cn } from "../lib/utils";
+import { useCloseSuppression } from "../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → Cascader Input */
 export type CascaderSize = "regular" | "big";
@@ -83,12 +82,11 @@ const CascaderContext = createContext<CascaderContextValue | null>(null);
 function useCascaderContext() {
   const context = useContext(CascaderContext);
   if (!context) {
-    throw new Error(
-      "Cascader compound components must be used within Cascader."
-    );
+    throw new Error("Cascader compound components must be used within Cascader.");
   }
   return context;
 }
+
 
 function renderItemIcon(
   node: ReactNode,
@@ -107,12 +105,7 @@ function renderItemIcon(
         "aviala-cascader-item__icon",
         iconLevel === "caption" && "aviala-cascader-item__icon--sm"
       )}
-      style={iconSlotCssVarStyle(
-        node,
-        "--cascader-item-icon-size",
-        iconLevel,
-        true
-      )}
+      style={iconSlotCssVarStyle(node, "--cascader-item-icon-size", iconLevel, true)}
       {...(debugId ? spiralDebugId(debugId) : undefined)}
     >
       {content}
@@ -125,11 +118,7 @@ function renderBadgeSlot(node: ReactNode): ReactNode {
 
   return (
     <span className="aviala-cascader-item__badge">
-      {isValidElement(node) && node.type === Badge ? (
-        node
-      ) : (
-        <Badge>{node}</Badge>
-      )}
+      {isValidElement(node) && node.type === Badge ? node : <Badge>{node}</Badge>}
     </span>
   );
 }
@@ -239,19 +228,13 @@ function findOptionPath(
   return current;
 }
 
-function getOptionsAtPath(
-  options: CascaderOption[],
-  path: string[]
-): CascaderOption[] {
+function getOptionsAtPath(options: CascaderOption[], path: string[]): CascaderOption[] {
   if (path.length === 0) return options;
   const node = findOptionPath(options, path);
   return node?.children ?? [];
 }
 
-function getLabelsForPath(
-  options: CascaderOption[],
-  path: string[]
-): ReactNode[] {
+function getLabelsForPath(options: CascaderOption[], path: string[]): ReactNode[] {
   const labels: ReactNode[] = [];
   let currentOptions = options;
 
@@ -307,27 +290,17 @@ export function Cascader({
   className,
 }: CascaderProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [internalValue, setInternalValue] = useState<string[]>(
-    defaultValue ?? []
-  );
+  const [internalValue, setInternalValue] = useState<string[]>(defaultValue ?? []);
   const [activePath, setActivePath] = useState<string[]>(defaultValue ?? []);
   const [highlightedValue, setHighlightedValue] = useState<string | null>(null);
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
 
   const isOpenControlled = openProp !== undefined;
   const isValueControlled = valueProp !== undefined;
   const open = isOpenControlled ? openProp : internalOpen;
-  const selectedPath = isValueControlled ? (valueProp ?? []) : internalValue;
+  const selectedPath = isValueControlled ? valueProp ?? [] : internalValue;
   const wasOpenRef = useRef(open);
 
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
+  const { shouldCommitOpenChange } = useCloseSuppression({ open, disabled });
 
   // Only seed expansion when the panel opens. While open, `selectPath` /
   // `expandTo` own `activePath` — re-syncing on every `selectedPath` change
@@ -351,39 +324,15 @@ export function Cascader({
     setActivePath(selectedPath.slice(0, -1));
   }, [open, options, selectedPath]);
 
-  useEffect(() => {
-    if (!open) {
-      pointerDownCloseRef.current = false;
-      return;
-    }
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () =>
-      document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
-
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (disabled && nextOpen) return;
-      if (
-        !nextOpen &&
-        windowBlurCloseRef.current &&
-        !pointerDownCloseRef.current
-      ) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isOpenControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [disabled, isOpenControlled, onOpenChange]
+    [isOpenControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   const commitValue = useCallback(
@@ -443,8 +392,7 @@ export function Cascader({
       getOptionsAtPath: (path) => getOptionsAtPath(options, path),
       isPathSelected: (path) => isPathOnSelectedPath(path, selectedPath),
       isPathExpanded: (path) => {
-        const expandedPrefix =
-          activePath.length > 0 ? activePath : selectedPath.slice(0, -1);
+        const expandedPrefix = activePath.length > 0 ? activePath : selectedPath.slice(0, -1);
         return (
           path.length <= expandedPrefix.length &&
           path.every((segment, index) => segment === expandedPrefix[index])
@@ -466,25 +414,14 @@ export function Cascader({
 
   return (
     <CascaderContext.Provider value={contextValue}>
-      <PopoverPrimitive.Root
-        open={open}
-        onOpenChange={handleOpenChange}
-        modal={false}
-      >
-        <div
-          className={cn("inline-flex", className)}
-          {...spiralDebugId("cascader")}
-        >
-          {children}
-        </div>
+      <PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} modal={false}>
+        <div className={cn("inline-flex", className)} {...spiralDebugId("cascader")}>{children}</div>
       </PopoverPrimitive.Root>
     </CascaderContext.Provider>
   );
 }
 
-export type CascaderTriggerProps = ComponentPropsWithoutRef<
-  typeof PopoverPrimitive.Trigger
-> & {
+export type CascaderTriggerProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger> & {
   size?: CascaderSize;
   allRound?: boolean;
   leftIcon?: ReactNode;
@@ -498,10 +435,7 @@ export type CascaderTriggerProps = ComponentPropsWithoutRef<
   className?: string;
 };
 
-export const CascaderTrigger = forwardRef<
-  HTMLButtonElement,
-  CascaderTriggerProps
->(
+export const CascaderTrigger = forwardRef<HTMLButtonElement, CascaderTriggerProps>(
   (
     {
       className,
@@ -521,21 +455,14 @@ export const CascaderTrigger = forwardRef<
   ) => {
     const locale = useLocaleMessages("Cascader");
     const resolvedPlaceholder = placeholder ?? locale.placeholder;
-    const {
-      open,
-      disabled: disabledContext,
-      size: sizeContext,
-      selectedPath,
-      getOptionAtPath,
-    } = useCascaderContext();
+    const { open, disabled: disabledContext, size: sizeContext, selectedPath, getOptionAtPath } =
+      useCascaderContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
     const resolvedError = useResolvedControlError(error);
 
     const labels = selectedPath
-      .map(
-        (_, index) => getOptionAtPath(selectedPath.slice(0, index + 1))?.label
-      )
+      .map((_, index) => getOptionAtPath(selectedPath.slice(0, index + 1))?.label)
       .filter((label): label is ReactNode => label != null && label !== false);
 
     const resolvedDisplay =
@@ -567,41 +494,22 @@ export const CascaderTrigger = forwardRef<
           {...spiralDebugId("cascader.trigger")}
           {...props}
         >
-          {renderSlotIcon(
-            leftIcon,
-            "aviala-cascader-trigger__slot",
-            "cascader.trigger.icon-left"
-          )}
-          <span
-            className="aviala-cascader-trigger__field"
-            {...spiralDebugId("cascader.trigger.value")}
-          >
+          {renderSlotIcon(leftIcon, "aviala-cascader-trigger__slot", "cascader.trigger.icon-left")}
+          <span className="aviala-cascader-trigger__field" {...spiralDebugId("cascader.trigger.value")}>
             <span
-              className={cn(
-                "aviala-cascader-trigger__value",
-                typographyVariants({ level: "text" })
-              )}
+              className={cn("aviala-cascader-trigger__value", typographyVariants({ level: "text" }))}
               data-placeholder={hasValue ? undefined : "true"}
             >
               {hasValue ? resolvedDisplay : resolvedPlaceholder}
             </span>
           </span>
-          {renderSlotIcon(
-            rightIcon,
-            "aviala-cascader-trigger__slot",
-            "cascader.trigger.icon-right"
-          )}
+          {renderSlotIcon(rightIcon, "aviala-cascader-trigger__slot", "cascader.trigger.icon-right")}
           <span
             className="aviala-cascader-trigger__expand"
             aria-hidden
             style={
               expandIcon
-                ? iconSlotCssVarStyle(
-                    expandIcon,
-                    "--input-slot-icon-size",
-                    "text",
-                    true
-                  )
+                ? iconSlotCssVarStyle(expandIcon, "--input-slot-icon-size", "text", true)
                 : iconLevelCssVarStyle("text", true, "--input-slot-icon-size")
             }
             {...spiralDebugId("cascader.trigger.expand")}
@@ -617,9 +525,7 @@ export const CascaderTrigger = forwardRef<
 );
 CascaderTrigger.displayName = "CascaderTrigger";
 
-export type CascaderContentProps = ComponentPropsWithoutRef<
-  typeof PopoverPrimitive.Content
-> & {
+export type CascaderContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
   portalled?: boolean;
   className?: string;
 };
@@ -735,22 +641,18 @@ export function CascaderItemGroup({
   return (
     <div className={cn("aviala-cascader-group", className)}>
       {label ? (
-        <div
-          className={cn(
-            "aviala-cascader-label",
-            typographyVariants({ level: "caption" })
-          )}
-        >
+        <div className={cn("aviala-cascader-label", typographyVariants({ level: "caption" }))}>
           {label}
         </div>
       ) : null}
       <div className="aviala-cascader-group__slot">{children}</div>
-      {showDivider ? (
-        <div className="aviala-cascader-separator" role="separator" />
-      ) : null}
+      {showDivider ? <div className="aviala-cascader-separator" role="separator" /> : null}
     </div>
   );
 }
+
+/** Selectable rows only — `title` layout renders as presentation and is skipped. */
+const CASCADER_OPTION_SELECTOR = '.aviala-cascader-item[role="option"]';
 
 export type CascaderItemProps = {
   value: string;
@@ -814,8 +716,7 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
     const isHighlighted = highlightedValue === value;
     const isDisabled = disabled || option?.disabled;
 
-    const isFormLeading =
-      itemFunction === "form-radio" || itemFunction === "form-checkbox";
+    const isFormLeading = itemFunction === "form-radio" || itemFunction === "form-checkbox";
     const leftIconLevel: IconLevel = isTitle ? "caption" : "text";
     const showTrailingFunction =
       showFunctionIcon &&
@@ -839,11 +740,27 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleClick();
+        return;
       }
       if (event.key === expandKey && hasChildren) {
         event.preventDefault();
         expandTo(path);
+        return;
       }
+
+      // Up/Down/Home/End roam the column the item lives in; the expand key is the
+      // only way across columns, so this axis stays vertical in both directions.
+      const move = resolveRovingMove(event.key, "vertical");
+      if (!move) return;
+
+      const column = event.currentTarget.closest(".aviala-cascader-column__surface");
+      const moved = focusRovingSibling(
+        column,
+        event.currentTarget,
+        move,
+        CASCADER_OPTION_SELECTOR
+      );
+      if (moved) event.preventDefault();
     };
 
     return (
@@ -870,42 +787,26 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
         onMouseLeave={(event) => {
           if (isTitle) return;
           const next = event.relatedTarget;
-          if (next instanceof Node && event.currentTarget.contains(next))
-            return;
+          if (next instanceof Node && event.currentTarget.contains(next)) return;
           if (highlightedValue === value) setHighlightedValue(null);
         }}
         onFocus={() => {
           if (!isTitle) setHighlightedValue(value);
         }}
       >
-        {isFormLeading && itemFunction === "form-radio" ? (
-          <CascaderItemFormRadio />
-        ) : null}
-        {isFormLeading && itemFunction === "form-checkbox" ? (
-          <CascaderItemFormCheckbox />
-        ) : null}
+        {isFormLeading && itemFunction === "form-radio" ? <CascaderItemFormRadio /> : null}
+        {isFormLeading && itemFunction === "form-checkbox" ? <CascaderItemFormCheckbox /> : null}
 
         {showLeftIcon && leftIcon
-          ? renderItemIcon(
-              leftIcon,
-              leftIconLevel,
-              "cascader.content.item.icon-left"
-            )
+          ? renderItemIcon(leftIcon, leftIconLevel, "cascader.content.item.icon-left")
           : null}
 
-        <span
-          className={cn(
-            "aviala-cascader-item__text",
-            typographyVariants({ level: isTitle ? "caption" : "text" })
-          )}
-        >
+        <span className={cn("aviala-cascader-item__text", typographyVariants({ level: isTitle ? "caption" : "text" }))}>
           {children ?? option?.label}
         </span>
 
-        {showBadge ? renderBadgeSlot(badge ?? "Text") : null}
-        {showRightIcon && rightIcon
-          ? renderItemIcon(rightIcon, leftIconLevel)
-          : null}
+        {showBadge ? renderBadgeSlot(badge) : null}
+        {showRightIcon && rightIcon ? renderItemIcon(rightIcon, leftIconLevel) : null}
 
         {renderFunctionSlot(
           itemFunction,
@@ -923,6 +824,8 @@ CascaderItem.displayName = "CascaderItem";
 
 export type CascaderOptionsMenuProps = {
   className?: string;
+  /** Optional group header above each column's options — omitted by default */
+  groupTitle?: ReactNode;
 };
 
 const COLUMN_ANIMATION_MS = 150;
@@ -947,9 +850,8 @@ function prefersReducedMotion() {
 }
 
 /** Renders cascade columns from `Cascader` `options` prop. */
-export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
-  const { activePath, selectedPath, getOptionsAtPath, open } =
-    useCascaderContext();
+export function CascaderOptionsMenu({ className, groupTitle }: CascaderOptionsMenuProps) {
+  const { activePath, selectedPath, getOptionsAtPath, open } = useCascaderContext();
   const prevColumnCountRef = useRef<number | null>(null);
   const prevColumnPathsRef = useRef<string[][]>([]);
   const lastPathChangeAtRef = useRef(0);
@@ -959,8 +861,7 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
 
   const columnPaths = useMemo(() => {
     const paths: string[][] = [[]];
-    const expansion =
-      activePath.length > 0 ? activePath : selectedPath.slice(0, -1);
+    const expansion = activePath.length > 0 ? activePath : selectedPath.slice(0, -1);
 
     for (let index = 0; index < expansion.length; index += 1) {
       const prefix = expansion.slice(0, index + 1);
@@ -997,16 +898,14 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
       prevPaths.length > 0 &&
       columnPaths.length === prevPaths.length &&
       columnPaths.some(
-        (pathPrefix, index) =>
-          toColumnKey(pathPrefix) !== toColumnKey(prevPaths[index]!)
+        (pathPrefix, index) => toColumnKey(pathPrefix) !== toColumnKey(prevPaths[index]!)
       );
 
     const removedCount = prevPaths.filter(
       (pathPrefix) => !nextKeys.has(toColumnKey(pathPrefix))
     ).length;
 
-    const allowExitAnimation =
-      !skipAnimations && !isLateralReplace && removedCount === 1;
+    const allowExitAnimation = !skipAnimations && !isLateralReplace && removedCount === 1;
 
     const measureExitLayout = (key: string) => {
       const columnEl = columnElRefs.current.get(key);
@@ -1032,11 +931,7 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
         return {
           pathPrefix,
           key,
-          animateEnter: skipAnimations
-            ? false
-            : existing
-              ? false
-              : index >= enterFromIndex,
+          animateEnter: skipAnimations ? false : existing ? false : index >= enterFromIndex,
           animateExit: false,
         };
       });
@@ -1066,9 +961,7 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
         : [];
 
       const activeMap = new Map(active.map((column) => [column.key, column]));
-      const merged: RenderColumn[] = columnPaths.map((pathPrefix) =>
-        activeMap.get(toColumnKey(pathPrefix))!
-      );
+      const merged: RenderColumn[] = columnPaths.map((pathPrefix) => activeMap.get(toColumnKey(pathPrefix))!);
 
       return [...merged, ...toExit];
     });
@@ -1091,37 +984,35 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
 
   return (
     <CascaderMenu ref={menuRef} className={className}>
-      {columns.map(
-        ({ pathPrefix, key, animateEnter, animateExit, exitLayout }) => (
-          <CascaderColumn
-            key={key}
-            ref={(element) => {
-              if (element) {
-                columnElRefs.current.set(key, element);
-                return;
-              }
-              columnElRefs.current.delete(key);
-            }}
-            animateEnter={animateEnter}
-            animateExit={animateExit}
-            exitLayout={exitLayout}
-          >
-            <CascaderItemGroup label="Title" showDivider>
-              {getOptionsAtPath(pathPrefix).map((option) => (
-                <CascaderItem
-                  key={[...pathPrefix, option.value].join("/")}
-                  value={option.value}
-                  pathPrefix={pathPrefix}
-                  disabled={option.disabled}
-                  hasChildren={Boolean(option.children?.length)}
-                >
-                  {option.label}
-                </CascaderItem>
-              ))}
-            </CascaderItemGroup>
-          </CascaderColumn>
-        )
-      )}
+      {columns.map(({ pathPrefix, key, animateEnter, animateExit, exitLayout }) => (
+        <CascaderColumn
+          key={key}
+          ref={(element) => {
+            if (element) {
+              columnElRefs.current.set(key, element);
+              return;
+            }
+            columnElRefs.current.delete(key);
+          }}
+          animateEnter={animateEnter}
+          animateExit={animateExit}
+          exitLayout={exitLayout}
+        >
+          <CascaderItemGroup label={groupTitle} showDivider>
+            {getOptionsAtPath(pathPrefix).map((option) => (
+              <CascaderItem
+                key={[...pathPrefix, option.value].join("/")}
+                value={option.value}
+                pathPrefix={pathPrefix}
+                disabled={option.disabled}
+                hasChildren={Boolean(option.children?.length)}
+              >
+                {option.label}
+              </CascaderItem>
+            ))}
+          </CascaderItemGroup>
+        </CascaderColumn>
+      ))}
     </CascaderMenu>
   );
 }
@@ -1188,9 +1079,4 @@ export function CascaderField({
   );
 }
 
-export {
-  findOptionPath,
-  getLabelsForPath,
-  getOptionsAtPath,
-  isPathOnSelectedPath,
-};
+export { findOptionPath, getLabelsForPath, getOptionsAtPath, isPathOnSelectedPath };

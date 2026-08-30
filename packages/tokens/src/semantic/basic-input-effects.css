@@ -203,7 +203,7 @@
 
 .aviala-link--caption,
 .aviala-link--text {
-  /* Typography level sizing via .aviala-typography on __label */
+  /* Level markers emitted by Link; sizing comes from .aviala-typography on the label span. */
 }
 
 .aviala-link .aviala-typography {

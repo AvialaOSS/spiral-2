@@ -1,5 +1,14 @@
 # Table
 
+## [Unreleased]
+
+### Changed
+- `TableCell` `content="people"` 未传 `people` 时，默认头像改用 `users_user` 图标，不再显示 `A` 占位字母
+
+### Removed
+- `TableCell` `content="badge"` 未传 `badge` / `badgeLabel` 时不再回填 `Text` 占位 Badge
+- `TableCell` `content="icon-place+text"` 未传 `iconPlace` / `icon` 时不再渲染 `A` 占位形底，图标位整体省略
+
 ## 2.7.0
 
 ### Added

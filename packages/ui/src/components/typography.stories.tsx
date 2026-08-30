@@ -74,6 +74,7 @@ export const LevelMatrix: Story = {
 
 export const WhiteOnDark: Story = {
   render: () => (
+    // Demo fixture: hex is only a story backdrop fallback, not a component style.
     <div className="flex flex-col gap-3 rounded-lg bg-[var(--aviala-neutral-neutral-12,#343333)] p-4">
       {levels.map((level) => (
         <Typography key={level} level={level} tone="white">

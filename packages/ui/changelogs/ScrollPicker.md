@@ -1,5 +1,10 @@
 # ScrollPicker
 
+## [Unreleased]
+
+### Fixed
+- `loop={false}` 的列滚到首尾后不再吞掉滚轮事件，页面可以继续滚动；loop 列行为不变
+
 ## 2.6.1
 
 ### Changed
