@@ -10,6 +10,12 @@ Aviala Design aligned React component library built on shadcn/ui, Radix UI, and 
 | `@aviala-design/icons` | Aviala Design Icons as React SVG components |
 | `@aviala-design/spiral` | React components + `ThemeProvider` |
 
+## Environment
+
+- **Node.js** ≥ 20 (see root `engines`)
+- **pnpm** `9.15.4` — enable via `corepack enable`, or install that version globally (repo `packageManager` field locks it)
+- Copy `.env.example` → `.env.local` and set `FIGMA_ACCESS_TOKEN` for icon export / Figma sync scripts (optional for normal `dev` / `build`)
+
 ## Quick start
 
 ```bash
@@ -42,21 +48,27 @@ Storybook uses the same zero-build setup (the tokens Vite plugin in
 `.storybook/main.ts`), so it starts without `turbo build` and hot-reloads
 token CSS changes.
 
-## 公开文档站（Spiral Docs）
+## Public docs site (Spiral Docs) / 公开文档站
+
+Chinese component docs live outside this repo, at [avialaWebsite/apps/spiral-docs](../avialaWebsite/apps/spiral-docs). They consume published `@aviala-design/*` packages from npm and ship with the Hugo site at `https://www.aviala.top/docs/spiral/`.
 
 中文组件文档已迁出本仓库，源码位于 [avialaWebsite/apps/spiral-docs](../avialaWebsite/apps/spiral-docs)，通过 npm 上已发布的 `@aviala-design/*` 消费本库，随 Hugo 站一起部署到 `https://www.aviala.top/docs/spiral/`。
 
 ```bash
-# 在 avialaWebsite 仓库
+# In the avialaWebsite repo / 在 avialaWebsite 仓库
 npm run dev:spiral-docs     # http://localhost:5175/docs/spiral/
 npm run build:spiral-docs
 ```
 
+**The docs site always shows published versions.** Component changes need a changeset, merge to `main`, and a successful Release (`release.yml`) before docs update. After publish, Release dispatches `spiral-released` to avialaWebsite via a GitHub App and opens a docs scaffold PR (dependency bump). Credentials: [SPIRAL_DOCS_DISPATCH](https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md).
+
 因此**文档展示的是已发布版本**：组件改动需要先 `pnpm changeset` 并合并到 `main`，由 [release.yml](.github/workflows/release.yml) 发布后，文档站才会同步。发版成功后 Release 用 GitHub App 向 avialaWebsite 派发 `spiral-released`，自动开 docs scaffold PR（含依赖 bump）；凭证配置见 [SPIRAL_DOCS_DISPATCH](https://github.com/AvialaOSS/avialaWebsite/blob/main/docs/SPIRAL_DOCS_DISPATCH.md)。
+
+Component API tables are generated when building `packages/ui` and published as `@aviala-design/spiral/props.json`.
 
 组件 API 表格数据由 `packages/ui` 构建时生成，随包发布为 `@aviala-design/spiral/props.json`。
 
-GitHub Pages 发布步骤见：[avialaWebsite/docs/GITHUB_DEPLOY.md](../avialaWebsite/docs/GITHUB_DEPLOY.md)。
+GitHub Pages deploy notes: [avialaWebsite/docs/GITHUB_DEPLOY.md](../avialaWebsite/docs/GITHUB_DEPLOY.md).
 
 ## Publishing
 
