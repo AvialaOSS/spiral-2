@@ -26,7 +26,7 @@ import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useRtl } from "../../config";
 import { useLocale, useLocaleMessages } from "../../locale";
 import { typographyVariants } from "../typography";
-import { useResolvedControlError } from "../form-field";
+import { useResolvedControlError } from "../form-field-context";
 import {
   DatePickerProvider,
   useDatePickerContext,

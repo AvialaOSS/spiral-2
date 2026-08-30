@@ -160,3 +160,4 @@ Workflow **Icons Sync** (`icons-sync.yml`): `workflow_dispatch` with optional fi
 - `raw/` is gitignored — never commit it
 - `src/components/`, `src/catalog.ts`, `src/index.ts` are auto-generated — do not hand-edit
 - Hand-written files in `src/`: `icon.tsx`, `icon-size.ts`, `resolve-variant.ts`, `types.ts`
+- The root "no inline SVG" rule targets **consumers** of this package (`packages/ui`, apps). SVG markup inside `src/components/` is the generated output of this pipeline and is expected; the exemption list in the root `AGENTS.md` covers `packages/ui` only

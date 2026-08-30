@@ -51,6 +51,8 @@ export function ColorPickerSlider({
 
   // Hue: spectrum only. Alpha: same-hue 0→1 (avoid `transparent` muddy lerp);
   // checkerboard sits under the gradient in CSS.
+  // Literal rgb()/hex is required here: these track gradients render the user's
+  // picked color, which is runtime color math and has no design token equivalent.
   const trackBg =
     kind === "hue"
       ? `linear-gradient(90deg, ${hueGradientStops()})`

@@ -24,7 +24,7 @@ import {
   type InputSize,
   type InputState,
 } from "./input";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → NumberInput (197:3237) */
 export type NumberInputStyle = "default" | "monospaced";
@@ -228,7 +228,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             aria-invalid={resolvedError || undefined}
             className={cn(
               typographyVariants({ level: "text" }),
-              "aviala-number-input__input w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,#343333)] outline-none",
+              "aviala-number-input__input w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,var(--text-text-normal-text-black))] outline-none",
               "disabled:cursor-not-allowed"
             )}
             data-content={inputStyle === "monospaced" ? "number" : "text"}

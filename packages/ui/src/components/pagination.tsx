@@ -168,10 +168,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                     <button
                       type="button"
                       data-size="regular"
-                      className={cn(
-                        buttonVariants({ mode: "noBackgroundCustom", compact: true }),
-                        "aviala-pagination__page--ellipsis"
-                      )}
+                      className={cn(buttonVariants({ mode: "noBackgroundCustom", compact: true }))}
                       aria-label={locale.morePages}
                       aria-haspopup="menu"
                     >
@@ -180,17 +177,14 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                       </Typography>
                     </button>
                   </PopoverTrigger>
-                  <PopoverContent className="aviala-pagination__ellipsis-content" showArrow flush>
+                  <PopoverContent showArrow flush>
                     <div className="aviala-pagination__ellipsis-menu">
                       {ellipsisRange(pages, index).map((p) => (
                         <button
                           key={p}
                           type="button"
                           data-size="regular"
-                          className={cn(
-                            buttonVariants({ mode: "noBackgroundCustom", compact: true }),
-                            "aviala-pagination__ellipsis-page"
-                          )}
+                          className={cn(buttonVariants({ mode: "noBackgroundCustom", compact: true }))}
                           onClick={() => {
                             setPage(p);
                             setOpenEllipsis(null);

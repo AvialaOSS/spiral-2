@@ -1,8 +1,6 @@
 import { SymbolInformationCircle, SymbolWrongCircle } from "@aviala-design/icons";
 import {
-  createContext,
   forwardRef,
-  useContext,
   useId,
   useMemo,
   type HTMLAttributes,
@@ -22,27 +20,14 @@ import {
   type UseFormStateReturn,
 } from "react-hook-form";
 import { cn } from "../lib/utils";
+import { FormFieldControlContext } from "./form-field-context";
 import { Typeface } from "./typeface";
 import { Typography } from "./typography";
 
 /** Figma Components → System Composition → Form (527:57461 / 527:57641) */
 export type FormFieldDirection = "vertical" | "horizontal";
 
-type FormFieldControlContextValue = {
-  /** True when FormField is showing an error tip (layout `error` or RHF message). */
-  invalid: boolean;
-};
-
-const FormFieldControlContext = createContext<FormFieldControlContextValue | null>(null);
-
-/**
- * Resolve a control `error` prop against the surrounding FormField.
- * Explicit `error={true|false}` wins; otherwise inherits FormField tip invalidity.
- */
-export function useResolvedControlError(errorProp?: boolean): boolean {
-  const ctx = useContext(FormFieldControlContext);
-  return errorProp ?? ctx?.invalid ?? false;
-}
+export { useResolvedControlError } from "./form-field-context";
 
 /** Layout mode — the original props-driven wrapper */
 export type FormFieldLayoutProps = HTMLAttributes<HTMLDivElement> & {

@@ -3,7 +3,6 @@ import {
   ColorPicker,
   ColorPickerContent,
   ColorPickerTrigger,
-  FormField,
   Input,
   Modal,
   ModalBody,
@@ -11,6 +10,7 @@ import {
   ModalFooter,
   ModalHeaderText,
 } from "@aviala-design/spiral";
+import { FormField } from "@aviala-design/spiral/form";
 import { useEffect, useState } from "react";
 import type { ColorEntry } from "../lib/types";
 
