@@ -1,5 +1,14 @@
 # CascaderField
 
+## [Unreleased]
+
+### Added
+- `CascaderOptionsMenu` `groupTitle`：可选的列分组标题，透传给 `CascaderItemGroup` 的 `label`；默认不传即不渲染标题行
+
+### Removed
+- `CascaderOptionsMenu` 不再输出硬编码的 `Title` 分组标题
+- `CascaderItem` 开启 `showBadge` 但未传 `badge` 时不再回填 `Text` 占位 Badge
+
 ## 2.8.0
 
 ### Fixed

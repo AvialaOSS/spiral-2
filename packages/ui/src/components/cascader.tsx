@@ -811,7 +811,7 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
           {children ?? option?.label}
         </span>
 
-        {showBadge ? renderBadgeSlot(badge ?? "Text") : null}
+        {showBadge ? renderBadgeSlot(badge) : null}
         {showRightIcon && rightIcon ? renderItemIcon(rightIcon, leftIconLevel) : null}
 
         {renderFunctionSlot(
@@ -830,6 +830,8 @@ CascaderItem.displayName = "CascaderItem";
 
 export type CascaderOptionsMenuProps = {
   className?: string;
+  /** Optional group header above each column's options — omitted by default */
+  groupTitle?: ReactNode;
 };
 
 const COLUMN_ANIMATION_MS = 150;
@@ -854,7 +856,7 @@ function prefersReducedMotion() {
 }
 
 /** Renders cascade columns from `Cascader` `options` prop. */
-export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
+export function CascaderOptionsMenu({ className, groupTitle }: CascaderOptionsMenuProps) {
   const { activePath, selectedPath, getOptionsAtPath, open } = useCascaderContext();
   const prevColumnCountRef = useRef<number | null>(null);
   const prevColumnPathsRef = useRef<string[][]>([]);
@@ -1002,7 +1004,7 @@ export function CascaderOptionsMenu({ className }: CascaderOptionsMenuProps) {
           animateExit={animateExit}
           exitLayout={exitLayout}
         >
-          <CascaderItemGroup label="Title" showDivider>
+          <CascaderItemGroup label={groupTitle} showDivider>
             {getOptionsAtPath(pathPrefix).map((option) => (
               <CascaderItem
                 key={[...pathPrefix, option.value].join("/")}
