@@ -207,7 +207,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       icon,
       title,
       subtitle,
-      actionLabel = "Text",
+      actionLabel,
       action,
       secondaryAction,
       select,
@@ -235,11 +235,11 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
 
     const primaryAction =
       action ??
-      (
+      (actionLabel != null ? (
         <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
           {actionLabel}
         </Button>
-      );
+      ) : null);
 
     const chevron = chevronVisible ? (
       <span className="aviala-list-item__chevron" aria-hidden>

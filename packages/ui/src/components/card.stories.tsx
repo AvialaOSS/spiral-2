@@ -14,7 +14,7 @@ export const Default: StoryObj<typeof Card> = {
     <Card style={{ width: 387 }}>
       <CardHead title="Card title" description="Caption" trailing={null} />
       <CardBody>Body content for this card.</CardBody>
-      <CardBottom slotType="action" />
+      <CardBottom slotType="action" actionLabel="设置" />
     </Card>
   ),
 };
@@ -26,6 +26,7 @@ export const HeadAction: StoryObj<typeof CardHead> = {
         slotType="action"
         title="Card title"
         description="Caption"
+        actionLabel="设置"
       />
     </Card>
   ),

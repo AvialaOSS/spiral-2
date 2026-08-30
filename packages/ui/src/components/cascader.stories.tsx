@@ -26,36 +26,36 @@ type Story = StoryObj<typeof Cascader>;
 const regionOptions: CascaderOption[] = [
   {
     value: "china",
-    label: "China",
+    label: "中国",
     children: [
       {
         value: "hainan",
-        label: "Hainan",
+        label: "海南省",
         children: [
-          { value: "haikou", label: "Haikou" },
-          { value: "sanya", label: "Sanya" },
+          { value: "haikou", label: "海口市" },
+          { value: "sanya", label: "三亚市" },
         ],
       },
       {
         value: "guangdong",
-        label: "Guangdong",
+        label: "广东省",
         children: [
-          { value: "guangzhou", label: "Guangzhou" },
-          { value: "shenzhen", label: "Shenzhen" },
+          { value: "guangzhou", label: "广州市" },
+          { value: "shenzhen", label: "深圳市" },
         ],
       },
     ],
   },
   {
     value: "usa",
-    label: "United States",
+    label: "美国",
     children: [
       {
         value: "ca",
-        label: "California",
+        label: "加利福尼亚州",
         children: [
-          { value: "sf", label: "San Francisco" },
-          { value: "la", label: "Los Angeles" },
+          { value: "sf", label: "旧金山" },
+          { value: "la", label: "洛杉矶" },
         ],
       },
     ],
@@ -65,7 +65,7 @@ const regionOptions: CascaderOption[] = [
 function CascaderDemo({
   size = "regular",
   allRound = false,
-  placeholder = "Text",
+  placeholder = "请选择所在地区",
   defaultValue,
   defaultOpen = false,
   error = false,
@@ -166,7 +166,7 @@ export const CompoundMenu: Story = {
   render: () => (
     <Cascader defaultOpen defaultValue={["a", "a2"]}>
       <CascaderTrigger
-        placeholder="Text"
+        placeholder="请选择产品型号"
         leftIcon={<GeneralSetting aria-hidden />}
         rightIcon={<GeneralSetting aria-hidden />}
         className="w-[290px]"
@@ -174,40 +174,40 @@ export const CompoundMenu: Story = {
       <CascaderContent>
         <CascaderMenu>
           <CascaderColumn>
-            <CascaderItemGroup label="Title" showDivider>
+            <CascaderItemGroup label="业务线" showDivider>
               <CascaderItem value="a" pathPrefix={[]} hasChildren>
-                Group A
+                服务器产品线
               </CascaderItem>
               <CascaderItem value="b" pathPrefix={[]} hasChildren>
-                Group B
+                存储产品线
               </CascaderItem>
               <CascaderItem value="c" pathPrefix={[]}>
-                Leaf C
+                网络产品线
               </CascaderItem>
             </CascaderItemGroup>
-            <CascaderItemGroup label="Title" showDivider>
+            <CascaderItemGroup label="其他" showDivider>
               <CascaderItem value="d" pathPrefix={[]}>
-                Leaf D
+                未分类产品
               </CascaderItem>
             </CascaderItemGroup>
           </CascaderColumn>
           <CascaderColumn>
-            <CascaderItemGroup label="Title" showDivider>
+            <CascaderItemGroup label="子产品线" showDivider>
               <CascaderItem value="a1" pathPrefix={["a"]}>
-                Item A1
+                通用服务器
               </CascaderItem>
               <CascaderItem value="a2" pathPrefix={["a"]} hasChildren>
-                Item A2
+                AI 服务器
               </CascaderItem>
             </CascaderItemGroup>
           </CascaderColumn>
           <CascaderColumn>
-            <CascaderItemGroup label="Title" showDivider>
+            <CascaderItemGroup label="型号" showDivider>
               <CascaderItem value="a2x" pathPrefix={["a", "a2"]}>
-                Item A2X
+                AI-100 训练机型
               </CascaderItem>
               <CascaderItem value="a2y" pathPrefix={["a", "a2"]}>
-                Item A2Y
+                AI-200 推理机型
               </CascaderItem>
             </CascaderItemGroup>
           </CascaderColumn>
@@ -222,9 +222,9 @@ export const ItemFunctionVariants: Story = {
   render: () => (
     <div className="w-[200px] rounded-[10px] border border-[var(--select-menu-border)] bg-[var(--select-menu-bg)] p-1.5 shadow-[var(--select-menu-shadow)]">
       <Cascader defaultOpen defaultValue={["selected"]}>
-        <CascaderItemGroup label="Title" showDivider>
+        <CascaderItemGroup label="选项类型" showDivider>
           <CascaderItem value="title" layout="title">
-            Title
+            分组标题
           </CascaderItem>
           <CascaderItem value="simple" pathPrefix={[]} hasChildren>
             Simple Item
@@ -254,21 +254,21 @@ export const ItemFunctionVariants: Story = {
 export const GroupDividerAndHugWidth: Story = {
   render: () => (
     <Cascader defaultOpen>
-      <CascaderTrigger placeholder="Text" className="w-[290px]" />
+      <CascaderTrigger placeholder="请选择所在地区" className="w-[290px]" />
       <CascaderContent>
         <CascaderMenu>
           <CascaderColumn>
-            <CascaderItemGroup label="Regions">
+            <CascaderItemGroup label="地区">
               <CascaderItem value="short" pathPrefix={[]} hasChildren>
-                Short
+                华南
               </CascaderItem>
               <CascaderItem value="long" pathPrefix={[]} hasChildren>
-                A much longer region label
+                粤港澳大湾区综合服务区
               </CascaderItem>
             </CascaderItemGroup>
-            <CascaderItemGroup label="Other">
+            <CascaderItemGroup label="其他">
               <CascaderItem value="leaf" pathPrefix={[]}>
-                Leaf item
+                海外节点
               </CascaderItem>
             </CascaderItemGroup>
           </CascaderColumn>
@@ -278,17 +278,17 @@ export const GroupDividerAndHugWidth: Story = {
   ),
 };
 
-/** Options-driven three-level demo — expand parent items to see column slide-in. */
+/** Options-driven three-level demo with an opt-in column group header (`groupTitle`). */
 export const MultiLevel: Story = {
   render: () => (
     <Cascader options={regionOptions} defaultOpen defaultValue={["china", "hainan", "haikou"]}>
       <CascaderTrigger
-        placeholder="Text"
+        placeholder="请选择所在地区"
         leftIcon={<GeneralSetting aria-hidden />}
         className="w-[290px]"
       />
       <CascaderContent>
-        <CascaderOptionsMenu />
+        <CascaderOptionsMenu groupTitle="地区" />
       </CascaderContent>
     </Cascader>
   ),
@@ -299,7 +299,7 @@ export const ColumnExpandAnimation: Story = {
   render: () => (
     <CascaderField
       options={regionOptions}
-      placeholder="Select region"
+      placeholder="请选择所在地区"
       leftIcon={<GeneralSetting aria-hidden />}
       className="w-[290px]"
     />

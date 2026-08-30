@@ -26,7 +26,7 @@ type Story = StoryObj<typeof Select>;
 function SelectDemo({
   size = "regular",
   allRound = false,
-  placeholder = "Text",
+  placeholder = "请选择所属部门",
   defaultValue,
 }: {
   size?: SelectSize;
@@ -45,13 +45,13 @@ function SelectDemo({
         className="w-[290px]"
       />
       <SelectContent>
-        <SelectItemGroup label="Title" showDivider>
-          <SelectItem value="a">Option A</SelectItem>
-          <SelectItem value="b">Option B</SelectItem>
+        <SelectItemGroup label="常用部门" showDivider>
+          <SelectItem value="a">产品设计部</SelectItem>
+          <SelectItem value="b">技术研发部</SelectItem>
         </SelectItemGroup>
-        <SelectItemGroup label="Title">
-          <SelectItem value="c">Option C</SelectItem>
-          <SelectItem value="d">Option D</SelectItem>
+        <SelectItemGroup label="全部部门">
+          <SelectItem value="c">市场运营部</SelectItem>
+          <SelectItem value="d">财务管理部</SelectItem>
         </SelectItemGroup>
       </SelectContent>
     </Select>
@@ -82,19 +82,19 @@ export const MenuWithTitle: Story = {
   render: () => (
     <Select defaultOpen defaultValue="a">
       <SelectTrigger
-        placeholder="Text"
+        placeholder="请选择所属部门"
         leftIcon={<GeneralSetting aria-hidden />}
         rightIcon={<GeneralSetting aria-hidden />}
         className="w-[290px]"
       />
       <SelectContent>
-        <SelectItemGroup label="Title" showDivider>
-          <SelectItem value="a">Option A</SelectItem>
-          <SelectItem value="b">Option B</SelectItem>
+        <SelectItemGroup label="常用部门" showDivider>
+          <SelectItem value="a">产品设计部</SelectItem>
+          <SelectItem value="b">技术研发部</SelectItem>
         </SelectItemGroup>
-        <SelectItemGroup label="Title">
-          <SelectItem value="c">Option C</SelectItem>
-          <SelectItem value="d">Option D</SelectItem>
+        <SelectItemGroup label="全部部门">
+          <SelectItem value="c">市场运营部</SelectItem>
+          <SelectItem value="d">财务管理部</SelectItem>
         </SelectItemGroup>
       </SelectContent>
     </Select>
@@ -106,19 +106,19 @@ export const MenuNoTitle: Story = {
   render: () => (
     <Select defaultOpen defaultValue="a">
       <SelectTrigger
-        placeholder="Text"
+        placeholder="请选择所属部门"
         leftIcon={<GeneralSetting aria-hidden />}
         rightIcon={<GeneralSetting aria-hidden />}
         className="w-[290px]"
       />
       <SelectContent>
         <SelectItemGroup showDivider>
-          <SelectItem value="a">Option A</SelectItem>
-          <SelectItem value="b">Option B</SelectItem>
+          <SelectItem value="a">产品设计部</SelectItem>
+          <SelectItem value="b">技术研发部</SelectItem>
         </SelectItemGroup>
         <SelectItemGroup>
-          <SelectItem value="c">Option C</SelectItem>
-          <SelectItem value="d">Option D</SelectItem>
+          <SelectItem value="c">市场运营部</SelectItem>
+          <SelectItem value="d">财务管理部</SelectItem>
         </SelectItemGroup>
       </SelectContent>
     </Select>
@@ -129,14 +129,14 @@ export const Disabled: Story = {
   render: () => (
     <Select defaultValue="a" disabled>
       <SelectTrigger
-        placeholder="Text"
+        placeholder="请选择所属部门"
         leftIcon={<GeneralSetting aria-hidden />}
         rightIcon={<GeneralSetting aria-hidden />}
         className="w-[290px]"
       />
       <SelectContent>
         <SelectItemGroup>
-          <SelectItem value="a">Option A</SelectItem>
+          <SelectItem value="a">产品设计部</SelectItem>
         </SelectItemGroup>
       </SelectContent>
     </Select>

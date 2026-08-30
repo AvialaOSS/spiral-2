@@ -85,7 +85,7 @@ export const Typeface = forwardRef<HTMLDivElement, TypefaceProps>(
     ref
   ) => {
     const layout = typefaceLayouts[content];
-    const values = resolveTypefaceValues(content, primary, secondary, tertiary, children);
+    const values = resolveTypefaceValues(primary, secondary, tertiary, children);
 
     return (
       <div ref={ref} className={cn("aviala-typeface", className)} data-content={content} {...props}>
@@ -115,7 +115,6 @@ export const Typeface = forwardRef<HTMLDivElement, TypefaceProps>(
 Typeface.displayName = "Typeface";
 
 function resolveTypefaceValues(
-  content: TypefaceContent,
   primary?: ReactNode,
   secondary?: ReactNode,
   tertiary?: ReactNode,
@@ -126,7 +125,7 @@ function resolveTypefaceValues(
   }
 
   if (children == null || children === false) {
-    return typefaceLayouts[content].map(() => "Text");
+    return [];
   }
 
   if (Array.isArray(children)) {

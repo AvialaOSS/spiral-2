@@ -29,7 +29,6 @@ import {
 } from "react";
 import { forwardChevronSide, useDirection, useRtl } from "../config";
 import { Badge } from "./badge";
-import { Link } from "./link";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
@@ -918,20 +917,14 @@ export const SelectItem = forwardRef<
 
         {textContent}
 
-        {showBadge ? renderBadgeSlot(badge ?? "Text") : null}
+        {showBadge ? renderBadgeSlot(badge) : null}
 
         {showRightIcon && rightIcon
           ? renderItemIcon(rightIcon, leftIconLevel, "select.content.item.icon-right")
           : null}
 
-        {showMoreFunction ? (
-          <span className="aviala-select-item__more">
-            {moreAction ?? (
-              <Link level="text" href="#" onClick={(event) => event.preventDefault()}>
-                Text
-              </Link>
-            )}
-          </span>
+        {showMoreFunction && moreAction != null ? (
+          <span className="aviala-select-item__more">{moreAction}</span>
         ) : null}
 
         {renderFunctionSlot(itemFunction, layout, showTrailingFunction, icon)}
@@ -1130,18 +1123,12 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
 
         {textContent}
 
-        {showBadge ? renderBadgeSlot(badge ?? "Text") : null}
+        {showBadge ? renderBadgeSlot(badge) : null}
 
         {showRightIcon && rightIcon ? renderItemIcon(rightIcon, leftIconLevel) : null}
 
-        {showMoreFunction ? (
-          <span className="aviala-select-item__more">
-            {moreAction ?? (
-              <Link level="text" href="#" onClick={(event) => event.preventDefault()}>
-                Text
-              </Link>
-            )}
-          </span>
+        {showMoreFunction && moreAction != null ? (
+          <span className="aviala-select-item__more">{moreAction}</span>
         ) : null}
 
         {renderFunctionSlot(itemFunction, layout, showTrailingFunction, icon)}

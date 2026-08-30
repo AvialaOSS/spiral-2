@@ -21,10 +21,10 @@ export const Nested: Story = {
   render: () => (
     <SegmentatorGroup defaultValue="a">
       <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-        Text
+        列表
       </SegmentatorItem>
       <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-        Text
+        看板
       </SegmentatorItem>
     </SegmentatorGroup>
   ),
@@ -34,10 +34,10 @@ export const Tiled: Story = {
   render: () => (
     <SegmentatorGroup mode="tiled" defaultValue="a">
       <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-        Text
+        列表
       </SegmentatorItem>
       <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-        Text
+        看板
       </SegmentatorItem>
     </SegmentatorGroup>
   ),
@@ -48,27 +48,27 @@ export const Vertical: Story = {
     <div className="flex flex-wrap items-start gap-6">
       <SegmentatorGroup direction="vertical" defaultValue="a">
         <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-          Text
+          列表
         </SegmentatorItem>
         <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-          Text
+          看板
         </SegmentatorItem>
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" mode="tiled" defaultValue="a">
         <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-          Text
+          列表
         </SegmentatorItem>
         <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
-          Text
+          看板
         </SegmentatorItem>
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" defaultValue="a">
-        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
-        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
+        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="列表视图" />
+        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="看板视图" />
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" allRound defaultValue="a">
-        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
-        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
+        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="列表视图" />
+        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="看板视图" />
       </SegmentatorGroup>
     </div>
   ),
@@ -77,8 +77,8 @@ export const Vertical: Story = {
 export const AllRound: Story = {
   render: () => (
     <SegmentatorGroup allRound defaultValue="a">
-      <SegmentatorItem value="a">Text</SegmentatorItem>
-      <SegmentatorItem value="b">Text</SegmentatorItem>
+      <SegmentatorItem value="a">列表</SegmentatorItem>
+      <SegmentatorItem value="b">看板</SegmentatorItem>
     </SegmentatorGroup>
   ),
 };
