@@ -257,10 +257,13 @@ export function TimePickerPanel({ className }: TimePickerPanelProps) {
   const locale = useLocaleMessages("TimePicker");
   const { value, setValue } = useTimePickerContext();
 
+  // Hour/minute wheels already expose listbox + aria-activedescendant + Up/Down/
+  // Home/End. The panel is a group so those widgets stay in browse mode; a
+  // panel-level listbox would fight the two independent spin columns.
   return (
     <div
       className={cn("aviala-timepicker-panel", className)}
-      role="application"
+      role="group"
       aria-label={locale.panel}
     >
       <TimePickerWheels value={value} onChange={setValue} />

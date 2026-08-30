@@ -30,6 +30,7 @@ import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
+import { focusRovingSibling, resolveRovingMove } from "../lib/roving-focus";
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
@@ -676,6 +677,9 @@ export function CascaderItemGroup({
   );
 }
 
+/** Selectable rows only — `title` layout renders as presentation and is skipped. */
+const CASCADER_OPTION_SELECTOR = '.aviala-cascader-item[role="option"]';
+
 export type CascaderItemProps = {
   value: string;
   pathPrefix?: string[];
@@ -762,11 +766,27 @@ export const CascaderItem = forwardRef<HTMLButtonElement, CascaderItemProps>(
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleClick();
+        return;
       }
       if (event.key === expandKey && hasChildren) {
         event.preventDefault();
         expandTo(path);
+        return;
       }
+
+      // Up/Down/Home/End roam the column the item lives in; the expand key is the
+      // only way across columns, so this axis stays vertical in both directions.
+      const move = resolveRovingMove(event.key, "vertical");
+      if (!move) return;
+
+      const column = event.currentTarget.closest(".aviala-cascader-column__surface");
+      const moved = focusRovingSibling(
+        column,
+        event.currentTarget,
+        move,
+        CASCADER_OPTION_SELECTOR
+      );
+      if (moved) event.preventDefault();
     };
 
     return (

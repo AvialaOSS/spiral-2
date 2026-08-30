@@ -13,7 +13,9 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import { useRtl } from "../config";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
+import { resolveRovingIndex, resolveRovingMove } from "../lib/roving-focus";
 import { cn } from "../lib/utils";
 import { useThemeLayoutKey } from "../theme/theme-provider";
 import { typographyVariants } from "./typography";
@@ -633,6 +635,7 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
   ) => {
     const [currentValue, setValue] = useSegmentatorState(value, defaultValue, onValueChange);
     const groupRef = useRef<HTMLDivElement>(null);
+    const rtl = useRtl();
     const layoutKey = useThemeLayoutKey();
     const consumeClickRef = useRef(false);
     const pointerDragRef = useRef<SegmentatorPointerDrag | null>(null);
@@ -839,6 +842,51 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       group.setPointerCapture(event.pointerId);
     };
 
+    // Roving tab stop: the checked radio owns it. With nothing checked yet the
+    // group would drop out of the tab order entirely, so the first item takes over.
+    useLayoutEffect(() => {
+      const group = groupRef.current;
+      if (!group) return;
+
+      const items = getEnabledSegmentatorItems(group);
+      if (items.length === 0) return;
+      if (items.some((item) => item.getAttribute("tabindex") === "0")) return;
+
+      items[0].setAttribute("tabindex", "0");
+    });
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (disabled || event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+      const group = groupRef.current;
+      if (!group) return;
+
+      const move = resolveRovingMove(
+        event.key,
+        direction === "vertical" ? "vertical" : "horizontal",
+        rtl
+      );
+      if (!move) return;
+
+      const items = getEnabledSegmentatorItems(group);
+      if (items.length === 0) return;
+
+      const active =
+        event.target instanceof Element
+          ? event.target.closest<HTMLButtonElement>(".aviala-segmentator-item")
+          : null;
+      const currentIndex = active ? items.indexOf(active) : -1;
+      const nextItem = items[resolveRovingIndex(currentIndex, items.length, move)];
+      if (!nextItem) return;
+
+      event.preventDefault();
+      nextItem.focus();
+      // Radio groups select on arrow, so the thumb follows the focused item.
+      const nextValue = nextItem.dataset.value;
+      if (nextValue && nextValue !== currentValue) setValue(nextValue);
+    };
+
     const thumbStyle: CSSProperties | undefined = thumb ? buildThumbStyle() : undefined;
 
     return (
@@ -871,6 +919,10 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           data-direction={direction}
           data-dragging={dragState.active ? "true" : undefined}
           data-pressing={dragState.pressing ? "true" : undefined}
+          onKeyDown={(event) => {
+            props.onKeyDown?.(event);
+            handleKeyDown(event);
+          }}
           onPointerDown={handlePointerDown}
           onPointerUp={finishPointerDrag}
           onPointerCancel={finishPointerDrag}
@@ -931,6 +983,7 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
         type="button"
         role="radio"
         aria-checked={selected}
+        tabIndex={selected ? 0 : -1}
         data-selected={selected ? "true" : "false"}
         data-value={value}
         data-mode={ctx.mode}

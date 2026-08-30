@@ -922,6 +922,22 @@ function prefersReducedMotion(): boolean {
   );
 }
 
+const DAYS_PER_WEEK = 7;
+
+/**
+ * `role="grid"` requires row wrappers, but the day cells are laid out by a single
+ * CSS grid — `display: contents` keeps the rows semantic without a layout box.
+ */
+const CALENDAR_ROW_STYLE = { display: "contents" } as const;
+
+function toCalendarWeeks(days: Date[]): Date[][] {
+  const weeks: Date[][] = [];
+  for (let index = 0; index < days.length; index += DAYS_PER_WEEK) {
+    weeks.push(days.slice(index, index + DAYS_PER_WEEK));
+  }
+  return weeks;
+}
+
 export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const calendarId = useId();
   const { code } = useLocale();
@@ -947,6 +963,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const days = useMemo(() => getCalendarDays(viewMonth), [viewMonth]);
+  const weeks = useMemo(() => toCalendarWeeks(days), [days]);
   const prevViewMonthRef = useRef(viewMonth);
   const dayGridRef = useRef<HTMLDivElement>(null);
   const pendingDayFocusRef = useRef(false);
@@ -1103,6 +1120,9 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
 
   const renderDateContent = () => (
     <>
+      {/* Weekday labels stay outside the grid (aria-hidden). Promoting them to
+          columnheader would require laying them out as the first grid row and is
+          deferred to avoid a calendar CSS rewrite in this pass. */}
       <div className="aviala-datepicker-calendar__weekdays" aria-hidden>
         {locale.weekdays.map((label) => (
           <span
@@ -1163,58 +1183,62 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
             }
           }}
         >
-          {days.map((day) => {
-            const outside = !isSameMonth(day, viewMonth);
-            const rangePos: RangeSelectionPosition =
-              mode === "range"
-                ? getRangeSelectionPosition(day, rangeValue.from, rangeValue.to)
-                : singleValue && isSameDay(day, singleValue)
-                  ? "single"
-                  : "none";
-            const selected = rangePos !== "none";
-            const inRange =
-              mode === "range" && isDateInRange(day, rangeValue.from, rangeValue.to);
-            const isToday = isSameDay(day, today);
-            const dayDisabled = isDateDisabled(day, minDate, maxDate);
-            const focused = focusedDay ? isSameDay(day, focusedDay) : false;
-            const dayKey = formatIsoDate(day);
+          {weeks.map((week) => (
+            <div key={formatIsoDate(week[0])} role="row" style={CALENDAR_ROW_STYLE}>
+              {week.map((day) => {
+                const outside = !isSameMonth(day, viewMonth);
+                const rangePos: RangeSelectionPosition =
+                  mode === "range"
+                    ? getRangeSelectionPosition(day, rangeValue.from, rangeValue.to)
+                    : singleValue && isSameDay(day, singleValue)
+                      ? "single"
+                      : "none";
+                const selected = rangePos !== "none";
+                const inRange =
+                  mode === "range" && isDateInRange(day, rangeValue.from, rangeValue.to);
+                const isToday = isSameDay(day, today);
+                const dayDisabled = isDateDisabled(day, minDate, maxDate);
+                const focused = focusedDay ? isSameDay(day, focusedDay) : false;
+                const dayKey = formatIsoDate(day);
 
-            return (
-              <button
-                key={dayKey}
-                type="button"
-                role="gridcell"
-                data-day={dayKey}
-                tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
-                className="aviala-datepicker-day aviala-focus-ring"
-                data-outside={outside ? "true" : undefined}
-                data-selected={selected ? "true" : undefined}
-                data-in-range={inRange && !selected ? "true" : undefined}
-                data-range-pos={rangePos !== "none" ? rangePos : undefined}
-                data-today={isToday ? "true" : undefined}
-                data-disabled={dayDisabled ? "true" : undefined}
-                aria-label={formatDisplayDate(day, code)}
-                aria-selected={selected || undefined}
-                aria-disabled={dayDisabled || undefined}
-                disabled={dayDisabled}
-                onClick={() => selectDate(day)}
-                onFocus={() => setFocusedDay(day)}
-                onKeyDown={(event) => handleDayKeyDown(event, day)}
-              >
-                <span
-                  className={cn(
-                    "aviala-datepicker-day__label",
-                    typographyVariants({ level: "text" })
-                  )}
-                >
-                  {day.getDate()}
-                </span>
-                {isToday ? (
-                  <span className="aviala-datepicker-day__today-dot" aria-hidden />
-                ) : null}
-              </button>
-            );
-          })}
+                return (
+                  <button
+                    key={dayKey}
+                    type="button"
+                    role="gridcell"
+                    data-day={dayKey}
+                    tabIndex={focused || (!focusedDay && isToday) ? 0 : -1}
+                    className="aviala-datepicker-day aviala-focus-ring"
+                    data-outside={outside ? "true" : undefined}
+                    data-selected={selected ? "true" : undefined}
+                    data-in-range={inRange && !selected ? "true" : undefined}
+                    data-range-pos={rangePos !== "none" ? rangePos : undefined}
+                    data-today={isToday ? "true" : undefined}
+                    data-disabled={dayDisabled ? "true" : undefined}
+                    aria-label={formatDisplayDate(day, code)}
+                    aria-selected={selected || undefined}
+                    aria-disabled={dayDisabled || undefined}
+                    disabled={dayDisabled}
+                    onClick={() => selectDate(day)}
+                    onFocus={() => setFocusedDay(day)}
+                    onKeyDown={(event) => handleDayKeyDown(event, day)}
+                  >
+                    <span
+                      className={cn(
+                        "aviala-datepicker-day__label",
+                        typographyVariants({ level: "text" })
+                      )}
+                    >
+                      {day.getDate()}
+                    </span>
+                    {isToday ? (
+                      <span className="aviala-datepicker-day__today-dot" aria-hidden />
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
     </>
@@ -1337,7 +1361,7 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   return (
     <div
       className={cn("aviala-datepicker-calendar", className)}
-      role="application"
+      role="group"
       aria-label={locale.calendar}
     >
       <div className="aviala-datepicker-calendar__panel-viewport">

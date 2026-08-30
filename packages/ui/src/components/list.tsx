@@ -9,6 +9,7 @@ import {
   isValidElement,
   type ComponentPropsWithoutRef,
   type HTMLAttributes,
+  type KeyboardEvent,
   type ReactElement,
   type ReactNode,
   type Ref,
@@ -223,6 +224,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       target,
       rel,
       onClick,
+      onKeyDown,
       ...props
     },
     ref
@@ -337,6 +339,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
           target={target}
           rel={rel}
           onClick={onClick as ComponentPropsWithoutRef<"a">["onClick"]}
+          onKeyDown={onKeyDown as ComponentPropsWithoutRef<"a">["onKeyDown"]}
           {...sharedData}
           {...(props as ComponentPropsWithoutRef<"a">)}
         >
@@ -345,12 +348,30 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       );
     }
 
+    // Without an href the row is a plain div, so it needs the full button
+    // contract: a tab stop, a button role, and Enter/Space activation.
+    const activatable = isInteractive && !disabled;
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+      if (!activatable || event.defaultPrevented) return;
+      if (event.key !== "Enter" && event.key !== " ") return;
+      // Nested controls (Switch, Button, Select) keep their own activation.
+      if (event.target !== event.currentTarget) return;
+
+      event.preventDefault();
+      event.currentTarget.click();
+    };
+
     return (
       <div
         ref={ref}
-        role="listitem"
+        role={activatable ? "button" : "listitem"}
+        tabIndex={activatable ? 0 : undefined}
+        aria-disabled={isInteractive && disabled ? true : undefined}
         className={sharedClassName}
         onClick={disabled ? undefined : onClick}
+        onKeyDown={handleKeyDown}
         {...sharedData}
         {...props}
       >

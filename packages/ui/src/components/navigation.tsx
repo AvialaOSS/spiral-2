@@ -2,6 +2,7 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { Slot } from "@radix-ui/react-slot";
 import {
   createContext,
+  createElement,
   forwardRef,
   useCallback,
   useContext,
@@ -602,7 +603,7 @@ export const Navigation = forwardRef<HTMLElement, NavigationProps>(
   (
     {
       className,
-      as: Tag = "nav",
+      as = "nav",
       background = "default",
       direction = "vertical",
       dividingLine = false,
@@ -611,14 +612,17 @@ export const Navigation = forwardRef<HTMLElement, NavigationProps>(
     ref
   ) => (
     <NavigationDirectionContext.Provider value={direction}>
-      <Tag
-        ref={ref as never}
-        className={cn("aviala-navigation", className)}
-        data-background={background}
-        data-direction={direction}
-        data-dividing-line={dividingLine ? "true" : "false"}
-        {...props}
-      />
+      {/* JSX resolves a union `as` tag to the intersection of every member's props,
+          which no single element ref can satisfy. createElement keeps the ref
+          typed as HTMLElement. */}
+      {createElement(as, {
+        ...props,
+        ref,
+        className: cn("aviala-navigation", className),
+        "data-background": background,
+        "data-direction": direction,
+        "data-dividing-line": dividingLine ? "true" : "false",
+      })}
     </NavigationDirectionContext.Provider>
   )
 );

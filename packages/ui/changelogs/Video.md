@@ -1,5 +1,10 @@
 # Video
 
+## [Unreleased]
+
+### Fixed
+- 倍速菜单补齐 listbox 键盘模型：roving tabindex 让当前倍速成为唯一 Tab 落点，Up / Down / Home / End 在选项间移动，`aria-activedescendant` 指向焦点项
+
 ## 2.8.0
 
 ### Added
