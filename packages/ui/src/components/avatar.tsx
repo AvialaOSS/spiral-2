@@ -33,9 +33,9 @@ const avatarVariants = cva("aviala-avatar", {
       text: "aviala-avatar--level-text",
     },
     content: {
-      text: "aviala-avatar--content-text",
-      picture: "aviala-avatar--content-picture",
-      icon: "aviala-avatar--content-icon",
+      text: "",
+      picture: "",
+      icon: "",
     },
     lineHeightFix: {
       true: "aviala-avatar--line-height-fix",

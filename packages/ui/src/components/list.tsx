@@ -112,13 +112,7 @@ function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode
   if (leading === "none") return null;
 
   const iconSize = leading === "shaped" ? 20 : 22;
-  const content =
-    node ??
-    (leading === "shaped" ? (
-      <GeneralSetting aria-hidden />
-    ) : (
-      <GeneralSetting aria-hidden />
-    ));
+  const content = node ?? <GeneralSetting aria-hidden />;
 
   const rendered =
     isValidElement(content) && typeof content.type !== "string"
@@ -213,7 +207,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       icon,
       title,
       subtitle,
-      actionLabel = "Text",
+      actionLabel,
       action,
       secondaryAction,
       select,
@@ -241,11 +235,11 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
 
     const primaryAction =
       action ??
-      (
+      (actionLabel != null ? (
         <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
           {actionLabel}
         </Button>
-      );
+      ) : null);
 
     const chevron = chevronVisible ? (
       <span className="aviala-list-item__chevron" aria-hidden>

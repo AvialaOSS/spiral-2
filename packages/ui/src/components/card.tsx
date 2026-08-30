@@ -72,7 +72,7 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
       icon,
       title,
       description,
-      actionLabel = "Text",
+      actionLabel,
       action,
       secondaryAction,
       select,
@@ -88,11 +88,11 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
     const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const primaryAction =
       action ??
-      (
+      (actionLabel != null ? (
         <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
           {actionLabel}
         </Button>
-      );
+      ) : null);
 
     const renderTrailing = () => {
       if (trailing !== undefined) return trailing;
@@ -190,7 +190,7 @@ export const CardBottom = forwardRef<HTMLDivElement, CardBottomProps>(
     {
       className,
       slotType = "action",
-      actionLabel = "Text",
+      actionLabel,
       action,
       secondaryAction,
       select,
@@ -206,11 +206,11 @@ export const CardBottom = forwardRef<HTMLDivElement, CardBottomProps>(
     const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
     const primaryAction =
       action ??
-      (
+      (actionLabel != null ? (
         <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
           {actionLabel}
         </Button>
-      );
+      ) : null);
 
     const renderTrailing = () => {
       if (trailing !== undefined) return trailing;

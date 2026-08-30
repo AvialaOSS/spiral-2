@@ -1,5 +1,11 @@
 # Select
 
+## [Unreleased]
+
+### Removed
+- `SelectItem` / `SelectSubItem` 开启 `showBadge` 但未传 `badge` 时不再回填 `Text` 占位 Badge
+- `SelectItem` / `SelectSubItem` 开启 `showMoreFunction` 但未传 `moreAction` 时不再回填 `Text` 占位 Link，尾部槽位整体不渲染
+
 ## 2.8.0
 
 ### Fixed

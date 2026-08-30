@@ -74,6 +74,7 @@ When editing skills, always edit the file in `skills/` — the redirectors only 
 - **Language**: English comments, English commit messages. Scopes: `fix(ui):`, `fix(tokens):`, `fix(playground):`, `chore:`, `docs:`.
 - **Styling**: CSS variables from `@aviala-design/tokens` only. No hardcoded hex/rgb colors.
 - **Icons**: `@aviala-design/icons` only. No `lucide-react`, no inline SVG.
+  - Exempt (structure-coupled graphics, not icons): `packages/ui/src/components/checkbox-check-icon.tsx`, `loading.tsx`, `overlay-pointer.tsx`, `progress.tsx`, `tab.tsx`, `video/video-animated-icon-markup.ts`. These SVGs are driven by component geometry (masks, animated paths, sized pointers) and cannot be replaced by catalog icons.
 - **Components**: Prefer Radix primitives (shadcn pattern). Use `cn()` from `src/lib/utils` for class merging. Use `class-variance-authority` for variant management.
 - **Changelogs**: User-visible changes get a `packages/ui/changelogs/{DisplayName}.md` entry (Chinese bullets, English section titles) **and** a changeset.
 - **Exports**: Every public component must be re-exported from `packages/ui/src/index.ts`.

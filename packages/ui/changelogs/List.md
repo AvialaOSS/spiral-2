@@ -1,5 +1,10 @@
 # List
 
+## [Unreleased]
+
+### Removed
+- `ListItem` `actionLabel` 的 `Text` 默认值；未传 `actionLabel` 且未传 `action` 时不再渲染主操作按钮
+
 ## 2.6.2
 
 ### Fixed

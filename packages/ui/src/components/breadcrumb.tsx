@@ -34,7 +34,7 @@ function breadcrumbTypeLevel(size: BreadcrumbSize): TypographyLevel {
 const breadcrumbVariants = cva("aviala-breadcrumb", {
   variants: {
     size: {
-      default: "aviala-breadcrumb--size-default",
+      default: "",
       small: "aviala-breadcrumb--size-small",
     },
   },
