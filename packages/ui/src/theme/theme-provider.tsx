@@ -249,23 +249,66 @@ export function useThemeLayoutKey(): string | null {
   return `${ctx.density}:${ctx.mode}`;
 }
 
+const DEFAULT_STORAGE_KEY = "aviala-theme";
+const DEFAULT_SCRIPT_MODE: ThemeMode = "light";
+const DEFAULT_SCRIPT_PRIMARY = "#FF5532";
+const DEFAULT_SCRIPT_DENSITY: BaseNumbersDensity = "default";
+
+/**
+ * `ThemeScript` builds its body as a template literal handed to
+ * `dangerouslySetInnerHTML`, so every interpolated prop must be whitelisted rather
+ * than escaped — a stray quote or `</script>` would otherwise break out of the JS
+ * string or the tag. Anything outside these whitelists falls back to the default.
+ */
+const STORAGE_KEY_PATTERN = /^[a-zA-Z0-9_-]+$/;
+const HEX_COLOR_PATTERN = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const THEME_MODES: readonly ThemeMode[] = ["light", "dark"];
+const THEME_DENSITIES: readonly BaseNumbersDensity[] = ["default", "mobile-friendly"];
+
+function pickFromWhitelist<T extends string>(
+  value: string | undefined,
+  allowed: readonly T[],
+  fallback: T
+): T {
+  return value !== undefined && (allowed as readonly string[]).includes(value)
+    ? (value as T)
+    : fallback;
+}
+
+function pickMatching(
+  value: string | undefined,
+  pattern: RegExp,
+  fallback: string
+): string {
+  return value !== undefined && pattern.test(value) ? value : fallback;
+}
+
 export function ThemeScript({
-  storageKey = "aviala-theme",
-  defaultMode = "light",
-  defaultPrimary = "#FF5532",
-  defaultDensity = "default",
+  storageKey,
+  defaultMode,
+  defaultPrimary,
+  defaultDensity,
 }: {
   storageKey?: string;
   defaultMode?: ThemeMode;
   defaultPrimary?: string;
   defaultDensity?: BaseNumbersDensity;
 }) {
+  const safeStorageKey = pickMatching(storageKey, STORAGE_KEY_PATTERN, DEFAULT_STORAGE_KEY);
+  const safeMode = pickFromWhitelist(defaultMode, THEME_MODES, DEFAULT_SCRIPT_MODE);
+  const safePrimary = pickMatching(defaultPrimary, HEX_COLOR_PATTERN, DEFAULT_SCRIPT_PRIMARY);
+  const safeDensity = pickFromWhitelist(
+    defaultDensity,
+    THEME_DENSITIES,
+    DEFAULT_SCRIPT_DENSITY
+  );
+
   const script = `
 (function(){
   try {
-    var mode = localStorage.getItem('${storageKey}:mode') || '${defaultMode}';
-    var primary = localStorage.getItem('${storageKey}:primary') || '${defaultPrimary}';
-    var density = localStorage.getItem('${storageKey}:density') || '${defaultDensity}';
+    var mode = localStorage.getItem('${safeStorageKey}:mode') || '${safeMode}';
+    var primary = localStorage.getItem('${safeStorageKey}:primary') || '${safePrimary}';
+    var density = localStorage.getItem('${safeStorageKey}:density') || '${safeDensity}';
     document.documentElement.setAttribute('data-mode', mode);
     if (density === 'mobile-friendly') {
       document.documentElement.setAttribute('data-density', 'mobile-friendly');
