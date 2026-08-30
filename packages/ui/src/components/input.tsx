@@ -122,7 +122,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={resolvedError || undefined}
             className={cn(
               typographyVariants({ level: "text" }),
-              "w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,#343333)] outline-none",
+              "w-full min-w-0 border-0 bg-transparent p-0 text-[var(--input-fg,var(--text-text-normal-text-black))] outline-none",
               "disabled:cursor-not-allowed"
             )}
             onChange={(event) => {

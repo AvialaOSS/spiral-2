@@ -11,6 +11,7 @@ import {
   applyTheme,
   applyBaseNumbersDensity,
   DEFAULT_PALETTE_CONFIG,
+  DEFAULT_PRIMARY,
   generateTheme,
   getPreset,
   presetList,
@@ -21,6 +22,9 @@ import {
   type ThemePreset,
 } from "@aviala-design/tokens";
 import { initKeyboardFocus } from "../lib/keyboard-focus";
+
+/** Last-resort brand color when no prop, stored value, or preset supplies one. */
+const DEFAULT_PRIMARY_COLOR: string = DEFAULT_PRIMARY;
 
 export type ThemeProviderProps = {
   children: ReactNode;
@@ -71,13 +75,15 @@ export function ThemeProvider({
 
   const [primaryColor, setPrimaryColorState] = useState(() => {
     if (typeof window === "undefined") {
-      return defaultPrimary ?? getPreset(defaultPresetId)?.primary ?? "#FF5532";
+      return (
+        defaultPrimary ?? getPreset(defaultPresetId)?.primary ?? DEFAULT_PRIMARY_COLOR
+      );
     }
     return (
       localStorage.getItem(`${storageKey}:primary`) ??
       defaultPrimary ??
       getPreset(defaultPresetId)?.primary ??
-      "#FF5532"
+      DEFAULT_PRIMARY_COLOR
     );
   });
 
@@ -252,7 +258,7 @@ export function useThemeLayoutKey(): string | null {
 export function ThemeScript({
   storageKey = "aviala-theme",
   defaultMode = "light",
-  defaultPrimary = "#FF5532",
+  defaultPrimary = DEFAULT_PRIMARY_COLOR,
   defaultDensity = "default",
 }: {
   storageKey?: string;

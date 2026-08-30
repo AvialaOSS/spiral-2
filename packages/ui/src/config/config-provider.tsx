@@ -66,7 +66,7 @@ export function ConfigProvider({
   return (
     <ConfigContext.Provider value={value}>
       <div
-        className={["aviala-config-provider", className].filter(Boolean).join(" ")}
+        className={className}
         dir={direction}
         style={style}
       >

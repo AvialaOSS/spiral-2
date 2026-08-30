@@ -21,12 +21,12 @@ type SliderPointerHandler = SliderRootProps["onPointerMove"];
 const sliderVariants = cva("aviala-slider", {
   variants: {
     size: {
-      default: "aviala-slider--size-default",
+      default: "",
       big: "aviala-slider--size-big",
     },
     type: {
-      default: "aviala-slider--type-default",
-      range: "aviala-slider--type-range",
+      default: "",
+      range: "",
     },
   },
   defaultVariants: {
