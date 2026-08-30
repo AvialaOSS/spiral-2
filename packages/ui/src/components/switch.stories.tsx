@@ -36,7 +36,9 @@ export const SizeMatrix: Story = {
     <div className="flex flex-col gap-4">
       {sizes.map((size) => (
         <div key={size} className="flex items-center gap-4">
-          <span className="w-16 font-mono text-xs text-muted-foreground">{size}</span>
+          <span className="w-16 font-mono text-xs text-muted-foreground">
+            {size}
+          </span>
           <Switch size={size} defaultChecked={false} />
           <Switch size={size} defaultChecked />
           <Switch size={size} defaultChecked disabled />
@@ -53,9 +55,9 @@ export const AnimationDemo: Story = {
     return (
       <div className="flex max-w-sm flex-col gap-6">
         <p className="text-sm text-muted-foreground">
-          Press and hold for a light directional stretch. Toggle to slide — the thumb uses paired
-          inset transitions (260ms) so it elongates slightly mid-travel and can reverse mid-flight
-          if you interrupt.
+          Press and hold for a light directional stretch. Toggle to slide — the
+          thumb uses paired inset transitions (260ms) so it elongates slightly
+          mid-travel and can reverse mid-flight if you interrupt.
         </p>
         <div className="flex flex-col gap-3">
           <label className="flex items-center gap-3 text-sm">
@@ -72,7 +74,9 @@ export const AnimationDemo: Story = {
           </label>
         </div>
         <div className="flex items-center gap-4">
-          <span className="w-16 font-mono text-xs text-muted-foreground">small</span>
+          <span className="w-16 font-mono text-xs text-muted-foreground">
+            small
+          </span>
           <Switch size="small" defaultChecked={false} />
           <Switch size="small" defaultChecked />
         </div>

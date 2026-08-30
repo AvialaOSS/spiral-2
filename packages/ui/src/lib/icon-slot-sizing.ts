@@ -1,6 +1,11 @@
 import type { AvialaIconProps, IconLevel } from "@aviala-design/icons";
 import { resolveIconSizeToken } from "@aviala-design/icons";
-import { isValidElement, type CSSProperties, type ReactElement, type ReactNode } from "react";
+import {
+  isValidElement,
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 
 export function resolveIconSlotSizing(
   node: ReactNode,
@@ -24,7 +29,11 @@ export function iconSlotCssVarStyle(
   defaultLevel: IconLevel,
   defaultBiggerSize = true
 ): CSSProperties {
-  const slotSizing = resolveIconSlotSizing(node, defaultLevel, defaultBiggerSize);
+  const slotSizing = resolveIconSlotSizing(
+    node,
+    defaultLevel,
+    defaultBiggerSize
+  );
   return {
     [cssVarName]: resolveIconSizeToken(slotSizing.level, slotSizing.biggerSize),
   } as CSSProperties;

@@ -4,11 +4,11 @@ Aviala Design aligned React component library built on shadcn/ui, Radix UI, and 
 
 ## Packages
 
-| Package | Description |
-|---|---|
+| Package                 | Description                                                 |
+| ----------------------- | ----------------------------------------------------------- |
 | `@aviala-design/tokens` | Theme engine + design tokens (ALD + `@aviala-design/color`) |
-| `@aviala-design/icons` | Aviala Design Icons as React SVG components |
-| `@aviala-design/spiral` | React components + `ThemeProvider` |
+| `@aviala-design/icons`  | Aviala Design Icons as React SVG components                 |
+| `@aviala-design/spiral` | React components + `ThemeProvider`                          |
 
 ## Quick start
 
@@ -78,6 +78,7 @@ pnpm icons:export --name=direction_arrowLeft         # then icons:build:merge fo
 ```
 
 CI: Actions → **Icons Sync** (`icons-sync.yml`).
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and set `FIGMA_ACCESS_TOKEN` for Figma exports. See [docs/figma-mcp.md](docs/figma-mcp.md). Only needed for icon sync, not for normal build/release.

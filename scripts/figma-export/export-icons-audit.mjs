@@ -61,7 +61,11 @@ async function fetchSvgUrlsWithRetry(client, fileKey, nodeIds, batchSize = 20) {
   const urls = new Map();
   for (let i = 0; i < nodeIds.length; i += batchSize) {
     const batch = nodeIds.slice(i, i + batchSize);
-    const { urls: batchUrls } = await client.fetchSvgUrls(fileKey, batch, batchSize);
+    const { urls: batchUrls } = await client.fetchSvgUrls(
+      fileKey,
+      batch,
+      batchSize
+    );
     for (const [id, url] of batchUrls.entries()) urls.set(id, url);
     await sleep(500);
   }
@@ -136,7 +140,8 @@ for (const component of components) {
   if (!variant.name || !variant.thickness || !variant.mode) continue;
 
   const setInfo = nodeToSet.get(component.node_id);
-  const category = setInfo?.category ?? (variant.name.split("_")[0] || "uncategorized");
+  const category =
+    setInfo?.category ?? (variant.name.split("_")[0] || "uncategorized");
 
   const canonicalPath =
     variantToRelativePath(category, variant) ??
@@ -224,7 +229,9 @@ for (const [iconName, sets] of iconNameToSets.entries()) {
     if ((parsed?.iconName ?? fileBase) !== iconName) continue;
     if (!item.setName || !sets.has(item.setName)) continue;
 
-    const existing = syncIssues.find((s) => s.file === `${item.relativePath}.svg`);
+    const existing = syncIssues.find(
+      (s) => s.file === `${item.relativePath}.svg`
+    );
     const entry = existing ?? {
       file: `${item.relativePath}.svg`,
       issues: [],
@@ -232,7 +239,11 @@ for (const [iconName, sets] of iconNameToSets.entries()) {
       variantName: item.variant.name,
       expectedIconName: expectedIconNameFromSet(item.setName),
       canonicalPath: `${item.canonicalPath}.svg`,
-      dedupeSuffix: getDedupeSuffix(item.relativePath, item.variant, item.category),
+      dedupeSuffix: getDedupeSuffix(
+        item.relativePath,
+        item.variant,
+        item.category
+      ),
       reactComponent: iconNameToComponentName(iconName),
       figmaVariant: item.figmaVariantName,
       nodeId: item.nodeId,
@@ -273,16 +284,22 @@ function buildSummary(exported, skipped) {
   for (const row of syncIssues) {
     lines.push(`### ${row.file}`);
     lines.push(`- Issues: ${row.issues.join(", ")}`);
-    if (row.componentSet) lines.push(`- Component set: \`${row.componentSet}\``);
+    if (row.componentSet)
+      lines.push(`- Component set: \`${row.componentSet}\``);
     lines.push(`- Variant name: \`${row.variantName}\``);
-    if (row.expectedIconName) lines.push(`- Expected name: \`${row.expectedIconName}\``);
+    if (row.expectedIconName)
+      lines.push(`- Expected name: \`${row.expectedIconName}\``);
     if (row.canonicalPath !== row.file) {
       lines.push(`- Canonical path: \`${row.canonicalPath}\``);
-      if (row.dedupeSuffix) lines.push(`- Dedupe suffix: \`${row.dedupeSuffix}\``);
+      if (row.dedupeSuffix)
+        lines.push(`- Dedupe suffix: \`${row.dedupeSuffix}\``);
     }
-    if (row.conflictWith) lines.push(`- Conflicts with set: \`${row.conflictWith}\``);
+    if (row.conflictWith)
+      lines.push(`- Conflicts with set: \`${row.conflictWith}\``);
     if (row.collidingSets) {
-      lines.push(`- Colliding sets: ${row.collidingSets.map((s) => `\`${s}\``).join(", ")}`);
+      lines.push(
+        `- Colliding sets: ${row.collidingSets.map((s) => `\`${s}\``).join(", ")}`
+      );
     }
     lines.push(`- React component: \`${row.reactComponent}\``);
     lines.push(`- Figma node: \`${row.nodeId}\``);
@@ -292,9 +309,14 @@ function buildSummary(exported, skipped) {
   return lines.join("\n");
 }
 
-writeFileSync(join(outDir, "sync-issues.json"), `${JSON.stringify(syncIssues, null, 2)}\n`);
+writeFileSync(
+  join(outDir, "sync-issues.json"),
+  `${JSON.stringify(syncIssues, null, 2)}\n`
+);
 writeFileSync(join(outDir, "sync-issues.md"), buildSummary(0, 0));
-console.log(`Sync issues: ${syncIssues.length} → ${join(outDir, "sync-issues.md")}`);
+console.log(
+  `Sync issues: ${syncIssues.length} → ${join(outDir, "sync-issues.md")}`
+);
 console.log("Downloading SVGs…");
 
 const svgUrls = await fetchSvgUrlsWithRetry(
@@ -346,7 +368,10 @@ for (const item of plan) {
 }
 
 manifest.count = exported;
-writeFileSync(join(outDir, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+writeFileSync(
+  join(outDir, "manifest.json"),
+  `${JSON.stringify(manifest, null, 2)}\n`
+);
 writeFileSync(join(outDir, "sync-issues.md"), buildSummary(exported, skipped));
 
 console.log(`Done. Exported ${exported}, skipped ${skipped}.`);

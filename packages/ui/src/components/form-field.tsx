@@ -1,4 +1,7 @@
-import { SymbolInformationCircle, SymbolWrongCircle } from "@aviala-design/icons";
+import {
+  SymbolInformationCircle,
+  SymbolWrongCircle,
+} from "@aviala-design/icons";
 import {
   createContext,
   forwardRef,
@@ -33,7 +36,8 @@ type FormFieldControlContextValue = {
   invalid: boolean;
 };
 
-const FormFieldControlContext = createContext<FormFieldControlContextValue | null>(null);
+const FormFieldControlContext =
+  createContext<FormFieldControlContextValue | null>(null);
 
 /**
  * Resolve a control `error` prop against the surrounding FormField.
@@ -126,7 +130,10 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
     const labelNode =
       hasLabel || description ? (
         htmlFor ? (
-          <label htmlFor={htmlFor} className="aviala-form__label aviala-form__label--control">
+          <label
+            htmlFor={htmlFor}
+            className="aviala-form__label aviala-form__label--control"
+          >
             <Typeface
               id={labelId}
               content="textCaption"
@@ -181,14 +188,21 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
             {children}
           </FormFieldControlContext.Provider>
           {error ? (
-            <div className="aviala-form__message aviala-form__message--error" role="alert">
+            <div
+              className="aviala-form__message aviala-form__message--error"
+              role="alert"
+            >
               <SymbolWrongCircle
                 className="aviala-form__message-icon"
                 width={14}
                 height={14}
                 aria-hidden
               />
-              <Typography level="caption" as="p" className="aviala-form__message-text">
+              <Typography
+                level="caption"
+                as="p"
+                className="aviala-form__message-text"
+              >
                 {error}
               </Typography>
             </div>
@@ -201,7 +215,11 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
                 height={14}
                 aria-hidden
               />
-              <Typography level="caption" as="p" className="aviala-form__message-text">
+              <Typography
+                level="caption"
+                as="p"
+                className="aviala-form__message-text"
+              >
                 {info}
               </Typography>
             </div>
@@ -214,7 +232,10 @@ const FormFieldLayout = forwardRef<HTMLDivElement, FormFieldLayoutProps>(
 );
 FormFieldLayout.displayName = "FormFieldLayout";
 
-const FormFieldControlled = forwardRef<HTMLDivElement, FormFieldControlledProps>(
+const FormFieldControlled = forwardRef<
+  HTMLDivElement,
+  FormFieldControlledProps
+>(
   (
     {
       control,
@@ -238,7 +259,8 @@ const FormFieldControlled = forwardRef<HTMLDivElement, FormFieldControlledProps>
       shouldUnregister,
       disabled,
     });
-    const message = error !== undefined ? error : (fieldState.error?.message ?? null);
+    const message =
+      error !== undefined ? error : (fieldState.error?.message ?? null);
 
     return (
       <FormFieldLayout ref={ref} {...layoutProps} htmlFor={id} error={message}>
@@ -252,15 +274,19 @@ FormFieldControlled.displayName = "FormFieldControlled";
 function isControlledProps(
   props: FormFieldProps
 ): props is FormFieldControlledProps {
-  return "render" in props && typeof props.render === "function" && "name" in props;
+  return (
+    "render" in props && typeof props.render === "function" && "name" in props
+  );
 }
 
-const FormFieldRoot = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) => {
-  if (isControlledProps(props)) {
-    return <FormFieldControlled ref={ref} {...props} />;
+const FormFieldRoot = forwardRef<HTMLDivElement, FormFieldProps>(
+  (props, ref) => {
+    if (isControlledProps(props)) {
+      return <FormFieldControlled ref={ref} {...props} />;
+    }
+    return <FormFieldLayout ref={ref} {...props} />;
   }
-  return <FormFieldLayout ref={ref} {...props} />;
-});
+);
 
 /**
  * FormField — layout wrapper around a form control, or a react-hook-form

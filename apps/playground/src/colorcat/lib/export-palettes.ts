@@ -60,7 +60,11 @@ export function exportAsCssVariables(payload: ExportPayload): string {
   return lines.join("\n");
 }
 
-export function downloadTextFile(filename: string, content: string, mimeType: string) {
+export function downloadTextFile(
+  filename: string,
+  content: string,
+  mimeType: string
+) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");

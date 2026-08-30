@@ -38,13 +38,18 @@ export function ColorPickerPresets({
   };
 
   return (
-    <div className={cn("aviala-color-picker-presets", className)} {...spiralDebugId("color-picker.content.presets")}>
+    <div
+      className={cn("aviala-color-picker-presets", className)}
+      {...spiralDebugId("color-picker.content.presets")}
+    >
       <Button
         type="button"
         mode="defaultCustom"
         size="regular"
         iconOnly
-        disabled={isDisabled || !onPresetsChange || presets.length >= maxPresets}
+        disabled={
+          isDisabled || !onPresetsChange || presets.length >= maxPresets
+        }
         aria-label="Add current color to presets"
         onClick={handleAdd}
       >

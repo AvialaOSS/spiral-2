@@ -41,8 +41,10 @@ function resolveTextareaState(
   return focused ? "typing" : "fill";
 }
 
-
-export type TextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> & {
+export type TextareaProps = Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "size"
+> & {
   /** Figma `Size` */
   size?: TextareaSize;
   leftIcon?: ReactNode;
@@ -77,7 +79,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const rootRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [focused, setFocused] = useState(false);
-    const [internalValue, setInternalValue] = useState(() => String(defaultValue ?? ""));
+    const [internalValue, setInternalValue] = useState(() =>
+      String(defaultValue ?? "")
+    );
     const [resizing, setResizing] = useState(false);
     const showController = showControllerProp ?? maxLength !== undefined;
     const resolvedSize = size ?? "regular";
@@ -131,8 +135,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         setResizing(true);
 
         const onMove = (ev: PointerEvent) => {
-          const nextW = Math.max(minW, Math.round(startW + (ev.clientX - startX)));
-          const nextH = Math.max(minH, Math.round(startH + (ev.clientY - startY)));
+          const nextW = Math.max(
+            minW,
+            Math.round(startW + (ev.clientX - startX))
+          );
+          const nextH = Math.max(
+            minH,
+            Math.round(startH + (ev.clientY - startY))
+          );
           root.style.width = `${nextW}px`;
           root.style.height = `${nextH}px`;
         };
@@ -180,9 +190,16 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         onMouseDown={handleShellMouseDown}
         {...spiralDebugId("textarea")}
       >
-        {renderSlotIcon(leftIcon, "aviala-textarea__slot", "textarea.left-icon")}
+        {renderSlotIcon(
+          leftIcon,
+          "aviala-textarea__slot",
+          "textarea.left-icon"
+        )}
 
-        <div className="aviala-textarea__field" {...spiralDebugId("textarea.field")}>
+        <div
+          className="aviala-textarea__field"
+          {...spiralDebugId("textarea.field")}
+        >
           <textarea
             ref={setTextareaRef}
             disabled={disabled}
@@ -190,7 +207,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             value={value}
             defaultValue={defaultValue}
             aria-invalid={resolvedError || undefined}
-            className={cn("aviala-textarea__input", typographyVariants({ level: "text" }))}
+            className={cn(
+              "aviala-textarea__input",
+              typographyVariants({ level: "text" })
+            )}
             onChange={(event) => {
               if (value === undefined) {
                 setInternalValue(event.target.value);
@@ -209,12 +229,22 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           />
         </div>
 
-        {renderSlotIcon(rightIcon, "aviala-textarea__slot", "textarea.right-icon")}
+        {renderSlotIcon(
+          rightIcon,
+          "aviala-textarea__slot",
+          "textarea.right-icon"
+        )}
 
         {showController ? (
-          <div className="aviala-textarea__controller" {...spiralDebugId("textarea.controller")}>
+          <div
+            className="aviala-textarea__controller"
+            {...spiralDebugId("textarea.controller")}
+          >
             <span
-              className={cn("aviala-textarea__counter", typographyVariants({ level: "caption" }))}
+              className={cn(
+                "aviala-textarea__counter",
+                typographyVariants({ level: "caption" })
+              )}
               aria-hidden
             >
               {displayLength}

@@ -39,7 +39,12 @@ function StorybookThemeSync({
   presetId: string;
   mode: ThemeMode;
 }) {
-  const { applyPreset, setMode, presetId: currentPreset, mode: currentMode } = useTheme();
+  const {
+    applyPreset,
+    setMode,
+    presetId: currentPreset,
+    mode: currentMode,
+  } = useTheme();
 
   useLayoutEffect(() => {
     if (currentPreset !== presetId) {
@@ -91,7 +96,8 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const presetId = (context.globals.themePreset as string) || "ald";
-      const mode = ((context.globals.themeMode as ThemeMode) || "light") as ThemeMode;
+      const mode = ((context.globals.themeMode as ThemeMode) ||
+        "light") as ThemeMode;
 
       return (
         <ThemeProvider
@@ -100,7 +106,10 @@ const preview: Preview = {
           storageKey="aviala-storybook-theme"
         >
           <StorybookThemeSync presetId={presetId} mode={mode} />
-          <div className="bg-background text-foreground p-4 font-sans" data-storybook-theme={presetId}>
+          <div
+            className="bg-background text-foreground p-4 font-sans"
+            data-storybook-theme={presetId}
+          >
             <Story />
           </div>
         </ThemeProvider>

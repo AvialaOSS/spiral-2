@@ -108,7 +108,11 @@ export const Filled: Story = {
 /** Figma Cascader Input — Size=Big (`345:11782`). */
 export const Big: Story = {
   render: () => (
-    <CascaderDemo size="big" defaultValue={["china", "hainan", "haikou"]} className="w-[300px]" />
+    <CascaderDemo
+      size="big"
+      defaultValue={["china", "hainan", "haikou"]}
+      className="w-[300px]"
+    />
   ),
 };
 
@@ -235,13 +239,25 @@ export const ItemFunctionVariants: Story = {
           <CascaderItem value="radio" pathPrefix={[]} itemFunction="radio">
             Radio
           </CascaderItem>
-          <CascaderItem value="checkbox" pathPrefix={[]} itemFunction="checkbox">
+          <CascaderItem
+            value="checkbox"
+            pathPrefix={[]}
+            itemFunction="checkbox"
+          >
             Checkbox
           </CascaderItem>
-          <CascaderItem value="form-radio" pathPrefix={[]} itemFunction="form-radio">
+          <CascaderItem
+            value="form-radio"
+            pathPrefix={[]}
+            itemFunction="form-radio"
+          >
             Form Radio
           </CascaderItem>
-          <CascaderItem value="form-checkbox" pathPrefix={[]} itemFunction="form-checkbox">
+          <CascaderItem
+            value="form-checkbox"
+            pathPrefix={[]}
+            itemFunction="form-checkbox"
+          >
             Form Checkbox
           </CascaderItem>
         </CascaderItemGroup>
@@ -281,7 +297,11 @@ export const GroupDividerAndHugWidth: Story = {
 /** Options-driven three-level demo — expand parent items to see column slide-in. */
 export const MultiLevel: Story = {
   render: () => (
-    <Cascader options={regionOptions} defaultOpen defaultValue={["china", "hainan", "haikou"]}>
+    <Cascader
+      options={regionOptions}
+      defaultOpen
+      defaultValue={["china", "hainan", "haikou"]}
+    >
       <CascaderTrigger
         placeholder="Text"
         leftIcon={<GeneralSetting aria-hidden />}

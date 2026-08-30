@@ -41,7 +41,6 @@ export type TimePickerProps = {
   className?: string;
 };
 
-
 export function TimePicker({
   children,
   value: valueProp,
@@ -55,7 +54,8 @@ export function TimePicker({
   className,
 }: TimePickerProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [internalValue, setInternalValue] = useState<TimePickerValue>(defaultValue);
+  const [internalValue, setInternalValue] =
+    useState<TimePickerValue>(defaultValue);
   const windowBlurCloseRef = useRef(false);
   const pointerDownCloseRef = useRef(false);
 
@@ -91,13 +91,18 @@ export function TimePicker({
       pointerDownCloseRef.current = true;
     };
     document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
+    return () =>
+      document.removeEventListener("pointerdown", markPointerDown, true);
   }, [open]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
       if (disabled && nextOpen) return;
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
+      if (
+        !nextOpen &&
+        windowBlurCloseRef.current &&
+        !pointerDownCloseRef.current
+      ) {
         windowBlurCloseRef.current = false;
         return;
       }
@@ -124,14 +129,21 @@ export function TimePicker({
 
   return (
     <TimePickerProvider value={contextValue}>
-      <PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} modal={false}>
+      <PopoverPrimitive.Root
+        open={open}
+        onOpenChange={handleOpenChange}
+        modal={false}
+      >
         <div className={cn("inline-flex", className)}>{children}</div>
       </PopoverPrimitive.Root>
     </TimePickerProvider>
   );
 }
 
-export type TimePickerTriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value"> & {
+export type TimePickerTriggerProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "value"
+> & {
   size?: TimePickerSize;
   allRound?: boolean;
   leftIcon?: ReactNode;
@@ -141,7 +153,10 @@ export type TimePickerTriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement
   displayValue?: string | null;
 };
 
-export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTriggerProps>(
+export const TimePickerTrigger = forwardRef<
+  HTMLButtonElement,
+  TimePickerTriggerProps
+>(
   (
     {
       className,
@@ -158,7 +173,12 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
     ref
   ) => {
     const locale = useLocaleMessages("TimePicker");
-    const { open, disabled: disabledContext, size: sizeContext, value } = useTimePickerContext();
+    const {
+      open,
+      disabled: disabledContext,
+      size: sizeContext,
+      value,
+    } = useTimePickerContext();
     const size = sizeProp ?? sizeContext;
     const disabled = disabledProp ?? disabledContext;
     const resolvedError = useResolvedControlError(error);
@@ -174,7 +194,10 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
         <button
           ref={ref}
           type="button"
-          className={cn("aviala-timepicker-trigger aviala-focus-ring", className)}
+          className={cn(
+            "aviala-timepicker-trigger aviala-focus-ring",
+            className
+          )}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
@@ -185,7 +208,9 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
           {...props}
         >
           {renderSlotIcon(
-            leftIcon ?? <TimeAndDateClock level="text" biggerSize aria-hidden />,
+            leftIcon ?? (
+              <TimeAndDateClock level="text" biggerSize aria-hidden />
+            ),
             "aviala-timepicker-trigger__slot"
           )}
           <span className="aviala-timepicker-trigger__field">
@@ -207,7 +232,9 @@ export const TimePickerTrigger = forwardRef<HTMLButtonElement, TimePickerTrigger
 );
 TimePickerTrigger.displayName = "TimePickerTrigger";
 
-export type TimePickerContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+export type TimePickerContentProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+> & {
   portalled?: boolean;
 };
 
@@ -268,7 +295,10 @@ export function TimePickerPanel({ className }: TimePickerPanelProps) {
   );
 }
 
-export type TimePickerFieldProps = Omit<TimePickerTriggerProps, "displayValue"> & {
+export type TimePickerFieldProps = Omit<
+  TimePickerTriggerProps,
+  "displayValue"
+> & {
   contentClassName?: string;
   panelClassName?: string;
   value?: TimePickerValue;

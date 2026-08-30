@@ -57,7 +57,9 @@ export const LevelMatrix: Story = {
     <div className="flex flex-col gap-3">
       {levels.map((level) => (
         <div key={level} className="flex items-baseline gap-4">
-          <span className="w-28 shrink-0 font-mono text-xs text-muted-foreground">{level}</span>
+          <span className="w-28 shrink-0 font-mono text-xs text-muted-foreground">
+            {level}
+          </span>
           <Typography level={level} content="text">
             Text
           </Typography>

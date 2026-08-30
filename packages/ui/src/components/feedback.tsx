@@ -23,7 +23,8 @@ import { Typeface } from "./typeface";
 import { Typography } from "./typography";
 
 /** Figma Components → Response And Feedback → Feedback (553:58620) */
-export type FeedbackType = "information" | "warning" | "wrong" | "success" | "normal";
+export type FeedbackType =
+  "information" | "warning" | "wrong" | "success" | "normal";
 export type FeedbackSize = "default" | "small";
 export type FeedbackMode = "default" | "primary";
 
@@ -58,14 +59,21 @@ function renderFeedbackIcon(node: ReactNode): ReactNode {
   if (!node) return null;
   const content =
     isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: FEEDBACK_ICON_SIZE,
-          height: FEEDBACK_ICON_SIZE,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: FEEDBACK_ICON_SIZE,
+            height: FEEDBACK_ICON_SIZE,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return (
@@ -82,16 +90,32 @@ function defaultStatusIcon(type: FeedbackType, mode: FeedbackMode): ReactNode {
   switch (type) {
     case "information":
       return (
-        <SymbolInformationCircle thickness={thickness} mode={iconMode} aria-hidden />
+        <SymbolInformationCircle
+          thickness={thickness}
+          mode={iconMode}
+          aria-hidden
+        />
       );
     case "warning":
-      return <SymbolWarningCircle thickness={thickness} mode={iconMode} aria-hidden />;
+      return (
+        <SymbolWarningCircle
+          thickness={thickness}
+          mode={iconMode}
+          aria-hidden
+        />
+      );
     case "wrong":
-      return <SymbolWrongCircle thickness={thickness} mode={iconMode} aria-hidden />;
+      return (
+        <SymbolWrongCircle thickness={thickness} mode={iconMode} aria-hidden />
+      );
     case "success":
-      return <SymbolRightCircle thickness={thickness} mode={iconMode} aria-hidden />;
+      return (
+        <SymbolRightCircle thickness={thickness} mode={iconMode} aria-hidden />
+      );
     case "normal":
-      return <GeneralNotification thickness={thickness} mode="default" aria-hidden />;
+      return (
+        <GeneralNotification thickness={thickness} mode="default" aria-hidden />
+      );
   }
 }
 
@@ -135,7 +159,8 @@ export const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
     const resolvedCloseLabel = closeLabel ?? locale.close;
     const resolvedType = type ?? "information";
     const resolvedSize = size ?? "default";
-    const mode = resolvedType === "normal" ? "default" : (modeProp ?? "default");
+    const mode =
+      resolvedType === "normal" ? "default" : (modeProp ?? "default");
     const tone = mode === "primary" ? "white" : "default";
     const isSmall = resolvedSize === "small";
     const resolvedRole = resolvedType === "wrong" ? "alert" : "status";
@@ -158,7 +183,11 @@ export const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
           {renderFeedbackIcon(icon ?? defaultStatusIcon(resolvedType, mode))}
 
           {isSmall ? (
-            <Typography level="text" tone={tone} className="aviala-feedback__title">
+            <Typography
+              level="text"
+              tone={tone}
+              className="aviala-feedback__title"
+            >
               {title}
             </Typography>
           ) : (

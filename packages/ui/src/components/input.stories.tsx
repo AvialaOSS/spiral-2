@@ -37,7 +37,9 @@ export const EmptyVsFilled: Story = {
   render: () => (
     <div className="flex w-full max-w-sm flex-col gap-3">
       <div className="flex flex-col gap-1">
-        <span className="font-mono text-xs text-muted-foreground">Empty (placeholder 60%)</span>
+        <span className="font-mono text-xs text-muted-foreground">
+          Empty (placeholder 60%)
+        </span>
         <Input
           placeholder="Text"
           leftIcon={<GeneralSetting aria-hidden />}
@@ -45,7 +47,9 @@ export const EmptyVsFilled: Story = {
         />
       </div>
       <div className="flex flex-col gap-1">
-        <span className="font-mono text-xs text-muted-foreground">Filled (100%)</span>
+        <span className="font-mono text-xs text-muted-foreground">
+          Filled (100%)
+        </span>
         <Input
           defaultValue="Text"
           leftIcon={<GeneralSetting aria-hidden />}
@@ -102,7 +106,9 @@ export const SizeMatrix: Story = {
     <div className="flex w-full max-w-sm flex-col gap-4">
       {sizes.map((size) => (
         <div key={size} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{size}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {size}
+          </span>
           <Input
             size={size}
             placeholder="Empty"

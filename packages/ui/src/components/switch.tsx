@@ -5,7 +5,9 @@ import { cn } from "../lib/utils";
 /** Figma Components → Basic Input → Switch */
 export type SwitchSize = "regular" | "small";
 
-export type SwitchProps = ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> & {
+export type SwitchProps = ComponentPropsWithoutRef<
+  typeof SwitchPrimitive.Root
+> & {
   size?: SwitchSize;
 };
 

@@ -121,7 +121,11 @@ function VerticalNavContent({
         </NavigationItem>
       </NavigationGroup>
       <NavigationActions>
-        <Button mode="noBackgroundCustom" size="regular" leftIcon={<GeneralCollapseSidebar aria-hidden />}>
+        <Button
+          mode="noBackgroundCustom"
+          size="regular"
+          leftIcon={<GeneralCollapseSidebar aria-hidden />}
+        >
           Collapse Sidebar
         </Button>
         <NavigationActionsSlot>
@@ -220,7 +224,12 @@ function HorizontalNavContent({
 /** Figma 624:92194 — Vertical, Background=Default, Dividing line=OFF */
 export const VerticalDefault: Story = {
   render: () => (
-    <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
+    <Navigation
+      direction="vertical"
+      background="default"
+      className="w-[260px]"
+      aria-label="Sidebar"
+    >
       <VerticalNavContent />
     </Navigation>
   ),
@@ -229,7 +238,12 @@ export const VerticalDefault: Story = {
 /** Figma 624:92190 — Vertical, Background=None */
 export const VerticalNone: Story = {
   render: () => (
-    <Navigation direction="vertical" background="none" className="w-[260px]" aria-label="Sidebar">
+    <Navigation
+      direction="vertical"
+      background="none"
+      className="w-[260px]"
+      aria-label="Sidebar"
+    >
       <VerticalNavContent />
     </Navigation>
   ),
@@ -268,7 +282,12 @@ export const VerticalDefaultDividingLine: Story = {
 /** Figma 624:61778 — Horizontal, Background=Default */
 export const HorizontalDefault: Story = {
   render: () => (
-    <Navigation direction="horizontal" background="default" className="w-full max-w-[1076px]" aria-label="Top bar">
+    <Navigation
+      direction="horizontal"
+      background="default"
+      className="w-full max-w-[1076px]"
+      aria-label="Top bar"
+    >
       <HorizontalNavContent />
     </Navigation>
   ),
@@ -277,7 +296,12 @@ export const HorizontalDefault: Story = {
 /** Figma 624:61776 — Horizontal, Background=None */
 export const HorizontalNone: Story = {
   render: () => (
-    <Navigation direction="horizontal" background="none" className="w-full max-w-[1076px]" aria-label="Top bar">
+    <Navigation
+      direction="horizontal"
+      background="none"
+      className="w-full max-w-[1076px]"
+      aria-label="Top bar"
+    >
       <HorizontalNavContent />
     </Navigation>
   ),
@@ -316,7 +340,12 @@ export const DocsPattern: Story = {
     const startHasActiveChild = startChildIds.has(activeId);
 
     return (
-      <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Docs">
+      <Navigation
+        direction="vertical"
+        background="default"
+        className="w-[260px]"
+        aria-label="Docs"
+      >
         <NavigationBrand>
           <NavigationBrandTitle href="#">Spiral 2</NavigationBrandTitle>
           <Typography level="caption" as="p">
@@ -337,13 +366,25 @@ export const DocsPattern: Story = {
             开始
           </NavigationItem>
           <NavigationItemGroup expanded={expandedStart}>
-            <NavigationItem itemType="child" active={activeId === "intro"} {...selectProps("intro")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "intro"}
+              {...selectProps("intro")}
+            >
               介绍
             </NavigationItem>
-            <NavigationItem itemType="child" active={activeId === "install"} {...selectProps("install")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "install"}
+              {...selectProps("install")}
+            >
               安装
             </NavigationItem>
-            <NavigationItem itemType="child" active={activeId === "theme"} {...selectProps("theme")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "theme"}
+              {...selectProps("theme")}
+            >
               主题
             </NavigationItem>
           </NavigationItemGroup>
@@ -365,7 +406,11 @@ export const DocsPattern: Story = {
           </NavigationItem>
         </NavigationGroup>
         <NavigationActions>
-          <Button mode="noBackgroundCustom" size="regular" leftIcon={<GeneralCollapseSidebar aria-hidden />}>
+          <Button
+            mode="noBackgroundCustom"
+            size="regular"
+            leftIcon={<GeneralCollapseSidebar aria-hidden />}
+          >
             Collapse Sidebar
           </Button>
           <NavigationActionsSlot>
@@ -436,7 +481,12 @@ export const ExpandableSections: Story = {
     const settingsHasActiveChild = settingsChildIds.has(activeId);
 
     return (
-      <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
+      <Navigation
+        direction="vertical"
+        background="default"
+        className="w-[260px]"
+        aria-label="Sidebar"
+      >
         <NavigationBrand>
           <NavigationBrandTitle href="#">Brand</NavigationBrandTitle>
         </NavigationBrand>
@@ -454,13 +504,25 @@ export const ExpandableSections: Story = {
             Overview
           </NavigationItem>
           <NavigationItemGroup expanded={expandedOverview}>
-            <NavigationItem itemType="child" active={activeId === "child-1"} {...selectProps("child-1")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "child-1"}
+              {...selectProps("child-1")}
+            >
               Child item
             </NavigationItem>
-            <NavigationItem itemType="child" active={activeId === "child-2"} {...selectProps("child-2")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "child-2"}
+              {...selectProps("child-2")}
+            >
               Active child
             </NavigationItem>
-            <NavigationItem itemType="child" active={activeId === "child-3"} {...selectProps("child-3")}>
+            <NavigationItem
+              itemType="child"
+              active={activeId === "child-3"}
+              {...selectProps("child-3")}
+            >
               Child item
             </NavigationItem>
           </NavigationItemGroup>
@@ -504,7 +566,12 @@ export const AnimatedVertical: Story = {
     const [activeId, setActiveId] = useState("overview");
 
     return (
-      <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
+      <Navigation
+        direction="vertical"
+        background="default"
+        className="w-[260px]"
+        aria-label="Sidebar"
+      >
         <VerticalNavContent activeId={activeId} onSelect={setActiveId} />
       </Navigation>
     );
@@ -536,7 +603,10 @@ export const HorizontalExpandable: Story = {
           <NavigationBrandTitle href="#">Brand</NavigationBrandTitle>
         </NavigationBrand>
         <NavigationGroup>
-          <NavigationItem active={activeId === "overview"} {...selectProps("overview")}>
+          <NavigationItem
+            active={activeId === "overview"}
+            {...selectProps("overview")}
+          >
             Overview
           </NavigationItem>
           <NavigationItem
@@ -591,7 +661,12 @@ export const HoverMenuVertical: Story = {
     });
 
     return (
-      <Navigation direction="vertical" background="default" className="w-[260px]" aria-label="Sidebar">
+      <Navigation
+        direction="vertical"
+        background="default"
+        className="w-[260px]"
+        aria-label="Sidebar"
+      >
         <NavigationGroup>
           <NavigationItemMenu
             value={startValue}
@@ -608,9 +683,16 @@ export const HoverMenuVertical: Story = {
               开始
             </NavigationItemMenuTrigger>
             <NavigationItemMenuContent>
-              <NavigationItemMenuItem value="intro">介绍</NavigationItemMenuItem>
-              <NavigationItemMenuItem value="install">安装</NavigationItemMenuItem>
-              <NavigationItemMenuItem value="theme" rightIcon={<GeneralSetting aria-hidden />}>
+              <NavigationItemMenuItem value="intro">
+                介绍
+              </NavigationItemMenuItem>
+              <NavigationItemMenuItem value="install">
+                安装
+              </NavigationItemMenuItem>
+              <NavigationItemMenuItem
+                value="theme"
+                rightIcon={<GeneralSetting aria-hidden />}
+              >
                 主题
               </NavigationItemMenuItem>
             </NavigationItemMenuContent>
@@ -637,13 +719,23 @@ export const HoverMenuVertical: Story = {
               信息采集
             </NavigationItemMenuTrigger>
             <NavigationItemMenuContent>
-              <NavigationItemMenuItem value="select" leftIcon={<GeneralSetting aria-hidden />}>
+              <NavigationItemMenuItem
+                value="select"
+                leftIcon={<GeneralSetting aria-hidden />}
+              >
                 Select
               </NavigationItemMenuItem>
-              <NavigationItemMenuItem value="checkbox" leftIcon={<GeneralSetting aria-hidden />}>
+              <NavigationItemMenuItem
+                value="checkbox"
+                leftIcon={<GeneralSetting aria-hidden />}
+              >
                 Checkbox
               </NavigationItemMenuItem>
-              <NavigationItemMenuItem value="radio" leftIcon={<GeneralSetting aria-hidden />} disabled>
+              <NavigationItemMenuItem
+                value="radio"
+                leftIcon={<GeneralSetting aria-hidden />}
+                disabled
+              >
                 Radio（禁用）
               </NavigationItemMenuItem>
             </NavigationItemMenuContent>
@@ -679,7 +771,10 @@ export const HoverMenuHorizontal: Story = {
           <NavigationBrandTitle href="#">Brand</NavigationBrandTitle>
         </NavigationBrand>
         <NavigationGroup>
-          <NavigationItem active={activeId === "overview"} {...selectProps("overview")}>
+          <NavigationItem
+            active={activeId === "overview"}
+            {...selectProps("overview")}
+          >
             Overview
           </NavigationItem>
           <NavigationItemMenu
@@ -696,8 +791,12 @@ export const HoverMenuHorizontal: Story = {
               Settings
             </NavigationItemMenuTrigger>
             <NavigationItemMenuContent>
-              <NavigationItemMenuItem value="general">General</NavigationItemMenuItem>
-              <NavigationItemMenuItem value="billing">Billing</NavigationItemMenuItem>
+              <NavigationItemMenuItem value="general">
+                General
+              </NavigationItemMenuItem>
+              <NavigationItemMenuItem value="billing">
+                Billing
+              </NavigationItemMenuItem>
             </NavigationItemMenuContent>
           </NavigationItemMenu>
           <NavigationItem active={activeId === "team"} {...selectProps("team")}>
@@ -735,7 +834,12 @@ export const VariantMatrix: Story = {
         <Typography level="caption" as="p">
           Horizontal variants (624:61777)
         </Typography>
-        <Navigation direction="horizontal" background="none" className="max-w-[1076px]" aria-label="H none">
+        <Navigation
+          direction="horizontal"
+          background="none"
+          className="max-w-[1076px]"
+          aria-label="H none"
+        >
           <HorizontalNavContent />
         </Navigation>
         <Navigation
@@ -766,10 +870,20 @@ export const VariantMatrix: Story = {
         </Navigation>
       </div>
       <div className="flex flex-wrap gap-4">
-        <Navigation direction="vertical" background="none" className="h-[500px] w-[260px]" aria-label="V none">
+        <Navigation
+          direction="vertical"
+          background="none"
+          className="h-[500px] w-[260px]"
+          aria-label="V none"
+        >
           <VerticalNavContent />
         </Navigation>
-        <Navigation direction="vertical" background="default" className="h-[500px] w-[260px]" aria-label="V default">
+        <Navigation
+          direction="vertical"
+          background="default"
+          className="h-[500px] w-[260px]"
+          aria-label="V default"
+        >
           <VerticalNavContent />
         </Navigation>
         <Navigation

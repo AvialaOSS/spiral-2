@@ -33,7 +33,9 @@ await page.waitForSelector(".aviala-segmentator-thumb");
 
 console.log("Initial:", await getThumbInfo(page));
 
-const buttons = await page.$$(".aviala-segmentator-group:first-of-type .aviala-segmentator-item");
+const buttons = await page.$$(
+  ".aviala-segmentator-group:first-of-type .aviala-segmentator-item"
+);
 console.log("Buttons:", buttons.length);
 
 // Click B and sample transforms every 16ms for 400ms
@@ -42,7 +44,11 @@ const samplesB = [];
 for (let i = 0; i < 25; i++) {
   await new Promise((r) => setTimeout(r, 16));
   const info = await getThumbInfo(page);
-  samplesB.push({ ms: (i + 1) * 16, translateX: info?.translateX, transform: info?.transform });
+  samplesB.push({
+    ms: (i + 1) * 16,
+    translateX: info?.translateX,
+    transform: info?.transform,
+  });
 }
 console.log("Click B samples:", JSON.stringify(samplesB, null, 2));
 
@@ -52,7 +58,11 @@ const samplesC = [];
 for (let i = 0; i < 25; i++) {
   await new Promise((r) => setTimeout(r, 16));
   const info = await getThumbInfo(page);
-  samplesC.push({ ms: (i + 1) * 16, translateX: info?.translateX, transform: info?.transform });
+  samplesC.push({
+    ms: (i + 1) * 16,
+    translateX: info?.translateX,
+    transform: info?.transform,
+  });
 }
 console.log("Click C samples:", JSON.stringify(samplesC, null, 2));
 

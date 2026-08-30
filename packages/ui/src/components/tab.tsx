@@ -116,8 +116,9 @@ function measureTabIndicator(list: HTMLElement): IndicatorMetrics | null {
     Number.parseFloat(styles.getPropertyValue("--tab-indicator-height")) || 4;
   // Figma active Default: indicator x=12, width = itemWidth - 24 (66 → 42)
   const inset =
-    Number.parseFloat(styles.getPropertyValue("--tab-indicator-inset-inline")) ||
-    12;
+    Number.parseFloat(
+      styles.getPropertyValue("--tab-indicator-inset-inline")
+    ) || 12;
 
   return {
     x: controlRect.left - listRect.left + list.scrollLeft + inset,
@@ -166,7 +167,10 @@ function useTabIndicator(
     if (!list) return;
 
     const onResize = () => sync(true);
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(onResize) : null;
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(onResize)
+        : null;
     ro?.observe(list);
     list.addEventListener("scroll", onResize, { passive: true });
     window.addEventListener("resize", onResize);
@@ -211,7 +215,10 @@ function TabCardEar({ side }: { side: "start" | "end" }) {
   );
 }
 
-export type TabProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "style"> & {
+export type TabProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange" | "style"
+> & {
   /** Figma `Style` */
   style?: TabStyle;
   /** Figma `Background` */
@@ -245,13 +252,22 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>(
     },
     ref
   ) => {
-    const [value, setValue] = useTabState(valueProp, defaultValue, onValueChange);
+    const [value, setValue] = useTabState(
+      valueProp,
+      defaultValue,
+      onValueChange
+    );
     const layoutKey = useThemeLayoutKey();
     const direction = useDirection();
     const listRef = useRef<HTMLDivElement | null>(null);
     const itemsRef = useRef(new Map<string, HTMLButtonElement>());
     const showIndicator = tabStyle === "default";
-    const indicatorRef = useTabIndicator(listRef, showIndicator, layoutKey, value);
+    const indicatorRef = useTabIndicator(
+      listRef,
+      showIndicator,
+      layoutKey,
+      value
+    );
 
     const registerItem = useCallback(
       (itemValue: string, el: HTMLButtonElement | null) => {
@@ -280,9 +296,7 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>(
         if (!entries.length) return;
         const idx = entries.findIndex(([v]) => v === current);
         const nextIdx =
-          idx < 0
-            ? 0
-            : (idx + delta + entries.length) % entries.length;
+          idx < 0 ? 0 : (idx + delta + entries.length) % entries.length;
         const [nextValue, el] = entries[nextIdx]!;
         setValue(nextValue);
         el.focus();
@@ -424,10 +438,7 @@ export const TabItem = forwardRef<HTMLButtonElement, TabItemProps>(
           type="button"
           role="tab"
           data-size="regular"
-          className={cn(
-            buttonVariants({ mode }),
-            "aviala-tab-item__control"
-          )}
+          className={cn(buttonVariants({ mode }), "aviala-tab-item__control")}
           aria-selected={active}
           tabIndex={active ? 0 : -1}
           disabled={disabled}

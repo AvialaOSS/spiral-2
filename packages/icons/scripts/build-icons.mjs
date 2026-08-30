@@ -79,7 +79,9 @@ function collectSvgFiles(dir, relativeDir = "") {
     // Export staging scratch — never treat as icon sources.
     if (entry.name === ".staging") continue;
 
-    const relativePath = relativeDir ? `${relativeDir}/${entry.name}` : entry.name;
+    const relativePath = relativeDir
+      ? `${relativeDir}/${entry.name}`
+      : entry.name;
     const absolutePath = join(dir, entry.name);
 
     if (entry.isDirectory()) {
@@ -149,7 +151,9 @@ function buildVariantsObjectLines(variantMap) {
 
 function buildCatalogVariantFields(variantMap) {
   const thicknesses = [...variantMap.keys()].sort();
-  const modes = [...new Set([...variantMap.values()].flatMap((m) => [...m.keys()]))].sort();
+  const modes = [
+    ...new Set([...variantMap.values()].flatMap((m) => [...m.keys()])),
+  ].sort();
   return {
     thicknesses: JSON.stringify(thicknesses),
     modes: JSON.stringify(modes),
@@ -193,7 +197,9 @@ for (const file of svgs) {
     continue;
   }
 
-  const category = file.relativePath.includes("/") ? file.relativePath.split("/")[0] : undefined;
+  const category = file.relativePath.includes("/")
+    ? file.relativePath.split("/")[0]
+    : undefined;
   const groupKey = parsed.iconName;
 
   if (!iconGroups.has(groupKey)) {
@@ -272,7 +278,9 @@ export function ${componentName}({
 `;
 
   writeFileSync(join(outDir, `${componentName}.tsx`), source);
-  exportLines.push(`export { ${componentName}, type ${componentName}Props } from "./components/${componentName}";`);
+  exportLines.push(
+    `export { ${componentName}, type ${componentName}Props } from "./components/${componentName}";`
+  );
   catalogEntries.push({
     name: componentName,
     iconName: group.iconName,
@@ -311,7 +319,9 @@ export function ${componentName}(props: ${componentName}Props) {
   catalogEntries.push({
     name: componentName,
     iconName: basename(file.relativePath),
-    category: file.relativePath.includes("/") ? file.relativePath.split("/")[0] : undefined,
+    category: file.relativePath.includes("/")
+      ? file.relativePath.split("/")[0]
+      : undefined,
     fileStem: file.relativePath,
     thicknesses: "[]",
     modes: "[]",
@@ -340,7 +350,26 @@ for (const file of readdirSync(outDir)) {
   }
 }
 
-for (const file of ["index.js", "index.d.ts", "index.d.ts.map", "catalog.js", "catalog.d.ts", "catalog.d.ts.map", "icon.js", "icon.d.ts", "icon.d.ts.map", "icon-size.js", "icon-size.d.ts", "icon-size.d.ts.map", "types.js", "types.d.ts", "types.d.ts.map", "resolve-variant.js", "resolve-variant.d.ts", "resolve-variant.d.ts.map"]) {
+for (const file of [
+  "index.js",
+  "index.d.ts",
+  "index.d.ts.map",
+  "catalog.js",
+  "catalog.d.ts",
+  "catalog.d.ts.map",
+  "icon.js",
+  "icon.d.ts",
+  "icon.d.ts.map",
+  "icon-size.js",
+  "icon-size.d.ts",
+  "icon-size.d.ts.map",
+  "types.js",
+  "types.d.ts",
+  "types.d.ts.map",
+  "resolve-variant.js",
+  "resolve-variant.d.ts",
+  "resolve-variant.d.ts.map",
+]) {
   const artifact = join(srcDir, file);
   if (existsSync(artifact)) unlinkSync(artifact);
 }
@@ -366,7 +395,9 @@ if (mergeMode) {
         modes,
         legacy: /legacy:\s*true/.test(match[0]) || undefined,
       });
-      exportLines.push(`export { ${name}, type ${name}Props } from "./components/${name}";`);
+      exportLines.push(
+        `export { ${name}, type ${name}Props } from "./components/${name}";`
+      );
       componentNames.add(name);
     }
     catalogEntries.sort((a, b) => a.name.localeCompare(b.name));
@@ -394,7 +425,9 @@ export function Placeholder(props: PlaceholderProps) {
 }
 `
   );
-  exportLines.push('export { Placeholder, type PlaceholderProps } from "./components/Placeholder";');
+  exportLines.push(
+    'export { Placeholder, type PlaceholderProps } from "./components/Placeholder";'
+  );
   catalogEntries.push({
     name: "Placeholder",
     iconName: "placeholder",
@@ -407,7 +440,10 @@ export function Placeholder(props: PlaceholderProps) {
 }
 
 const catalogImports = catalogEntries
-  .map(({ name }) => `import { ${name}, type ${name}Props } from "./components/${name}";`)
+  .map(
+    ({ name }) =>
+      `import { ${name}, type ${name}Props } from "./components/${name}";`
+  )
   .join("\n");
 
 const catalogArray = catalogEntries

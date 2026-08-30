@@ -1,5 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Form, FormField, Input, Stack, Textarea } from "@aviala-design/spiral";
+import {
+  Button,
+  Form,
+  FormField,
+  Input,
+  Stack,
+  Textarea,
+} from "@aviala-design/spiral";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -41,7 +48,12 @@ export function FormValidationDemo() {
               description="Your public display name."
               required
               render={({ field, fieldState, id }) => (
-                <Input id={id} placeholder="aviala" error={fieldState.invalid} {...field} />
+                <Input
+                  id={id}
+                  placeholder="aviala"
+                  error={fieldState.invalid}
+                  {...field}
+                />
               )}
             />
             <FormField
@@ -81,7 +93,12 @@ export function FormValidationDemo() {
               label="Bio"
               description="Optional. 160 characters max."
               render={({ field, fieldState, id }) => (
-                <Textarea id={id} rows={3} error={fieldState.invalid} {...field} />
+                <Textarea
+                  id={id}
+                  rows={3}
+                  error={fieldState.invalid}
+                  {...field}
+                />
               )}
             />
             <Stack direction="row" gap="component">

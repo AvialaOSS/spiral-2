@@ -5,7 +5,11 @@ export {
   type ThemeMode,
   type ThemeVars,
 } from "./engine/generate-theme";
-export { applyTheme, removeTheme, type ApplyThemeOptions } from "./engine/apply-theme";
+export {
+  applyTheme,
+  removeTheme,
+  type ApplyThemeOptions,
+} from "./engine/apply-theme";
 export {
   applyBaseNumbersDensity,
   BASE_NUMBERS_DENSITY_ATTR,

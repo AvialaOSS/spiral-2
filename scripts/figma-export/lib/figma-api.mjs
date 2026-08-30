@@ -7,7 +7,9 @@ function sleep(ms) {
 /** Thrown when Figma returns 429 and retries are exhausted. Callers should hard-fail. */
 export class RateLimitExhaustedError extends Error {
   constructor(path, attempts) {
-    super(`Figma rate limit exhausted after ${attempts} retries on ${path.split("?")[0]}`);
+    super(
+      `Figma rate limit exhausted after ${attempts} retries on ${path.split("?")[0]}`
+    );
     this.name = "RateLimitExhaustedError";
     this.path = path;
     this.attempts = attempts;

@@ -129,17 +129,30 @@ export const VariantMatrix: Story = {
           <Checkbox aria-label="Unchecked" />
           <Checkbox disabled aria-label="Unchecked disabled" />
           <Checkbox checked="indeterminate" aria-label="Indeterminate" />
-          <Checkbox checked="indeterminate" disabled aria-label="Indeterminate disabled" />
+          <Checkbox
+            checked="indeterminate"
+            disabled
+            aria-label="Indeterminate disabled"
+          />
         </div>
       </div>
       <div>
         <p className="mb-3 text-sm text-muted-foreground">Huge · Square</p>
         <div className="flex flex-col gap-3">
           <Checkbox defaultChecked size="huge" aria-label="Huge checked" />
-          <Checkbox defaultChecked size="huge" disabled aria-label="Huge checked disabled" />
+          <Checkbox
+            defaultChecked
+            size="huge"
+            disabled
+            aria-label="Huge checked disabled"
+          />
           <Checkbox size="huge" aria-label="Huge unchecked" />
           <Checkbox size="huge" disabled aria-label="Huge unchecked disabled" />
-          <Checkbox checked="indeterminate" size="huge" aria-label="Huge indeterminate" />
+          <Checkbox
+            checked="indeterminate"
+            size="huge"
+            aria-label="Huge indeterminate"
+          />
           <Checkbox
             checked="indeterminate"
             size="huge"
@@ -152,17 +165,36 @@ export const VariantMatrix: Story = {
         <p className="mb-3 text-sm text-muted-foreground">Default · Round</p>
         <div className="flex flex-col gap-3">
           <Checkbox defaultChecked round aria-label="Round checked" />
-          <Checkbox defaultChecked round disabled aria-label="Round checked disabled" />
+          <Checkbox
+            defaultChecked
+            round
+            disabled
+            aria-label="Round checked disabled"
+          />
           <Checkbox round aria-label="Round unchecked" />
           <Checkbox round disabled aria-label="Round unchecked disabled" />
-          <Checkbox checked="indeterminate" round aria-label="Round indeterminate" />
-          <Checkbox checked="indeterminate" round disabled aria-label="Round indeterminate disabled" />
+          <Checkbox
+            checked="indeterminate"
+            round
+            aria-label="Round indeterminate"
+          />
+          <Checkbox
+            checked="indeterminate"
+            round
+            disabled
+            aria-label="Round indeterminate disabled"
+          />
         </div>
       </div>
       <div>
         <p className="mb-3 text-sm text-muted-foreground">Huge · Round</p>
         <div className="flex flex-col gap-3">
-          <Checkbox defaultChecked size="huge" round aria-label="Huge round checked" />
+          <Checkbox
+            defaultChecked
+            size="huge"
+            round
+            aria-label="Huge round checked"
+          />
           <Checkbox
             defaultChecked
             size="huge"
@@ -171,7 +203,12 @@ export const VariantMatrix: Story = {
             aria-label="Huge round checked disabled"
           />
           <Checkbox size="huge" round aria-label="Huge round unchecked" />
-          <Checkbox size="huge" round disabled aria-label="Huge round unchecked disabled" />
+          <Checkbox
+            size="huge"
+            round
+            disabled
+            aria-label="Huge round unchecked disabled"
+          />
           <Checkbox
             checked="indeterminate"
             size="huge"
@@ -194,7 +231,12 @@ export const VariantMatrix: Story = {
 export const NormalInput: Story = {
   render: () => (
     <CheckboxGroup direction="vertical" className="w-[200px]">
-      <CheckboxInput id="cb-input-a" title="Text" description="Text" defaultChecked />
+      <CheckboxInput
+        id="cb-input-a"
+        title="Text"
+        description="Text"
+        defaultChecked
+      />
       <CheckboxInput id="cb-input-b" title="Text" description="Text" />
     </CheckboxGroup>
   ),
@@ -223,7 +265,12 @@ export const NormalInputWithIcon: Story = {
 export const HorizontalGroup: Story = {
   render: () => (
     <CheckboxGroup direction="horizontal" className="w-[420px]">
-      <CheckboxInput id="cb-h-a" title="Text" description="Text" defaultChecked />
+      <CheckboxInput
+        id="cb-h-a"
+        title="Text"
+        description="Text"
+        defaultChecked
+      />
       <CheckboxInput id="cb-h-b" title="Text" description="Text" />
     </CheckboxGroup>
   ),
@@ -232,7 +279,13 @@ export const HorizontalGroup: Story = {
 export const InputDisabled: Story = {
   render: () => (
     <CheckboxGroup direction="vertical" className="w-[200px]">
-      <CheckboxInput id="cb-dis-a" title="Text" description="Text" defaultChecked disabled />
+      <CheckboxInput
+        id="cb-dis-a"
+        title="Text"
+        description="Text"
+        defaultChecked
+        disabled
+      />
       <CheckboxInput id="cb-dis-b" title="Text" description="Text" />
     </CheckboxGroup>
   ),

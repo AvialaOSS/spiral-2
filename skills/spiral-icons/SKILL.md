@@ -7,10 +7,10 @@ description: Aviala Design Icons pipeline for @aviala-design/icons — SVG expor
 
 ## Source of truth
 
-| Path | In git? | Role |
-|---|---|---|
-| `packages/icons/raw/` | **No** (gitignore) | Local / CI sync scratch from Figma |
-| `packages/icons/src/components/` + `catalog.ts` | **Yes** | What CI and `release:publish` build (`tsup` / `build:release`) |
+| Path                                            | In git?            | Role                                                           |
+| ----------------------------------------------- | ------------------ | -------------------------------------------------------------- |
+| `packages/icons/raw/`                           | **No** (gitignore) | Local / CI sync scratch from Figma                             |
+| `packages/icons/src/components/` + `catalog.ts` | **Yes**            | What CI and `release:publish` build (`tsup` / `build:release`) |
 
 Normal `pnpm build`, CI, and Release **do not** call Figma. Sync icons only when the set changes.
 
@@ -20,11 +20,11 @@ Discovery uses the **published library catalog** of the Icons file (`FIGMA_FILE_
 
 Icons live in **component sets**:
 
-| Layer | Example |
-|---|---|
-| Component set | `direction/arrowLeft` |
+| Layer                  | Example                                                     |
+| ---------------------- | ----------------------------------------------------------- |
+| Component set          | `direction/arrowLeft`                                       |
 | Variant (order varies) | `thickness=Regular, mode=default, name=direction_arrowLeft` |
-| Exported SVG | `raw/direction/direction_arrowLeft-regular-default.svg` |
+| Exported SVG           | `raw/direction/direction_arrowLeft-regular-default.svg`     |
 
 ## React component model
 
@@ -37,11 +37,11 @@ import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 <Icon icon={DirectionArrowLeft} size={20} thickness="Light" mode="default" />
 ```
 
-| Prop | Values | Default |
-|---|---|---|
-| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium` |
-| `mode` | `default` \| `fill` | `default` |
-| `Icon` `size` | number \| CSS length | typography token when unset |
+| Prop           | Values                                                                                  | Default                      |
+| -------------- | --------------------------------------------------------------------------------------- | ---------------------------- |
+| `thickness`    | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black`                                   | `Medium`                     |
+| `mode`         | `default` \| `fill`                                                                     | `default`                    |
+| `Icon` `size`  | number \| CSS length                                                                    | typography token when unset  |
 | `Icon` `level` | `display` \| `headline1` \| `headline2` \| `title` \| `subtitle` \| `text` \| `caption` | — (maps to icon size tokens) |
 
 Component name = PascalCase of icon `name` (`direction_arrowLeft` → `DirectionArrowLeft`).
@@ -63,16 +63,16 @@ Local TTY: recoverable failures (null URL / download error) prompt `(r)etry` / `
 
 ### Optional export filters
 
-| Flag / env | Example |
-|---|---|
-| `--thickness=` / `ICONS_THICKNESS` | `Regular,Medium` |
-| `--mode=` / `ICONS_MODE` | `default,fill` |
-| `--category=` / `ICONS_CATEGORY` | `direction,ai` |
-| `--name=` or `--only=` / `ICONS_NAME` | `direction_arrowLeft` |
-| `--dry-run` | list matches, write nothing |
-| `--no-clean` | merge into existing `raw/` on promote |
-| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; failures abort |
-| `--max-retries=` / `ICONS_MAX_RETRIES` | 429 retry budget (default 6) |
+| Flag / env                                    | Example                               |
+| --------------------------------------------- | ------------------------------------- |
+| `--thickness=` / `ICONS_THICKNESS`            | `Regular,Medium`                      |
+| `--mode=` / `ICONS_MODE`                      | `default,fill`                        |
+| `--category=` / `ICONS_CATEGORY`              | `direction,ai`                        |
+| `--name=` or `--only=` / `ICONS_NAME`         | `direction_arrowLeft`                 |
+| `--dry-run`                                   | list matches, write nothing           |
+| `--no-clean`                                  | merge into existing `raw/` on promote |
+| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; failures abort            |
+| `--max-retries=` / `ICONS_MAX_RETRIES`        | 429 retry budget (default 6)          |
 
 ```bash
 pnpm icons:export --category=direction --thickness=Regular
@@ -106,11 +106,11 @@ src/catalog.ts                                        # committed
 
 ## Package scripts
 
-| Script | Meaning |
-|---|---|
-| `build` | `build-icons` (no-op if `raw/` empty) + `tsup` |
-| `build:icons` | SVG → components |
-| `build:release` | `tsup` only (CI / publish) |
+| Script          | Meaning                                        |
+| --------------- | ---------------------------------------------- |
+| `build`         | `build-icons` (no-op if `raw/` empty) + `tsup` |
+| `build:icons`   | SVG → components                               |
+| `build:release` | `tsup` only (CI / publish)                     |
 
 ## Rules
 

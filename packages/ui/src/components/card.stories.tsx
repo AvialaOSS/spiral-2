@@ -22,11 +22,7 @@ export const Default: StoryObj<typeof Card> = {
 export const HeadAction: StoryObj<typeof CardHead> = {
   render: () => (
     <Card style={{ width: 387 }}>
-      <CardHead
-        slotType="action"
-        title="Card title"
-        description="Caption"
-      />
+      <CardHead slotType="action" title="Card title" description="Caption" />
     </Card>
   ),
 };

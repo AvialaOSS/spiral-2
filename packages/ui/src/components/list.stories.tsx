@@ -68,11 +68,41 @@ function ListItemMatrix({
 export const Default: Story = {
   render: () => (
     <List title="Text" className="w-[387px]">
-      <ListItem itemType="select" leading="shaped" title="Text" subtitle="Text" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="shaped" title="Text" subtitle="Text" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="shaped" title="Text" subtitle="Text" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="shaped" title="Text" subtitle="Text" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="shaped" title="Text" subtitle="Text" select={<DemoSelect />} />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Text"
+        subtitle="Text"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Text"
+        subtitle="Text"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Text"
+        subtitle="Text"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Text"
+        subtitle="Text"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Text"
+        subtitle="Text"
+        select={<DemoSelect />}
+      />
     </List>
   ),
 };
@@ -99,7 +129,13 @@ export const ItemVariants: Story = {
   ),
 };
 
-function ListGroupSection({ label, children }: { label: string; children: ReactNode }) {
+function ListGroupSection({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
   return (
     <ListItemGroup label={label} className="w-[507px]">
       {children}
@@ -111,9 +147,27 @@ function ListGroupSection({ label, children }: { label: string; children: ReactN
 export const LeadingIcons: Story = {
   render: () => (
     <List title="Text" className="w-[507px]">
-      <ListItem itemType="select" leading="shaped" title="Shaped icon" subtitle="36px theme circle" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="default" title="Default icon" subtitle="22px plain icon" select={<DemoSelect />} />
-      <ListItem itemType="select" leading="none" title="No icon" subtitle="Content aligned to edge" select={<DemoSelect />} />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Shaped icon"
+        subtitle="36px theme circle"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="default"
+        title="Default icon"
+        subtitle="22px plain icon"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="select"
+        leading="none"
+        title="No icon"
+        subtitle="Content aligned to edge"
+        select={<DemoSelect />}
+      />
     </List>
   ),
 };
@@ -122,9 +176,26 @@ export const LeadingIcons: Story = {
 export const TrailingTypes: Story = {
   render: () => (
     <List title="Text" className="w-[507px]">
-      <ListItem itemType="select" leading="shaped" title="Select trailing" subtitle="Primary button + select" select={<DemoSelect />} />
-      <ListItem itemType="action" leading="shaped" title="Action trailing" subtitle="Button group + chevron" />
-      <ListItem itemType="switch" leading="shaped" title="Switch trailing" subtitle="Primary button + switch" switchProps={{ defaultChecked: true }} />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Select trailing"
+        subtitle="Primary button + select"
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="action"
+        leading="shaped"
+        title="Action trailing"
+        subtitle="Button group + chevron"
+      />
+      <ListItem
+        itemType="switch"
+        leading="shaped"
+        title="Switch trailing"
+        subtitle="Primary button + switch"
+        switchProps={{ defaultChecked: true }}
+      />
     </List>
   ),
 };
@@ -134,13 +205,36 @@ export const GroupedSections: Story = {
   render: () => (
     <div className="flex w-[387px] flex-col gap-4">
       <ListItemGroup label="Section A">
-        <ListItem itemType="select" leading="shaped" title="Item A1" subtitle="Caption" select={<DemoSelect />} />
-        <ListItem itemType="select" leading="shaped" title="Item A2" subtitle="Caption" select={<DemoSelect />} />
+        <ListItem
+          itemType="select"
+          leading="shaped"
+          title="Item A1"
+          subtitle="Caption"
+          select={<DemoSelect />}
+        />
+        <ListItem
+          itemType="select"
+          leading="shaped"
+          title="Item A2"
+          subtitle="Caption"
+          select={<DemoSelect />}
+        />
       </ListItemGroup>
       <ListSeparator />
       <ListItemGroup label="Section B">
-        <ListItem itemType="action" leading="default" title="Item B1" subtitle="Caption" />
-        <ListItem itemType="switch" leading="none" title="Item B2" subtitle="Caption" switchProps={{ defaultChecked: true }} />
+        <ListItem
+          itemType="action"
+          leading="default"
+          title="Item B1"
+          subtitle="Caption"
+        />
+        <ListItem
+          itemType="switch"
+          leading="none"
+          title="Item B2"
+          subtitle="Caption"
+          switchProps={{ defaultChecked: true }}
+        />
       </ListItemGroup>
     </div>
   ),
@@ -158,8 +252,22 @@ export const Interactive: Story = {
         interactive
         onClick={() => undefined}
       />
-      <ListItem itemType="select" leading="shaped" title="Selected row" subtitle="Selected state" selected select={<DemoSelect />} />
-      <ListItem itemType="switch" leading="shaped" title="Disabled row" subtitle="Reduced opacity" disabled switchProps={{ defaultChecked: true }} />
+      <ListItem
+        itemType="select"
+        leading="shaped"
+        title="Selected row"
+        subtitle="Selected state"
+        selected
+        select={<DemoSelect />}
+      />
+      <ListItem
+        itemType="switch"
+        leading="shaped"
+        title="Disabled row"
+        subtitle="Reduced opacity"
+        disabled
+        switchProps={{ defaultChecked: true }}
+      />
     </List>
   ),
 };

@@ -5,7 +5,10 @@ import { useLocaleMessages } from "../../locale";
 import { clamp01, pureHueHex } from "./color-utils";
 import { useOptionalColorPickerContext } from "./color-picker-context";
 import { usePointerDrag } from "./use-pointer-drag";
-import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
+import {
+  useColorPickerState,
+  type UseColorPickerStateOptions,
+} from "./use-color-picker-state";
 
 export type ColorPickerAreaProps = {
   className?: string;
@@ -46,12 +49,19 @@ export function ColorPickerArea({
     [isDisabled, setHsva]
   );
 
-  const { handlePointerDown, handlePointerMove } = usePointerDrag(ref, handleMove, !isDisabled);
+  const { handlePointerDown, handlePointerMove } = usePointerDrag(
+    ref,
+    handleMove,
+    !isDisabled
+  );
 
   const hueColor = pureHueHex(hsva.h);
 
   return (
-    <div className={cn("aviala-color-picker-area", className)} {...spiralDebugId("color-picker.content.area")}>
+    <div
+      className={cn("aviala-color-picker-area", className)}
+      {...spiralDebugId("color-picker.content.area")}
+    >
       <div
         ref={ref}
         className="aviala-color-picker-area__surface aviala-focus-ring"

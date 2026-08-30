@@ -1,4 +1,7 @@
-import { applyBaseNumbersDensity, type BaseNumbersDensity } from "./base-numbers";
+import {
+  applyBaseNumbersDensity,
+  type BaseNumbersDensity,
+} from "./base-numbers";
 import type { ThemeVars } from "./generate-theme";
 
 export type ApplyThemeOptions = {
@@ -44,7 +47,9 @@ export function applyTheme(
   }
 }
 
-export function removeTheme(target: HTMLElement = document.documentElement): void {
+export function removeTheme(
+  target: HTMLElement = document.documentElement
+): void {
   const style = target.style;
   const toRemove: string[] = [];
   for (let i = 0; i < style.length; i++) {

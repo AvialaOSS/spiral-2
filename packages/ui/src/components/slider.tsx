@@ -111,9 +111,7 @@ function SliderThumb({
       <SliderPrimitive.unstable_ThumbTrigger
         className="aviala-slider__thumb aviala-focus-ring"
         onPointerDown={onThumbPointerDown}
-        onPointerEnter={
-          showValueTooltip ? () => setHoverOpen(true) : undefined
-        }
+        onPointerEnter={showValueTooltip ? () => setHoverOpen(true) : undefined}
         onPointerLeave={
           showValueTooltip ? () => setHoverOpen(false) : undefined
         }
@@ -155,8 +153,7 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
     const resolvedType = type ?? "default";
     const resolvedSize = size ?? "default";
     const isRange = resolvedType === "range";
-    const resolvedDefaultValue =
-      defaultValue ?? (isRange ? [25, 75] : [50]);
+    const resolvedDefaultValue = defaultValue ?? (isRange ? [25, 75] : [50]);
     const thumbCount = isRange
       ? Math.max(2, value?.length ?? defaultValue?.length ?? 2)
       : 1;
@@ -180,9 +177,8 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
     const valueTransitionReady =
       valueTransitionGate.axisKey === valueTransitionAxisKey &&
       valueTransitionGate.ready;
-    const [uncontrolledValue, setUncontrolledValue] = useState<number[]>(
-      resolvedDefaultValue
-    );
+    const [uncontrolledValue, setUncontrolledValue] =
+      useState<number[]>(resolvedDefaultValue);
     const currentValues = value ?? uncontrolledValue;
 
     useLayoutEffect(() => {

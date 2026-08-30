@@ -64,8 +64,20 @@ export const NormalInputWithIcon: Story = {
 export const CardInput: Story = {
   render: () => (
     <RadioGroup defaultValue="a" direction="vertical" className="w-[200px]">
-      <RadioInput value="a" id="radio-card-a" title="Text" description="Text" variant="card" />
-      <RadioInput value="b" id="radio-card-b" title="Text" description="Text" variant="card" />
+      <RadioInput
+        value="a"
+        id="radio-card-a"
+        title="Text"
+        description="Text"
+        variant="card"
+      />
+      <RadioInput
+        value="b"
+        id="radio-card-b"
+        title="Text"
+        description="Text"
+        variant="card"
+      />
     </RadioGroup>
   ),
 };
@@ -82,7 +94,13 @@ export const HorizontalGroup: Story = {
 export const Disabled: Story = {
   render: () => (
     <RadioGroup defaultValue="a" direction="vertical" className="w-[200px]">
-      <RadioInput value="a" id="radio-dis-a" title="Text" description="Text" disabled />
+      <RadioInput
+        value="a"
+        id="radio-dis-a"
+        title="Text"
+        description="Text"
+        disabled
+      />
       <RadioInput value="b" id="radio-dis-b" title="Text" description="Text" />
     </RadioGroup>
   ),

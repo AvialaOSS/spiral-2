@@ -12,7 +12,11 @@ type Story = StoryObj<typeof Anchor>;
 
 const indentLevels: AnchorIndentLevel[] = [0, 1, 2, 3];
 
-const demoItems: { label: string; indentLevel: AnchorIndentLevel; activated: boolean }[] = [
+const demoItems: {
+  label: string;
+  indentLevel: AnchorIndentLevel;
+  activated: boolean;
+}[] = [
   { label: "Getting started", indentLevel: 0, activated: true },
   { label: "Installation", indentLevel: 0, activated: false },
   { label: "Quick start", indentLevel: 1, activated: false },
@@ -54,8 +58,13 @@ export const IndentMatrix: Story = {
     <div className="flex flex-col gap-8">
       {indentLevels.map((indentLevel) => (
         <div key={indentLevel} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">indent {indentLevel}</span>
-          <Anchor aria-label={`Indent level ${indentLevel}`} className="w-[200px]">
+          <span className="font-mono text-xs text-muted-foreground">
+            indent {indentLevel}
+          </span>
+          <Anchor
+            aria-label={`Indent level ${indentLevel}`}
+            className="w-[200px]"
+          >
             <AnchorItem href="#" indentLevel={indentLevel} activated>
               Active
             </AnchorItem>

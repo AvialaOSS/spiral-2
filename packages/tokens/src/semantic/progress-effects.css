@@ -20,7 +20,10 @@
   height: var(--progress-bar-height, 6px);
   overflow: hidden;
   border-radius: var(--border-radius-allround, 99px);
-  background-color: var(--progress-track-bg, var(--control-control-normal-lightbackground-1, #f0efef));
+  background-color: var(
+    --progress-track-bg,
+    var(--control-control-normal-lightbackground-1, #f0efef)
+  );
 }
 
 .aviala-progress--size-big.aviala-progress--shape-bar .aviala-progress__track {
@@ -39,7 +42,10 @@
 .aviala-progress__label {
   flex-shrink: 0;
   min-width: var(--progress-label-width, 22px);
-  color: var(--progress-label-fg, var(--text-text-normal-text-caption-black, #616060));
+  color: var(
+    --progress-label-fg,
+    var(--text-text-normal-text-caption-black, #616060)
+  );
 }
 
 .aviala-progress--shape-ring {

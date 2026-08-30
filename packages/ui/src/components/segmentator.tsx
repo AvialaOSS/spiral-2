@@ -96,7 +96,9 @@ const SEGMENTATOR_DRAG_ANIMATE_JUMP_PX = 6;
 const SEGMENTATOR_HAPTIC_PRESS_PATTERN = [20, 30, 15] as const;
 const SEGMENTATOR_HAPTIC_SELECT_MS = 16;
 
-function getPressedItemFromTarget(target: EventTarget | null): HTMLButtonElement | null {
+function getPressedItemFromTarget(
+  target: EventTarget | null
+): HTMLButtonElement | null {
   if (!(target instanceof Element)) return null;
   const item = target.closest<HTMLButtonElement>(".aviala-segmentator-item");
   if (!item || item.disabled) return null;
@@ -104,7 +106,11 @@ function getPressedItemFromTarget(target: EventTarget | null): HTMLButtonElement
 }
 
 function triggerSegmentatorHaptic(kind: "press" | "select") {
-  if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
+  if (
+    typeof navigator === "undefined" ||
+    typeof navigator.vibrate !== "function"
+  )
+    return;
 
   try {
     if (kind === "press") {
@@ -155,7 +161,9 @@ export function isSegmentatorDragPointer(pointerType: string): boolean {
 
 function getEnabledSegmentatorItems(group: HTMLElement): HTMLButtonElement[] {
   return Array.from(
-    group.querySelectorAll<HTMLButtonElement>('.aviala-segmentator-item:not(:disabled)')
+    group.querySelectorAll<HTMLButtonElement>(
+      ".aviala-segmentator-item:not(:disabled)"
+    )
   );
 }
 
@@ -164,7 +172,10 @@ function getEnabledSegmentatorItems(group: HTMLElement): HTMLButtonElement[] {
  * Mirrors the command-only philosophy of writeThumbMetrics — drag preview must
  * not go through React state/context, otherwise every item re-renders per crossing.
  */
-function applyDragPreview(group: HTMLElement, activeItem: HTMLButtonElement | null) {
+function applyDragPreview(
+  group: HTMLElement,
+  activeItem: HTMLButtonElement | null
+) {
   const items = getEnabledSegmentatorItems(group);
   for (const item of items) {
     if (item === activeItem) {
@@ -176,7 +187,10 @@ function applyDragPreview(group: HTMLElement, activeItem: HTMLButtonElement | nu
 }
 
 /** Layout offset of `el` relative to `ancestor`'s padding edge (ignores CSS transforms). */
-function offsetRelativeTo(el: HTMLElement, ancestor: HTMLElement): { x: number; y: number } {
+function offsetRelativeTo(
+  el: HTMLElement,
+  ancestor: HTMLElement
+): { x: number; y: number } {
   if (el.offsetParent === ancestor) {
     return { x: el.offsetLeft, y: el.offsetTop };
   }
@@ -204,8 +218,10 @@ function offsetRelativeTo(el: HTMLElement, ancestor: HTMLElement): { x: number; 
 
   const groupRect = ancestor.getBoundingClientRect();
   const elRect = el.getBoundingClientRect();
-  const scaleX = ancestor.offsetWidth > 0 ? groupRect.width / ancestor.offsetWidth : 1;
-  const scaleY = ancestor.offsetHeight > 0 ? groupRect.height / ancestor.offsetHeight : 1;
+  const scaleX =
+    ancestor.offsetWidth > 0 ? groupRect.width / ancestor.offsetWidth : 1;
+  const scaleY =
+    ancestor.offsetHeight > 0 ? groupRect.height / ancestor.offsetHeight : 1;
   return {
     x: scaleX === 0 ? 0 : (elRect.left - groupRect.left) / scaleX,
     y: scaleY === 0 ? 0 : (elRect.top - groupRect.top) / scaleY,
@@ -386,7 +402,10 @@ function applyThumbMetrics(
 }
 
 /** Drag-follow write: keep transitions off for the whole gesture (no per-frame toggle). */
-function applyThumbMetricsLive(el: HTMLSpanElement, metrics: SegmentatorThumbMetrics) {
+function applyThumbMetricsLive(
+  el: HTMLSpanElement,
+  metrics: SegmentatorThumbMetrics
+) {
   el.setAttribute("data-instant", "true");
   el.style.width = `${metrics.width}px`;
   el.style.height = `${metrics.height}px`;
@@ -454,11 +473,14 @@ function useSegmentatorThumb(
   );
 
   /** Continuous drag follow — transitions stay disabled until gesture ends. */
-  const writeThumbMetricsLive = useCallback((metrics: SegmentatorThumbMetrics) => {
-    metricsRef.current = metrics;
-    const el = thumbElRef.current;
-    if (el) applyThumbMetricsLive(el, metrics);
-  }, []);
+  const writeThumbMetricsLive = useCallback(
+    (metrics: SegmentatorThumbMetrics) => {
+      metricsRef.current = metrics;
+      const el = thumbElRef.current;
+      if (el) applyThumbMetricsLive(el, metrics);
+    },
+    []
+  );
 
   const remeasureThumb = useCallback(() => {
     if (dragStateRef.current.pressing || dragStateRef.current.active) return;
@@ -535,7 +557,14 @@ function useSegmentatorThumb(
     }
 
     syncThumb(next, false);
-  }, [selectedValue, measureThumb, syncThumb, dragState.active, dragState.pressing, groupRef]);
+  }, [
+    selectedValue,
+    measureThumb,
+    syncThumb,
+    dragState.active,
+    dragState.pressing,
+    groupRef,
+  ]);
 
   useLayoutEffect(() => {
     const group = groupRef.current;
@@ -581,7 +610,10 @@ function useSegmentatorThumb(
       observer.disconnect();
       layoutObserver.disconnect();
       group.removeEventListener("scroll", onScroll);
-      overlaySurface?.removeEventListener("animationend", onOverlayAnimationEnd);
+      overlaySurface?.removeEventListener(
+        "animationend",
+        onOverlayAnimationEnd
+      );
     };
   }, [groupRef, remeasureThumb]);
 
@@ -614,7 +646,10 @@ export type SegmentatorGroupProps = Omit<
   disabled?: boolean;
 };
 
-export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps>(
+export const SegmentatorGroup = forwardRef<
+  HTMLDivElement,
+  SegmentatorGroupProps
+>(
   (
     {
       className,
@@ -631,7 +666,11 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
     },
     ref
   ) => {
-    const [currentValue, setValue] = useSegmentatorState(value, defaultValue, onValueChange);
+    const [currentValue, setValue] = useSegmentatorState(
+      value,
+      defaultValue,
+      onValueChange
+    );
     const groupRef = useRef<HTMLDivElement>(null);
     const layoutKey = useThemeLayoutKey();
     const consumeClickRef = useRef(false);
@@ -740,7 +779,9 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           : Number.POSITIVE_INFINITY;
         const settling = performance.now() < (drag.snapUntil ?? 0);
         const shouldAnimate =
-          itemChanged || settling || jumpDistance >= SEGMENTATOR_DRAG_ANIMATE_JUMP_PX;
+          itemChanged ||
+          settling ||
+          jumpDistance >= SEGMENTATOR_DRAG_ANIMATE_JUMP_PX;
 
         drag.lastMetrics = metrics;
 
@@ -781,14 +822,25 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
           finishPointerInteraction(event.pointerId);
         };
 
-        window.addEventListener("pointermove", onPointerMove, { capture: true, passive: false });
+        window.addEventListener("pointermove", onPointerMove, {
+          capture: true,
+          passive: false,
+        });
         window.addEventListener("pointerup", onPointerEnd, { capture: true });
-        window.addEventListener("pointercancel", onPointerEnd, { capture: true });
+        window.addEventListener("pointercancel", onPointerEnd, {
+          capture: true,
+        });
 
         return () => {
-          window.removeEventListener("pointermove", onPointerMove, { capture: true });
-          window.removeEventListener("pointerup", onPointerEnd, { capture: true });
-          window.removeEventListener("pointercancel", onPointerEnd, { capture: true });
+          window.removeEventListener("pointermove", onPointerMove, {
+            capture: true,
+          });
+          window.removeEventListener("pointerup", onPointerEnd, {
+            capture: true,
+          });
+          window.removeEventListener("pointercancel", onPointerEnd, {
+            capture: true,
+          });
         };
       },
       [direction, finishPointerInteraction, updateDragThumb]
@@ -839,7 +891,9 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
       group.setPointerCapture(event.pointerId);
     };
 
-    const thumbStyle: CSSProperties | undefined = thumb ? buildThumbStyle() : undefined;
+    const thumbStyle: CSSProperties | undefined = thumb
+      ? buildThumbStyle()
+      : undefined;
 
     return (
       <SegmentatorContext.Provider
@@ -895,14 +949,20 @@ export const SegmentatorGroup = forwardRef<HTMLDivElement, SegmentatorGroupProps
 );
 SegmentatorGroup.displayName = "SegmentatorGroup";
 
-export type SegmentatorItemProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value"> & {
+export type SegmentatorItemProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "value"
+> & {
   value: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   iconOnly?: boolean;
 };
 
-export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProps>(
+export const SegmentatorItem = forwardRef<
+  HTMLButtonElement,
+  SegmentatorItemProps
+>(
   (
     {
       className,
@@ -919,8 +979,7 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
   ) => {
     const ctx = useSegmentatorContext();
     const selected = ctx.value === value;
-    const iconOnly =
-      iconOnlyProp ?? (!!(leftIcon ?? rightIcon) && !children);
+    const iconOnly = iconOnlyProp ?? (!!(leftIcon ?? rightIcon) && !children);
     const isDisabled = disabled || ctx.disabled;
     const dimmed = isDisabled;
     const icon = iconOnly ? (leftIcon ?? rightIcon) : leftIcon;
@@ -936,7 +995,11 @@ export const SegmentatorItem = forwardRef<HTMLButtonElement, SegmentatorItemProp
         data-mode={ctx.mode}
         data-all-round={ctx.allRound ? "true" : "false"}
         disabled={isDisabled}
-        className={cn("aviala-segmentator-item aviala-focus-ring", iconOnly && "min-w-0", className)}
+        className={cn(
+          "aviala-segmentator-item aviala-focus-ring",
+          iconOnly && "min-w-0",
+          className
+        )}
         onClick={(e) => {
           if (ctx.consumeClickRef.current) {
             ctx.consumeClickRef.current = false;

@@ -26,9 +26,19 @@ export type ThemeInput = {
 export type ThemeVars = Record<string, string>;
 
 /** Merge a partial PaletteConfig with the Aviala design-spec defaults. */
-function resolvePaletteConfig(config?: PaletteConfig): Required<
-  Pick<PaletteConfig, "curveGamma" | "protectHues" | "protectHueFamilies" | "protectHueStrength" | "mixRatio">
-> & Pick<PaletteConfig, "mixColor"> {
+function resolvePaletteConfig(
+  config?: PaletteConfig
+): Required<
+  Pick<
+    PaletteConfig,
+    | "curveGamma"
+    | "protectHues"
+    | "protectHueFamilies"
+    | "protectHueStrength"
+    | "mixRatio"
+  >
+> &
+  Pick<PaletteConfig, "mixColor"> {
   return {
     curveGamma: config?.curveGamma ?? DEFAULT_PALETTE_CONFIG.curveGamma,
     protectHues: config?.protectHues ?? DEFAULT_PALETTE_CONFIG.protectHues,
@@ -98,7 +108,8 @@ function syncNeutralPalette(vars: ThemeVars, mode: ThemeMode): void {
 /** Mode-specific ALD tokens that are not derived from the primary palette steps. */
 function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
   const neutral = (step: number) =>
-    vars[aliasToCssVar(`neutral/neutral-${step}`)] ?? ALD_NEUTRAL_RAMP[mode][step]!;
+    vars[aliasToCssVar(`neutral/neutral-${step}`)] ??
+    ALD_NEUTRAL_RAMP[mode][step]!;
 
   // ALD token-colors aliases (light/dark resolve via neutral ramp).
   // lightBackground-1/2 → neutral-4/5; Background-3 → neutral-6
@@ -120,13 +131,41 @@ function syncAldModeTokens(vars: ThemeVars, mode: ThemeMode): void {
 /** Primary-tinted ALD semantic tokens — follow palette steps (Figma token-colors). */
 function syncPrimarySemanticTokens(vars: ThemeVars): void {
   const step = (n: number) => vars[aliasToCssVar(`primary/primary-${n}`)]!;
-  setAldVar(vars, "text/text-theme-primary-black", step(SEMANTIC_STEP_MAP.textPrimary));
-  setAldVar(vars, "text/text-theme-secondary-black", step(SEMANTIC_STEP_MAP.textSecondary));
-  setAldVar(vars, "text/text-theme-light-black", step(SEMANTIC_STEP_MAP.textLight));
-  setAldVar(vars, "box/box-theme-secondarybackground", step(SEMANTIC_STEP_MAP.secondaryBackground));
-  setAldVar(vars, "box/box-theme-lightbackground", step(SEMANTIC_STEP_MAP.lightBackground));
-  setAldVar(vars, "control/control-theme-background", step(SEMANTIC_STEP_MAP.controlBackground));
-  setAldVar(vars, "border/border-theme-primary", step(SEMANTIC_STEP_MAP.primaryBorder));
+  setAldVar(
+    vars,
+    "text/text-theme-primary-black",
+    step(SEMANTIC_STEP_MAP.textPrimary)
+  );
+  setAldVar(
+    vars,
+    "text/text-theme-secondary-black",
+    step(SEMANTIC_STEP_MAP.textSecondary)
+  );
+  setAldVar(
+    vars,
+    "text/text-theme-light-black",
+    step(SEMANTIC_STEP_MAP.textLight)
+  );
+  setAldVar(
+    vars,
+    "box/box-theme-secondarybackground",
+    step(SEMANTIC_STEP_MAP.secondaryBackground)
+  );
+  setAldVar(
+    vars,
+    "box/box-theme-lightbackground",
+    step(SEMANTIC_STEP_MAP.lightBackground)
+  );
+  setAldVar(
+    vars,
+    "control/control-theme-background",
+    step(SEMANTIC_STEP_MAP.controlBackground)
+  );
+  setAldVar(
+    vars,
+    "border/border-theme-primary",
+    step(SEMANTIC_STEP_MAP.primaryBorder)
+  );
 }
 
 /** Semantic status icon/text — palette step 10 per family (ALD text/*-primary-black). */
@@ -178,7 +217,11 @@ export function generateTheme(input: ThemeInput = {}): ThemeVars {
 
   // Line shadows for button depth (neutral, mode-independent).
   setAldVar(vars, "special-effort/se-lineShadow-bottom", "rgba(0, 0, 0, 0.04)");
-  setAldVar(vars, "special-effort/se-lineShadow-bottomDeep", "rgba(0, 0, 0, 0.08)");
+  setAldVar(
+    vars,
+    "special-effort/se-lineShadow-bottomDeep",
+    "rgba(0, 0, 0, 0.08)"
+  );
   setAldVar(vars, "special-effort/se-lineShadow-all", "rgba(0, 0, 0, 0.12)");
 
   if (input.presetId) {

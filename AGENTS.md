@@ -20,13 +20,13 @@ spiral2/
 
 ## Package responsibilities
 
-| Package | Source root | Role |
-|---|---|---|
-| `packages/ui` | `packages/ui/src/` | React components. Flat file layout: `components/{name}.tsx` + `{name}.stories.tsx`. Compound components use subfolders (`date-picker/`, `color-picker/`, `time-picker/`, `video/`). All exports go through `src/index.ts`. |
-| `packages/icons` | `packages/icons/src/` | React icon components generated from Figma SVGs. `src/components/` holds one component per icon; `src/catalog.ts` is the barrel. `scripts/build-icons.mjs` drives SVGR. |
-| `packages/tokens` | `packages/tokens/src/` | CSS variables and theme engine. `src/semantic/` holds per-component effect CSS. `source/ald/` is synced from an external ALD token source. |
-| `apps/playground` | `apps/playground/src/` | Vite + React sandbox. Imports all three packages for interactive testing. |
-| `apps/docs` | `apps/docs/` | Storybook 8. Stories live alongside components in `packages/ui/src/components/`. |
+| Package           | Source root            | Role                                                                                                                                                                                                                       |
+| ----------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/ui`     | `packages/ui/src/`     | React components. Flat file layout: `components/{name}.tsx` + `{name}.stories.tsx`. Compound components use subfolders (`date-picker/`, `color-picker/`, `time-picker/`, `video/`). All exports go through `src/index.ts`. |
+| `packages/icons`  | `packages/icons/src/`  | React icon components generated from Figma SVGs. `src/components/` holds one component per icon; `src/catalog.ts` is the barrel. `scripts/build-icons.mjs` drives SVGR.                                                    |
+| `packages/tokens` | `packages/tokens/src/` | CSS variables and theme engine. `src/semantic/` holds per-component effect CSS. `source/ald/` is synced from an external ALD token source.                                                                                 |
+| `apps/playground` | `apps/playground/src/` | Vite + React sandbox. Imports all three packages for interactive testing.                                                                                                                                                  |
+| `apps/docs`       | `apps/docs/`           | Storybook 8. Stories live alongside components in `packages/ui/src/components/`.                                                                                                                                           |
 
 ## Key commands
 
@@ -62,14 +62,14 @@ pnpm release:publish    # build all + changeset publish
 
 When editing skills, always edit the file in `skills/` — the redirectors only need updating when a new skill is added.
 
-| Skill | Purpose |
-|---|---|
-| `spiral-component` | How to add/modify components aligned with Figma |
-| `spiral-coding-tone` | Naming, comments, token usage conventions |
-| `spiral-changelog` | Changelog + changeset workflow |
-| `spiral-theme` | Theme engine, generateTheme, applyTheme |
-| `aviala-design-system` | Design system reference |
-| `spiral-icons` | Icon pipeline usage |
+| Skill                  | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `spiral-component`     | How to add/modify components aligned with Figma |
+| `spiral-coding-tone`   | Naming, comments, token usage conventions       |
+| `spiral-changelog`     | Changelog + changeset workflow                  |
+| `spiral-theme`         | Theme engine, generateTheme, applyTheme         |
+| `aviala-design-system` | Design system reference                         |
+| `spiral-icons`         | Icon pipeline usage                             |
 
 ## Coding conventions
 
@@ -87,6 +87,7 @@ Feature branch + changeset → merge to main → `pnpm version:packages` creates
 ## CI
 
 GitHub Actions (`.github/workflows/`):
+
 - **CI** (`ci.yml`): build + typecheck + lint + format:check + test on push/PR to main.
 - **Icons Sync** (`icons-sync.yml`): manual Figma export → build → PR.
 - **Release** (`release.yml`): changeset-based publish.

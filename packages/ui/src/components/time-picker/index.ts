@@ -12,4 +12,7 @@ export {
   type TimePickerSize,
   type TimePickerValue,
 } from "./time-picker";
-export { TimePickerWheels, type TimePickerWheelsValue } from "./time-picker-wheels";
+export {
+  TimePickerWheels,
+  type TimePickerWheelsValue,
+} from "./time-picker-wheels";

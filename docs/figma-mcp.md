@@ -14,11 +14,11 @@ CLI scripts load `.env.local` automatically from the repo root.
 
 ## Figma files
 
-| Resource | File Key |
-|---|---|
+| Resource          | File Key                 |
+| ----------------- | ------------------------ |
 | Colour For Design | `RbhKI6PNBWXMUmFijJ6Zuz` |
-| Components | `aykyMmGyzVPkAsf8oRBZg0` |
-| Icons | `kLrxJHsDob2VoX7PfkD5PW` |
+| Components        | `aykyMmGyzVPkAsf8oRBZg0` |
+| Icons             | `kLrxJHsDob2VoX7PfkD5PW` |
 
 ## Icons sync source
 
@@ -55,10 +55,10 @@ ICONS_THICKNESS=Regular,Bold ICONS_MODE=default pnpm icons:export
 
 Export writes to `packages/icons/raw/.staging/` first. Promote into `raw/` only after success, or after you choose skip in the interactive prompt. Abort / rate-limit exhaustion leave the previous `raw/` unchanged.
 
-| Situation | Local TTY | CI / `--non-interactive` |
-|---|---|---|
-| Null SVG URL / download error | Prompt retry / skip / abort | `exit 1`, no promote |
-| 429 retries exhausted | Hard fail, no promote | Hard fail, no promote |
+| Situation                     | Local TTY                   | CI / `--non-interactive` |
+| ----------------------------- | --------------------------- | ------------------------ |
+| Null SVG URL / download error | Prompt retry / skip / abort | `exit 1`, no promote     |
+| 429 retries exhausted         | Hard fail, no promote       | Hard fail, no promote    |
 
 After export, see `packages/icons/raw/manifest.json` (includes `skipped` when you chose skip).
 

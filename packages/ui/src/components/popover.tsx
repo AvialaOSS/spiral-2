@@ -8,9 +8,15 @@ import {
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
-import { OverlayPointerSvg, POPOVER_POINTER, TOOLTIP_POINTER } from "./overlay-pointer";
+import {
+  OverlayPointerSvg,
+  POPOVER_POINTER,
+  TOOLTIP_POINTER,
+} from "./overlay-pointer";
 
-export type PopoverProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>;
+export type PopoverProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Root
+>;
 
 /**
  * Thin controlled/uncontrolled wrapper around Radix `Popover.Root`. We don't add
@@ -54,7 +60,9 @@ export const PopoverAnchor = PopoverPrimitive.Anchor;
 export type PopoverAppearance = "default" | "tooltip" | "primary";
 export type PopoverContentLevel = "caption" | "text";
 
-export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+export type PopoverContentProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+> & {
   /** Render without Portal — use inside nested overlays. */
   portalled?: boolean;
   /** Show a caret arrow pointing at the trigger (Figma with-arrow variant). */

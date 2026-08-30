@@ -68,14 +68,21 @@ function renderCellIcon(node: ReactNode, sized = true): ReactNode {
   if (!node) return null;
   const content =
     sized && isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: 16,
-          height: 16,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: 16,
+            height: 16,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return <span className="aviala-table-cell__icon">{content}</span>;
@@ -88,7 +95,11 @@ function renderTextBlock(text: ReactNode, caption?: ReactNode) {
         {text}
       </Typography>
       {caption != null && caption !== false ? (
-        <Typography level="caption" as="span" className="aviala-table-cell__caption">
+        <Typography
+          level="caption"
+          as="span"
+          className="aviala-table-cell__caption"
+        >
           {caption}
         </Typography>
       ) : null}

@@ -38,14 +38,21 @@ function renderCardIcon(node: ReactNode): ReactNode {
   if (!node) return null;
   const content =
     isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: 14,
-          height: 14,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: 14,
+            height: 14,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return <span className="aviala-card-head__icon">{content}</span>;
@@ -85,14 +92,18 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
   ) => {
     const locale = useLocaleMessages("Card");
     const rtl = useRtl();
-    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
-    const primaryAction =
-      action ??
-      (
-        <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
-          {actionLabel}
-        </Button>
-      );
+    const ChevronIcon = rtl
+      ? DirectionArrowLeftLight
+      : DirectionArrowRightLight;
+    const primaryAction = action ?? (
+      <Button
+        mode="primary"
+        size="regular"
+        leftIcon={<GeneralSetting aria-hidden />}
+      >
+        {actionLabel}
+      </Button>
+    );
 
     const renderTrailing = () => {
       if (trailing !== undefined) return trailing;
@@ -143,7 +154,11 @@ export const CardHead = forwardRef<HTMLDivElement, CardHeadProps>(
           {renderCardIcon(icon ?? <GeneralSetting aria-hidden />)}
           <div className="aviala-card-head__title">
             {title != null || description != null ? (
-              <Typeface content="textCaption" primary={title} secondary={description} />
+              <Typeface
+                content="textCaption"
+                primary={title}
+                secondary={description}
+              />
             ) : (
               children
             )}
@@ -203,14 +218,18 @@ export const CardBottom = forwardRef<HTMLDivElement, CardBottomProps>(
   ) => {
     const locale = useLocaleMessages("Card");
     const rtl = useRtl();
-    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
-    const primaryAction =
-      action ??
-      (
-        <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
-          {actionLabel}
-        </Button>
-      );
+    const ChevronIcon = rtl
+      ? DirectionArrowLeftLight
+      : DirectionArrowRightLight;
+    const primaryAction = action ?? (
+      <Button
+        mode="primary"
+        size="regular"
+        leftIcon={<GeneralSetting aria-hidden />}
+      >
+        {actionLabel}
+      </Button>
+    );
 
     const renderTrailing = () => {
       if (trailing !== undefined) return trailing;

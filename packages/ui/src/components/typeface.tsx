@@ -85,13 +85,25 @@ export const Typeface = forwardRef<HTMLDivElement, TypefaceProps>(
     ref
   ) => {
     const layout = typefaceLayouts[content];
-    const values = resolveTypefaceValues(content, primary, secondary, tertiary, children);
+    const values = resolveTypefaceValues(
+      content,
+      primary,
+      secondary,
+      tertiary,
+      children
+    );
 
     return (
-      <div ref={ref} className={cn("aviala-typeface", className)} data-content={content} {...props}>
+      <div
+        ref={ref}
+        className={cn("aviala-typeface", className)}
+        data-content={content}
+        {...props}
+      >
         {layout.map((line, index) => {
           const value = values[index];
-          if (value === undefined || value === null || value === false) return null;
+          if (value === undefined || value === null || value === false)
+            return null;
 
           const lineContent =
             index === 0
@@ -101,7 +113,10 @@ export const Typeface = forwardRef<HTMLDivElement, TypefaceProps>(
                 : tertiaryContent;
 
           return (
-            <span key={`${line.level}-${index}`} className="aviala-typeface__line">
+            <span
+              key={`${line.level}-${index}`}
+              className="aviala-typeface__line"
+            >
               <Typography level={line.level} content={lineContent} tone={tone}>
                 {value}
               </Typography>
@@ -121,7 +136,11 @@ function resolveTypefaceValues(
   tertiary?: ReactNode,
   children?: ReactNode
 ): ReactNode[] {
-  if (primary !== undefined || secondary !== undefined || tertiary !== undefined) {
+  if (
+    primary !== undefined ||
+    secondary !== undefined ||
+    tertiary !== undefined
+  ) {
     return [primary, secondary, tertiary];
   }
 

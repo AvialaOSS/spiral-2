@@ -24,7 +24,10 @@ type ColorEntryModalProps = {
   onSave: (entry: ColorEntry) => void;
 };
 
-function createDraft(mode: ColorEntryModalMode, entry: ColorEntry | null): ColorEntry {
+function createDraft(
+  mode: ColorEntryModalMode,
+  entry: ColorEntry | null
+): ColorEntry {
   if (mode === "edit" && entry) return { ...entry };
   return {
     id: crypto.randomUUID(),
@@ -41,7 +44,9 @@ export function ColorEntryModal({
   onOpenChange,
   onSave,
 }: ColorEntryModalProps) {
-  const [draft, setDraft] = useState<ColorEntry>(() => createDraft(mode, entry));
+  const [draft, setDraft] = useState<ColorEntry>(() =>
+    createDraft(mode, entry)
+  );
 
   useEffect(() => {
     if (open) {
@@ -49,7 +54,8 @@ export function ColorEntryModal({
     }
   }, [open, mode, entry]);
 
-  const canSave = draft.name.trim().length > 0 && draft.subtitle.trim().length > 0;
+  const canSave =
+    draft.name.trim().length > 0 && draft.subtitle.trim().length > 0;
 
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
@@ -65,7 +71,10 @@ export function ColorEntryModal({
                 value={draft.name}
                 placeholder="Primary"
                 onChange={(event) =>
-                  setDraft((current) => ({ ...current, name: event.target.value }))
+                  setDraft((current) => ({
+                    ...current,
+                    name: event.target.value,
+                  }))
                 }
               />
             </FormField>
@@ -74,7 +83,10 @@ export function ColorEntryModal({
                 value={draft.subtitle}
                 placeholder="主题色"
                 onChange={(event) =>
-                  setDraft((current) => ({ ...current, subtitle: event.target.value }))
+                  setDraft((current) => ({
+                    ...current,
+                    subtitle: event.target.value,
+                  }))
                 }
               />
             </FormField>
@@ -82,7 +94,9 @@ export function ColorEntryModal({
               <span className="colorcat-modal-form__label">基础颜色</span>
               <ColorPicker
                 value={draft.baseColor}
-                onChange={(next) => setDraft((current) => ({ ...current, baseColor: next }))}
+                onChange={(next) =>
+                  setDraft((current) => ({ ...current, baseColor: next }))
+                }
               >
                 <ColorPickerTrigger className="w-full max-w-xs" />
                 <ColorPickerContent />

@@ -19,7 +19,14 @@ const meta: Meta<typeof ColorPicker> = {
 export default meta;
 type Story = StoryObj<typeof ColorPicker>;
 
-const DEFAULT_PRESETS = ["#FF0000", "#165DFF", "#00B42A", "#FF7D00", "#F53F3F", "#722ED1"];
+const DEFAULT_PRESETS = [
+  "#FF0000",
+  "#165DFF",
+  "#00B42A",
+  "#FF7D00",
+  "#F53F3F",
+  "#722ED1",
+];
 
 function ColorPickerDemo({
   size = "regular",
@@ -48,7 +55,11 @@ function ColorPickerDemo({
       disabled={disabled}
       defaultOpen={defaultOpen}
     >
-      <ColorPickerTrigger size={size} allRound={allRound} className="w-[120px]" />
+      <ColorPickerTrigger
+        size={size}
+        allRound={allRound}
+        className="w-[120px]"
+      />
       <ColorPickerContent />
     </ColorPicker>
   );

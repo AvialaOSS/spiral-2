@@ -56,7 +56,11 @@ export const WithMessages: Story = {
       error="Enter a valid email address"
       info="Use your work email if possible"
       alert={
-        <Alert type="warning" title="Verify soon" description="Confirm within 7 days." />
+        <Alert
+          type="warning"
+          title="Verify soon"
+          description="Confirm within 7 days."
+        />
       }
     >
       <Input id="email" defaultValue="not-an-email" />
@@ -78,7 +82,11 @@ export const FieldsetExample: Story = {
         </>
       }
     >
-      <FormField label="Name" description="Your display name" htmlFor="profile-name">
+      <FormField
+        label="Name"
+        description="Your display name"
+        htmlFor="profile-name"
+      >
         <Input id="profile-name" defaultValue="Aviala" />
       </FormField>
       <FormField
@@ -136,7 +144,12 @@ const ProfileFormDemo = () => {
           description="We never share your email."
           required
           render={({ field, id }) => (
-            <Input id={id} type="email" placeholder="you@example.com" {...field} />
+            <Input
+              id={id}
+              type="email"
+              placeholder="you@example.com"
+              {...field}
+            />
           )}
         />
         <FormField
@@ -144,9 +157,7 @@ const ProfileFormDemo = () => {
           name="bio"
           label="Bio"
           description="Tell us a little about yourself."
-          render={({ field, id }) => (
-            <Textarea id={id} rows={3} {...field} />
-          )}
+          render={({ field, id }) => <Textarea id={id} rows={3} {...field} />}
         />
         <div className="flex gap-2">
           <Button mode="primary" type="submit">

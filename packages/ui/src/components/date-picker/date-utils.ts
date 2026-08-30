@@ -6,9 +6,18 @@ export type DateRange = {
 };
 
 /** @deprecated Prefer `useLocaleMessages("DatePicker").weekdays`. Kept for callers. */
-export const WEEKDAY_LABELS = ["一", "二", "三", "四", "五", "六", "日"] as const;
+export const WEEKDAY_LABELS = [
+  "一",
+  "二",
+  "三",
+  "四",
+  "五",
+  "六",
+  "日",
+] as const;
 
-export type RangeSelectionPosition = "none" | "single" | "head" | "middle" | "last";
+export type RangeSelectionPosition =
+  "none" | "single" | "head" | "middle" | "last";
 
 export function startOfDay(date: Date): Date {
   const copy = new Date(date);
@@ -160,17 +169,23 @@ export function isDateInRange(date: Date, from?: Date, to?: Date): boolean {
 export function isRangeStart(date: Date, from?: Date, to?: Date): boolean {
   if (!from) return false;
   if (!to) return isSameDay(date, from);
-  const start = startOfDay(from).getTime() <= startOfDay(to).getTime() ? from : to;
+  const start =
+    startOfDay(from).getTime() <= startOfDay(to).getTime() ? from : to;
   return isSameDay(date, start);
 }
 
 export function isRangeEnd(date: Date, from?: Date, to?: Date): boolean {
   if (!from || !to) return false;
-  const end = startOfDay(from).getTime() <= startOfDay(to).getTime() ? to : from;
+  const end =
+    startOfDay(from).getTime() <= startOfDay(to).getTime() ? to : from;
   return isSameDay(date, end);
 }
 
-export function isDateDisabled(date: Date, minDate?: Date, maxDate?: Date): boolean {
+export function isDateDisabled(
+  date: Date,
+  minDate?: Date,
+  maxDate?: Date
+): boolean {
   const time = startOfDay(date).getTime();
   if (minDate && time < startOfDay(minDate).getTime()) return true;
   if (maxDate && time > startOfDay(maxDate).getTime()) return true;

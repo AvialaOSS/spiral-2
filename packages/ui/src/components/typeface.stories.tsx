@@ -38,7 +38,9 @@ export const ContentMatrix: Story = {
     <div className="flex flex-col gap-6">
       {contents.map((content) => (
         <div key={content} className="flex items-start gap-4">
-          <span className="w-40 shrink-0 font-mono text-xs text-muted-foreground">{content}</span>
+          <span className="w-40 shrink-0 font-mono text-xs text-muted-foreground">
+            {content}
+          </span>
           <Typeface
             content={content}
             primary="Primary"
@@ -53,7 +55,10 @@ export const ContentMatrix: Story = {
 
 export const Pair: Story = {
   render: () => (
-    <TypefacePair title="Radio option title" description="Supporting caption text" />
+    <TypefacePair
+      title="Radio option title"
+      description="Supporting caption text"
+    />
   ),
 };
 

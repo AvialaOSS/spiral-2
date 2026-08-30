@@ -2,11 +2,7 @@ import { SymbolRight } from "@aviala-design/icons";
 import { useState, type ReactNode } from "react";
 import { interpolate } from "../../locale";
 import { cn } from "../../lib/utils";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { typographyVariants } from "../typography";
 
 export type VideoSpeedProps = {

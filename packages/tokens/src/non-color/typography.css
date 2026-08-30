@@ -60,7 +60,10 @@
   --typography-body-fg: var(--text-text-normal-text-black, #262525);
   --typography-body-fg-white: var(--text-text-normal-text-white, #ffffff);
   --typography-caption-fg: var(--text-text-normal-text-caption-black, #616060);
-  --typography-caption-fg-white: var(--text-text-normal-text-caption-white, #ffffff);
+  --typography-caption-fg-white: var(
+    --text-text-normal-text-caption-white,
+    #ffffff
+  );
 
   --typeface-gap: var(--gap-none, 0);
 }

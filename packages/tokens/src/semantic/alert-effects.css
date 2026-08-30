@@ -71,7 +71,8 @@
   display: flex;
   align-items: flex-start;
   gap: var(--alert-actions-gap);
-  padding: 0 var(--alert-actions-pr) var(--alert-actions-pb) var(--alert-actions-pl);
+  padding: 0 var(--alert-actions-pr) var(--alert-actions-pb)
+    var(--alert-actions-pl);
 }
 
 .aviala-alert--size-small .aviala-alert__actions {

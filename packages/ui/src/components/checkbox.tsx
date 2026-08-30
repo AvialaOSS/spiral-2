@@ -19,7 +19,9 @@ export type CheckboxGroupDirection = "vertical" | "horizontal";
 /** Figma Checkbox `Size` — Default → `default`, Huge → `huge` */
 export type CheckboxSize = "default" | "huge";
 
-export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
+export type CheckboxProps = ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Root
+> & {
   /** Figma Checkbox `Round` */
   round?: boolean;
   /** Figma Checkbox `Size` */
@@ -47,7 +49,10 @@ export const Checkbox = forwardRef<
       {...props}
     >
       <span aria-hidden className="aviala-checkbox__surface" />
-      <CheckboxPrimitive.Indicator forceMount className="aviala-checkbox__indicator">
+      <CheckboxPrimitive.Indicator
+        forceMount
+        className="aviala-checkbox__indicator"
+      >
         <CheckboxCheckIcon className="aviala-checkbox__indicator-icon aviala-checkbox__indicator-icon--check" />
         <span
           aria-hidden
@@ -81,14 +86,21 @@ function renderIcon(node: ReactNode): ReactNode {
   const icon = 18;
   const content =
     isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: icon,
-          height: icon,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: icon,
+            height: icon,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return <span className="aviala-checkbox-input__icon">{content}</span>;
@@ -105,32 +117,19 @@ export type CheckboxInputProps = Omit<CheckboxProps, "children"> & {
 export const CheckboxInput = forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxInputProps
->(
-  (
-    {
-      className,
-      title,
-      description,
-      icon,
-      disabled,
-      id,
-      ...props
-    },
-    ref
-  ) => (
-    <label
-      htmlFor={id}
-      className={cn("aviala-checkbox-input", className)}
-      data-disabled={disabled ? "true" : undefined}
-    >
-      <Checkbox ref={ref} id={id} disabled={disabled} {...props} />
-      {renderIcon(icon)}
-      <TypefacePair
-        className="aviala-checkbox-input__content min-w-0 flex-1"
-        title={title}
-        description={description}
-      />
-    </label>
-  )
-);
+>(({ className, title, description, icon, disabled, id, ...props }, ref) => (
+  <label
+    htmlFor={id}
+    className={cn("aviala-checkbox-input", className)}
+    data-disabled={disabled ? "true" : undefined}
+  >
+    <Checkbox ref={ref} id={id} disabled={disabled} {...props} />
+    {renderIcon(icon)}
+    <TypefacePair
+      className="aviala-checkbox-input__content min-w-0 flex-1"
+      title={title}
+      description={description}
+    />
+  </label>
+));
 CheckboxInput.displayName = "CheckboxInput";

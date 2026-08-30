@@ -16,5 +16,5 @@ const updated = stampUnreleased(version);
 console.log(
   updated > 0
     ? `Stamped [Unreleased] → ${version} in ${updated} component changelog(s).`
-    : `No non-empty [Unreleased] sections to stamp for ${version}.`,
+    : `No non-empty [Unreleased] sections to stamp for ${version}.`
 );

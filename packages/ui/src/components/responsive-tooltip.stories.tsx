@@ -52,7 +52,11 @@ export const Placements: Story = {
   render: () => (
     <div className="flex flex-wrap items-center justify-center gap-4 p-16">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <ResponsiveTooltip key={side} content={`Tooltip on ${side}`} side={side}>
+        <ResponsiveTooltip
+          key={side}
+          content={`Tooltip on ${side}`}
+          side={side}
+        >
           <Button mode="second" size="small">
             {side}
           </Button>

@@ -15,7 +15,12 @@ export default meta;
 function MoreActions() {
   return (
     <>
-      <Button mode="noBackgroundCustom" size="small" iconOnly aria-label="Settings">
+      <Button
+        mode="noBackgroundCustom"
+        size="small"
+        iconOnly
+        aria-label="Settings"
+      >
         <GeneralSetting aria-hidden />
       </Button>
       <Button mode="noBackgroundCustom" size="small" iconOnly aria-label="More">
@@ -26,9 +31,27 @@ function MoreActions() {
 }
 
 const ROWS = [
-  { id: "1", name: "Kai Lark", caption: "Owner", badge: "Active", switchOn: true },
-  { id: "2", name: "Ada Chen", caption: "Editor", badge: "Away", switchOn: false },
-  { id: "3", name: "Bo Park", caption: "Viewer", badge: "Active", switchOn: true },
+  {
+    id: "1",
+    name: "Kai Lark",
+    caption: "Owner",
+    badge: "Active",
+    switchOn: true,
+  },
+  {
+    id: "2",
+    name: "Ada Chen",
+    caption: "Editor",
+    badge: "Away",
+    switchOn: false,
+  },
+  {
+    id: "3",
+    name: "Bo Park",
+    caption: "Viewer",
+    badge: "Active",
+    switchOn: true,
+  },
 ] as const;
 
 function SelectableTable({ stickyHeader = false }: { stickyHeader?: boolean }) {
@@ -44,7 +67,10 @@ function SelectableTable({ stickyHeader = false }: { stickyHeader?: boolean }) {
   const someChecked = selectedCount > 0 && !allChecked;
 
   return (
-    <Table stickyHeader={stickyHeader} style={{ width: 720, maxHeight: stickyHeader ? 280 : undefined }}>
+    <Table
+      stickyHeader={stickyHeader}
+      style={{ width: 720, maxHeight: stickyHeader ? 280 : undefined }}
+    >
       <TableRow header>
         <TableHead
           content="checkbox"
@@ -83,8 +109,15 @@ function SelectableTable({ stickyHeader = false }: { stickyHeader?: boolean }) {
             caption={row.caption}
             actions={<MoreActions />}
           />
-          <TableCell content="badge" badgeLabel={row.badge} actions={<MoreActions />} />
-          <TableCell content="switch" switchProps={{ defaultChecked: row.switchOn }} />
+          <TableCell
+            content="badge"
+            badgeLabel={row.badge}
+            actions={<MoreActions />}
+          />
+          <TableCell
+            content="switch"
+            switchProps={{ defaultChecked: row.switchOn }}
+          />
         </TableRow>
       ))}
     </Table>

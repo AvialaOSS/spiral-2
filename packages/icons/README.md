@@ -6,10 +6,10 @@ Aviala Design Icons as React SVG components. Figma is the design source of truth
 
 ## Source of truth
 
-| Path | In git? | Role |
-|---|---|---|
-| `raw/` | **No** (gitignore) | Local / CI sync scratch from Figma |
-| `src/components/` + `src/catalog.ts` | **Yes** | What CI and `release:publish` build (`tsup` / `build:release`) |
+| Path                                 | In git?            | Role                                                           |
+| ------------------------------------ | ------------------ | -------------------------------------------------------------- |
+| `raw/`                               | **No** (gitignore) | Local / CI sync scratch from Figma                             |
+| `src/components/` + `src/catalog.ts` | **Yes**            | What CI and `release:publish` build (`tsup` / `build:release`) |
 
 ```
 raw/direction/direction_arrowLeft-light-default.svg   # gitignored
@@ -23,11 +23,11 @@ Sync discovers icons from the **published library catalog** of the Icons Figma f
 
 Icons live in Figma **component sets**:
 
-| Layer | Example |
-|---|---|
-| Component set | `direction/arrowLeft` |
-| Variant | `thickness=Regular, mode=default, name=direction_arrowLeft` |
-| Exported SVG | `raw/direction/direction_arrowLeft-regular-default.svg` |
+| Layer         | Example                                                     |
+| ------------- | ----------------------------------------------------------- |
+| Component set | `direction/arrowLeft`                                       |
+| Variant       | `thickness=Regular, mode=default, name=direction_arrowLeft` |
+| Exported SVG  | `raw/direction/direction_arrowLeft-regular-default.svg`     |
 
 One React component per icon **name**. Switch variants via props:
 
@@ -38,12 +38,12 @@ import { DirectionArrowLeft, Icon } from "@aviala-design/icons";
 <Icon icon={DirectionArrowLeft} size={20} thickness="Light" mode="default" />
 ```
 
-| Prop | Values | Default |
-|---|---|---|
-| `thickness` | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium` |
-| `mode` | `default` \| `fill` | `default` |
-| `level` | typography level for token-based sizing | — |
-| `biggerSize` | bump one ALD size step for the given `level` | `false` |
+| Prop         | Values                                                | Default   |
+| ------------ | ----------------------------------------------------- | --------- |
+| `thickness`  | `Light` \| `Regular` \| `Medium` \| `Bold` \| `Black` | `Medium`  |
+| `mode`       | `default` \| `fill`                                   | `default` |
+| `level`      | typography level for token-based sizing               | —         |
+| `biggerSize` | bump one ALD size step for the given `level`          | `false`   |
 
 Component name = PascalCase of icon `name` (`direction_arrowLeft` → `DirectionArrowLeft`).
 
@@ -76,23 +76,23 @@ Exports write to `raw/.staging/` first, then promote into `raw/` only after succ
 
 ### Failure handling
 
-| Situation | Local (TTY) | CI / `--non-interactive` / `ICONS_NON_INTERACTIVE=1` |
-|---|---|---|
-| Null SVG URL or download error | Continue; then prompt `(r)etry` / `(s)kip` / `(a)bort` | Fail job (`exit 1`); do not promote |
-| Rate limit (429) retries exhausted | Hard fail; do not promote | Hard fail; do not promote |
+| Situation                          | Local (TTY)                                            | CI / `--non-interactive` / `ICONS_NON_INTERACTIVE=1` |
+| ---------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
+| Null SVG URL or download error     | Continue; then prompt `(r)etry` / `(s)kip` / `(a)bort` | Fail job (`exit 1`); do not promote                  |
+| Rate limit (429) retries exhausted | Hard fail; do not promote                              | Hard fail; do not promote                            |
 
 ### Optional export filters
 
-| Flag / env | Example |
-|---|---|
-| `--thickness=` / `ICONS_THICKNESS` | `Regular,Medium` |
-| `--mode=` / `ICONS_MODE` | `default,fill` |
-| `--category=` / `ICONS_CATEGORY` | `direction,ai` |
-| `--name=` or `--only=` / `ICONS_NAME` | `direction_arrowLeft` |
-| `--dry-run` | list matches, write nothing |
-| `--no-clean` | merge into existing `raw/` on promote (not recommended for full sync) |
-| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; remaining failures abort |
-| `--max-retries=` / `ICONS_MAX_RETRIES` | 429 retry budget (default 6) |
+| Flag / env                                    | Example                                                               |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| `--thickness=` / `ICONS_THICKNESS`            | `Regular,Medium`                                                      |
+| `--mode=` / `ICONS_MODE`                      | `default,fill`                                                        |
+| `--category=` / `ICONS_CATEGORY`              | `direction,ai`                                                        |
+| `--name=` or `--only=` / `ICONS_NAME`         | `direction_arrowLeft`                                                 |
+| `--dry-run`                                   | list matches, write nothing                                           |
+| `--no-clean`                                  | merge into existing `raw/` on promote (not recommended for full sync) |
+| `--non-interactive` / `ICONS_NON_INTERACTIVE` | no prompts; remaining failures abort                                  |
+| `--max-retries=` / `ICONS_MAX_RETRIES`        | 429 retry budget (default 6)                                          |
 
 ```bash
 pnpm icons:export --category=direction --thickness=Regular
@@ -104,11 +104,11 @@ pnpm icons:export:dry --category=ai
 
 ### Package scripts (`@aviala-design/icons`)
 
-| Script | Meaning |
-|---|---|
-| `build` | `build-icons` (no-op if `raw/` empty) + `tsup` |
-| `build:icons` | SVG → components |
-| `build:release` | `tsup` only (CI / publish) |
+| Script          | Meaning                                        |
+| --------------- | ---------------------------------------------- |
+| `build`         | `build-icons` (no-op if `raw/` empty) + `tsup` |
+| `build:icons`   | SVG → components                               |
+| `build:release` | `tsup` only (CI / publish)                     |
 
 ## How to update icons
 

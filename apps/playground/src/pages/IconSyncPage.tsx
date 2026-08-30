@@ -10,12 +10,21 @@ import {
   type IconMode,
   type IconThickness,
 } from "@aviala-design/icons";
-import { Button, cn, Input, Link, SegmentatorGroup, SegmentatorItem, Stack } from "@aviala-design/spiral";
+import {
+  Button,
+  cn,
+  Input,
+  Link,
+  SegmentatorGroup,
+  SegmentatorItem,
+  Stack,
+} from "@aviala-design/spiral";
 import { useMemo, useState } from "react";
 
 type VariantKey = `${IconThickness}:${IconMode}`;
 type Severity = "critical" | "warning" | "info";
-type FilterMode = "all" | "critical" | "warning" | "info" | "no-fill" | "metadata";
+type FilterMode =
+  "all" | "critical" | "warning" | "info" | "no-fill" | "metadata";
 
 type RawIconManifestEntry = {
   file: string;
@@ -146,7 +155,8 @@ const rowsByIconName = manifestRows.reduce((map, row) => {
 
 function analyzeIcon(entry: IconCatalogEntry): IconDiagnostic {
   const rows = rowsByIconName.get(entry.iconName) ?? [];
-  const variants = rows.length > 0 ? rowsToVariants(rows) : toVariantsFromCatalog(entry);
+  const variants =
+    rows.length > 0 ? rowsToVariants(rows) : toVariantsFromCatalog(entry);
   const missingVariants = EXPECTED_VARIANTS.filter((key) => !variants.has(key));
   const issues: DiagnosticIssue[] = [];
 
@@ -180,7 +190,9 @@ function analyzeIcon(entry: IconCatalogEntry): IconDiagnostic {
     });
   }
 
-  const missingMedium = ICON_MODES.filter((mode) => !variants.has(variantKey("Medium", mode)));
+  const missingMedium = ICON_MODES.filter(
+    (mode) => !variants.has(variantKey("Medium", mode))
+  );
   if (missingMedium.length > 0) {
     issues.push({
       code: "MEDIUM_MISSING",
@@ -227,7 +239,9 @@ function analyzeIcon(entry: IconCatalogEntry): IconDiagnostic {
     const manifestThicknesses = uniqueSorted(
       rows.map((row) => row.thickness).filter(isIconThickness)
     );
-    const manifestModes = uniqueSorted(rows.map((row) => row.mode).filter(isIconMode));
+    const manifestModes = uniqueSorted(
+      rows.map((row) => row.mode).filter(isIconMode)
+    );
     const catalogThicknesses = uniqueSorted(entry.thicknesses);
     const catalogModes = uniqueSorted(entry.modes);
 
@@ -285,17 +299,27 @@ function severityClass(severity: Severity | "ok"): string {
 }
 
 function issueBadgeClass(severity: Severity): string {
-  return cn("inline-flex rounded-full border px-2 py-0.5 text-xs", severityClass(severity));
+  return cn(
+    "inline-flex rounded-full border px-2 py-0.5 text-xs",
+    severityClass(severity)
+  );
 }
 
-function issueMatchesFilter(diagnostic: IconDiagnostic, filter: FilterMode): boolean {
+function issueMatchesFilter(
+  diagnostic: IconDiagnostic,
+  filter: FilterMode
+): boolean {
   if (filter === "all") return true;
   if (filter === "no-fill") {
-    return diagnostic.issues.some((issue) => issue.code === "FILL_MODE_MISSING");
+    return diagnostic.issues.some(
+      (issue) => issue.code === "FILL_MODE_MISSING"
+    );
   }
   if (filter === "metadata") {
     return diagnostic.issues.some((issue) =>
-      ["METADATA_SYNC", "CATALOG_MISMATCH", "MANIFEST_MISSING"].includes(issue.code)
+      ["METADATA_SYNC", "CATALOG_MISMATCH", "MANIFEST_MISSING"].includes(
+        issue.code
+      )
     );
   }
   return diagnostic.severity === filter;
@@ -325,11 +349,17 @@ function GlobalNotice() {
         <div>
           <h2 className="text-base font-semibold">Default mismatch</h2>
           <p className="mt-1 text-sm">
-            The Icon wrapper defaults to Regular/default, while generated icon components default
-            to Bold/default. Wrapper usage and direct component usage can render different weights.
+            The Icon wrapper defaults to Regular/default, while generated icon
+            components default to Bold/default. Wrapper usage and direct
+            component usage can render different weights.
           </p>
         </div>
-        <Link href="/icons" level="text" mode="noBackgroundCustom" rightIcon={<DirectionArrowRight aria-hidden />}>
+        <Link
+          href="/icons"
+          level="text"
+          mode="noBackgroundCustom"
+          rightIcon={<DirectionArrowRight aria-hidden />}
+        >
           Gallery
         </Link>
       </div>
@@ -360,7 +390,10 @@ function VariantMatrix({ diagnostic }: { diagnostic: IconDiagnostic }) {
             const key = variantKey(thickness, mode);
             const available = diagnostic.variants.has(key);
             return (
-              <div key={key} className="flex min-h-16 items-center justify-center border-r border-border p-2 last:border-r-0">
+              <div
+                key={key}
+                className="flex min-h-16 items-center justify-center border-r border-border p-2 last:border-r-0"
+              >
                 {available ? (
                   <Icon
                     icon={diagnostic.entry.component}
@@ -401,14 +434,22 @@ function DetailPanel({ diagnostic }: { diagnostic: IconDiagnostic }) {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold">{diagnostic.entry.name}</h2>
-              <p className="font-mono text-xs text-muted-foreground">{diagnostic.entry.iconName}</p>
+              <p className="font-mono text-xs text-muted-foreground">
+                {diagnostic.entry.iconName}
+              </p>
             </div>
-            <span className={cn("rounded-full border px-2 py-0.5 text-xs", severityClass(diagnostic.severity))}>
+            <span
+              className={cn(
+                "rounded-full border px-2 py-0.5 text-xs",
+                severityClass(diagnostic.severity)
+              )}
+            >
               {diagnostic.severity}
             </span>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            {formatCategory(diagnostic.entry.category)} / {diagnostic.rows.length} raw rows
+            {formatCategory(diagnostic.entry.category)} /{" "}
+            {diagnostic.rows.length} raw rows
           </p>
         </div>
 
@@ -418,13 +459,22 @@ function DetailPanel({ diagnostic }: { diagnostic: IconDiagnostic }) {
           <h3 className="mb-2 text-sm font-semibold">Issues</h3>
           <Stack gap="content">
             {diagnostic.issues.map((issue) => (
-              <div key={issue.code} className="border-b border-border pb-3 last:border-b-0 last:pb-0">
+              <div
+                key={issue.code}
+                className="border-b border-border pb-3 last:border-b-0 last:pb-0"
+              >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={issueBadgeClass(issue.severity)}>{issue.label}</span>
-                  <span className="font-mono text-xs text-muted-foreground">{issue.code}</span>
+                  <span className={issueBadgeClass(issue.severity)}>
+                    {issue.label}
+                  </span>
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {issue.code}
+                  </span>
                 </div>
                 <p className="mt-2 text-sm text-foreground">{issue.detail}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{issue.fix}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {issue.fix}
+                </p>
               </div>
             ))}
           </Stack>
@@ -435,8 +485,13 @@ function DetailPanel({ diagnostic }: { diagnostic: IconDiagnostic }) {
             <h3 className="mb-2 text-sm font-semibold">Metadata rows</h3>
             <Stack gap="inside">
               {metadataRows.slice(0, 6).map((row) => (
-                <div key={`${row.nodeId}-${row.file}`} className="rounded-md border border-border p-2">
-                  <p className="break-all font-mono text-xs text-foreground">{row.file}</p>
+                <div
+                  key={`${row.nodeId}-${row.file}`}
+                  className="rounded-md border border-border p-2"
+                >
+                  <p className="break-all font-mono text-xs text-foreground">
+                    {row.file}
+                  </p>
                   <p className="mt-1 break-all text-xs text-muted-foreground">
                     {row.componentSet ?? "No component set"} / {row.nodeId}
                   </p>
@@ -472,10 +527,16 @@ function DiagnosticRow({
       )}
     >
       <span className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-background">
-        <Icon icon={diagnostic.entry.component} size={22} className="text-foreground" />
+        <Icon
+          icon={diagnostic.entry.component}
+          size={22}
+          className="text-foreground"
+        />
       </span>
       <span className="min-w-0">
-        <span className="block truncate font-medium text-foreground">{diagnostic.entry.name}</span>
+        <span className="block truncate font-medium text-foreground">
+          {diagnostic.entry.name}
+        </span>
         <span className="block truncate font-mono text-xs text-muted-foreground">
           {diagnostic.entry.iconName}
         </span>
@@ -504,7 +565,9 @@ function DiagnosticRow({
 export function IconSyncPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterMode>("all");
-  const [selectedName, setSelectedName] = useState(diagnostics[0]?.entry.name ?? "");
+  const [selectedName, setSelectedName] = useState(
+    diagnostics[0]?.entry.name ?? ""
+  );
 
   const filtered = useMemo(() => {
     const normalized = search.trim().toLowerCase();
@@ -526,8 +589,12 @@ export function IconSyncPage() {
     diagnostics[0]!;
 
   const counts = useMemo(() => {
-    const critical = diagnostics.filter((item) => item.severity === "critical").length;
-    const warning = diagnostics.filter((item) => item.severity === "warning").length;
+    const critical = diagnostics.filter(
+      (item) => item.severity === "critical"
+    ).length;
+    const warning = diagnostics.filter(
+      (item) => item.severity === "warning"
+    ).length;
     const info = diagnostics.filter((item) => item.severity === "info").length;
     const noFill = diagnostics.filter((item) =>
       item.issues.some((issue) => issue.code === "FILL_MODE_MISSING")
@@ -540,10 +607,15 @@ export function IconSyncPage() {
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">Aviala Icons</p>
-            <h1 className="text-2xl font-bold text-foreground">Icon Sync Console</h1>
+            <p className="text-sm font-medium text-muted-foreground">
+              Aviala Icons
+            </p>
+            <h1 className="text-2xl font-bold text-foreground">
+              Icon Sync Console
+            </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              {iconCatalog.length} catalog entries / {manifest.count ?? manifestRows.length} raw variants
+              {iconCatalog.length} catalog entries /{" "}
+              {manifest.count ?? manifestRows.length} raw variants
             </p>
           </div>
           <Stack direction="row" gap="component" className="items-center">
@@ -562,10 +634,26 @@ export function IconSyncPage() {
           <GlobalNotice />
 
           <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <MetricTile label="Critical sync issues" value={counts.critical} tone="critical" />
-            <MetricTile label="Warning groups" value={counts.warning} tone="warning" />
-            <MetricTile label="Incomplete matrices" value={counts.info} tone="info" />
-            <MetricTile label="Default-only icons" value={counts.noFill} tone="warning" />
+            <MetricTile
+              label="Critical sync issues"
+              value={counts.critical}
+              tone="critical"
+            />
+            <MetricTile
+              label="Warning groups"
+              value={counts.warning}
+              tone="warning"
+            />
+            <MetricTile
+              label="Incomplete matrices"
+              value={counts.info}
+              tone="info"
+            />
+            <MetricTile
+              label="Default-only icons"
+              value={counts.noFill}
+              tone="warning"
+            />
           </section>
 
           <section className="rounded-lg border border-border bg-card p-4">
@@ -578,7 +666,10 @@ export function IconSyncPage() {
                   leftIcon={<GeneralSearch aria-hidden />}
                   aria-label="Search sync diagnostics"
                 />
-                <SegmentatorGroup value={filter} onValueChange={(value) => setFilter(value as FilterMode)}>
+                <SegmentatorGroup
+                  value={filter}
+                  onValueChange={(value) => setFilter(value as FilterMode)}
+                >
                   {FILTERS.map((item) => (
                     <SegmentatorItem key={item.value} value={item.value}>
                       {item.label}

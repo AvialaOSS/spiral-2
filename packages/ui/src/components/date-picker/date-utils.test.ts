@@ -50,7 +50,9 @@ describe("applyTimeToDate", () => {
 
 describe("isSameDay", () => {
   it("returns true for same calendar day", () => {
-    expect(isSameDay(new Date(2026, 7, 21, 10, 0), new Date(2026, 7, 21, 22, 59))).toBe(true);
+    expect(
+      isSameDay(new Date(2026, 7, 21, 10, 0), new Date(2026, 7, 21, 22, 59))
+    ).toBe(true);
   });
 
   it("returns false for different days", () => {
@@ -171,16 +173,24 @@ describe("isDateInRange", () => {
 
 describe("isDateDisabled", () => {
   it("returns true when before minDate", () => {
-    expect(isDateDisabled(new Date(2026, 7, 1), new Date(2026, 7, 10))).toBe(true);
+    expect(isDateDisabled(new Date(2026, 7, 1), new Date(2026, 7, 10))).toBe(
+      true
+    );
   });
 
   it("returns true when after maxDate", () => {
-    expect(isDateDisabled(new Date(2026, 7, 25), undefined, new Date(2026, 7, 20))).toBe(true);
+    expect(
+      isDateDisabled(new Date(2026, 7, 25), undefined, new Date(2026, 7, 20))
+    ).toBe(true);
   });
 
   it("returns false when within bounds", () => {
     expect(
-      isDateDisabled(new Date(2026, 7, 15), new Date(2026, 7, 10), new Date(2026, 7, 20))
+      isDateDisabled(
+        new Date(2026, 7, 15),
+        new Date(2026, 7, 10),
+        new Date(2026, 7, 20)
+      )
     ).toBe(false);
   });
 
@@ -353,12 +363,12 @@ describe("isRangeStart", () => {
   });
 
   it("matches from when to is undefined", () => {
-    expect(
-      isRangeStart(new Date(2026, 7, 10), new Date(2026, 7, 10))
-    ).toBe(true);
-    expect(
-      isRangeStart(new Date(2026, 7, 15), new Date(2026, 7, 10))
-    ).toBe(false);
+    expect(isRangeStart(new Date(2026, 7, 10), new Date(2026, 7, 10))).toBe(
+      true
+    );
+    expect(isRangeStart(new Date(2026, 7, 15), new Date(2026, 7, 10))).toBe(
+      false
+    );
   });
 });
 
@@ -384,8 +394,8 @@ describe("isRangeEnd", () => {
   });
 
   it("returns false when to is undefined", () => {
-    expect(
-      isRangeEnd(new Date(2026, 7, 10), new Date(2026, 7, 10))
-    ).toBe(false);
+    expect(isRangeEnd(new Date(2026, 7, 10), new Date(2026, 7, 10))).toBe(
+      false
+    );
   });
 });

@@ -35,9 +35,11 @@ Also follow `skills/spiral-component` for component layout and exports.
 ## [Unreleased]
 
 ### Added
+
 - …
 
 ## 2.1.0
+
 …
 ```
 

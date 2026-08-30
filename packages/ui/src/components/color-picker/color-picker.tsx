@@ -10,11 +10,17 @@ import { cn } from "../../lib/utils";
 import { useOverlayPortalContainer } from "../../overlay/overlay-container";
 import { useLocaleMessages } from "../../locale";
 import { ColorPickerArea } from "./color-picker-area";
-import { ColorPickerContext, useColorPickerContext } from "./color-picker-context";
+import {
+  ColorPickerContext,
+  useColorPickerContext,
+} from "./color-picker-context";
 import { ColorPickerInputs } from "./color-picker-inputs";
 import { ColorPickerPresets } from "./color-picker-presets";
 import { ColorPickerSlider } from "./color-picker-slider";
-import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
+import {
+  useColorPickerState,
+  type UseColorPickerStateOptions,
+} from "./use-color-picker-state";
 import type { ColorFormat } from "./color-utils";
 
 export type ColorPickerProps = UseColorPickerStateOptions & {
@@ -77,8 +83,15 @@ export function ColorPicker({
 
   return (
     <ColorPickerContextProvider value={contextValue}>
-      <PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} modal={false}>
-        <div className={cn("inline-flex", className)} {...spiralDebugId("color-picker")}>
+      <PopoverPrimitive.Root
+        open={open}
+        onOpenChange={handleOpenChange}
+        modal={false}
+      >
+        <div
+          className={cn("inline-flex", className)}
+          {...spiralDebugId("color-picker")}
+        >
           {children}
         </div>
       </PopoverPrimitive.Root>
@@ -90,13 +103,21 @@ function ColorPickerContextProvider({
   value,
   children,
 }: {
-  value: NonNullable<React.ComponentProps<typeof ColorPickerContext.Provider>["value"]>;
+  value: NonNullable<
+    React.ComponentProps<typeof ColorPickerContext.Provider>["value"]
+  >;
   children: ReactNode;
 }) {
-  return <ColorPickerContext.Provider value={value}>{children}</ColorPickerContext.Provider>;
+  return (
+    <ColorPickerContext.Provider value={value}>
+      {children}
+    </ColorPickerContext.Provider>
+  );
 }
 
-export type ColorPickerTriggerProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger> & {
+export type ColorPickerTriggerProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Trigger
+> & {
   size?: "regular" | "big";
   allRound?: boolean;
   placeholder?: string;
@@ -106,43 +127,59 @@ export type ColorPickerTriggerProps = ComponentPropsWithoutRef<typeof PopoverPri
 export const ColorPickerTrigger = forwardRef<
   HTMLButtonElement,
   ColorPickerTriggerProps
->(({ className, size = "regular", allRound = false, placeholder, ...props }, ref) => {
-  const locale = useLocaleMessages("ColorPicker");
-  const resolvedPlaceholder = placeholder ?? locale.placeholder;
-  const { value, open, disabled } = useColorPickerContext();
+>(
+  (
+    { className, size = "regular", allRound = false, placeholder, ...props },
+    ref
+  ) => {
+    const locale = useLocaleMessages("ColorPicker");
+    const resolvedPlaceholder = placeholder ?? locale.placeholder;
+    const { value, open, disabled } = useColorPickerContext();
 
-  return (
-    <PopoverPrimitive.Trigger asChild>
-      <button
-        ref={ref}
-        type="button"
-        className={cn("aviala-color-picker-trigger aviala-focus-ring", className)}
-        {...spiralDebugId("color-picker.trigger")}
-        data-size={size}
-        data-all-round={allRound ? "true" : "false"}
-        data-open={open ? "true" : "false"}
-        data-disabled={disabled ? "true" : undefined}
-        disabled={disabled}
-        {...props}
-      >
-        <span className="aviala-color-picker-trigger__swatch" {...spiralDebugId("color-picker.trigger.swatch")}>
-          <span
-            className="aviala-color-picker-trigger__swatch-inner"
-            style={{ backgroundColor: value }}
-            aria-hidden
-          />
-        </span>
-        <span className="aviala-color-picker-trigger__value" {...spiralDebugId("color-picker.trigger.value")}>
-          {value ? (
-            value.replace(/^#/, "").slice(0, 6).toUpperCase()
-          ) : (
-            <span className="aviala-color-picker-trigger__placeholder">{resolvedPlaceholder}</span>
+    return (
+      <PopoverPrimitive.Trigger asChild>
+        <button
+          ref={ref}
+          type="button"
+          className={cn(
+            "aviala-color-picker-trigger aviala-focus-ring",
+            className
           )}
-        </span>
-      </button>
-    </PopoverPrimitive.Trigger>
-  );
-});
+          {...spiralDebugId("color-picker.trigger")}
+          data-size={size}
+          data-all-round={allRound ? "true" : "false"}
+          data-open={open ? "true" : "false"}
+          data-disabled={disabled ? "true" : undefined}
+          disabled={disabled}
+          {...props}
+        >
+          <span
+            className="aviala-color-picker-trigger__swatch"
+            {...spiralDebugId("color-picker.trigger.swatch")}
+          >
+            <span
+              className="aviala-color-picker-trigger__swatch-inner"
+              style={{ backgroundColor: value }}
+              aria-hidden
+            />
+          </span>
+          <span
+            className="aviala-color-picker-trigger__value"
+            {...spiralDebugId("color-picker.trigger.value")}
+          >
+            {value ? (
+              value.replace(/^#/, "").slice(0, 6).toUpperCase()
+            ) : (
+              <span className="aviala-color-picker-trigger__placeholder">
+                {resolvedPlaceholder}
+              </span>
+            )}
+          </span>
+        </button>
+      </PopoverPrimitive.Trigger>
+    );
+  }
+);
 ColorPickerTrigger.displayName = "ColorPickerTrigger";
 
 function isWithinSelectLayer(target: EventTarget | null) {
@@ -153,12 +190,17 @@ function isWithinSelectLayer(target: EventTarget | null) {
   );
 }
 
-export type ColorPickerContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+export type ColorPickerContentProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+> & {
   showEyedropper?: boolean;
   showPresets?: boolean;
 };
 
-export const ColorPickerContent = forwardRef<HTMLDivElement, ColorPickerContentProps>(
+export const ColorPickerContent = forwardRef<
+  HTMLDivElement,
+  ColorPickerContentProps
+>(
   (
     {
       className,
@@ -171,7 +213,8 @@ export const ColorPickerContent = forwardRef<HTMLDivElement, ColorPickerContentP
     ref
   ) => {
     const overlayContainer = useOverlayPortalContainer();
-    const { presets, onPresetsChange, maxPresets, disabled } = useColorPickerContext();
+    const { presets, onPresetsChange, maxPresets, disabled } =
+      useColorPickerContext();
 
     return (
       <PopoverPrimitive.Portal container={overlayContainer}>
@@ -194,7 +237,10 @@ export const ColorPickerContent = forwardRef<HTMLDivElement, ColorPickerContentP
             <ColorPickerArea disabled={disabled} />
             <ColorPickerSlider kind="hue" disabled={disabled} />
             <ColorPickerSlider kind="alpha" disabled={disabled} />
-            <ColorPickerInputs disabled={disabled} showEyedropper={showEyedropper} />
+            <ColorPickerInputs
+              disabled={disabled}
+              showEyedropper={showEyedropper}
+            />
             {showPresets ? (
               <ColorPickerPresets
                 disabled={disabled}

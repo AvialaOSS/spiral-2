@@ -75,7 +75,9 @@ export const ModeMatrix: Story = {
     <div className="flex flex-col gap-4">
       {modes.map((mode) => (
         <div key={mode} className="flex flex-wrap items-center gap-3">
-          <span className="w-40 shrink-0 font-mono text-xs text-muted-foreground">{mode}</span>
+          <span className="w-40 shrink-0 font-mono text-xs text-muted-foreground">
+            {mode}
+          </span>
           {levels.map((level) => (
             <Link
               key={level}

@@ -44,7 +44,9 @@ function formatCategoryLabel(category: string): string {
 
 function iconShortLabel(entry: IconCatalogEntry): string {
   const underscore = entry.iconName.indexOf("_");
-  return underscore >= 0 ? entry.iconName.slice(underscore + 1) : entry.iconName;
+  return underscore >= 0
+    ? entry.iconName.slice(underscore + 1)
+    : entry.iconName;
 }
 
 function groupIconsByCategory(
@@ -116,7 +118,10 @@ function ThemeToggle() {
   const { mode, setMode } = useTheme();
 
   return (
-    <SegmentatorGroup value={mode} onValueChange={(value) => setMode(value as "light" | "dark")}>
+    <SegmentatorGroup
+      value={mode}
+      onValueChange={(value) => setMode(value as "light" | "dark")}
+    >
       <SegmentatorItem value="light">Light</SegmentatorItem>
       <SegmentatorItem value="dark">Dark</SegmentatorItem>
     </SegmentatorGroup>
@@ -159,7 +164,9 @@ function CategoryAccordion({
             open && "rotate-180"
           )}
         />
-        <span className="flex-1 font-medium text-foreground">{group.label}</span>
+        <span className="flex-1 font-medium text-foreground">
+          {group.label}
+        </span>
         <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs text-muted-foreground">
           {group.icons.length}
         </span>
@@ -182,7 +189,11 @@ function CategoryAccordion({
                       : "border-border bg-background hover:border-border hover:bg-muted/50"
                   )}
                 >
-                  <Icon icon={entry.component} size={24} className="text-foreground" />
+                  <Icon
+                    icon={entry.component}
+                    size={24}
+                    className="text-foreground"
+                  />
                   <span className="w-full truncate font-mono text-[10px] leading-tight text-muted-foreground">
                     {iconShortLabel(entry)}
                   </span>
@@ -229,8 +240,12 @@ function PreviewPanel({
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             Preview
           </p>
-          <h2 className="mt-1 text-lg font-semibold text-foreground">{entry.name}</h2>
-          <p className="font-mono text-xs text-muted-foreground">{entry.iconName}</p>
+          <h2 className="mt-1 text-lg font-semibold text-foreground">
+            {entry.name}
+          </h2>
+          <p className="font-mono text-xs text-muted-foreground">
+            {entry.iconName}
+          </p>
         </div>
 
         <div
@@ -269,9 +284,16 @@ function PreviewPanel({
 
         <div>
           <p className="mb-2 text-sm text-muted-foreground">Mode</p>
-          <SegmentatorGroup value={mode} onValueChange={(value) => onModeChange(value as IconMode)}>
+          <SegmentatorGroup
+            value={mode}
+            onValueChange={(value) => onModeChange(value as IconMode)}
+          >
             {ICON_MODES.map((value) => (
-              <SegmentatorItem key={value} value={value} disabled={!entry.modes.includes(value)}>
+              <SegmentatorItem
+                key={value}
+                value={value}
+                disabled={!entry.modes.includes(value)}
+              >
                 {value}
               </SegmentatorItem>
             ))}
@@ -282,7 +304,9 @@ function PreviewPanel({
           <p className="mb-2 text-sm text-muted-foreground">Color</p>
           <SegmentatorGroup
             value={colorMode}
-            onValueChange={(value) => onColorModeChange(value as PreviewColorMode)}
+            onValueChange={(value) =>
+              onColorModeChange(value as PreviewColorMode)
+            }
           >
             {PREVIEW_COLOR_MODES.map(({ value, label }) => (
               <SegmentatorItem key={value} value={value}>
@@ -315,7 +339,10 @@ export function IconGalleryPage() {
   const [mode, setMode] = useState<IconMode>("default");
   const [colorMode, setColorMode] = useState<PreviewColorMode>("black");
 
-  const categories = useMemo(() => groupIconsByCategory(iconCatalog, search), [search]);
+  const categories = useMemo(
+    () => groupIconsByCategory(iconCatalog, search),
+    [search]
+  );
   const totalVisible = useMemo(
     () => categories.reduce((sum, group) => sum + group.icons.length, 0),
     [categories]
@@ -330,73 +357,76 @@ export function IconGalleryPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-        <header className="border-b border-border bg-card">
-          <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Aviala Design
-              </p>
-              <h1 className="text-2xl font-bold text-foreground">Icon Gallery</h1>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Browse {iconCatalog.length} icons by category with live variant preview.
-              </p>
-            </div>
-            <Stack direction="row" gap="component" className="items-center">
-              <ThemeToggle />
-              <Link href="/icon-sync" level="text" mode="noBackgroundCustom">
-                Sync Console
-              </Link>
-              <Link href="/" level="text" mode="noBackgroundCustom">
-                Playground
-              </Link>
-            </Stack>
+      <header className="border-b border-border bg-card">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Aviala Design
+            </p>
+            <h1 className="text-2xl font-bold text-foreground">Icon Gallery</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Browse {iconCatalog.length} icons by category with live variant
+              preview.
+            </p>
           </div>
-        </header>
+          <Stack direction="row" gap="component" className="items-center">
+            <ThemeToggle />
+            <Link href="/icon-sync" level="text" mode="noBackgroundCustom">
+              Sync Console
+            </Link>
+            <Link href="/" level="text" mode="noBackgroundCustom">
+              Playground
+            </Link>
+          </Stack>
+        </div>
+      </header>
 
-        <main className="mx-auto grid max-w-7xl gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <Stack gap="block">
-            <div className="rounded-lg border border-border bg-card p-4">
-              <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Search by name or category…"
-                leftIcon={<GeneralSearch aria-hidden />}
-                aria-label="Search icons"
-              />
-              <p className="mt-2 text-xs text-muted-foreground">
-                {searching
-                  ? `${totalVisible} matching icon${totalVisible === 1 ? "" : "s"}`
-                  : `${categories.length} categories`}
+      <main className="mx-auto grid max-w-7xl gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <Stack gap="block">
+          <div className="rounded-lg border border-border bg-card p-4">
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search by name or category…"
+              leftIcon={<GeneralSearch aria-hidden />}
+              aria-label="Search icons"
+            />
+            <p className="mt-2 text-xs text-muted-foreground">
+              {searching
+                ? `${totalVisible} matching icon${totalVisible === 1 ? "" : "s"}`
+                : `${categories.length} categories`}
+            </p>
+          </div>
+
+          {categories.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-border bg-card p-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                No icons match your search.
               </p>
             </div>
+          ) : (
+            categories.map((group, index) => (
+              <CategoryAccordion
+                key={group.id}
+                group={group}
+                forceOpen={searching}
+                defaultOpen={index === 0}
+                selectedName={selected.name}
+                onSelect={selectIcon}
+              />
+            ))
+          )}
+        </Stack>
 
-            {categories.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-border bg-card p-8 text-center">
-                <p className="text-sm text-muted-foreground">No icons match your search.</p>
-              </div>
-            ) : (
-              categories.map((group, index) => (
-                <CategoryAccordion
-                  key={group.id}
-                  group={group}
-                  forceOpen={searching}
-                  defaultOpen={index === 0}
-                  selectedName={selected.name}
-                  onSelect={selectIcon}
-                />
-              ))
-            )}
-          </Stack>
-
-          <PreviewPanel
-            entry={selected}
-            thickness={thickness}
-            mode={mode}
-            colorMode={colorMode}
-            onThicknessChange={setThickness}
-            onModeChange={setMode}
-            onColorModeChange={setColorMode}
-          />
+        <PreviewPanel
+          entry={selected}
+          thickness={thickness}
+          mode={mode}
+          colorMode={colorMode}
+          onThicknessChange={setThickness}
+          onModeChange={setMode}
+          onColorModeChange={setColorMode}
+        />
       </main>
     </div>
   );

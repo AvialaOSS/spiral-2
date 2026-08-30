@@ -20,7 +20,10 @@ export const ICON_THICKNESSES = [
   "Bold",
   "Black",
 ] as const satisfies readonly IconThickness[];
-export const ICON_MODES = ["default", "fill"] as const satisfies readonly IconMode[];
+export const ICON_MODES = [
+  "default",
+  "fill",
+] as const satisfies readonly IconMode[];
 export const ICON_LEVELS = [
   "display",
   "headline1",

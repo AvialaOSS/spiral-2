@@ -1,5 +1,9 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
+import {
+  forwardRef,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from "react";
 import { typographyVariants } from "./typography";
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
@@ -49,7 +53,9 @@ export const TooltipTrigger = TooltipPrimitive.Trigger;
 
 export type TooltipContentLevel = "caption" | "text";
 
-export type TooltipContentProps = ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
+export type TooltipContentProps = ComponentPropsWithoutRef<
+  typeof TooltipPrimitive.Content
+> & {
   /** Show a caret arrow pointing at the trigger (default true). */
   showArrow?: boolean;
   /**
@@ -78,38 +84,38 @@ export const TooltipContent = forwardRef<
     const overlayContainer = useOverlayPortalContainer();
 
     return (
-    <TooltipPrimitive.Portal container={overlayContainer}>
-      <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        collisionPadding={collisionPadding}
-        className={cn("aviala-tooltip-content", className)}
-        {...props}
-      >
-        <div
-          className={cn(
-            "aviala-tooltip-content__surface",
-            typographyVariants({ level })
-          )}
+      <TooltipPrimitive.Portal container={overlayContainer}>
+        <TooltipPrimitive.Content
+          ref={ref}
+          sideOffset={sideOffset}
+          collisionPadding={collisionPadding}
+          className={cn("aviala-tooltip-content", className)}
+          {...props}
         >
-          {children}
-        </div>
-        {showArrow ? (
-          <TooltipPrimitive.Arrow
-            asChild
-            width={TOOLTIP_POINTER.width}
-            height={TOOLTIP_POINTER.height}
+          <div
+            className={cn(
+              "aviala-tooltip-content__surface",
+              typographyVariants({ level })
+            )}
           >
-            <OverlayPointerSvg
-              className="aviala-tooltip-content__arrow"
+            {children}
+          </div>
+          {showArrow ? (
+            <TooltipPrimitive.Arrow
+              asChild
               width={TOOLTIP_POINTER.width}
               height={TOOLTIP_POINTER.height}
-              path={TOOLTIP_POINTER.path}
-            />
-          </TooltipPrimitive.Arrow>
-        ) : null}
-      </TooltipPrimitive.Content>
-    </TooltipPrimitive.Portal>
+            >
+              <OverlayPointerSvg
+                className="aviala-tooltip-content__arrow"
+                width={TOOLTIP_POINTER.width}
+                height={TOOLTIP_POINTER.height}
+                path={TOOLTIP_POINTER.path}
+              />
+            </TooltipPrimitive.Arrow>
+          ) : null}
+        </TooltipPrimitive.Content>
+      </TooltipPrimitive.Portal>
     );
   }
 );

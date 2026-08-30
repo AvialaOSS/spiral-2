@@ -4,7 +4,10 @@ import { ColorPickerInputs } from "./color-picker-inputs";
 import { ColorPickerPresets } from "./color-picker-presets";
 import { ColorPickerSlider } from "./color-picker-slider";
 import { ColorPickerContext } from "./color-picker-context";
-import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
+import {
+  useColorPickerState,
+  type UseColorPickerStateOptions,
+} from "./use-color-picker-state";
 
 export type ColorPickerPanelProps = UseColorPickerStateOptions & {
   className?: string;
@@ -55,7 +58,10 @@ export function ColorPickerPanel({
         <ColorPickerArea disabled={disabled} />
         <ColorPickerSlider kind="hue" disabled={disabled} />
         <ColorPickerSlider kind="alpha" disabled={disabled} />
-        <ColorPickerInputs disabled={disabled} showEyedropper={showEyedropper} />
+        <ColorPickerInputs
+          disabled={disabled}
+          showEyedropper={showEyedropper}
+        />
         {showPresets ? (
           <ColorPickerPresets
             disabled={disabled}

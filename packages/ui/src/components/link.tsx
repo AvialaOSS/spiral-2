@@ -25,10 +25,7 @@ const levelStyles = {
   },
 } as const;
 
-function renderIcon(
-  node: ReactNode,
-  level: LinkLevel
-): ReactNode {
+function renderIcon(node: ReactNode, level: LinkLevel): ReactNode {
   if (!node) return null;
   const { iconBox } = levelStyles[level];
   const iconLevel: IconLevel = level;
@@ -49,7 +46,10 @@ function renderIcon(
   );
 }
 
-export type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "disabled"> & {
+export type LinkProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "disabled"
+> & {
   level?: LinkLevel;
   mode?: LinkMode;
   iconOnly?: boolean;
@@ -75,8 +75,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     },
     ref
   ) => {
-    const iconOnly =
-      iconOnlyProp ?? (!!(leftIcon ?? rightIcon) && !children);
+    const iconOnly = iconOnlyProp ?? (!!(leftIcon ?? rightIcon) && !children);
     const resolvedLevel = level ?? "caption";
     const Comp = asChild ? Slot : "a";
 
@@ -124,7 +123,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         tabIndex={disabled ? -1 : tabIndex}
         onClick={handleClick}
       >
-        {renderIcon(leftIcon ?? (iconOnly ? rightIcon : undefined), resolvedLevel)}
+        {renderIcon(
+          leftIcon ?? (iconOnly ? rightIcon : undefined),
+          resolvedLevel
+        )}
         {!iconOnly && children !== undefined && children !== null && (
           <span
             className={cn(

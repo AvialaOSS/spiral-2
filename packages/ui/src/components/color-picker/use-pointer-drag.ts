@@ -29,7 +29,12 @@ export function usePointerDrag<T extends HTMLElement>(
 
   const handlePointerMove = useCallback(
     (event: PointerEvent<T>) => {
-      if (!enabled || !ref.current || !ref.current.hasPointerCapture(event.pointerId)) return;
+      if (
+        !enabled ||
+        !ref.current ||
+        !ref.current.hasPointerCapture(event.pointerId)
+      )
+        return;
       updateFromEvent(event.clientX, event.clientY);
     },
     [enabled, ref, updateFromEvent]

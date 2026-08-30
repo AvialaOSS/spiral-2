@@ -28,7 +28,11 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     // avialaTokensCss serves tokens CSS/JS straight from source: no build
     // needed before dev, and edits to tokens/src/semantic/*.css hot-reload.
-    config.plugins = [avialaTokensCss(), ...(config.plugins ?? []), tailwindcss()];
+    config.plugins = [
+      avialaTokensCss(),
+      ...(config.plugins ?? []),
+      tailwindcss(),
+    ];
     config.resolve = {
       ...config.resolve,
       alias: [
@@ -38,11 +42,17 @@ const config: StorybookConfig = {
         // which breaks the tokens plugin's CSS interception.
         {
           find: /^@aviala-design\/spiral$/,
-          replacement: path.resolve(dirname, "../../../packages/ui/src/index.ts"),
+          replacement: path.resolve(
+            dirname,
+            "../../../packages/ui/src/index.ts"
+          ),
         },
         {
           find: /^@aviala-design\/icons$/,
-          replacement: path.resolve(dirname, "../../../packages/icons/src/index.ts"),
+          replacement: path.resolve(
+            dirname,
+            "../../../packages/icons/src/index.ts"
+          ),
         },
       ],
     };

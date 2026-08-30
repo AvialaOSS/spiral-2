@@ -22,7 +22,9 @@ type Story = StoryObj<typeof HoverPopover>;
 export const Default: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-sm text-muted-foreground">将鼠标悬浮在按钮上以显示 Popover（触屏为点按）</p>
+      <p className="text-sm text-muted-foreground">
+        将鼠标悬浮在按钮上以显示 Popover（触屏为点按）
+      </p>
       <HoverPopover
         content={
           <div className="flex flex-col gap-2 p-1">
@@ -64,7 +66,11 @@ export const Placements: Story = {
   render: () => (
     <div className="flex flex-wrap items-center justify-center gap-4 p-16">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <HoverPopover key={side} side={side} content={<p className="p-1">On {side}</p>}>
+        <HoverPopover
+          key={side}
+          side={side}
+          content={<p className="p-1">On {side}</p>}
+        >
           <Button mode="second" size="small">
             {side}
           </Button>

@@ -16,12 +16,16 @@ export type ColorPickerContextValue = {
   maxPresets: number;
 };
 
-export const ColorPickerContext = createContext<ColorPickerContextValue | null>(null);
+export const ColorPickerContext = createContext<ColorPickerContextValue | null>(
+  null
+);
 
 export function useColorPickerContext() {
   const ctx = useContext(ColorPickerContext);
   if (!ctx) {
-    throw new Error("ColorPicker compound components must be used within <ColorPicker>");
+    throw new Error(
+      "ColorPicker compound components must be used within <ColorPicker>"
+    );
   }
   return ctx;
 }

@@ -60,6 +60,7 @@ raw/**/*.svg → parse variant file names → group by icon name
 ```
 
 Two modes:
+
 - **Full replace** (`pnpm icons:build`): regenerates all components, removes orphans from `src/components/`.
 - **Merge** (`pnpm icons:build:merge` or `pnpm build` with `--merge`): regenerates only icons present in `raw/`, keeps other committed components untouched. Use after filtered exports.
 
@@ -69,17 +70,19 @@ If `raw/` is empty, codegen is a no-op and existing committed `src/components/` 
 
 ### Figma model → file name → React component
 
-| Layer | Figma example | File name | React component |
-|---|---|---|---|
-| Component set | `direction/arrowLeft` | — | — |
-| Variant | `thickness=Regular, mode=default, name=direction_arrowLeft` | `direction_arrowLeft-regular-default.svg` | — |
-| Icon (grouped) | — | `raw/direction/direction_arrowLeft-regular-default.svg` | `DirectionArrowLeft` |
+| Layer          | Figma example                                               | File name                                               | React component      |
+| -------------- | ----------------------------------------------------------- | ------------------------------------------------------- | -------------------- |
+| Component set  | `direction/arrowLeft`                                       | —                                                       | —                    |
+| Variant        | `thickness=Regular, mode=default, name=direction_arrowLeft` | `direction_arrowLeft-regular-default.svg`               | —                    |
+| Icon (grouped) | —                                                           | `raw/direction/direction_arrowLeft-regular-default.svg` | `DirectionArrowLeft` |
 
 **Icon name → component name**: PascalCase via `iconNameToComponentName()` in `icon-utils.mjs`.
+
 - `direction_arrowLeft` → `DirectionArrowLeft`
 - `ai_cloudIntelligent` → `AICloudIntelligent`
 
 **SVG variant file name format**: `{icon_name}-{thickness}-{mode}.svg`
+
 - Thickness in file: lowercase (`regular`, `medium`, `light`, `bold`, `black`; legacy: `standard` → Regular, `semilight` → Medium)
 - Mode in file: `default` or `fill`
 - Export dedup suffix: `-2`, `-3`, … (stripped during parsing)
@@ -89,6 +92,7 @@ If `raw/` is empty, codegen is a no-op and existing committed `src/components/` 
 ### Inner component naming
 
 Each variant becomes an inner (non-exported) component named `{Thickness}{Mode}`:
+
 - `Medium` + `default` → `MediumDefault`
 - `Bold` + `fill` → `BoldFill`
 
@@ -107,6 +111,7 @@ After SVGR, `normalizeIconSvg()` forces `viewBox="0 0 120 120"` on the root `<sv
 ## Generated component model
 
 Each generated component:
+
 1. Imports inner variant components (one per thickness × mode combination)
 2. Builds a `variants` map: `{ Light: { default: LightDefault, fill: LightFill }, Medium: { … }, … }`
 3. Exports `{ComponentName}({ thickness, mode, ...props })` that calls `resolveIconVariant()` to pick the best match
@@ -116,14 +121,14 @@ Fallback chain: exact match → `Medium/default` → any available variant.
 
 ## Package scripts
 
-| Script | Pipeline step | What it does |
-|---|---|---|
-| `build` | Full codegen + bundle | `build-icons.mjs --merge` then `tsup` |
-| `build:icons` | Codegen only | `build-icons.mjs` (full replace) |
-| `build:release` | Bundle only | `tsup` (CI / publish — no codegen) |
-| `dev` | Watch bundle | `tsup --watch` |
-| `typecheck` | Type check | `tsc --noEmit` |
-| `clean` | Reset | Remove `dist/`, `src/components/`, `src/catalog.ts` |
+| Script          | Pipeline step         | What it does                                        |
+| --------------- | --------------------- | --------------------------------------------------- |
+| `build`         | Full codegen + bundle | `build-icons.mjs --merge` then `tsup`               |
+| `build:icons`   | Codegen only          | `build-icons.mjs` (full replace)                    |
+| `build:release` | Bundle only           | `tsup` (CI / publish — no codegen)                  |
+| `dev`           | Watch bundle          | `tsup --watch`                                      |
+| `typecheck`     | Type check            | `tsc --noEmit`                                      |
+| `clean`         | Reset                 | Remove `dist/`, `src/components/`, `src/catalog.ts` |
 
 ## Common operations
 

@@ -2,7 +2,10 @@ import type { ComponentType, SVGProps } from "react";
 import type { IconMode, IconThickness } from "./types";
 
 type VariantMap = Partial<
-  Record<IconThickness, Partial<Record<IconMode, ComponentType<SVGProps<SVGSVGElement>>>>>
+  Record<
+    IconThickness,
+    Partial<Record<IconMode, ComponentType<SVGProps<SVGSVGElement>>>>
+  >
 >;
 
 const THICKNESS_ORDER: IconThickness[] = ["Medium", "Regular", "Bold", "Light"];

@@ -2,8 +2,14 @@ import { cn } from "../../lib/utils";
 import { useLocaleMessages } from "../../locale";
 import { DatePickerTimeWheelColumn } from "../date-picker/date-picker-time-wheel";
 
-export const TIME_PICKER_HOUR_VALUES = Array.from({ length: 24 }, (_, index) => index);
-export const TIME_PICKER_MINUTE_VALUES = Array.from({ length: 12 }, (_, index) => index * 5);
+export const TIME_PICKER_HOUR_VALUES = Array.from(
+  { length: 24 },
+  (_, index) => index
+);
+export const TIME_PICKER_MINUTE_VALUES = Array.from(
+  { length: 12 },
+  (_, index) => index * 5
+);
 
 export type TimePickerWheelsValue = {
   hours: number;
@@ -16,7 +22,11 @@ type TimePickerWheelsProps = {
   className?: string;
 };
 
-export function TimePickerWheels({ value, onChange, className }: TimePickerWheelsProps) {
+export function TimePickerWheels({
+  value,
+  onChange,
+  className,
+}: TimePickerWheelsProps) {
   const locale = useLocaleMessages("TimePicker");
 
   return (

@@ -27,7 +27,9 @@ export function OverlayContainerProvider({
 
 function readFullscreenElement(): HTMLElement | null {
   if (typeof document === "undefined") return null;
-  const doc = document as Document & { webkitFullscreenElement?: Element | null };
+  const doc = document as Document & {
+    webkitFullscreenElement?: Element | null;
+  };
   const el = document.fullscreenElement ?? doc.webkitFullscreenElement ?? null;
   return el instanceof HTMLElement ? el : null;
 }

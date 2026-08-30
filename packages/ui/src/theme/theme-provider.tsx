@@ -87,7 +87,10 @@ export function ThemeProvider({
   });
 
   const [paletteConfig, setPaletteConfigState] = useState<PaletteConfig>(() => {
-    const base: PaletteConfig = { ...DEFAULT_PALETTE_CONFIG, ...defaultPaletteConfig };
+    const base: PaletteConfig = {
+      ...DEFAULT_PALETTE_CONFIG,
+      ...defaultPaletteConfig,
+    };
     if (typeof window === "undefined") return base;
     const stored = localStorage.getItem(`${storageKey}:palette`);
     if (!stored) return base;
@@ -180,7 +183,10 @@ export function ThemeProvider({
   );
 
   const resetPaletteConfig = useCallback(() => {
-    const base: PaletteConfig = { ...DEFAULT_PALETTE_CONFIG, ...defaultPaletteConfig };
+    const base: PaletteConfig = {
+      ...DEFAULT_PALETTE_CONFIG,
+      ...defaultPaletteConfig,
+    };
     setPaletteConfigState(base);
     localStorage.removeItem(`${storageKey}:palette`);
   }, [storageKey, defaultPaletteConfig]);
@@ -231,7 +237,9 @@ export function ThemeProvider({
     ]
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme(): ThemeContextValue {

@@ -39,13 +39,16 @@ const inputRootVariants = cva("aviala-input relative min-w-0 font-sans", {
   },
 });
 
-
 function renderBadgeArea(node: ReactNode): ReactNode {
   if (node == null || node === false) return null;
 
   return (
     <span className="aviala-input__badge-area">
-      {isValidElement(node) && node.type === Badge ? node : <Badge>{node}</Badge>}
+      {isValidElement(node) && node.type === Badge ? (
+        node
+      ) : (
+        <Badge>{node}</Badge>
+      )}
     </span>
   );
 }
@@ -91,7 +94,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const [focused, setFocused] = useState(false);
-    const [internalValue, setInternalValue] = useState(() => String(defaultValue ?? ""));
+    const [internalValue, setInternalValue] = useState(() =>
+      String(defaultValue ?? "")
+    );
     const resolvedValue = value !== undefined ? String(value) : internalValue;
     const inputState = resolveInputState(resolvedValue, undefined, focused);
     const resolvedError = useResolvedControlError(error);

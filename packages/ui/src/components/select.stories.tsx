@@ -150,7 +150,11 @@ export const ActionItemVariants: Story = {
       <SelectTrigger placeholder="Action items" className="w-[290px]" />
       <SelectContent>
         <SelectItemGroup>
-          <SelectItem value="action" showLeftIcon leftIcon={<GeneralSetting aria-hidden />}>
+          <SelectItem
+            value="action"
+            showLeftIcon
+            leftIcon={<GeneralSetting aria-hidden />}
+          >
             Default action
           </SelectItem>
           <SelectItem
@@ -162,7 +166,11 @@ export const ActionItemVariants: Story = {
             showBadge
             badge="New"
             showMoreFunction
-            moreAction={<span className="text-[length:var(--size-regular, 1.125rem)] text-[var(--select-item-selected-fg)]">More</span>}
+            moreAction={
+              <span className="text-[length:var(--size-regular, 1.125rem)] text-[var(--select-item-selected-fg)]">
+                More
+              </span>
+            }
           >
             With slots
           </SelectItem>
@@ -228,10 +236,18 @@ export const PeopleItems: Story = {
           <SelectItemPeople value="people-action" subtitle="Design">
             Alex Chen
           </SelectItemPeople>
-          <SelectItemPeople value="people-radio" itemFunction="radio" subtitle="Engineering">
+          <SelectItemPeople
+            value="people-radio"
+            itemFunction="radio"
+            subtitle="Engineering"
+          >
             Sam Rivera
           </SelectItemPeople>
-          <SelectItemPeople value="people-form-radio" itemFunction="form-radio" subtitle="Product">
+          <SelectItemPeople
+            value="people-form-radio"
+            itemFunction="form-radio"
+            subtitle="Product"
+          >
             Jordan Lee
           </SelectItemPeople>
         </SelectItemGroup>
@@ -247,7 +263,12 @@ export const TitleRow: Story = {
       <SelectTrigger placeholder="Title row" className="w-[290px]" />
       <SelectContent>
         <SelectItemGroup>
-          <SelectItem value="title" layout="title" itemFunction="simple" showFunctionIcon={false}>
+          <SelectItem
+            value="title"
+            layout="title"
+            itemFunction="simple"
+            showFunctionIcon={false}
+          >
             Section title
           </SelectItem>
           <SelectItem value="row">Default row</SelectItem>
@@ -277,7 +298,8 @@ export const ItemVariantMatrix: Story = {
             <SelectItemGroup key={layout} label={layout} showDivider>
               {functions.map((itemFunction) => {
                 const value = `${itemFunction}-${layout}`;
-                const Item = layout === "people" ? SelectItemPeople : SelectItem;
+                const Item =
+                  layout === "people" ? SelectItemPeople : SelectItem;
                 return (
                   <Item
                     key={value}
@@ -323,7 +345,11 @@ export const NestedSubMenu: Story = {
           <SelectItem value="simple">Simple option</SelectItem>
         </SelectItemGroup>
         <SelectItemGroup label="Regions" showDivider>
-          <SelectSubItem itemFunction="action" showLeftIcon leftIcon={<GeneralSetting aria-hidden />}>
+          <SelectSubItem
+            itemFunction="action"
+            showLeftIcon
+            leftIcon={<GeneralSetting aria-hidden />}
+          >
             Settings
             <SelectSubMenu>
               <SelectItemGroup>

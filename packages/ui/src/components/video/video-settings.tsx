@@ -1,9 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { SegmentatorGroup, SegmentatorItem } from "../segmentator";
 import { Switch } from "../switch";
 import { Typography } from "../typography";

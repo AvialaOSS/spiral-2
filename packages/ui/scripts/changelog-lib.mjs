@@ -1,4 +1,10 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -61,7 +67,7 @@ export function parseComponentChangelog(markdown) {
   }
 
   return releases.filter((release) =>
-    Object.values(release.sections).some((items) => items.length > 0),
+    Object.values(release.sections).some((items) => items.length > 0)
   );
 }
 
@@ -115,7 +121,7 @@ export function stampUnreleased(version) {
     // Only stamp when Unreleased has at least one bullet before the next ## heading
     // (or end of file). Use (?![\s\S]) for EOF — JS has no \Z end anchor (\Z is literal "Z").
     const unreleasedBlock = before.match(
-      /^##[ \t]+(?:\[Unreleased\]|Unreleased)[ \t]*\n([\s\S]*?)(?=^##[ \t]|(?![\s\S]))/m,
+      /^##[ \t]+(?:\[Unreleased\]|Unreleased)[ \t]*\n([\s\S]*?)(?=^##[ \t]|(?![\s\S]))/m
     );
     if (!unreleasedBlock) continue;
     if (!/^[ \t]*-[ \t]+\S/m.test(unreleasedBlock[1])) continue;

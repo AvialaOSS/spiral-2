@@ -46,8 +46,10 @@
    transform-origin (Radix's --radix-tooltip-content-transform-origin, per side + arrow position)
    so a single keyframe covers all sides. No translate: the panel and arrow must move as one,
    so both scale-only around their junction-facing origins. */
-.aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__surface,
-.aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__surface {
+.aviala-tooltip-content[data-state="delayed-open"]
+  .aviala-tooltip-content__surface,
+.aviala-tooltip-content[data-state="instant-open"]
+  .aviala-tooltip-content__surface {
   animation: aviala-tooltip-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -64,8 +66,10 @@
   transform-origin: 50% 50%;
 }
 
-.aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
-.aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
+.aviala-tooltip-content[data-state="delayed-open"]
+  .aviala-tooltip-content__arrow,
+.aviala-tooltip-content[data-state="instant-open"]
+  .aviala-tooltip-content__arrow {
   animation: aviala-tooltip-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -109,11 +113,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .aviala-tooltip-content[data-state="closed"],
-  .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__surface,
-  .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__surface,
+  .aviala-tooltip-content[data-state="delayed-open"]
+    .aviala-tooltip-content__surface,
+  .aviala-tooltip-content[data-state="instant-open"]
+    .aviala-tooltip-content__surface,
   .aviala-tooltip-content[data-state="closed"] .aviala-tooltip-content__surface,
-  .aviala-tooltip-content[data-state="delayed-open"] .aviala-tooltip-content__arrow,
-  .aviala-tooltip-content[data-state="instant-open"] .aviala-tooltip-content__arrow {
+  .aviala-tooltip-content[data-state="delayed-open"]
+    .aviala-tooltip-content__arrow,
+  .aviala-tooltip-content[data-state="instant-open"]
+    .aviala-tooltip-content__arrow {
     /* !important — side-specific enter rules above outspecificity these selectors */
     animation: none !important;
   }
