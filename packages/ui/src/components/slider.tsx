@@ -11,6 +11,16 @@ import { cn } from "../lib/utils";
 import { OverlayPointerSvg, TOOLTIP_POINTER } from "./overlay-pointer";
 import { typographyVariants } from "./typography";
 
+// This component depends on three unstable Radix Slider APIs —
+// `unstable_ThumbProvider`, `unstable_ThumbTrigger` and `unstable_BubbleInput`.
+// They are required: the stable `Slider.Thumb` cannot host the per-thumb value
+// tooltip we need, and dropping `unstable_BubbleInput` breaks native form
+// submission. Because they carry no compatibility guarantee,
+// `@radix-ui/react-slider` is pinned to an exact version in package.json.
+// Any Radix upgrade must bump that pin deliberately and include a full Slider
+// regression pass (single/range thumbs, horizontal/vertical, value tooltip,
+// keyboard and drag interaction, form submission).
+
 /** Figma Components → Information Collect → Slider (384:21585) */
 export type SliderSize = "default" | "big";
 export type SliderType = "default" | "range";
