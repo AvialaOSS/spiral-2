@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `CascaderItem`：Up / Down 在同一列的选项之间移动焦点，Home / End 跳到该列首尾；`title` 行与禁用项自动跳过，跨列仍由展开方向键负责
 - `CascaderOptionsMenu` `groupTitle`：可选的列分组标题，透传给 `CascaderItemGroup` 的 `label`；默认不传即不渲染标题行
 
 ### Removed

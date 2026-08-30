@@ -33,6 +33,13 @@ import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
 import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
+import {
+  collectRovingItems,
+  focusRovingSibling,
+  resolveRovingIndex,
+  resolveRovingMove,
+  type RovingMove,
+} from "../lib/roving-focus";
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
@@ -52,6 +59,53 @@ export type SelectItemFunction =
 
 /** Figma Select Menu Item `Type` variant */
 export type SelectItemLayout = "default" | "title" | "people" | "checked";
+
+const SELECT_MENU_ITEM_SELECTOR = ".aviala-select-item";
+/** Sub-menu panels also carry `aviala-select-content`, so this matches the closest panel. */
+const SELECT_PANEL_SELECTOR = ".aviala-select-content";
+
+/**
+ * Move focus between the rows of one menu panel.
+ * Rows belonging to an open sub-menu are skipped — that panel owns its own ring.
+ */
+function focusSelectMenuItem(panel: Element | null, current: Element | null, move: RovingMove) {
+  return focusRovingSibling(panel, current, move, SELECT_MENU_ITEM_SELECTOR, {
+    filter: (item) => item.closest(SELECT_PANEL_SELECTOR) === panel,
+  });
+}
+
+/**
+ * Radix only walks its own Item collection, so a SelectSubItem in the same panel
+ * is skipped. Intercept arrows when the next DOM row is (or the current row is)
+ * a sub-item; otherwise leave the event for Radix.
+ */
+function handleMixedSelectPanelKeys(event: KeyboardEvent<HTMLElement>, panel: Element | null) {
+  if (event.defaultPrevented) return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+  const move = resolveRovingMove(event.key, "vertical");
+  if (!move || !panel) return;
+
+  const current =
+    event.target instanceof Element ? event.target.closest(SELECT_MENU_ITEM_SELECTOR) : null;
+  if (!current) return;
+
+  const items = collectRovingItems(panel, SELECT_MENU_ITEM_SELECTOR, (item) => {
+    return item.closest(SELECT_PANEL_SELECTOR) === panel;
+  });
+  const currentIndex = items.indexOf(current as HTMLElement);
+  const next = items[resolveRovingIndex(currentIndex, items.length, move)];
+  if (!next || next === current) return;
+
+  const involvesSubItem =
+    current.classList.contains("aviala-select-sub-item") ||
+    next.classList.contains("aviala-select-sub-item");
+  if (!involvesSubItem) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  next.focus();
+}
 
 const SELECT_SUB_MENU_CLOSE_DELAY_MS = 250;
 const SELECT_SUB_MENU_EXIT_ANIM_MS = 150;
@@ -740,6 +794,7 @@ export const SelectContent = forwardRef<
       sideOffset = 8,
       portalled = true,
       onCloseAutoFocus,
+      onKeyDown,
       ...props
     },
     ref
@@ -775,6 +830,10 @@ export const SelectContent = forwardRef<
           onCloseAutoFocus={handleCloseAutoFocus}
           {...spiralDebugId("select.content")}
           {...props}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+            handleMixedSelectPanelKeys(event, event.currentTarget);
+          }}
         >
           <SelectPrimitive.Viewport
             className="aviala-select-viewport"
@@ -1080,19 +1139,63 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
       scheduleCloseSubItem(subItemId, event.relatedTarget);
     };
 
+    const focusTrigger = () => {
+      rootRef.current
+        ?.querySelector<HTMLButtonElement>(".aviala-select-sub-item")
+        ?.focus();
+    };
+
+    const focusFlyoutStart = () => {
+      // The flyout mounts with the popover, so wait a frame before reaching in.
+      requestAnimationFrame(() => {
+        focusSelectMenuItem(contentRef.current, null, "first");
+      });
+    };
+
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
       if (event.key === expandKey || event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         handleOpen();
+        if (event.key === expandKey) focusFlyoutStart();
+        return;
       }
-      if (event.key === "Escape") {
+      if (event.key === "Escape" || event.key === collapseKey) {
         event.preventDefault();
         closeActiveSubItem();
+        return;
       }
-      if (event.key === collapseKey) {
+
+      // Radix drives the arrow keys for its own items, but this row is a plain
+      // button outside that collection — walk the panel by hand instead.
+      const move = resolveRovingMove(event.key, "vertical");
+      if (!move) return;
+      if (!focusSelectMenuItem(event.currentTarget.closest(SELECT_PANEL_SELECTOR), event.currentTarget, move)) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    const handleFlyoutKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Escape" || event.key === collapseKey) {
         event.preventDefault();
+        event.stopPropagation();
         closeActiveSubItem();
+        focusTrigger();
+        return;
       }
+
+      const move = resolveRovingMove(event.key, "vertical");
+      if (!move) return;
+
+      const currentRow =
+        event.target instanceof Element
+          ? event.target.closest(SELECT_MENU_ITEM_SELECTOR)
+          : null;
+      if (!focusSelectMenuItem(contentRef.current, currentRow, move)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
     };
 
     const itemRow = (
@@ -1152,6 +1255,7 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
         onPointerEnter={handleOpen}
         onPointerLeave={handlePointerLeave}
         onPointerDownOutside={(event) => event.preventDefault()}
+        onKeyDown={handleFlyoutKeyDown}
       >
         <div className="aviala-select-viewport aviala-select-sub-content__viewport">
           {wrapUngroupedSelectItems(subMenu.children)}

@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import {
+  createElement,
   forwardRef,
   type AnchorHTMLAttributes,
   type HTMLAttributes,
@@ -15,10 +16,15 @@ export type AnchorProps = HTMLAttributes<HTMLElement> & {
   as?: "nav" | "div";
 };
 
+// JSX resolves a union `as` tag to the intersection of every member's props, which
+// no single element ref can satisfy. createElement keeps the ref typed as HTMLElement.
 export const Anchor = forwardRef<HTMLElement, AnchorProps>(
-  ({ className, as: Tag = "nav", ...props }, ref) => (
-    <Tag ref={ref as never} className={cn("aviala-anchor", className)} {...props} />
-  )
+  ({ className, as = "nav", ...props }, ref) =>
+    createElement(as, {
+      ...props,
+      ref,
+      className: cn("aviala-anchor", className),
+    })
 );
 Anchor.displayName = "Anchor";
 
