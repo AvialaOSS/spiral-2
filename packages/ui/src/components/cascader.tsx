@@ -32,6 +32,7 @@ import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizi
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import { focusRovingSibling, resolveRovingMove } from "../lib/roving-focus";
 import { cn } from "../lib/utils";
+import { useCloseSuppression } from "../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
@@ -292,8 +293,6 @@ export function Cascader({
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue ?? []);
   const [activePath, setActivePath] = useState<string[]>(defaultValue ?? []);
   const [highlightedValue, setHighlightedValue] = useState<string | null>(null);
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
 
   const isOpenControlled = openProp !== undefined;
   const isValueControlled = valueProp !== undefined;
@@ -301,13 +300,7 @@ export function Cascader({
   const selectedPath = isValueControlled ? valueProp ?? [] : internalValue;
   const wasOpenRef = useRef(open);
 
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
+  const { shouldCommitOpenChange } = useCloseSuppression({ open, disabled });
 
   // Only seed expansion when the panel opens. While open, `selectPath` /
   // `expandTo` own `activePath` — re-syncing on every `selectedPath` change
@@ -331,34 +324,15 @@ export function Cascader({
     setActivePath(selectedPath.slice(0, -1));
   }, [open, options, selectedPath]);
 
-  useEffect(() => {
-    if (!open) {
-      pointerDownCloseRef.current = false;
-      return;
-    }
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
-
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (disabled && nextOpen) return;
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      pointerDownCloseRef.current = false;
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isOpenControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [disabled, isOpenControlled, onOpenChange]
+    [isOpenControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   const commitValue = useCallback(

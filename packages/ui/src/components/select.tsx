@@ -41,6 +41,7 @@ import {
   type RovingMove,
 } from "../lib/roving-focus";
 import { cn } from "../lib/utils";
+import { useCloseSuppression } from "../lib/use-close-suppression";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { useResolvedControlError } from "./form-field";
@@ -558,68 +559,50 @@ function renderFunctionSlot(
 
 export type SelectProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Root>;
 
-/**
- * Radix Select closes on `window` blur (e.g. focusing DevTools). Suppress only
- * blur-initiated closes; pointer-down (outside click, item select, trigger toggle)
- * and Escape must still dismiss on the first interaction.
- */
 export function Select({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
+  disabled,
   ...props
 }: SelectProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = openProp !== undefined;
   const open = isControlled ? openProp : internalOpen;
-  const windowBlurCloseRef = useRef(false);
-  const pointerDownCloseRef = useRef(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // `SelectContent.onCloseAutoFocus` reads the pointer-down flag after the close,
+  // so it must survive the closing render.
+  const { pointerDownCloseRef, shouldCommitOpenChange } = useCloseSuppression({
+    open,
+    disabled,
+    keepPointerDownFlagAfterClose: true,
+  });
 
   const dismissContextValue = useMemo(
     () => ({ pointerDownCloseRef, triggerRef }),
-    []
+    [pointerDownCloseRef]
   );
-
-  useEffect(() => {
-    const markWindowBlur = () => {
-      windowBlurCloseRef.current = true;
-    };
-    window.addEventListener("blur", markWindowBlur, true);
-    return () => window.removeEventListener("blur", markWindowBlur, true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const markPointerDown = () => {
-      pointerDownCloseRef.current = true;
-    };
-    document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
-  }, [open]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
-        windowBlurCloseRef.current = false;
-        return;
-      }
-      windowBlurCloseRef.current = false;
-      if (nextOpen) {
-        pointerDownCloseRef.current = false;
-      }
+      if (!shouldCommitOpenChange(nextOpen)) return;
       if (!isControlled) {
         setInternalOpen(nextOpen);
       }
       onOpenChange?.(nextOpen);
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange, shouldCommitOpenChange]
   );
 
   return (
     <SelectDismissContext.Provider value={dismissContextValue}>
-      <SelectPrimitive.Root open={open} onOpenChange={handleOpenChange} {...props} />
+      <SelectPrimitive.Root
+        open={open}
+        onOpenChange={handleOpenChange}
+        disabled={disabled}
+        {...props}
+      />
     </SelectDismissContext.Provider>
   );
 }
