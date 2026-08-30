@@ -22,6 +22,10 @@ export default defineConfig({
         replacement: path.resolve(dirname, "../../packages/ui/src/index.ts"),
       },
       {
+        find: /^@aviala-design\/spiral\/form$/,
+        replacement: path.resolve(dirname, "../../packages/ui/src/form.ts"),
+      },
+      {
         find: /^@aviala-design\/icons$/,
         replacement: path.resolve(dirname, "../../packages/icons/src/index.ts"),
       },

@@ -37,7 +37,7 @@ import { renderSlotIcon } from "../lib/render-slot-icon";
 import { cn } from "../lib/utils";
 import { useOverlayPortalContainer } from "../overlay/overlay-container";
 import { spiralDebugId } from "../lib/spiral-debug";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → Select */
 export type SelectSize = "regular" | "big";

@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Form, FormField, Input, Stack, Textarea } from "@aviala-design/spiral";
+import { Button, Input, Stack, Textarea } from "@aviala-design/spiral";
+import { Form, FormField } from "@aviala-design/spiral/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 

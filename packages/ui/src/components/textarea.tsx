@@ -17,7 +17,7 @@ import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
 import { typographyVariants } from "./typography";
 import type { InputState } from "./input";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → TextareaInput (301:6320) */
 export type TextareaSize = "regular" | "big";

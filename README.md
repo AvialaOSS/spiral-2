@@ -10,6 +10,17 @@ Aviala Design aligned React component library built on shadcn/ui, Radix UI, and 
 | `@aviala-design/icons` | Aviala Design Icons as React SVG components |
 | `@aviala-design/spiral` | React components + `ThemeProvider` |
 
+### `@aviala-design/spiral` entry points
+
+| Entry | Contents | Required peers |
+|---|---|---|
+| `@aviala-design/spiral` | All components, providers, and hooks except the form bindings | `react`, `react-dom` |
+| `@aviala-design/spiral/form` | `Form`, `FormField`, and their types | `react`, `react-dom`, `react-hook-form` (`>=7.50`) |
+
+`react-hook-form` is an optional peer: it is only needed when you import from
+`@aviala-design/spiral/form`. The main entry never references it, so consumers
+without it installed can import the package freely.
+
 ## Quick start
 
 ```bash

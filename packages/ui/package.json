@@ -22,6 +22,12 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./form": {
+      "development": "./src/form.ts",
+      "types": "./dist/form.d.ts",
+      "import": "./dist/form.js",
+      "require": "./dist/form.cjs"
+    },
     "./styles.css": "./dist/styles.css",
     "./props.json": "./dist/props.json",
     "./component-changelogs.json": "./dist/component-changelogs.json"
@@ -61,6 +67,11 @@
     "react": ">=18",
     "react-dom": ">=18",
     "react-hook-form": ">=7.50"
+  },
+  "peerDependenciesMeta": {
+    "react-hook-form": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@hookform/resolvers": "^5.2.1",
