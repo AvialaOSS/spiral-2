@@ -125,7 +125,6 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     freezeAtEnd(layer);
     setLayerRest(layer, true);
     shownRef.current = name;
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount only
   }, []);
 
   useLayoutEffect(() => {
