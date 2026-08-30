@@ -355,7 +355,10 @@ export function ScrollPickerColumn<T = string>({
       // A non-looping column that is already pinned to an end has nothing left
       // to consume — leave the event alone so the page keeps scrolling.
       if (!loop) {
-        const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+        const maxScroll = Math.max(
+          container.scrollHeight - container.clientHeight,
+          0
+        );
         const atStart = event.deltaY < 0 && container.scrollTop <= 1;
         const atEnd = event.deltaY > 0 && container.scrollTop >= maxScroll - 1;
         if (atStart || atEnd) {

@@ -58,14 +58,16 @@ import {
 } from "./date-utils";
 import type { LocaleDatePicker } from "../../locale/interface";
 
-import {
-  SegmentatorGroup,
-  SegmentatorItem,
-} from "../segmentator";
+import { SegmentatorGroup, SegmentatorItem } from "../segmentator";
 import { DatePickerMonthYearWheels } from "./date-picker-month-wheels";
 import { TimePickerWheels } from "../time-picker/time-picker-wheels";
 
-export type { DatePickerMode, DatePickerPanel, DatePickerSize, DatePickerTimeValue } from "./date-picker-context";
+export type {
+  DatePickerMode,
+  DatePickerPanel,
+  DatePickerSize,
+  DatePickerTimeValue,
+} from "./date-picker-context";
 
 type DatePickerBaseProps = {
   children: ReactNode;
@@ -100,7 +102,6 @@ export type DatePickerRangeProps = DatePickerBaseProps & {
 };
 
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
-
 
 function getInitialViewMonth(
   mode: DatePickerMode,
@@ -139,20 +140,24 @@ export function DatePicker(props: DatePickerProps) {
 
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [internalSingle, setInternalSingle] = useState<Date | undefined>(() =>
-    mode === "single" ? (props as DatePickerSingleProps).defaultValue : undefined
+    mode === "single"
+      ? (props as DatePickerSingleProps).defaultValue
+      : undefined
   );
   const [internalRange, setInternalRange] = useState<DateRange>(() =>
-    mode === "range" ? (props as DatePickerRangeProps).defaultValue ?? {} : {}
+    mode === "range" ? ((props as DatePickerRangeProps).defaultValue ?? {}) : {}
   );
-  const [rangeDraftFrom, setRangeDraftFrom] = useState<Date | undefined>(undefined);
+  const [rangeDraftFrom, setRangeDraftFrom] = useState<Date | undefined>(
+    undefined
+  );
   const [activePanel, setActivePanel] = useState<DatePickerPanel>("date");
-  const [internalTime, setInternalTime] = useState<DatePickerTimeValue>(defaultTimeValue);
+  const [internalTime, setInternalTime] =
+    useState<DatePickerTimeValue>(defaultTimeValue);
 
   const isOpenControlled = openProp !== undefined;
   const open = isOpenControlled ? openProp : internalOpen;
 
-  const timeValue =
-    timeValueProp !== undefined ? timeValueProp : internalTime;
+  const timeValue = timeValueProp !== undefined ? timeValueProp : internalTime;
 
   const setTimeValue = useCallback(
     (next: DatePickerTimeValue) => {
@@ -223,7 +228,11 @@ export function DatePicker(props: DatePickerProps) {
       : { from: rangeDraftFrom };
 
   const [viewMonth, setViewMonth] = useState(() =>
-    getInitialViewMonth(mode, singleValue, mode === "range" ? rangeValue : undefined)
+    getInitialViewMonth(
+      mode,
+      singleValue,
+      mode === "range" ? rangeValue : undefined
+    )
   );
   const [focusedDay, setFocusedDay] = useState<Date | null>(null);
 
@@ -240,7 +249,7 @@ export function DatePicker(props: DatePickerProps) {
       if (current) return current;
       if (mode === "single" && singleValue) return startOfDay(singleValue);
       const rangeAnchor =
-        mode === "range" ? rangeValue.from ?? rangeValue.to : undefined;
+        mode === "range" ? (rangeValue.from ?? rangeValue.to) : undefined;
       if (rangeAnchor) return startOfDay(rangeAnchor);
       return startOfDay(new Date());
     });
@@ -317,7 +326,10 @@ export function DatePicker(props: DatePickerProps) {
 
       const parsedRange = parseDateRangeInput(trimmed);
       if (!parsedRange) return false;
-      if (parsedRange.from && isDateDisabled(parsedRange.from, minDate, maxDate)) {
+      if (
+        parsedRange.from &&
+        isDateDisabled(parsedRange.from, minDate, maxDate)
+      ) {
         return false;
       }
       if (parsedRange.to && isDateDisabled(parsedRange.to, minDate, maxDate)) {
@@ -333,7 +345,9 @@ export function DatePicker(props: DatePickerProps) {
         from: parsedRange.from ? withTime(parsedRange.from) : undefined,
         to: parsedRange.to ? withTime(parsedRange.to) : undefined,
       };
-      setRangeDraftFrom(next.to ? undefined : next.from ? startOfDay(next.from) : undefined);
+      setRangeDraftFrom(
+        next.to ? undefined : next.from ? startOfDay(next.from) : undefined
+      );
       commitRange(next);
       const anchor = next.from ?? next.to;
       if (anchor) {
@@ -485,7 +499,11 @@ export function DatePicker(props: DatePickerProps) {
 
   return (
     <DatePickerProvider value={contextValue}>
-      <PopoverPrimitive.Root open={open} onOpenChange={handleOpenChange} modal={false}>
+      <PopoverPrimitive.Root
+        open={open}
+        onOpenChange={handleOpenChange}
+        modal={false}
+      >
         <div className={cn("inline-flex", className)}>{children}</div>
       </PopoverPrimitive.Root>
     </DatePickerProvider>
@@ -540,7 +558,10 @@ function formatTriggerValue(
   return null;
 }
 
-export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerProps>(
+export const DatePickerTrigger = forwardRef<
+  HTMLInputElement,
+  DatePickerTriggerProps
+>(
   (
     {
       className,
@@ -579,7 +600,8 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
     const disabled = disabledProp ?? disabledContext;
     const resolvedError = useResolvedControlError(error);
     const resolvedPlaceholder = placeholder ?? locale.placeholder;
-    const resolvedRangePlaceholder = rangePlaceholder ?? locale.rangePlaceholder;
+    const resolvedRangePlaceholder =
+      rangePlaceholder ?? locale.rangePlaceholder;
     const inputRef = useRef<HTMLInputElement>(null);
     const editingRef = useRef(false);
 
@@ -641,7 +663,10 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
         <PopoverPrimitive.Trigger asChild>
           <button
             type="button"
-            className={cn("aviala-datepicker-trigger aviala-focus-ring", className)}
+            className={cn(
+              "aviala-datepicker-trigger aviala-focus-ring",
+              className
+            )}
             data-size={size}
             data-all-round={allRound ? "true" : "false"}
             data-state={open ? "open" : "closed"}
@@ -651,7 +676,9 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
             aria-haspopup="dialog"
           >
             {renderSlotIcon(
-              leftIcon ?? <TimeAndDateDate level="text" biggerSize aria-hidden />,
+              leftIcon ?? (
+                <TimeAndDateDate level="text" biggerSize aria-hidden />
+              ),
               "aviala-datepicker-trigger__slot"
             )}
             <span className="aviala-datepicker-trigger__field">
@@ -674,7 +701,10 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
     return (
       <PopoverPrimitive.Anchor asChild>
         <div
-          className={cn("aviala-datepicker-trigger aviala-focus-ring", className)}
+          className={cn(
+            "aviala-datepicker-trigger aviala-focus-ring",
+            className
+          )}
           data-size={size}
           data-all-round={allRound ? "true" : "false"}
           data-state={open ? "open" : "closed"}
@@ -754,7 +784,9 @@ export const DatePickerTrigger = forwardRef<HTMLInputElement, DatePickerTriggerP
 );
 DatePickerTrigger.displayName = "DatePickerTrigger";
 
-export type DatePickerContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+export type DatePickerContentProps = ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+> & {
   portalled?: boolean;
 };
 
@@ -892,7 +924,10 @@ type PanelSlideState = {
 };
 
 function monthDiff(from: Date, to: Date): number {
-  return (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+  return (
+    (to.getFullYear() - from.getFullYear()) * 12 +
+    (to.getMonth() - from.getMonth())
+  );
 }
 
 function prefersReducedMotion(): boolean {
@@ -955,9 +990,14 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   const [nextNavAnimating, setNextNavAnimating] = useState(false);
   const isMonthPanel = activePanel === "month";
   const isTimePanel = activePanel === "time" && enableTime;
-  const targetContentView: CalendarContentView = isMonthPanel ? "month" : "date";
-  const [contentView, setContentView] = useState<CalendarContentView>(targetContentView);
-  const [viewCrossfade, setViewCrossfade] = useState<ViewCrossfadeState | null>(null);
+  const targetContentView: CalendarContentView = isMonthPanel
+    ? "month"
+    : "date";
+  const [contentView, setContentView] =
+    useState<CalendarContentView>(targetContentView);
+  const [viewCrossfade, setViewCrossfade] = useState<ViewCrossfadeState | null>(
+    null
+  );
   const [monthWheelLayoutKey, setMonthWheelLayoutKey] = useState(0);
   const contentViewRef = useRef(contentView);
   contentViewRef.current = contentView;
@@ -1003,7 +1043,12 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     const previous = prevViewMonthRef.current;
     const diff = monthDiff(previous, viewMonth);
     prevViewMonthRef.current = viewMonth;
-    if (diff === 0 || prefersReducedMotion() || contentView === "month" || panel === "time") {
+    if (
+      diff === 0 ||
+      prefersReducedMotion() ||
+      contentView === "month" ||
+      panel === "time"
+    ) {
       setMonthSlide(null);
       return;
     }
@@ -1030,7 +1075,10 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
     [monthSlide]
   );
 
-  const handleDayKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
+  const handleDayKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    date: Date
+  ) => {
     let deltaDays = 0;
     switch (event.key) {
       case "ArrowLeft":
@@ -1092,7 +1140,9 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
 
     setFocusedDay(normalized);
     if (!isSameMonth(normalized, viewMonth)) {
-      setViewMonth(new Date(normalized.getFullYear(), normalized.getMonth(), 1));
+      setViewMonth(
+        new Date(normalized.getFullYear(), normalized.getMonth(), 1)
+      );
     }
   };
 
@@ -1164,18 +1214,27 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           }}
         >
           {weeks.map((week) => (
-            <div key={formatIsoDate(week[0])} role="row" style={CALENDAR_ROW_STYLE}>
+            <div
+              key={formatIsoDate(week[0])}
+              role="row"
+              style={CALENDAR_ROW_STYLE}
+            >
               {week.map((day) => {
                 const outside = !isSameMonth(day, viewMonth);
                 const rangePos: RangeSelectionPosition =
                   mode === "range"
-                    ? getRangeSelectionPosition(day, rangeValue.from, rangeValue.to)
+                    ? getRangeSelectionPosition(
+                        day,
+                        rangeValue.from,
+                        rangeValue.to
+                      )
                     : singleValue && isSameDay(day, singleValue)
                       ? "single"
                       : "none";
                 const selected = rangePos !== "none";
                 const inRange =
-                  mode === "range" && isDateInRange(day, rangeValue.from, rangeValue.to);
+                  mode === "range" &&
+                  isDateInRange(day, rangeValue.from, rangeValue.to);
                 const isToday = isSameDay(day, today);
                 const dayDisabled = isDateDisabled(day, minDate, maxDate);
                 const focused = focusedDay ? isSameDay(day, focusedDay) : false;
@@ -1212,7 +1271,10 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
                       {day.getDate()}
                     </span>
                     {isToday ? (
-                      <span className="aviala-datepicker-day__today-dot" aria-hidden />
+                      <span
+                        className="aviala-datepicker-day__today-dot"
+                        aria-hidden
+                      />
                     ) : null}
                   </button>
                 );
@@ -1266,7 +1328,9 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
           )}
           data-active={isMonthPanel ? "true" : undefined}
           aria-expanded={isMonthPanel}
-          aria-label={isMonthPanel ? locale.closeMonthYear : locale.selectMonthYear}
+          aria-label={
+            isMonthPanel ? locale.closeMonthYear : locale.selectMonthYear
+          }
           onClick={() => setActivePanel(isMonthPanel ? "date" : "month")}
         >
           <span
@@ -1379,7 +1443,10 @@ export function DatePickerCalendar({ className }: DatePickerCalendarProps) {
   );
 }
 
-export type DatePickerFieldProps = Omit<DatePickerTriggerProps, "displayValue"> & {
+export type DatePickerFieldProps = Omit<
+  DatePickerTriggerProps,
+  "displayValue"
+> & {
   contentClassName?: string;
   calendarClassName?: string;
   mode?: DatePickerMode;
@@ -1393,7 +1460,8 @@ export type DatePickerFieldProps = Omit<DatePickerTriggerProps, "displayValue"> 
   className?: string;
   value?: Date | DateRange;
   defaultValue?: Date | DateRange;
-  onValueChange?: ((value: Date | undefined) => void) | ((value: DateRange) => void);
+  onValueChange?:
+    ((value: Date | undefined) => void) | ((value: DateRange) => void);
   enableTime?: boolean;
   timeValue?: DatePickerTimeValue;
   defaultTimeValue?: DatePickerTimeValue;
@@ -1435,7 +1503,8 @@ export function DatePickerField({
           mode: "range" as const,
           value: value as DateRange | undefined,
           defaultValue: defaultValue as DateRange | undefined,
-          onValueChange: onValueChange as ((value: DateRange) => void) | undefined,
+          onValueChange: onValueChange as
+            ((value: DateRange) => void) | undefined,
           open,
           defaultOpen,
           onOpenChange,
@@ -1451,7 +1520,8 @@ export function DatePickerField({
           mode: "single" as const,
           value: value as Date | undefined,
           defaultValue: defaultValue as Date | undefined,
-          onValueChange: onValueChange as ((value: Date | undefined) => void) | undefined,
+          onValueChange: onValueChange as
+            ((value: Date | undefined) => void) | undefined,
           open,
           defaultOpen,
           onOpenChange,

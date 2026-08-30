@@ -86,7 +86,8 @@ function readIndicatorToken(el: HTMLElement, name: string, fallback: number) {
 
 function isInsideCollapsedGroup(item: HTMLElement): boolean {
   return (
-    item.closest('.aviala-navigation-item-group[data-expanded="false"]') !== null
+    item.closest('.aviala-navigation-item-group[data-expanded="false"]') !==
+    null
   );
 }
 
@@ -114,7 +115,11 @@ function measureNavigationIndicator(
   }
   const groupRect = group.getBoundingClientRect();
   const itemRect = item.getBoundingClientRect();
-  const railInlineStart = readIndicatorToken(group, "--navigation-rail-inline-start", 1);
+  const railInlineStart = readIndicatorToken(
+    group,
+    "--navigation-rail-inline-start",
+    1
+  );
   const railInset = readIndicatorToken(group, "--navigation-rail-inset", 6);
   const railWidth = readIndicatorToken(group, "--navigation-rail-width", 3);
   const horizontalWidth = readIndicatorToken(
@@ -443,7 +448,7 @@ function useNavigationIndicator(
     const start =
       hadActiveAnimation || isAnimatingRef.current
         ? measureIndicatorFromElement(el, group)
-        : metricsRef.current ?? next;
+        : (metricsRef.current ?? next);
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -508,9 +513,7 @@ function useNavigationIndicator(
     resizeObserver.observe(group);
 
     group
-      .querySelectorAll<HTMLElement>(
-        ".aviala-navigation-item-group__inner"
-      )
+      .querySelectorAll<HTMLElement>(".aviala-navigation-item-group__inner")
       .forEach((inner) => {
         resizeObserver.observe(inner);
       });
@@ -564,7 +567,10 @@ function useNavigationIndicator(
       if (isLayoutTrackingRef.current || isAnimatingRef.current) return;
       const metrics = measureIndicator();
       if (!metrics) return;
-      if (metricsRef.current && metricsApproxEqual(metrics, metricsRef.current)) {
+      if (
+        metricsRef.current &&
+        metricsApproxEqual(metrics, metricsRef.current)
+      ) {
         return;
       }
 
@@ -659,7 +665,10 @@ export const NavigationBrandTitle = forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn("aviala-navigation-brand__title aviala-focus-ring", className)}
+      className={cn(
+        "aviala-navigation-brand__title aviala-focus-ring",
+        className
+      )}
       {...props}
     >
       {asChild ? (
@@ -771,9 +780,7 @@ export const NavigationItemGroup = forwardRef<
     <div
       ref={ref}
       className={cn("aviala-navigation-item-group", className)}
-      data-expanded={
-        isCollapsible ? (expanded ? "true" : "false") : undefined
-      }
+      data-expanded={isCollapsible ? (expanded ? "true" : "false") : undefined}
       aria-hidden={isCollapsed ? true : undefined}
       {...props}
     >
@@ -1058,61 +1065,49 @@ export type NavigationItemMenuTriggerProps = Omit<
 export const NavigationItemMenuTrigger = forwardRef<
   HTMLButtonElement,
   NavigationItemMenuTriggerProps
->(
-  (
-    {
-      className,
-      active,
-      leftIcon,
-      rightIcon,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const menu = useNavigationItemMenuContext("NavigationItemMenuTrigger");
-    const isActive = active ?? menu.hasSelection;
+>(({ className, active, leftIcon, rightIcon, children, ...props }, ref) => {
+  const menu = useNavigationItemMenuContext("NavigationItemMenuTrigger");
+  const isActive = active ?? menu.hasSelection;
 
-    const mode = navigationItemButtonMode(isActive);
+  const mode = navigationItemButtonMode(isActive);
 
-    return (
-      <span
-        className={cn("aviala-navigation-item", className)}
-        data-item-type="default"
-        data-active={isActive ? "true" : "false"}
-        onMouseEnter={() => menu.openMenu(true)}
-        onMouseLeave={menu.scheduleClose}
-      >
-        <PopoverPrimitive.Trigger asChild>
-          <button
-            ref={ref}
-            type="button"
-            className={cn(
-              buttonVariants({ mode }),
-              "aviala-navigation-item__control whitespace-normal"
-            )}
-            data-size="regular"
-            {...props}
+  return (
+    <span
+      className={cn("aviala-navigation-item", className)}
+      data-item-type="default"
+      data-active={isActive ? "true" : "false"}
+      onMouseEnter={() => menu.openMenu(true)}
+      onMouseLeave={menu.scheduleClose}
+    >
+      <PopoverPrimitive.Trigger asChild>
+        <button
+          ref={ref}
+          type="button"
+          className={cn(
+            buttonVariants({ mode }),
+            "aviala-navigation-item__control whitespace-normal"
+          )}
+          data-size="regular"
+          {...props}
+        >
+          {renderItemIcon(leftIcon)}
+          <Typography
+            level="text"
+            as="span"
+            className="aviala-navigation-item__label"
           >
-            {renderItemIcon(leftIcon)}
-            <Typography
-              level="text"
-              as="span"
-              className="aviala-navigation-item__label"
-            >
-              {children}
-            </Typography>
-            {rightIcon ? (
-              <span className="aviala-navigation-item__chevron">
-                {renderItemIcon(rightIcon)}
-              </span>
-            ) : null}
-          </button>
-        </PopoverPrimitive.Trigger>
-      </span>
-    );
-  }
-);
+            {children}
+          </Typography>
+          {rightIcon ? (
+            <span className="aviala-navigation-item__chevron">
+              {renderItemIcon(rightIcon)}
+            </span>
+          ) : null}
+        </button>
+      </PopoverPrimitive.Trigger>
+    </span>
+  );
+});
 NavigationItemMenuTrigger.displayName = "NavigationItemMenuTrigger";
 
 export type NavigationItemMenuContentProps = ComponentPropsWithoutRef<

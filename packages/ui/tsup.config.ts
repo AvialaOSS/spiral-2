@@ -15,7 +15,8 @@ const externalPackages = [
   ...Object.keys(pkg.peerDependencies ?? {}),
 ];
 
-const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export default defineConfig({
   entry: ["src/index.ts", "src/form.ts"],

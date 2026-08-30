@@ -1,5 +1,11 @@
 import { SymbolRight } from "@aviala-design/icons";
-import { useEffect, useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { interpolate } from "../../locale";
 import { resolveRovingIndex, resolveRovingMove } from "../../lib/roving-focus";
 import { cn } from "../../lib/utils";
@@ -38,9 +44,13 @@ export function VideoSpeed({
   const selectedIndex = playbackRates.indexOf(playbackRate);
   const fallbackIndex = selectedIndex >= 0 ? selectedIndex : 0;
   const [activeIndex, setActiveIndex] = useState(fallbackIndex);
-  const tabStopIndex = Math.min(Math.max(activeIndex, 0), Math.max(playbackRates.length - 1, 0));
+  const tabStopIndex = Math.min(
+    Math.max(activeIndex, 0),
+    Math.max(playbackRates.length - 1, 0)
+  );
   const activeRate = playbackRates[tabStopIndex];
-  const activeOptionId = activeRate != null ? videoSpeedOptionId(listId, activeRate) : undefined;
+  const activeOptionId =
+    activeRate != null ? videoSpeedOptionId(listId, activeRate) : undefined;
 
   useEffect(() => {
     if (!open) return;
@@ -57,7 +67,11 @@ export function VideoSpeed({
     const move = resolveRovingMove(event.key, "vertical");
     if (!move) return;
 
-    const nextIndex = resolveRovingIndex(tabStopIndex, playbackRates.length, move);
+    const nextIndex = resolveRovingIndex(
+      tabStopIndex,
+      playbackRates.length,
+      move
+    );
     const nextRate = playbackRates[nextIndex];
     if (nextRate == null) return;
 

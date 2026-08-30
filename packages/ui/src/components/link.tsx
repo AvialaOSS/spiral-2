@@ -130,7 +130,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         )}
         {!iconOnly && children !== undefined && children !== null && (
           <span
-            className={cn("relative shrink-0", levelStyles[resolvedLevel].className)}
+            className={cn(
+              "relative shrink-0",
+              levelStyles[resolvedLevel].className
+            )}
           >
             {children}
           </span>

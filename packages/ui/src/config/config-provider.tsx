@@ -65,11 +65,7 @@ export function ConfigProvider({
 
   return (
     <ConfigContext.Provider value={value}>
-      <div
-        className={className}
-        dir={direction}
-        style={style}
-      >
+      <div className={className} dir={direction} style={style}>
         {content}
       </div>
     </ConfigContext.Provider>

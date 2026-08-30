@@ -76,7 +76,9 @@ export function ThemeProvider({
   const [primaryColor, setPrimaryColorState] = useState(() => {
     if (typeof window === "undefined") {
       return (
-        defaultPrimary ?? getPreset(defaultPresetId)?.primary ?? DEFAULT_PRIMARY_COLOR
+        defaultPrimary ??
+        getPreset(defaultPresetId)?.primary ??
+        DEFAULT_PRIMARY_COLOR
       );
     }
     return (
@@ -275,9 +277,13 @@ const DEFAULT_SCRIPT_DENSITY: BaseNumbersDensity = "default";
  * string or the tag. Anything outside these whitelists falls back to the default.
  */
 const STORAGE_KEY_PATTERN = /^[a-zA-Z0-9_-]+$/;
-const HEX_COLOR_PATTERN = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const HEX_COLOR_PATTERN =
+  /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
 const THEME_MODES: readonly ThemeMode[] = ["light", "dark"];
-const THEME_DENSITIES: readonly BaseNumbersDensity[] = ["default", "mobile-friendly"];
+const THEME_DENSITIES: readonly BaseNumbersDensity[] = [
+  "default",
+  "mobile-friendly",
+];
 
 function pickFromWhitelist<T extends string>(
   value: string | undefined,
@@ -308,9 +314,21 @@ export function ThemeScript({
   defaultPrimary?: string;
   defaultDensity?: BaseNumbersDensity;
 }) {
-  const safeStorageKey = pickMatching(storageKey, STORAGE_KEY_PATTERN, DEFAULT_STORAGE_KEY);
-  const safeMode = pickFromWhitelist(defaultMode, THEME_MODES, DEFAULT_SCRIPT_MODE);
-  const safePrimary = pickMatching(defaultPrimary, HEX_COLOR_PATTERN, DEFAULT_SCRIPT_PRIMARY);
+  const safeStorageKey = pickMatching(
+    storageKey,
+    STORAGE_KEY_PATTERN,
+    DEFAULT_STORAGE_KEY
+  );
+  const safeMode = pickFromWhitelist(
+    defaultMode,
+    THEME_MODES,
+    DEFAULT_SCRIPT_MODE
+  );
+  const safePrimary = pickMatching(
+    defaultPrimary,
+    HEX_COLOR_PATTERN,
+    DEFAULT_SCRIPT_PRIMARY
+  );
   const safeDensity = pickFromWhitelist(
     defaultDensity,
     THEME_DENSITIES,

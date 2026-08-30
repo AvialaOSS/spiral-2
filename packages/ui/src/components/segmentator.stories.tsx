@@ -20,10 +20,18 @@ type Story = StoryObj<typeof SegmentatorGroup>;
 export const Nested: Story = {
   render: () => (
     <SegmentatorGroup defaultValue="a">
-      <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+      <SegmentatorItem
+        value="a"
+        leftIcon={<GeneralSetting aria-hidden />}
+        rightIcon={<GeneralSetting aria-hidden />}
+      >
         列表
       </SegmentatorItem>
-      <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+      <SegmentatorItem
+        value="b"
+        leftIcon={<GeneralSetting aria-hidden />}
+        rightIcon={<GeneralSetting aria-hidden />}
+      >
         看板
       </SegmentatorItem>
     </SegmentatorGroup>
@@ -33,10 +41,18 @@ export const Nested: Story = {
 export const Tiled: Story = {
   render: () => (
     <SegmentatorGroup mode="tiled" defaultValue="a">
-      <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+      <SegmentatorItem
+        value="a"
+        leftIcon={<GeneralSetting aria-hidden />}
+        rightIcon={<GeneralSetting aria-hidden />}
+      >
         列表
       </SegmentatorItem>
-      <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+      <SegmentatorItem
+        value="b"
+        leftIcon={<GeneralSetting aria-hidden />}
+        rightIcon={<GeneralSetting aria-hidden />}
+      >
         看板
       </SegmentatorItem>
     </SegmentatorGroup>
@@ -47,28 +63,64 @@ export const Vertical: Story = {
   render: () => (
     <div className="flex flex-wrap items-start gap-6">
       <SegmentatorGroup direction="vertical" defaultValue="a">
-        <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+        <SegmentatorItem
+          value="a"
+          leftIcon={<GeneralSetting aria-hidden />}
+          rightIcon={<GeneralSetting aria-hidden />}
+        >
           列表
         </SegmentatorItem>
-        <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+        <SegmentatorItem
+          value="b"
+          leftIcon={<GeneralSetting aria-hidden />}
+          rightIcon={<GeneralSetting aria-hidden />}
+        >
           看板
         </SegmentatorItem>
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" mode="tiled" defaultValue="a">
-        <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+        <SegmentatorItem
+          value="a"
+          leftIcon={<GeneralSetting aria-hidden />}
+          rightIcon={<GeneralSetting aria-hidden />}
+        >
           列表
         </SegmentatorItem>
-        <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+        <SegmentatorItem
+          value="b"
+          leftIcon={<GeneralSetting aria-hidden />}
+          rightIcon={<GeneralSetting aria-hidden />}
+        >
           看板
         </SegmentatorItem>
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" defaultValue="a">
-        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="列表视图" />
-        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="看板视图" />
+        <SegmentatorItem
+          value="a"
+          iconOnly
+          leftIcon={<GeneralSetting aria-hidden />}
+          aria-label="列表视图"
+        />
+        <SegmentatorItem
+          value="b"
+          iconOnly
+          leftIcon={<GeneralSetting aria-hidden />}
+          aria-label="看板视图"
+        />
       </SegmentatorGroup>
       <SegmentatorGroup direction="vertical" allRound defaultValue="a">
-        <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="列表视图" />
-        <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="看板视图" />
+        <SegmentatorItem
+          value="a"
+          iconOnly
+          leftIcon={<GeneralSetting aria-hidden />}
+          aria-label="列表视图"
+        />
+        <SegmentatorItem
+          value="b"
+          iconOnly
+          leftIcon={<GeneralSetting aria-hidden />}
+          aria-label="看板视图"
+        />
       </SegmentatorGroup>
     </div>
   ),
@@ -100,7 +152,12 @@ export const EqualWidth: Story = {
           <SegmentatorItem value="a">Date</SegmentatorItem>
           <SegmentatorItem value="b">Time</SegmentatorItem>
         </SegmentatorGroup>
-        <SegmentatorGroup equalWidth direction="vertical" mode="tiled" defaultValue="a">
+        <SegmentatorGroup
+          equalWidth
+          direction="vertical"
+          mode="tiled"
+          defaultValue="a"
+        >
           <SegmentatorItem value="a">Short</SegmentatorItem>
           <SegmentatorItem value="b">Much longer label</SegmentatorItem>
           <SegmentatorItem value="c">Mid</SegmentatorItem>
@@ -134,8 +191,18 @@ export const HorizontalScroll: Story = {
 export const IconOnly: Story = {
   render: () => (
     <SegmentatorGroup defaultValue="a">
-      <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
-      <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
+      <SegmentatorItem
+        value="a"
+        iconOnly
+        leftIcon={<GeneralSetting aria-hidden />}
+        aria-label="A"
+      />
+      <SegmentatorItem
+        value="b"
+        iconOnly
+        leftIcon={<GeneralSetting aria-hidden />}
+        aria-label="B"
+      />
     </SegmentatorGroup>
   ),
 };
@@ -152,14 +219,30 @@ export const ModeMatrix: Story = {
             <span className="font-mono text-xs text-muted-foreground">
               {direction} / {mode}
             </span>
-            <SegmentatorGroup direction={direction} mode={mode} defaultValue="a">
-              <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+            <SegmentatorGroup
+              direction={direction}
+              mode={mode}
+              defaultValue="a"
+            >
+              <SegmentatorItem
+                value="a"
+                leftIcon={<GeneralSetting aria-hidden />}
+                rightIcon={<GeneralSetting aria-hidden />}
+              >
                 Text
               </SegmentatorItem>
-              <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+              <SegmentatorItem
+                value="b"
+                leftIcon={<GeneralSetting aria-hidden />}
+                rightIcon={<GeneralSetting aria-hidden />}
+              >
                 Text
               </SegmentatorItem>
-              <SegmentatorItem value="c" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+              <SegmentatorItem
+                value="c"
+                leftIcon={<GeneralSetting aria-hidden />}
+                rightIcon={<GeneralSetting aria-hidden />}
+              >
                 Text
               </SegmentatorItem>
             </SegmentatorGroup>
@@ -177,7 +260,8 @@ export const SlidingIndicator: Story = {
     return (
       <div className="flex max-w-sm flex-col gap-6">
         <p className="text-sm text-muted-foreground">
-          Click segments to see the selected thumb slide between items (520ms soft ease-out with a light overshoot).
+          Click segments to see the selected thumb slide between items (520ms
+          soft ease-out with a light overshoot).
         </p>
         <SegmentatorGroup value={value} onValueChange={setValue}>
           <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>
@@ -190,7 +274,11 @@ export const SlidingIndicator: Story = {
             Option C
           </SegmentatorItem>
         </SegmentatorGroup>
-        <SegmentatorGroup direction="vertical" value={value} onValueChange={setValue}>
+        <SegmentatorGroup
+          direction="vertical"
+          value={value}
+          onValueChange={setValue}
+        >
           <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>
             Option A
           </SegmentatorItem>
@@ -207,9 +295,24 @@ export const SlidingIndicator: Story = {
           <SegmentatorItem value="c">Tiled C</SegmentatorItem>
         </SegmentatorGroup>
         <SegmentatorGroup allRound value={value} onValueChange={setValue}>
-          <SegmentatorItem value="a" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="A" />
-          <SegmentatorItem value="b" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="B" />
-          <SegmentatorItem value="c" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="C" />
+          <SegmentatorItem
+            value="a"
+            iconOnly
+            leftIcon={<GeneralSetting aria-hidden />}
+            aria-label="A"
+          />
+          <SegmentatorItem
+            value="b"
+            iconOnly
+            leftIcon={<GeneralSetting aria-hidden />}
+            aria-label="B"
+          />
+          <SegmentatorItem
+            value="c"
+            iconOnly
+            leftIcon={<GeneralSetting aria-hidden />}
+            aria-label="C"
+          />
         </SegmentatorGroup>
       </div>
     );

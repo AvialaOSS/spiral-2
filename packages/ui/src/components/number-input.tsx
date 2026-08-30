@@ -19,11 +19,7 @@ import { spiralDebugId } from "../lib/spiral-debug";
 import { useLocaleMessages } from "../locale";
 import { typographyVariants } from "./typography";
 import { Badge } from "./badge";
-import {
-  inputRootVariants,
-  type InputSize,
-  type InputState,
-} from "./input";
+import { inputRootVariants, type InputSize, type InputState } from "./input";
 import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → NumberInput (197:3237) */
@@ -87,13 +83,16 @@ function decimalPlaces(n: number): number {
   return i === -1 ? 0 : text.length - i - 1;
 }
 
-
 function renderBadgeArea(node: ReactNode): ReactNode {
   if (node == null || node === false) return null;
 
   return (
     <span className="aviala-input__badge-area">
-      {isValidElement(node) && node.type === Badge ? node : <Badge>{node}</Badge>}
+      {isValidElement(node) && node.type === Badge ? (
+        node
+      ) : (
+        <Badge>{node}</Badge>
+      )}
     </span>
   );
 }
@@ -162,7 +161,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [focused, setFocused] = useState(false);
     const [internalValue, setInternalValue] = useState(() =>
-      defaultValue === undefined || defaultValue === null ? "" : String(defaultValue)
+      defaultValue === undefined || defaultValue === null
+        ? ""
+        : String(defaultValue)
     );
     const isControlled = value !== undefined;
     const resolvedValue = isControlled
@@ -206,7 +207,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         data-disabled={disabled ? "true" : undefined}
         {...spiralDebugId("number-input")}
       >
-        {renderSlotIcon(leftIcon, "aviala-input__slot", "number-input.left-icon")}
+        {renderSlotIcon(
+          leftIcon,
+          "aviala-input__slot",
+          "number-input.left-icon"
+        )}
         {renderBadgeArea(leftBadge)}
 
         <div
@@ -269,7 +274,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         </div>
 
         {renderBadgeArea(rightBadge)}
-        {renderSlotIcon(rightIcon, "aviala-input__slot", "number-input.right-icon")}
+        {renderSlotIcon(
+          rightIcon,
+          "aviala-input__slot",
+          "number-input.right-icon"
+        )}
 
         {showControls ? (
           <div

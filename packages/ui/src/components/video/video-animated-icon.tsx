@@ -164,8 +164,10 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
       // not `name`, which can still be the previous state when the token fires.
       const from = shownRef.current === "pause" ? "pause" : "play";
       const to: "play" | "pause" = from === "play" ? "pause" : "play";
-      const incoming = to === "pause" ? pauseLayerRef.current : playLayerRef.current;
-      const outgoing = to === "pause" ? playLayerRef.current : pauseLayerRef.current;
+      const incoming =
+        to === "pause" ? pauseLayerRef.current : playLayerRef.current;
+      const outgoing =
+        to === "pause" ? playLayerRef.current : pauseLayerRef.current;
       if (!incoming || !outgoing) {
         lockRef.current = false;
         return;
@@ -205,8 +207,10 @@ export const VideoAnimatedIcon = memo(function VideoAnimatedIcon({
     if (shownRef.current === name) return;
     if (name !== "play" && name !== "pause") return;
 
-    const incoming = name === "pause" ? pauseLayerRef.current : playLayerRef.current;
-    const outgoing = name === "pause" ? playLayerRef.current : pauseLayerRef.current;
+    const incoming =
+      name === "pause" ? pauseLayerRef.current : playLayerRef.current;
+    const outgoing =
+      name === "pause" ? playLayerRef.current : pauseLayerRef.current;
     if (!incoming || !outgoing) return;
     freezeAtEnd(incoming);
     setLayerActive(incoming, true);

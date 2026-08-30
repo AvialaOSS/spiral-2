@@ -31,7 +31,10 @@ import { forwardChevronSide, useDirection, useRtl } from "../config";
 import { Badge } from "./badge";
 import { typographyVariants } from "./typography";
 import { cloneAvialaIconElement } from "../lib/clone-aviala-icon";
-import { iconLevelCssVarStyle, iconSlotCssVarStyle } from "../lib/icon-slot-sizing";
+import {
+  iconLevelCssVarStyle,
+  iconSlotCssVarStyle,
+} from "../lib/icon-slot-sizing";
 import { renderSlotIcon } from "../lib/render-slot-icon";
 import {
   collectRovingItems,
@@ -51,12 +54,7 @@ export type SelectSize = "regular" | "big";
 
 /** Figma Select Menu Item `Function` variant */
 export type SelectItemFunction =
-  | "action"
-  | "simple"
-  | "checkbox"
-  | "form-checkbox"
-  | "radio"
-  | "form-radio";
+  "action" | "simple" | "checkbox" | "form-checkbox" | "radio" | "form-radio";
 
 /** Figma Select Menu Item `Type` variant */
 export type SelectItemLayout = "default" | "title" | "people" | "checked";
@@ -69,7 +67,11 @@ const SELECT_PANEL_SELECTOR = ".aviala-select-content";
  * Move focus between the rows of one menu panel.
  * Rows belonging to an open sub-menu are skipped — that panel owns its own ring.
  */
-function focusSelectMenuItem(panel: Element | null, current: Element | null, move: RovingMove) {
+function focusSelectMenuItem(
+  panel: Element | null,
+  current: Element | null,
+  move: RovingMove
+) {
   return focusRovingSibling(panel, current, move, SELECT_MENU_ITEM_SELECTOR, {
     filter: (item) => item.closest(SELECT_PANEL_SELECTOR) === panel,
   });
@@ -80,7 +82,10 @@ function focusSelectMenuItem(panel: Element | null, current: Element | null, mov
  * is skipped. Intercept arrows when the next DOM row is (or the current row is)
  * a sub-item; otherwise leave the event for Radix.
  */
-function handleMixedSelectPanelKeys(event: KeyboardEvent<HTMLElement>, panel: Element | null) {
+function handleMixedSelectPanelKeys(
+  event: KeyboardEvent<HTMLElement>,
+  panel: Element | null
+) {
   if (event.defaultPrevented) return;
   if (event.metaKey || event.ctrlKey || event.altKey) return;
 
@@ -88,7 +93,9 @@ function handleMixedSelectPanelKeys(event: KeyboardEvent<HTMLElement>, panel: El
   if (!move || !panel) return;
 
   const current =
-    event.target instanceof Element ? event.target.closest(SELECT_MENU_ITEM_SELECTOR) : null;
+    event.target instanceof Element
+      ? event.target.closest(SELECT_MENU_ITEM_SELECTOR)
+      : null;
   if (!current) return;
 
   const items = collectRovingItems(panel, SELECT_MENU_ITEM_SELECTOR, (item) => {
@@ -137,25 +144,34 @@ type SelectSubMenuContextValue = {
   registerSubItem: (id: string, registration: SubMenuItemRegistration) => void;
   unregisterSubItem: (id: string) => void;
   openSubItem: (id: string) => void;
-  scheduleCloseSubItem: (id: string, relatedTarget?: EventTarget | null) => void;
+  scheduleCloseSubItem: (
+    id: string,
+    relatedTarget?: EventTarget | null
+  ) => void;
   closeActiveSubItem: () => void;
   isSubItemOpen: (id: string) => boolean;
   isSubItemExiting: (id: string) => boolean;
 };
 
-const SelectSubMenuContext = createContext<SelectSubMenuContextValue | null>(null);
+const SelectSubMenuContext = createContext<SelectSubMenuContextValue | null>(
+  null
+);
 
 type SelectDismissContextValue = {
   pointerDownCloseRef: React.MutableRefObject<boolean>;
   triggerRef: React.MutableRefObject<HTMLButtonElement | null>;
 };
 
-const SelectDismissContext = createContext<SelectDismissContextValue | null>(null);
+const SelectDismissContext = createContext<SelectDismissContextValue | null>(
+  null
+);
 
 function useSelectSubMenuContext() {
   const context = useContext(SelectSubMenuContext);
   if (!context) {
-    throw new Error("Select sub-menu components must be used within SelectContent.");
+    throw new Error(
+      "Select sub-menu components must be used within SelectContent."
+    );
   }
   return context;
 }
@@ -165,8 +181,12 @@ function useSelectSubMenuLayer(): SelectSubMenuContextValue {
   const [activeSubItemId, setActiveSubItemId] = useState<string | null>(null);
   const [exitingSubItemId, setExitingSubItemId] = useState<string | null>(null);
   const itemsRef = useRef(new Map<string, SubMenuItemRegistration>());
-  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const pointerRef = useRef({ x: 0, y: 0 });
 
   const cancelScheduledClose = useCallback(() => {
@@ -183,38 +203,56 @@ function useSelectSubMenuLayer(): SelectSubMenuContextValue {
     }
   }, []);
 
-  const isTargetInSubItemTree = useCallback((id: string, target: EventTarget | null | undefined) => {
-    if (!(target instanceof Node)) return false;
-    const registration = itemsRef.current.get(id);
-    if (!registration) return false;
-    const root = registration.getRoot();
-    const content = registration.getContent();
-    return (root?.contains(target) ?? false) || (content?.contains(target) ?? false);
-  }, []);
-
-  const findSubItemIdForTarget = useCallback((target: EventTarget | null | undefined, excludeId?: string) => {
-    if (!(target instanceof Node)) return null;
-    for (const [id, registration] of itemsRef.current) {
-      if (id === excludeId) continue;
+  const isTargetInSubItemTree = useCallback(
+    (id: string, target: EventTarget | null | undefined) => {
+      if (!(target instanceof Node)) return false;
+      const registration = itemsRef.current.get(id);
+      if (!registration) return false;
       const root = registration.getRoot();
       const content = registration.getContent();
-      if (root?.contains(target) || content?.contains(target)) return id;
-    }
-    return null;
-  }, []);
+      return (
+        (root?.contains(target) ?? false) ||
+        (content?.contains(target) ?? false)
+      );
+    },
+    []
+  );
+
+  const findSubItemIdForTarget = useCallback(
+    (target: EventTarget | null | undefined, excludeId?: string) => {
+      if (!(target instanceof Node)) return null;
+      for (const [id, registration] of itemsRef.current) {
+        if (id === excludeId) continue;
+        const root = registration.getRoot();
+        const content = registration.getContent();
+        if (root?.contains(target) || content?.contains(target)) return id;
+      }
+      return null;
+    },
+    []
+  );
 
   const isPointerOverSubItem = useCallback((id: string) => {
-    const hovered = document.elementFromPoint(pointerRef.current.x, pointerRef.current.y);
+    const hovered = document.elementFromPoint(
+      pointerRef.current.x,
+      pointerRef.current.y
+    );
     if (!(hovered instanceof Element)) return false;
     const registration = itemsRef.current.get(id);
     if (!registration) return false;
     const root = registration.getRoot();
     const content = registration.getContent();
-    return (root?.contains(hovered) ?? false) || (content?.contains(hovered) ?? false);
+    return (
+      (root?.contains(hovered) ?? false) ||
+      (content?.contains(hovered) ?? false)
+    );
   }, []);
 
   const findSubItemIdAtPointer = useCallback((excludeId?: string) => {
-    const hovered = document.elementFromPoint(pointerRef.current.x, pointerRef.current.y);
+    const hovered = document.elementFromPoint(
+      pointerRef.current.x,
+      pointerRef.current.y
+    );
     if (!(hovered instanceof Element)) return null;
     for (const [id, registration] of itemsRef.current) {
       if (id === excludeId) continue;
@@ -293,9 +331,12 @@ function useSelectSubMenuLayer(): SelectSubMenuContextValue {
     ]
   );
 
-  const registerSubItem = useCallback((id: string, registration: SubMenuItemRegistration) => {
-    itemsRef.current.set(id, registration);
-  }, []);
+  const registerSubItem = useCallback(
+    (id: string, registration: SubMenuItemRegistration) => {
+      itemsRef.current.set(id, registration);
+    },
+    []
+  );
 
   const unregisterSubItem = useCallback((id: string) => {
     itemsRef.current.delete(id);
@@ -359,8 +400,10 @@ function useSelectSubMenuLayer(): SelectSubMenuContextValue {
       openSubItem,
       scheduleCloseSubItem,
       closeActiveSubItem,
-      isSubItemOpen: (id: string) => activeSubItemId === id || exitingSubItemId === id,
-      isSubItemExiting: (id: string) => exitingSubItemId === id && activeSubItemId !== id,
+      isSubItemOpen: (id: string) =>
+        activeSubItemId === id || exitingSubItemId === id,
+      isSubItemExiting: (id: string) =>
+        exitingSubItemId === id && activeSubItemId !== id,
     }),
     [
       activeSubItemId,
@@ -381,7 +424,9 @@ export function SelectSubMenu(_props: SelectSubMenuMarkerProps): null {
 }
 SelectSubMenu.displayName = "SelectSubMenu";
 
-function isSelectSubMenuElement(child: ReactNode): child is ReactElement<SelectSubMenuMarkerProps> {
+function isSelectSubMenuElement(
+  child: ReactNode
+): child is ReactElement<SelectSubMenuMarkerProps> {
   return isValidElement(child) && child.type === SelectSubMenu;
 }
 
@@ -413,9 +458,11 @@ function parseSelectSubItemChildren(children: ReactNode): {
 }
 
 function isWithinSelectSubLayer(target: EventTarget | null) {
-  return target instanceof Element && target.closest(".aviala-select-sub-content") !== null;
+  return (
+    target instanceof Element &&
+    target.closest(".aviala-select-sub-content") !== null
+  );
 }
-
 
 function renderItemIcon(
   node: ReactNode,
@@ -434,7 +481,12 @@ function renderItemIcon(
         "aviala-select-item__icon",
         iconLevel === "caption" && "aviala-select-item__icon--sm"
       )}
-      style={iconSlotCssVarStyle(node, "--select-item-icon-size", iconLevel, true)}
+      style={iconSlotCssVarStyle(
+        node,
+        "--select-item-icon-size",
+        iconLevel,
+        true
+      )}
       {...(debugId ? spiralDebugId(debugId) : undefined)}
     >
       {content}
@@ -447,7 +499,11 @@ function renderBadgeSlot(node: ReactNode): ReactNode {
 
   return (
     <span className="aviala-select-item__badge">
-      {isValidElement(node) && node.type === Badge ? node : <Badge>{node}</Badge>}
+      {isValidElement(node) && node.type === Badge ? (
+        node
+      ) : (
+        <Badge>{node}</Badge>
+      )}
     </span>
   );
 }
@@ -476,7 +532,10 @@ function SelectItemFormCheckbox() {
 
 function SelectItemTrailingRadio() {
   return (
-    <SelectPrimitive.ItemIndicator className="aviala-select-item__trailing-radio" aria-hidden>
+    <SelectPrimitive.ItemIndicator
+      className="aviala-select-item__trailing-radio"
+      aria-hidden
+    >
       <SymbolRight level="text" biggerSize aria-hidden />
     </SelectPrimitive.ItemIndicator>
   );
@@ -484,7 +543,10 @@ function SelectItemTrailingRadio() {
 
 function SelectItemTrailingCheckbox() {
   return (
-    <SelectPrimitive.ItemIndicator className="aviala-select-item__trailing-checkbox" aria-hidden>
+    <SelectPrimitive.ItemIndicator
+      className="aviala-select-item__trailing-checkbox"
+      aria-hidden
+    >
       <SymbolRight level="text" biggerSize aria-hidden />
     </SelectPrimitive.ItemIndicator>
   );
@@ -514,7 +576,12 @@ function renderFunctionSlot(
   if (layout === "checked") return null;
 
   const functionStyle = icon
-    ? iconSlotCssVarStyle(icon, "--select-item-function-icon-size", "text", true)
+    ? iconSlotCssVarStyle(
+        icon,
+        "--select-item-function-icon-size",
+        "text",
+        true
+      )
     : undefined;
 
   if (icon !== undefined) {
@@ -532,13 +599,19 @@ function renderFunctionSlot(
   switch (itemFunction) {
     case "radio":
       return (
-        <span className="aviala-select-item__function" {...spiralDebugId("select.content.item.function")}>
+        <span
+          className="aviala-select-item__function"
+          {...spiralDebugId("select.content.item.function")}
+        >
           <SelectItemTrailingRadio />
         </span>
       );
     case "checkbox":
       return (
-        <span className="aviala-select-item__function" {...spiralDebugId("select.content.item.function")}>
+        <span
+          className="aviala-select-item__function"
+          {...spiralDebugId("select.content.item.function")}
+        >
           <SelectItemTrailingCheckbox />
         </span>
       );
@@ -548,7 +621,11 @@ function renderFunctionSlot(
       return (
         <span
           className="aviala-select-item__function"
-          style={iconLevelCssVarStyle("text", true, "--select-item-function-icon-size")}
+          style={iconLevelCssVarStyle(
+            "text",
+            true,
+            "--select-item-function-icon-size"
+          )}
           {...spiralDebugId("select.content.item.function")}
         >
           <SelectExpandChevron />
@@ -617,7 +694,10 @@ const SELECT_MENU_ITEM_DISPLAY_NAMES = new Set([
 ]);
 
 function getComponentDisplayName(type: unknown): string | undefined {
-  if (typeof type === "function" || (typeof type === "object" && type !== null)) {
+  if (
+    typeof type === "function" ||
+    (typeof type === "object" && type !== null)
+  ) {
     return (type as { displayName?: string }).displayName;
   }
   return undefined;
@@ -634,7 +714,9 @@ function isSelectGroupElement(child: ReactNode): boolean {
 function isSelectMenuItemElement(child: ReactNode): boolean {
   if (!isValidElement(child)) return false;
   const displayName = getComponentDisplayName(child.type);
-  return displayName !== undefined && SELECT_MENU_ITEM_DISPLAY_NAMES.has(displayName);
+  return (
+    displayName !== undefined && SELECT_MENU_ITEM_DISPLAY_NAMES.has(displayName)
+  );
 }
 
 /** Ensures bare menu items are wrapped in a SelectGroup in the DOM (Figma requirement). */
@@ -649,7 +731,10 @@ function wrapUngroupedSelectItems(children: ReactNode): ReactNode {
   const flushBareItems = () => {
     if (bareItems.length === 0) return;
     wrapped.push(
-      <SelectGroup key={`__select-auto-group-${autoGroupIndex++}`} className="aviala-select-group">
+      <SelectGroup
+        key={`__select-auto-group-${autoGroupIndex++}`}
+        className="aviala-select-group"
+      >
         <div className="aviala-select-group__slot">{bareItems}</div>
       </SelectGroup>
     );
@@ -672,7 +757,9 @@ function wrapUngroupedSelectItems(children: ReactNode): ReactNode {
   return wrapped.length === 1 ? wrapped[0] : wrapped;
 }
 
-export type SelectTriggerProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
+export type SelectTriggerProps = ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Trigger
+> & {
   size?: SelectSize;
   allRound?: boolean;
   leftIcon?: ReactNode;
@@ -705,62 +792,80 @@ export const SelectTrigger = forwardRef<
     const resolvedError = useResolvedControlError(error);
 
     return (
-    <SelectPrimitive.Trigger
-      ref={(node) => {
-        if (dismissContext) {
-          dismissContext.triggerRef.current = node;
-        }
-        if (typeof ref === "function") {
-          ref(node);
-        } else if (ref) {
-          ref.current = node;
-        }
-      }}
-      className={cn("aviala-select-trigger aviala-focus-ring", className)}
-      data-size={size}
-      data-all-round={allRound ? "true" : "false"}
-      data-error={resolvedError ? "true" : undefined}
-      aria-invalid={resolvedError || undefined}
-      {...spiralDebugId("select.trigger")}
-      {...props}
-    >
-      {renderSlotIcon(leftIcon, "aviala-select-trigger__slot", "select.trigger.icon-left")}
-      <span className="aviala-select-trigger__field">
-        <SelectPrimitive.Value
-          placeholder={placeholder}
-          className={cn("aviala-select-trigger__value", typographyVariants({ level: "text" }))}
-          {...spiralDebugId("select.trigger.value")}
-        />
-      </span>
-      {renderSlotIcon(rightIcon, "aviala-select-trigger__slot", "select.trigger.icon-right")}
-      <SelectPrimitive.Icon asChild>
-        <span
-          className="aviala-select-trigger__expand"
-          aria-hidden
-          style={
-            expandIcon
-              ? iconSlotCssVarStyle(expandIcon, "--input-slot-icon-size", "text", true)
-              : iconLevelCssVarStyle("text", true, "--input-slot-icon-size")
+      <SelectPrimitive.Trigger
+        ref={(node) => {
+          if (dismissContext) {
+            dismissContext.triggerRef.current = node;
           }
-          {...spiralDebugId("select.trigger.expand")}
-        >
-          {expandIcon ?? (
-            <DirectionArrowDownLight
-              className="aviala-select-trigger__expand-icon"
-              level="text"
-              biggerSize
-              aria-hidden
-            />
-          )}
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
+        className={cn("aviala-select-trigger aviala-focus-ring", className)}
+        data-size={size}
+        data-all-round={allRound ? "true" : "false"}
+        data-error={resolvedError ? "true" : undefined}
+        aria-invalid={resolvedError || undefined}
+        {...spiralDebugId("select.trigger")}
+        {...props}
+      >
+        {renderSlotIcon(
+          leftIcon,
+          "aviala-select-trigger__slot",
+          "select.trigger.icon-left"
+        )}
+        <span className="aviala-select-trigger__field">
+          <SelectPrimitive.Value
+            placeholder={placeholder}
+            className={cn(
+              "aviala-select-trigger__value",
+              typographyVariants({ level: "text" })
+            )}
+            {...spiralDebugId("select.trigger.value")}
+          />
         </span>
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
+        {renderSlotIcon(
+          rightIcon,
+          "aviala-select-trigger__slot",
+          "select.trigger.icon-right"
+        )}
+        <SelectPrimitive.Icon asChild>
+          <span
+            className="aviala-select-trigger__expand"
+            aria-hidden
+            style={
+              expandIcon
+                ? iconSlotCssVarStyle(
+                    expandIcon,
+                    "--input-slot-icon-size",
+                    "text",
+                    true
+                  )
+                : iconLevelCssVarStyle("text", true, "--input-slot-icon-size")
+            }
+            {...spiralDebugId("select.trigger.expand")}
+          >
+            {expandIcon ?? (
+              <DirectionArrowDownLight
+                className="aviala-select-trigger__expand-icon"
+                level="text"
+                biggerSize
+                aria-hidden
+              />
+            )}
+          </span>
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
     );
   }
 );
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-export type SelectContentProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & {
+export type SelectContentProps = ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Content
+> & {
   /** Render without Portal — use inside nested overlays (e.g. ColorPicker popover). */
   portalled?: boolean;
 };
@@ -786,9 +891,9 @@ export const SelectContent = forwardRef<
     const subMenuLayer = useSelectSubMenuLayer();
     const dismissContext = useContext(SelectDismissContext);
 
-    const handleCloseAutoFocus: NonNullable<SelectContentProps["onCloseAutoFocus"]> = (
-      event
-    ) => {
+    const handleCloseAutoFocus: NonNullable<
+      SelectContentProps["onCloseAutoFocus"]
+    > = (event) => {
       onCloseAutoFocus?.(event);
       if (event.defaultPrevented) {
         if (dismissContext) {
@@ -839,7 +944,9 @@ export const SelectContent = forwardRef<
 );
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-export type SelectLabelProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Label>;
+export type SelectLabelProps = ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Label
+>;
 
 export const SelectLabel = forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
@@ -847,13 +954,19 @@ export const SelectLabel = forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("aviala-select-label", typographyVariants({ level: "caption" }), className)}
+    className={cn(
+      "aviala-select-label",
+      typographyVariants({ level: "caption" }),
+      className
+    )}
     {...props}
   />
 ));
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-export type SelectItemProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
+export type SelectItemProps = ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Item
+> & {
   /** Figma Function variant (default Action Item) */
   itemFunction?: SelectItemFunction;
   /** Figma Type variant */
@@ -919,19 +1032,30 @@ export const SelectItem = forwardRef<
     const textContent = isPeople ? (
       <span className="aviala-select-item__content">
         <SelectPrimitive.ItemText
-          className={cn("aviala-select-item__text", typographyVariants({ level: textLevel }))}
+          className={cn(
+            "aviala-select-item__text",
+            typographyVariants({ level: textLevel })
+          )}
         >
           {children}
         </SelectPrimitive.ItemText>
         {subtitle != null && subtitle !== false ? (
-          <span className={cn("aviala-select-item__subtitle", typographyVariants({ level: "caption" }))}>
+          <span
+            className={cn(
+              "aviala-select-item__subtitle",
+              typographyVariants({ level: "caption" })
+            )}
+          >
             {subtitle}
           </span>
         ) : null}
       </span>
     ) : (
       <SelectPrimitive.ItemText
-        className={cn("aviala-select-item__text", typographyVariants({ level: textLevel }))}
+        className={cn(
+          "aviala-select-item__text",
+          typographyVariants({ level: textLevel })
+        )}
       >
         {children}
       </SelectPrimitive.ItemText>
@@ -946,13 +1070,19 @@ export const SelectItem = forwardRef<
         {...spiralDebugId("select.content.item")}
         {...props}
       >
-        {isFormLeading && itemFunction === "form-radio" ? <SelectItemFormRadio /> : null}
+        {isFormLeading && itemFunction === "form-radio" ? (
+          <SelectItemFormRadio />
+        ) : null}
         {isFormLeading && itemFunction === "form-checkbox" ? (
           <SelectItemFormCheckbox />
         ) : null}
 
         {showLeftIcon && leftIcon
-          ? renderItemIcon(leftIcon, leftIconLevel, "select.content.item.icon-left")
+          ? renderItemIcon(
+              leftIcon,
+              leftIconLevel,
+              "select.content.item.icon-left"
+            )
           : null}
 
         {isPeople ? (avatar ?? <SelectItemDefaultAvatar />) : null}
@@ -962,7 +1092,11 @@ export const SelectItem = forwardRef<
         {showBadge ? renderBadgeSlot(badge) : null}
 
         {showRightIcon && rightIcon
-          ? renderItemIcon(rightIcon, leftIconLevel, "select.content.item.icon-right")
+          ? renderItemIcon(
+              rightIcon,
+              leftIconLevel,
+              "select.content.item.icon-right"
+            )
           : null}
 
         {showMoreFunction && moreAction != null ? (
@@ -1103,17 +1237,32 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
 
     const textContent = isPeople ? (
       <span className="aviala-select-item__content">
-        <span className={cn("aviala-select-item__text", typographyVariants({ level: textLevel }))}>
+        <span
+          className={cn(
+            "aviala-select-item__text",
+            typographyVariants({ level: textLevel })
+          )}
+        >
           {itemChildren}
         </span>
         {subtitle != null && subtitle !== false ? (
-          <span className={cn("aviala-select-item__subtitle", typographyVariants({ level: "caption" }))}>
+          <span
+            className={cn(
+              "aviala-select-item__subtitle",
+              typographyVariants({ level: "caption" })
+            )}
+          >
             {subtitle}
           </span>
         ) : null}
       </span>
     ) : (
-      <span className={cn("aviala-select-item__text", typographyVariants({ level: textLevel }))}>
+      <span
+        className={cn(
+          "aviala-select-item__text",
+          typographyVariants({ level: textLevel })
+        )}
+      >
         {itemChildren}
       </span>
     );
@@ -1136,7 +1285,11 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-      if (event.key === expandKey || event.key === "Enter" || event.key === " ") {
+      if (
+        event.key === expandKey ||
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
         event.preventDefault();
         handleOpen();
         if (event.key === expandKey) focusFlyoutStart();
@@ -1152,7 +1305,13 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
       // button outside that collection — walk the panel by hand instead.
       const move = resolveRovingMove(event.key, "vertical");
       if (!move) return;
-      if (!focusSelectMenuItem(event.currentTarget.closest(SELECT_PANEL_SELECTOR), event.currentTarget, move)) {
+      if (
+        !focusSelectMenuItem(
+          event.currentTarget.closest(SELECT_PANEL_SELECTOR),
+          event.currentTarget,
+          move
+        )
+      ) {
         return;
       }
       event.preventDefault();
@@ -1198,12 +1357,16 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
         onBlur={handleTriggerBlur}
         onKeyDown={handleKeyDown}
       >
-        {isFormLeading && itemFunction === "form-radio" ? <SelectItemFormRadio /> : null}
+        {isFormLeading && itemFunction === "form-radio" ? (
+          <SelectItemFormRadio />
+        ) : null}
         {isFormLeading && itemFunction === "form-checkbox" ? (
           <SelectItemFormCheckbox />
         ) : null}
 
-        {showLeftIcon && leftIcon ? renderItemIcon(leftIcon, leftIconLevel) : null}
+        {showLeftIcon && leftIcon
+          ? renderItemIcon(leftIcon, leftIconLevel)
+          : null}
 
         {isPeople ? (avatar ?? <SelectItemDefaultAvatar />) : null}
 
@@ -1211,7 +1374,9 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
 
         {showBadge ? renderBadgeSlot(badge) : null}
 
-        {showRightIcon && rightIcon ? renderItemIcon(rightIcon, leftIconLevel) : null}
+        {showRightIcon && rightIcon
+          ? renderItemIcon(rightIcon, leftIconLevel)
+          : null}
 
         {showMoreFunction && moreAction != null ? (
           <span className="aviala-select-item__more">{moreAction}</span>
@@ -1226,7 +1391,10 @@ export const SelectSubItem = forwardRef<HTMLDivElement, SelectSubItemProps>(
         ref={contentRef}
         id={subMenuId}
         role="menu"
-        className={cn("aviala-select-content aviala-select-sub-content", subMenu.className)}
+        className={cn(
+          "aviala-select-content aviala-select-sub-content",
+          subMenu.className
+        )}
         side={side}
         align="center"
         sideOffset={sideOffset}
@@ -1279,9 +1447,10 @@ SelectSubItem.displayName = "SelectSubItem";
 /** People layout convenience alias — same as `<SelectSubItem layout="people" … />`. */
 export type SelectSubItemPeopleProps = Omit<SelectSubItemProps, "layout">;
 
-export const SelectSubItemPeople = forwardRef<HTMLDivElement, SelectSubItemPeopleProps>(
-  (props, ref) => <SelectSubItem ref={ref} layout="people" {...props} />
-);
+export const SelectSubItemPeople = forwardRef<
+  HTMLDivElement,
+  SelectSubItemPeopleProps
+>((props, ref) => <SelectSubItem ref={ref} layout="people" {...props} />);
 SelectSubItemPeople.displayName = "SelectSubItemPeople";
 
 /** People layout convenience alias — same as `<SelectItem layout="people" … />`. */
@@ -1293,7 +1462,9 @@ export const SelectItemPeople = forwardRef<
 >((props, ref) => <SelectItem ref={ref} layout="people" {...props} />);
 SelectItemPeople.displayName = "SelectItemPeople";
 
-export type SelectSeparatorProps = ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>;
+export type SelectSeparatorProps = ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Separator
+>;
 
 export const SelectSeparator = forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,

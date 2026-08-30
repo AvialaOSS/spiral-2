@@ -257,7 +257,9 @@ export const TableCell = forwardRef<HTMLDivElement, TableCellProps>(
               {renderCellBody(
                 <>
                   {iconPlaceNode != null ? (
-                    <span className="aviala-table-cell__icon-place">{iconPlaceNode}</span>
+                    <span className="aviala-table-cell__icon-place">
+                      {iconPlaceNode}
+                    </span>
                   ) : null}
                   {renderTextBlock(text, caption)}
                 </>,
