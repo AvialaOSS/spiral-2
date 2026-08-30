@@ -33,6 +33,7 @@
 .aviala-loading__path {
   r: calc(50% - var(--loading-ring-stroke, 2px) / 2);
   stroke-width: var(--loading-ring-stroke, 2px);
+  stroke: var(--loading-mask-reveal, #ffffff);
 }
 
 .aviala-loading__conic {
