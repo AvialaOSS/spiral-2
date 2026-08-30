@@ -154,10 +154,16 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
     const peopleAvatar =
       avatar ??
       (avatarSrc ? (
-        <Avatar level="text" content="picture" src={avatarSrc} lineHeightFix={false} />
+        <Avatar
+          level="text"
+          content="picture"
+          src={avatarSrc}
+          lineHeightFix={false}
+        />
       ) : (
         <Avatar level="text" content="text" lineHeightFix={false}>
-          {avatarText ?? (typeof children === "string" ? children.charAt(0) : "?")}
+          {avatarText ??
+            (typeof children === "string" ? children.charAt(0) : "?")}
         </Avatar>
       ));
 
@@ -191,7 +197,9 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
         >
           {children}
         </Typography>
-        {resolvedContent === "text" ? renderTagIcon(rightIcon, resolvedLevel) : null}
+        {resolvedContent === "text"
+          ? renderTagIcon(rightIcon, resolvedLevel)
+          : null}
         {closable ? (
           <TagClose
             aria-label={resolvedCloseLabel}

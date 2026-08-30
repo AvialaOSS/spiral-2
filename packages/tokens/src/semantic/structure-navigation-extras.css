@@ -148,10 +148,7 @@ button.aviala-breadcrumb-item:active {
 }
 
 .aviala-breadcrumb-ellipsis-item:hover {
-  background-color: var(
-    --control-control-normal-lightbackground-1,
-    #f0efef
-  );
+  background-color: var(--control-control-normal-lightbackground-1, #f0efef);
 }
 
 .aviala-breadcrumb-ellipsis-item__label {
@@ -312,32 +309,38 @@ button.aviala-breadcrumb-item:active {
 }
 
 .aviala-steps-item[data-state="done"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="done"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="done"]
+  .aviala-steps-item__title.aviala-typography {
   color: var(--steps-done-fg);
 }
 
 .aviala-steps-item[data-state="fail"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="fail"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="fail"]
+  .aviala-steps-item__title.aviala-typography {
   color: var(--steps-fail-fg);
 }
 
 .aviala-steps-item[data-state="warning"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="warning"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="warning"]
+  .aviala-steps-item__title.aviala-typography {
   color: var(--steps-warning-fg);
 }
 
 .aviala-steps-item[data-state="waiting"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="waiting"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="waiting"]
+  .aviala-steps-item__title.aviala-typography {
   color: var(--steps-waiting-fg);
 }
 
 .aviala-steps-item[data-state="inProgress"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="inProgress"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="inProgress"]
+  .aviala-steps-item__title.aviala-typography {
   color: var(--steps-in-progress-fg);
 }
 
 .aviala-steps-item[data-state="default"] .aviala-steps-item__title,
-.aviala-steps-item[data-state="default"] .aviala-steps-item__title.aviala-typography {
+.aviala-steps-item[data-state="default"]
+  .aviala-steps-item__title.aviala-typography {
   /* Figma default title uses Typography Subtitle / text-normal — not caption gray */
   color: var(--steps-title-fg);
 }
@@ -378,7 +381,8 @@ button.aviala-breadcrumb-item:active {
 .aviala-pagination__page[data-active="true"] {
   background-color: var(--pagination-page-active-bg);
   color: var(--pagination-page-active-fg);
-  box-shadow: inset 0 -0.5px 0 var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
+  box-shadow: inset 0 -0.5px 0
+    var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
 }
 
 .aviala-pagination__page[data-active="true"] .aviala-typography {

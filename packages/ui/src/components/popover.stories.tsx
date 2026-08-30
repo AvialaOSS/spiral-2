@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
-import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "./popover";
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+  PopoverTrigger,
+} from "./popover";
 import { HoverPopover } from "./hover-popover";
 import { Stack } from "./stack";
 
@@ -20,7 +25,10 @@ export const Default: Story = {
         <Button mode="default">Open popover</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <p>Popover content with text typography. Use for rich panels, forms, or actions.</p>
+        <p>
+          Popover content with text typography. Use for rich panels, forms, or
+          actions.
+        </p>
       </PopoverContent>
     </Popover>
   ),
@@ -88,7 +96,9 @@ export const PrimaryAppearance: Story = {
 export const HoverTrigger: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-sm text-muted-foreground">将鼠标悬浮在按钮上以显示 Popover（触屏为点按）</p>
+      <p className="text-sm text-muted-foreground">
+        将鼠标悬浮在按钮上以显示 Popover（触屏为点按）
+      </p>
       <HoverPopover
         content={
           <div className="flex flex-col gap-2 p-1">

@@ -3,7 +3,9 @@ import { useState } from "react";
 import { ScrollPicker, ScrollPickerColumn } from "./scroll-picker";
 
 const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
+const minutes = Array.from({ length: 60 }, (_, i) =>
+  String(i).padStart(2, "0")
+);
 
 const meta: Meta<typeof ScrollPicker> = {
   title: "Information Collect/ScrollPicker",
@@ -44,7 +46,15 @@ export const SingleColumn: Story = {
       <ScrollPicker style={{ width: 160 }}>
         <ScrollPickerColumn
           aria-label="Fruit"
-          values={["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"]}
+          values={[
+            "Apple",
+            "Banana",
+            "Cherry",
+            "Date",
+            "Elderberry",
+            "Fig",
+            "Grape",
+          ]}
           value={value}
           onChange={setValue}
           loop={false}

@@ -12,7 +12,12 @@ export const Horizontal: StoryObj<typeof Steps> = {
   render: () => (
     <Steps direction="horizontal" style={{ width: 388 }}>
       <StepsItem state="done" title="Done" description="Completed" index={1} />
-      <StepsItem state="inProgress" title="In progress" description="Working" index={2} />
+      <StepsItem
+        state="inProgress"
+        title="In progress"
+        description="Working"
+        index={2}
+      />
       <StepsItem state="default" title="Next" description="Waiting" index={3} />
     </Steps>
   ),

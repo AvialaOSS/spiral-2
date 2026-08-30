@@ -41,7 +41,9 @@ function FieldDemo({
   defaultOpen?: boolean;
   defaultValue?: TimePickerValue;
 }) {
-  const [value, setValue] = useState<TimePickerValue>(defaultValue ?? { hours: 9, minutes: 30 });
+  const [value, setValue] = useState<TimePickerValue>(
+    defaultValue ?? { hours: 9, minutes: 30 }
+  );
 
   return (
     <TimePickerField
@@ -87,7 +89,10 @@ export const Error: Story = {
 
 export const Compound: Story = {
   render: () => {
-    const [value, setValue] = useState<TimePickerValue>({ hours: 17, minutes: 0 });
+    const [value, setValue] = useState<TimePickerValue>({
+      hours: 17,
+      minutes: 0,
+    });
 
     return (
       <TimePicker value={value} onValueChange={setValue} defaultOpen>

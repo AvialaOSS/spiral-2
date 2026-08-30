@@ -1,5 +1,10 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, useId, type CSSProperties, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  useId,
+  type CSSProperties,
+  type HTMLAttributes,
+} from "react";
 import { cn } from "../lib/utils";
 import { useLocaleMessages } from "../locale";
 
@@ -46,7 +51,9 @@ const BUTTON_SIZE_TO_LOADING_LEVEL = {
 
 export type LoadingButtonSize = keyof typeof BUTTON_SIZE_TO_LOADING_LEVEL;
 
-export function loadingLevelForButtonSize(size: LoadingButtonSize): LoadingLevel {
+export function loadingLevelForButtonSize(
+  size: LoadingButtonSize
+): LoadingLevel {
   return BUTTON_SIZE_TO_LOADING_LEVEL[size];
 }
 
@@ -96,7 +103,8 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
     const locale = useLocaleMessages("Loading");
     const ringMaskId = `aviala-loading-ring-${useId().replace(/:/g, "")}`;
     const resolvedLabel = label ?? locale.label;
-    const isDecorative = props["aria-hidden"] === true || props["aria-hidden"] === "true";
+    const isDecorative =
+      props["aria-hidden"] === true || props["aria-hidden"] === "true";
 
     return (
       <span
@@ -111,11 +119,23 @@ export const Loading = forwardRef<HTMLSpanElement, LoadingProps>(
           <svg className="aviala-loading__ring">
             <defs>
               <mask id={ringMaskId} maskUnits="userSpaceOnUse">
-                <circle className="aviala-loading__path" cx="50%" cy="50%" fill="none" />
+                <circle
+                  className="aviala-loading__path"
+                  cx="50%"
+                  cy="50%"
+                  fill="none"
+                />
               </mask>
             </defs>
-            <foreignObject width="100%" height="100%" mask={`url(#${ringMaskId})`}>
-              <div className="aviala-loading__conic" style={loadingRingStyle(mode ?? "theme")} />
+            <foreignObject
+              width="100%"
+              height="100%"
+              mask={`url(#${ringMaskId})`}
+            >
+              <div
+                className="aviala-loading__conic"
+                style={loadingRingStyle(mode ?? "theme")}
+              />
             </foreignObject>
           </svg>
         </span>

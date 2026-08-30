@@ -4,7 +4,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint && eslint scripts eslint.config.mjs",
+    "lint:fix": "eslint . apps/docs/.storybook --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "icons:export": "node scripts/figma-export/export-icons.mjs",
@@ -20,9 +23,16 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6",
     "rimraf": "^6.0.1",
     "turbo": "^2.5.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.68.0"
   },
   "packageManager": "pnpm@9.15.4",
   "engines": {

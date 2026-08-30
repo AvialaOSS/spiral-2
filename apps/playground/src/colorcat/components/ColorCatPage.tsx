@@ -42,7 +42,8 @@ export function ColorCatPage() {
     applyPreset("default");
   }, [applyPreset]);
 
-  const primaryEntry = entries.find((entry) => entry.id === "primary") ?? entries[0];
+  const primaryEntry =
+    entries.find((entry) => entry.id === "primary") ?? entries[0];
 
   useEffect(() => {
     if (primaryEntry) {
@@ -51,7 +52,13 @@ export function ColorCatPage() {
   }, [primaryEntry, setPrimaryColor]);
 
   const palettesById = useMemo(() => {
-    const map: Record<string, { light: ReturnType<typeof generatePaletteSteps>; dark: ReturnType<typeof generatePaletteSteps> }> = {};
+    const map: Record<
+      string,
+      {
+        light: ReturnType<typeof generatePaletteSteps>;
+        dark: ReturnType<typeof generatePaletteSteps>;
+      }
+    > = {};
     for (const entry of entries) {
       map[entry.id] = {
         light: generatePaletteSteps(entry.baseColor, "light"),
@@ -78,7 +85,11 @@ export function ColorCatPage() {
       const index = current.findIndex((item) => item.id === entry.id);
       if (index === -1) return [...current, entry];
       const next = [...current];
-      next[index] = { ...current[index], ...entry, isDefault: current[index]?.isDefault };
+      next[index] = {
+        ...current[index],
+        ...entry,
+        isDefault: current[index]?.isDefault,
+      };
       return next;
     });
   };
@@ -92,7 +103,11 @@ export function ColorCatPage() {
     const payload = buildExportPayload(entries, palettesById);
     const json = exportAsJson(payload);
     downloadTextFile("colorcat-palettes.json", json, "application/json");
-    downloadTextFile("colorcat-palettes.css", exportAsCssVariables(payload), "text/css");
+    downloadTextFile(
+      "colorcat-palettes.css",
+      exportAsCssVariables(payload),
+      "text/css"
+    );
   };
 
   return (
@@ -103,7 +118,10 @@ export function ColorCatPage() {
             ColorCat
           </Typography>
           <div className="colorcat-header__actions">
-            <Select value={format} onValueChange={(value) => setFormat(value as ColorFormat)}>
+            <Select
+              value={format}
+              onValueChange={(value) => setFormat(value as ColorFormat)}
+            >
               <SelectTrigger placeholder="HEX" className="w-[96px]" />
               <SelectContent>
                 <SelectItemGroup>
@@ -123,7 +141,11 @@ export function ColorCatPage() {
               aria-label="Export palettes"
               onClick={handleExport}
             />
-            <Button mode="primary" leftIcon={<EditAddMore aria-hidden />} onClick={openAddModal}>
+            <Button
+              mode="primary"
+              leftIcon={<EditAddMore aria-hidden />}
+              onClick={openAddModal}
+            >
               添加颜色
             </Button>
           </div>

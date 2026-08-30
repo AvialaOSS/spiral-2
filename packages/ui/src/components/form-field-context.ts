@@ -11,7 +11,8 @@ type FormFieldControlContextValue = {
   invalid: boolean;
 };
 
-export const FormFieldControlContext = createContext<FormFieldControlContextValue | null>(null);
+export const FormFieldControlContext =
+  createContext<FormFieldControlContextValue | null>(null);
 
 /**
  * Resolve a control `error` prop against the surrounding FormField.

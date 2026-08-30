@@ -159,7 +159,12 @@ export const CompoundComposition: Story = {
     const [value, setValue] = useState<Date | undefined>();
 
     return (
-      <DatePicker mode="single" value={value} onValueChange={setValue} className="w-[290px]">
+      <DatePicker
+        mode="single"
+        value={value}
+        onValueChange={setValue}
+        className="w-[290px]"
+      >
         <DatePickerTrigger placeholder="Custom composition" />
         <DatePickerContent />
       </DatePicker>
@@ -168,14 +173,14 @@ export const CompoundComposition: Story = {
 };
 
 export const WithTime: Story = {
-  render: () => (
-    <SingleDemo defaultValue={new Date(2026, 5, 10)} defaultOpen />
-  ),
+  render: () => <SingleDemo defaultValue={new Date(2026, 5, 10)} defaultOpen />,
 };
 
 export const WithTimeOpenOnTimePanel: Story = {
   render: () => {
-    const [value, setValue] = useState<Date | undefined>(new Date(2026, 5, 10, 14, 30));
+    const [value, setValue] = useState<Date | undefined>(
+      new Date(2026, 5, 10, 14, 30)
+    );
 
     return (
       <DatePicker
@@ -253,7 +258,8 @@ export const TypedInput: Story = {
   render: () => (
     <div className="flex w-full max-w-sm flex-col gap-2">
       <p className="text-sm text-muted-foreground">
-        Type <code>2026-07-04</code> or <code>2026/07/04 14:30</code>, then press Enter.
+        Type <code>2026-07-04</code> or <code>2026/07/04 14:30</code>, then
+        press Enter.
       </p>
       <SingleDemo defaultValue={new Date(2026, 6, 4)} />
     </div>
@@ -276,7 +282,9 @@ export const SizeMatrix: Story = {
     <div className="flex w-full max-w-sm flex-col gap-4">
       {sizes.map((size) => (
         <div key={size} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{size}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {size}
+          </span>
           <DatePickerField
             mode="single"
             size={size}

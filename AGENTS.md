@@ -21,13 +21,13 @@ spiral2/
 
 ## Package responsibilities
 
-| Package | Source root | Role |
-|---|---|---|
-| `packages/ui` | `packages/ui/src/` | React components. Flat file layout: `components/{name}.tsx` + `{name}.stories.tsx`. Compound components use subfolders (`date-picker/`, `color-picker/`, `time-picker/`, `video/`). All exports go through `src/index.ts`. |
-| `packages/icons` | `packages/icons/src/` | React icon components generated from Figma SVGs. `src/components/` holds one component per icon; `src/catalog.ts` is the barrel. `scripts/build-icons.mjs` drives SVGR. |
-| `packages/tokens` | `packages/tokens/src/` | CSS variables and theme engine. `src/semantic/` holds per-component effect CSS. `source/ald/` is synced from an external ALD token source. |
-| `apps/playground` | `apps/playground/src/` | Vite + React sandbox. Imports all three packages for interactive testing. |
-| `apps/docs` | `apps/docs/` | Storybook 8. Stories live alongside components in `packages/ui/src/components/`. |
+| Package           | Source root            | Role                                                                                                                                                                                                                       |
+| ----------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/ui`     | `packages/ui/src/`     | React components. Flat file layout: `components/{name}.tsx` + `{name}.stories.tsx`. Compound components use subfolders (`date-picker/`, `color-picker/`, `time-picker/`, `video/`). All exports go through `src/index.ts`. |
+| `packages/icons`  | `packages/icons/src/`  | React icon components generated from Figma SVGs. `src/components/` holds one component per icon; `src/catalog.ts` is the barrel. `scripts/build-icons.mjs` drives SVGR.                                                    |
+| `packages/tokens` | `packages/tokens/src/` | CSS variables and theme engine. `src/semantic/` holds per-component effect CSS. `source/ald/` is synced from an external ALD token source.                                                                                 |
+| `apps/playground` | `apps/playground/src/` | Vite + React sandbox. Imports all three packages for interactive testing.                                                                                                                                                  |
+| `apps/docs`       | `apps/docs/`           | Storybook 8. Stories live alongside components in `packages/ui/src/components/`.                                                                                                                                           |
 
 ## Key commands
 
@@ -65,14 +65,14 @@ When editing skills, always edit the file in `skills/` — the redirectors only 
 
 Tool-specific agent directories other than `.cursor/` are **not tracked**. `.qoder/` is gitignored: it used to carry a duplicate redirector set plus a generated `repowiki/`, which drifted from `skills/` and bloated the tree. If another agent tool needs discovery stubs, add a redirector set under that tool's directory and register it here rather than committing generated caches.
 
-| Skill | Purpose |
-|---|---|
-| `spiral-component` | How to add/modify components aligned with Figma |
-| `spiral-coding-tone` | Naming, comments, token usage conventions |
-| `spiral-changelog` | Changelog + changeset workflow |
-| `spiral-theme` | Theme engine, generateTheme, applyTheme |
-| `aviala-design-system` | Design system reference |
-| `spiral-icons` | Icon pipeline usage |
+| Skill                  | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `spiral-component`     | How to add/modify components aligned with Figma |
+| `spiral-coding-tone`   | Naming, comments, token usage conventions       |
+| `spiral-changelog`     | Changelog + changeset workflow                  |
+| `spiral-theme`         | Theme engine, generateTheme, applyTheme         |
+| `aviala-design-system` | Design system reference                         |
+| `spiral-icons`         | Icon pipeline usage                             |
 
 ## Coding conventions
 
@@ -81,14 +81,14 @@ Tool-specific agent directories other than `.cursor/` are **not tracked**. `.qod
 - **Icons**: `@aviala-design/icons` only. No `lucide-react`, no inline SVG.
   - Exempt (structure-coupled graphics, not icons) — **6 files, 9 occurrences**, all under `packages/ui/src/components/`. These SVGs are driven by component geometry (masks, animated paths, sized pointers) and cannot be replaced by catalog icons:
 
-    | File | Occurrences | Why it stays inline |
-    |---|---|---|
-    | `checkbox-check-icon.tsx` | 1 | Checkmark path is stroke-dash animated with the checkbox state |
-    | `loading.tsx` | 1 | `<mask>` that clips the conic-gradient spinner |
-    | `overlay-pointer.tsx` | 1 | Arrow geometry is recomputed from overlay placement/size |
-    | `progress.tsx` | 1 | Track/indicator geometry follows the measured bar |
-    | `tab.tsx` | 1 | Active-tab notch shape depends on adjacent tab widths |
-    | `video/video-animated-icon-markup.ts` | 4 | play/pause/next/previous animation markup injected at runtime with `__UID__` substitution |
+    | File                                  | Occurrences | Why it stays inline                                                                       |
+    | ------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+    | `checkbox-check-icon.tsx`             | 1           | Checkmark path is stroke-dash animated with the checkbox state                            |
+    | `loading.tsx`                         | 1           | `<mask>` that clips the conic-gradient spinner                                            |
+    | `overlay-pointer.tsx`                 | 1           | Arrow geometry is recomputed from overlay placement/size                                  |
+    | `progress.tsx`                        | 1           | Track/indicator geometry follows the measured bar                                         |
+    | `tab.tsx`                             | 1           | Active-tab notch shape depends on adjacent tab widths                                     |
+    | `video/video-animated-icon-markup.ts` | 4           | play/pause/next/previous animation markup injected at runtime with `__UID__` substitution |
 
     This is a closed list. Adding an inline SVG means adding a row here in the same change, with the geometric reason — otherwise use a catalog icon.
 - **Components**: Prefer Radix primitives (shadcn pattern). Use `cn()` from `src/lib/utils` for class merging. Use `class-variance-authority` for variant management.
@@ -175,6 +175,7 @@ Feature branch + changeset → merge to main → `pnpm version:packages` creates
 ## CI
 
 GitHub Actions (`.github/workflows/`):
+
 - **CI** (`ci.yml`): build + typecheck on push/PR to main.
 - **Icons Sync** (`icons-sync.yml`): manual Figma export → build → PR.
 - **Release** (`release.yml`): changeset-based publish.

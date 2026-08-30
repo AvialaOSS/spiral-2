@@ -13,12 +13,7 @@ import { Typography, type TypographyLevel } from "./typography";
 
 /** Figma Components → Information Display → Avata (305:7013) */
 export type AvatarLevel =
-  | "display"
-  | "headline1"
-  | "headline2"
-  | "title"
-  | "subtitle"
-  | "text";
+  "display" | "headline1" | "headline2" | "title" | "subtitle" | "text";
 
 export type AvatarContent = "text" | "picture" | "icon";
 
@@ -73,11 +68,18 @@ function renderAvatarIcon(node: ReactNode, level: AvatarLevel): ReactNode {
   const size = AVATAR_ICON_SIZE[level];
   if (isValidElement(node) && typeof node.type !== "string") {
     return cloneElement(
-      node as ReactElement<{ width?: number | string; height?: number | string; className?: string }>,
+      node as ReactElement<{
+        width?: number | string;
+        height?: number | string;
+        className?: string;
+      }>,
       {
         width: size,
         height: size,
-        className: cn((node as ReactElement<{ className?: string }>).props.className, "shrink-0"),
+        className: cn(
+          (node as ReactElement<{ className?: string }>).props.className,
+          "shrink-0"
+        ),
       }
     );
   }

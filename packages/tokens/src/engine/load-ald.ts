@@ -1,10 +1,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  BASE_NUMBERS_FILES,
-  type BaseNumbersDensity,
-} from "./base-numbers";
+import { BASE_NUMBERS_FILES, type BaseNumbersDensity } from "./base-numbers";
 import {
   flattenTokens,
   resolveTokenHex,
@@ -103,7 +100,9 @@ function loadBaseNumbers(density: BaseNumbersDensity = "default"): ThemeVars {
     const value = resolveTokenNumber(token);
     if (value !== undefined) {
       vars[baseNumberToCssVar(path)] =
-        typeof value === "number" ? formatBaseNumber(path, value) : String(value);
+        typeof value === "number"
+          ? formatBaseNumber(path, value)
+          : String(value);
     }
   }
 

@@ -107,7 +107,9 @@ describe("isPathOnSelectedPath", () => {
   it("returns true when path is a prefix of selectedPath", () => {
     expect(isPathOnSelectedPath(["a"], ["a", "a1", "a1x"])).toBe(true);
     expect(isPathOnSelectedPath(["a", "a1"], ["a", "a1", "a1x"])).toBe(true);
-    expect(isPathOnSelectedPath(["a", "a1", "a1x"], ["a", "a1", "a1x"])).toBe(true);
+    expect(isPathOnSelectedPath(["a", "a1", "a1x"], ["a", "a1", "a1x"])).toBe(
+      true
+    );
   });
 
   it("returns false when path diverges", () => {

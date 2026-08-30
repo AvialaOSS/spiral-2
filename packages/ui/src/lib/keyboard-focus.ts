@@ -25,7 +25,12 @@ export function initKeyboardFocus(): void {
     (event) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       // Ignore pure modifier presses
-      if (event.key === "Meta" || event.key === "Control" || event.key === "Alt" || event.key === "Shift") {
+      if (
+        event.key === "Meta" ||
+        event.key === "Control" ||
+        event.key === "Alt" ||
+        event.key === "Shift"
+      ) {
         return;
       }
       setKeyboard(true);
@@ -34,5 +39,8 @@ export function initKeyboardFocus(): void {
   );
 
   window.addEventListener("pointerdown", () => setKeyboard(false), true);
-  window.addEventListener("touchstart", () => setKeyboard(false), { capture: true, passive: true });
+  window.addEventListener("touchstart", () => setKeyboard(false), {
+    capture: true,
+    passive: true,
+  });
 }

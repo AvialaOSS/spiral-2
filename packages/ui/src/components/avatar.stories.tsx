@@ -9,7 +9,14 @@ const meta: Meta<typeof Avatar> = {
   argTypes: {
     level: {
       control: "select",
-      options: ["display", "headline1", "headline2", "title", "subtitle", "text"] satisfies AvatarLevel[],
+      options: [
+        "display",
+        "headline1",
+        "headline2",
+        "title",
+        "subtitle",
+        "text",
+      ] satisfies AvatarLevel[],
     },
     content: {
       control: "select",
@@ -37,7 +44,16 @@ export const Icon: Story = {
 export const Levels: Story = {
   render: () => (
     <div style={{ display: "flex", alignItems: "flex-end", gap: 12 }}>
-      {(["display", "headline1", "headline2", "title", "subtitle", "text"] as const).map((level) => (
+      {(
+        [
+          "display",
+          "headline1",
+          "headline2",
+          "title",
+          "subtitle",
+          "text",
+        ] as const
+      ).map((level) => (
         <Avatar key={level} level={level} content="text" lineHeightFix={false}>
           K
         </Avatar>

@@ -189,14 +189,22 @@ const components = [
       { exportName: "ListSeparator" },
     ],
   },
-  { key: "Typography", file: "components/typography.tsx", exportName: "Typography" },
+  {
+    key: "Typography",
+    file: "components/typography.tsx",
+    exportName: "Typography",
+  },
   {
     key: "Typeface",
     file: "components/typeface.tsx",
     exportName: "Typeface",
     parts: [{ exportName: "TypefacePair" }],
   },
-  { key: "FormField", file: "components/form-field.tsx", exportName: "FormField" },
+  {
+    key: "FormField",
+    file: "components/form-field.tsx",
+    exportName: "FormField",
+  },
   {
     key: "Anchor",
     file: "components/anchor.tsx",
@@ -280,7 +288,10 @@ const components = [
     key: "ScrollPicker",
     file: "components/scroll-picker.tsx",
     exportName: "ScrollPicker",
-    parts: [{ exportName: "ScrollPickerColumn" }, { exportName: "ScrollPickerItem" }],
+    parts: [
+      { exportName: "ScrollPickerColumn" },
+      { exportName: "ScrollPickerItem" },
+    ],
   },
   {
     key: "Breadcrumb",
@@ -300,7 +311,11 @@ const components = [
     exportName: "Steps",
     parts: [{ exportName: "StepsItem" }, { exportName: "StepsIcon" }],
   },
-  { key: "Pagination", file: "components/pagination.tsx", exportName: "Pagination" },
+  {
+    key: "Pagination",
+    file: "components/pagination.tsx",
+    exportName: "Pagination",
+  },
   {
     key: "Card",
     file: "components/card.tsx",
@@ -340,7 +355,9 @@ function literalFromDocgenValue(raw) {
     return trimmed;
   }
   if (typeof raw === "object" && raw !== null && "value" in raw) {
-    return literalFromDocgenValue(/** @type {{ value: unknown }} */ (raw).value);
+    return literalFromDocgenValue(
+      /** @type {{ value: unknown }} */ (raw).value
+    );
   }
   return String(raw);
 }
@@ -448,7 +465,9 @@ for (const entry of components) {
     const partDocs = parseFile(partFilePath);
     const partMatch = findDoc(partDocs, part.exportName);
     if (!partMatch) {
-      console.warn(`No docgen match for part ${entry.key} → ${part.exportName}`);
+      console.warn(
+        `No docgen match for part ${entry.key} → ${part.exportName}`
+      );
       continue;
     }
     const partDoc = serializeComponentDoc(partMatch);
@@ -466,5 +485,10 @@ for (const entry of components) {
 
 const outDir = path.resolve(dirname, "../dist");
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, "props.json"), `${JSON.stringify(registry, null, 2)}\n`);
-console.log(`Wrote ${Object.keys(registry).length} component prop docs to dist/props.json`);
+fs.writeFileSync(
+  path.join(outDir, "props.json"),
+  `${JSON.stringify(registry, null, 2)}\n`
+);
+console.log(
+  `Wrote ${Object.keys(registry).length} component prop docs to dist/props.json`
+);

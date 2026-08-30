@@ -262,7 +262,10 @@ export function useVideoState({
     document.addEventListener("webkitfullscreenchange", onFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", onFullscreenChange);
-      document.removeEventListener("webkitfullscreenchange", onFullscreenChange);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        onFullscreenChange
+      );
     };
   }, [rootRef]);
 
@@ -348,7 +351,9 @@ export function useVideoState({
       if (!video) return;
       const next = Math.min(
         Math.max(0, video.currentTime + delta),
-        Number.isFinite(video.duration) ? video.duration : video.currentTime + delta
+        Number.isFinite(video.duration)
+          ? video.duration
+          : video.currentTime + delta
       );
       video.currentTime = next;
       setCurrentTime(next);
@@ -426,7 +431,8 @@ export function useVideoState({
     };
 
     const isFull =
-      document.fullscreenElement === root || doc.webkitFullscreenElement === root;
+      document.fullscreenElement === root ||
+      doc.webkitFullscreenElement === root;
 
     try {
       if (isFull) {

@@ -80,15 +80,11 @@ describe("metricsApproxEqual", () => {
   });
 
   it("returns true within default epsilon", () => {
-    expect(
-      metricsApproxEqual(base, { ...base, x: 10.3, y: 20.2 })
-    ).toBe(true);
+    expect(metricsApproxEqual(base, { ...base, x: 10.3, y: 20.2 })).toBe(true);
   });
 
   it("returns false beyond default epsilon", () => {
-    expect(
-      metricsApproxEqual(base, { ...base, x: 11 })
-    ).toBe(false);
+    expect(metricsApproxEqual(base, { ...base, x: 11 })).toBe(false);
   });
 
   it("respects custom epsilon", () => {

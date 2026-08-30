@@ -16,10 +16,17 @@ const gapMap = {
 };
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>(
-  ({ className, gap = "component", direction = "column", style, ...props }, ref) => (
+  (
+    { className, gap = "component", direction = "column", style, ...props },
+    ref
+  ) => (
     <div
       ref={ref}
-      className={cn("flex", direction === "row" ? "flex-row" : "flex-col", className)}
+      className={cn(
+        "flex",
+        direction === "row" ? "flex-row" : "flex-col",
+        className
+      )}
       style={{ gap: gapMap[gap], ...style }}
       {...props}
     />
@@ -85,9 +92,15 @@ export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(
 
         {hasAction ? (
           <div className="aviala-form-group__action">
-            {info ? <div className="aviala-form-group__info">{info}</div> : null}
-            {feedback ? <div className="aviala-form-group__feedback">{feedback}</div> : null}
-            {actions ? <div className="aviala-form-group__actions">{actions}</div> : null}
+            {info ? (
+              <div className="aviala-form-group__info">{info}</div>
+            ) : null}
+            {feedback ? (
+              <div className="aviala-form-group__feedback">{feedback}</div>
+            ) : null}
+            {actions ? (
+              <div className="aviala-form-group__actions">{actions}</div>
+            ) : null}
           </div>
         ) : null}
       </fieldset>

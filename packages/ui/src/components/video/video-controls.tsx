@@ -15,7 +15,10 @@ import {
   parseVideoTime,
   type VideoObjectFit,
 } from "./use-video-state";
-import { VideoAnimatedIcon, VIDEO_TRANSPORT_ANIMATION_MS } from "./video-animated-icon";
+import {
+  VideoAnimatedIcon,
+  VIDEO_TRANSPORT_ANIMATION_MS,
+} from "./video-animated-icon";
 import { VideoSettings } from "./video-settings";
 import { VideoSpeed } from "./video-speed";
 import { VideoVolume } from "./video-volume";
@@ -73,11 +76,7 @@ function volumePercent(volume: number, muted: boolean): number {
   return Math.round(Math.min(1, Math.max(0, volume)) * 100);
 }
 
-function VolumeTriggerIcon({
-  percent,
-}: {
-  percent: number;
-}) {
+function VolumeTriggerIcon({ percent }: { percent: number }) {
   if (percent <= 0) return <GeneralVolumeSlash mode="fill" aria-hidden />;
   if (percent < 34) return <GeneralVolumeMin mode="fill" aria-hidden />;
   if (percent < 67) return <GeneralVolumeMiddle mode="fill" aria-hidden />;
@@ -187,7 +186,9 @@ function VideoTimeInput({
     const parsed = parseVideoTime(draft);
     if (parsed != null) {
       const next =
-        safeDuration > 0 ? Math.min(Math.max(0, parsed), safeDuration) : Math.max(0, parsed);
+        safeDuration > 0
+          ? Math.min(Math.max(0, parsed), safeDuration)
+          : Math.max(0, parsed);
       onSeek(next);
     }
     setEditing(false);
@@ -200,7 +201,11 @@ function VideoTimeInput({
       size="regular"
       value={editing ? draft : timeLabel}
       aria-label={timeLabel}
-      style={{ ["--video-time-ch" as string]: String((editing ? draft : timeLabel).length) }}
+      style={{
+        ["--video-time-ch" as string]: String(
+          (editing ? draft : timeLabel).length
+        ),
+      }}
       onFocus={(event) => {
         setEditing(true);
         setDraft(timeLabel);

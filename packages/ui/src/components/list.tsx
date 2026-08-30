@@ -50,7 +50,9 @@ export type ListTitleProps = HTMLAttributes<HTMLDivElement>;
 export const ListTitle = forwardRef<HTMLDivElement, ListTitleProps>(
   ({ className, children, ...props }, ref) => (
     <div ref={ref} className={cn("aviala-list-title", className)} {...props}>
-      <span className={cn(typographyVariants({ level: "text" }))}>{children}</span>
+      <span className={cn(typographyVariants({ level: "text" }))}>
+        {children}
+      </span>
     </div>
   )
 );
@@ -61,7 +63,12 @@ export type ListGroupProps = HTMLAttributes<HTMLDivElement>;
 /** Figma List card container — rounded white surface for items */
 export const ListGroup = forwardRef<HTMLDivElement, ListGroupProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn("aviala-list-group", className)} role="list" {...props}>
+    <div
+      ref={ref}
+      className={cn("aviala-list-group", className)}
+      role="list"
+      {...props}
+    >
       {children}
     </div>
   )
@@ -75,7 +82,11 @@ export type ListItemGroupProps = {
 };
 
 /** Convenience wrapper — titled list section (Figma List title + card) */
-export function ListItemGroup({ label, children, className }: ListItemGroupProps) {
+export function ListItemGroup({
+  label,
+  children,
+  className,
+}: ListItemGroupProps) {
   return (
     <div className={cn("aviala-list", className)}>
       {label != null ? <ListTitle>{label}</ListTitle> : null}
@@ -104,12 +115,19 @@ export type ListSeparatorProps = HTMLAttributes<HTMLHRElement>;
 /** Horizontal separator between list groups */
 export const ListSeparator = forwardRef<HTMLHRElement, ListSeparatorProps>(
   ({ className, ...props }, ref) => (
-    <hr ref={ref} className={cn("aviala-list-separator", className)} {...props} />
+    <hr
+      ref={ref}
+      className={cn("aviala-list-separator", className)}
+      {...props}
+    />
   )
 );
 ListSeparator.displayName = "ListSeparator";
 
-function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode {
+function renderLeadingIcon(
+  node: ReactNode,
+  leading: ListItemLeading
+): ReactNode {
   if (leading === "none") return null;
 
   const iconSize = leading === "shaped" ? 20 : 22;
@@ -117,14 +135,21 @@ function renderLeadingIcon(node: ReactNode, leading: ListItemLeading): ReactNode
 
   const rendered =
     isValidElement(content) && typeof content.type !== "string"
-      ? cloneElement(content as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: iconSize,
-          height: iconSize,
-          className: cn(
-            (content as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          content as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: iconSize,
+            height: iconSize,
+            className: cn(
+              (content as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : content;
 
   return (
@@ -231,14 +256,20 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
   ) => {
     const locale = useLocaleMessages("List");
     const rtl = useRtl();
-    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
+    const ChevronIcon = rtl
+      ? DirectionArrowLeftLight
+      : DirectionArrowRightLight;
     const isInteractive = interactive ?? (onClick != null || href != null);
     const chevronVisible = showChevron ?? itemType === "action";
 
     const primaryAction =
       action ??
       (actionLabel != null ? (
-        <Button mode="primary" size="regular" leftIcon={<GeneralSetting aria-hidden />}>
+        <Button
+          mode="primary"
+          size="regular"
+          leftIcon={<GeneralSetting aria-hidden />}
+        >
           {actionLabel}
         </Button>
       ) : null);
@@ -321,7 +352,11 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
         <div className="aviala-list-item__body">
           <div className="aviala-list-item__content">
             <div className="aviala-list-item__head">
-              <Typeface content="textCaption" primary={title} secondary={subtitle} />
+              <Typeface
+                content="textCaption"
+                primary={title}
+                secondary={subtitle}
+              />
             </div>
             {trailingNode}
           </div>

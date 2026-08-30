@@ -95,7 +95,12 @@ function resolveSize(
   iconOnly?: boolean,
   variant?: LegacyVariant | null
 ): ButtonSize {
-  if (size === "tiny" || size === "small" || size === "regular" || size === "big") {
+  if (
+    size === "tiny" ||
+    size === "small" ||
+    size === "regular" ||
+    size === "big"
+  ) {
     return size;
   }
   switch (size) {
@@ -113,12 +118,7 @@ function resolveSize(
 }
 
 type LegacyVariant =
-  | "default"
-  | "secondary"
-  | "outline"
-  | "ghost"
-  | "destructive"
-  | "link";
+  "default" | "secondary" | "outline" | "ghost" | "destructive" | "link";
 
 type LegacySize = "default" | "sm" | "lg" | "icon";
 
@@ -175,7 +175,8 @@ function resolveIconOnlyIcon(
   const fromProp = leftIcon ?? icon;
   if (fromProp) return fromProp;
   if (!iconOnly || children == null || children === false) return undefined;
-  if (isValidElement(children) && typeof children.type !== "string") return children;
+  if (isValidElement(children) && typeof children.type !== "string")
+    return children;
   return undefined;
 }
 
@@ -227,7 +228,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ((!!(leftIcon ?? icon) ||
           (isValidElement(children) && typeof children.type !== "string")) &&
           !rightIcon &&
-          (leftIcon ?? icon ? !children : true)));
+          ((leftIcon ?? icon) ? !children : true)));
     const size = resolveSize(sizeProp, iconOnly, variant);
     const isDisabled = disabled || loading;
     const showSurface = hasSurface(mode);
@@ -238,7 +239,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const resolvedLeft = iconOnly
       ? resolveIconOnlyIcon(leftIcon, icon, children, true)
-      : leftIcon ?? icon;
+      : (leftIcon ?? icon);
     const label = iconOnly ? null : children;
     const iconLevel = sizeLabelLevels[size];
 
@@ -260,10 +261,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             aria-hidden
           />
         )}
-        {!iconOnly && renderIcon(resolvedLeft, iconLevel, undefined, "button.icon-left")}
+        {!iconOnly &&
+          renderIcon(resolvedLeft, iconLevel, undefined, "button.icon-left")}
         {iconOnly
           ? renderIcon(resolvedLeft, iconLevel, undefined, "button.icon-left")
-          : label !== null && label !== undefined && (
+          : label !== null &&
+            label !== undefined && (
               <span
                 className={cn(
                   typographyVariants({ level: sizeLabelLevels[size] }),
@@ -275,7 +278,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 {label}
               </span>
             )}
-        {!iconOnly && renderIcon(rightIcon, iconLevel, undefined, "button.icon-right")}
+        {!iconOnly &&
+          renderIcon(rightIcon, iconLevel, undefined, "button.icon-right")}
       </>
     );
 

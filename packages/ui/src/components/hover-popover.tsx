@@ -86,8 +86,12 @@ export function HoverPopover({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const open = isControlled ? openProp : internalOpen;
 
-  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
 
   const clearTimers = useCallback(() => {
     if (openTimer.current) clearTimeout(openTimer.current);
@@ -154,7 +158,8 @@ export function HoverPopover({
         onMouseEnter={openNow}
         onMouseLeave={closeSoon}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") keyboardOpenRef.current = true;
+          if (e.key === "Enter" || e.key === " ")
+            keyboardOpenRef.current = true;
         }}
       >
         {children}

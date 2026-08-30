@@ -37,7 +37,10 @@ import { join, dirname } from "node:path";
 import { createInterface } from "node:readline";
 import { fileURLToPath } from "node:url";
 import { loadEnv } from "./lib/load-env.mjs";
-import { createFigmaClient, RateLimitExhaustedError } from "./lib/figma-api.mjs";
+import {
+  createFigmaClient,
+  RateLimitExhaustedError,
+} from "./lib/figma-api.mjs";
 import {
   componentSetToCategory,
   componentSetToIconName,
@@ -88,7 +91,10 @@ function sleep(ms) {
 
 function isNonInteractive() {
   if (process.argv.includes("--non-interactive")) return true;
-  if (process.env.ICONS_NON_INTERACTIVE === "1" || process.env.ICONS_NON_INTERACTIVE === "true") {
+  if (
+    process.env.ICONS_NON_INTERACTIVE === "1" ||
+    process.env.ICONS_NON_INTERACTIVE === "true"
+  ) {
     return true;
   }
   if (process.env.CI === "true" || process.env.CI === "1") return true;
@@ -169,7 +175,9 @@ function promptChoice(question) {
 }
 
 async function askRecoveryAction(failed, total) {
-  console.error(`\nExport finished with ${failed.length} failure(s) (of ${total}).`);
+  console.error(
+    `\nExport finished with ${failed.length} failure(s) (of ${total}).`
+  );
   for (const item of failed.slice(0, 20)) {
     console.error(`  ${item.relativePath}.svg  [${item.reason}]`);
   }
@@ -178,7 +186,9 @@ async function askRecoveryAction(failed, total) {
   }
 
   if (isNonInteractive()) {
-    console.error("Non-interactive mode: treating remaining failures as abort.");
+    console.error(
+      "Non-interactive mode: treating remaining failures as abort."
+    );
     return "a";
   }
 
@@ -245,7 +255,11 @@ async function exportItems(client, fileKey, items, maxRetries, results) {
     if (!svgRes.ok) {
       const entry = { item, reason: "download-status", status: svgRes.status };
       failed.push(entry);
-      results.set(item.nodeId, { ok: false, reason: "download-status", status: svgRes.status });
+      results.set(item.nodeId, {
+        ok: false,
+        reason: "download-status",
+        status: svgRes.status,
+      });
       console.warn(`  fail (download ${svgRes.status}): ${item.relativePath}`);
       continue;
     }
@@ -284,12 +298,21 @@ console.log(`Figma icons file: ${fileKey}`);
 console.log(
   "Source: published library catalog of this file (Publish library for new icons); SVG from live file."
 );
-if (thicknessFilter) console.log(`Filter thickness: ${[...thicknessFilter].join(", ")}`);
+if (thicknessFilter)
+  console.log(`Filter thickness: ${[...thicknessFilter].join(", ")}`);
 if (modeFilter) console.log(`Filter mode: ${[...modeFilter].join(", ")}`);
-if (categoryFilter) console.log(`Filter category: ${[...categoryFilter].join(", ")}`);
+if (categoryFilter)
+  console.log(`Filter category: ${[...categoryFilter].join(", ")}`);
 if (nameFilter) console.log(`Filter name: ${[...nameFilter].join(", ")}`);
-if (nonInteractive) console.log("Mode: non-interactive (failures after export abort without promoting).");
-console.log(dryRun ? "Dry run — no files will be written." : `Output: ${outDir} (via .staging)`);
+if (nonInteractive)
+  console.log(
+    "Mode: non-interactive (failures after export abort without promoting)."
+  );
+console.log(
+  dryRun
+    ? "Dry run — no files will be written."
+    : `Output: ${outDir} (via .staging)`
+);
 
 let componentSets;
 let components;
@@ -311,7 +334,9 @@ const exportableSets = componentSets.filter((set) => {
   return name.length > 0 && !name.startsWith("_") && !name.startsWith(".");
 });
 
-console.log(`Found ${exportableSets.length} published component set(s), ${components.length} published component(s).`);
+console.log(
+  `Found ${exportableSets.length} published component set(s), ${components.length} published component(s).`
+);
 
 /** node_id → { setName, category } from component-set children */
 const nodeToSet = new Map();
@@ -355,13 +380,18 @@ for (const component of components) {
   if (modeFilter && !modeFilter.has(variant.mode)) continue;
 
   const setInfo = nodeToSet.get(component.node_id);
-  const category = setInfo?.category ?? (variant.name.split("_")[0] || "uncategorized");
+  const category =
+    setInfo?.category ?? (variant.name.split("_")[0] || "uncategorized");
   const iconName = setInfo?.setName
-    ? componentSetToIconName(setInfo.setName) ?? variant.name
+    ? (componentSetToIconName(setInfo.setName) ?? variant.name)
     : variant.name;
 
   if (categoryFilter && !filterHas(categoryFilter, category)) continue;
-  if (nameFilter && !filterHas(nameFilter, iconName) && !filterHas(nameFilter, variant.name)) {
+  if (
+    nameFilter &&
+    !filterHas(nameFilter, iconName) &&
+    !filterHas(nameFilter, variant.name)
+  ) {
     continue;
   }
 
@@ -411,7 +441,13 @@ let failed = [];
 
 try {
   while (pending.length > 0) {
-    const round = await exportItems(client, fileKey, pending, maxRetries, results);
+    const round = await exportItems(
+      client,
+      fileKey,
+      pending,
+      maxRetries,
+      results
+    );
     exported += round.exportedDelta;
     failed = round.failed.map((f) => ({
       item: f.item,
@@ -494,12 +530,17 @@ for (const item of plan) {
 }
 
 manifest.count = manifest.icons.length;
-writeFileSync(join(stagingDir, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+writeFileSync(
+  join(stagingDir, "manifest.json"),
+  `${JSON.stringify(manifest, null, 2)}\n`
+);
 
 promoteStaging();
 
 console.log(`Exported ${manifest.count} icon variant(s) to ${outDir}`);
 if (skippedEntries.length > 0) {
-  console.warn(`Skipped ${skippedEntries.length} variant(s) (see manifest.skipped).`);
+  console.warn(
+    `Skipped ${skippedEntries.length} variant(s) (see manifest.skipped).`
+  );
 }
 console.log("Next: pnpm icons:build");

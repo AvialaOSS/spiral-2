@@ -12,7 +12,8 @@ import { cn } from "../lib/utils";
 import { Typography, type TypographyLevel } from "./typography";
 
 /** Figma Components → Information Display → Badge (166:137) */
-export type BadgeStyle = "theme" | "info" | "fail" | "warning" | "success" | "normal";
+export type BadgeStyle =
+  "theme" | "info" | "fail" | "warning" | "success" | "normal";
 export type BadgeLevel = "caption" | "text";
 export type BadgeLineHeightFix = "text" | "subtitle" | "off";
 

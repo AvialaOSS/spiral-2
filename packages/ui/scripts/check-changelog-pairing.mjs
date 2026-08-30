@@ -22,12 +22,19 @@ function readChangesets() {
   if (!existsSync(changesetDir)) return [];
 
   return readdirSync(changesetDir)
-    .filter((file) => file.endsWith(".md") && file.toLowerCase() !== "readme.md")
+    .filter(
+      (file) => file.endsWith(".md") && file.toLowerCase() !== "readme.md"
+    )
     .map((file) => {
-      const raw = readFileSync(path.join(changesetDir, file), "utf8").replace(/\r\n/g, "\n");
+      const raw = readFileSync(path.join(changesetDir, file), "utf8").replace(
+        /\r\n/g,
+        "\n"
+      );
       const frontmatter = /^---\n([\s\S]*?)\n---/.exec(raw);
       const packages = frontmatter
-        ? [...frontmatter[1].matchAll(/^["']?([^"':]+)["']?\s*:/gm)].map((m) => m[1].trim())
+        ? [...frontmatter[1].matchAll(/^["']?([^"':]+)["']?\s*:/gm)].map((m) =>
+            m[1].trim()
+          )
         : [];
       return { file, packages };
     });

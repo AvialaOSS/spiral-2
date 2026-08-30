@@ -42,6 +42,7 @@
     "changelog:check": "node scripts/check-changelog-pairing.mjs",
     "changelog:stamp": "node scripts/stamp-unreleased.mjs",
     "dev": "tsup --watch",
+    "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist"

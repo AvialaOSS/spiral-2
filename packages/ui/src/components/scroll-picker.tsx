@@ -45,13 +45,17 @@ type ColumnMetrics = {
  * 0 does not sit at scrollTop 0.
  */
 function readMetrics(container: HTMLElement): ColumnMetrics | null {
-  const items = container.querySelectorAll<HTMLElement>(".aviala-scroll-picker-item");
+  const items = container.querySelectorAll<HTMLElement>(
+    ".aviala-scroll-picker-item"
+  );
   const first = items[0];
   if (!first) return null;
 
   const itemHeight = first.offsetHeight;
   const second = items[1];
-  const measuredPitch = second ? second.offsetTop - first.offsetTop : itemHeight;
+  const measuredPitch = second
+    ? second.offsetTop - first.offsetTop
+    : itemHeight;
   const pitch = measuredPitch > 0 ? measuredPitch : itemHeight;
   if (pitch <= 0) return null;
 
@@ -61,12 +65,25 @@ function readMetrics(container: HTMLElement): ColumnMetrics | null {
   };
 }
 
-function scrollTopForIndex(container: HTMLElement, metrics: ColumnMetrics, index: number): number {
-  const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
-  return Math.min(Math.max(metrics.originTop + index * metrics.pitch, 0), maxScroll);
+function scrollTopForIndex(
+  container: HTMLElement,
+  metrics: ColumnMetrics,
+  index: number
+): number {
+  const maxScroll = Math.max(
+    container.scrollHeight - container.clientHeight,
+    0
+  );
+  return Math.min(
+    Math.max(metrics.originTop + index * metrics.pitch, 0),
+    maxScroll
+  );
 }
 
-function fractionalIndexAtScrollTop(metrics: ColumnMetrics, scrollTop: number): number {
+function fractionalIndexAtScrollTop(
+  metrics: ColumnMetrics,
+  scrollTop: number
+): number {
   return (scrollTop - metrics.originTop) / metrics.pitch;
 }
 
@@ -76,7 +93,11 @@ function readRawIndex(container: HTMLElement, metrics: ColumnMetrics): number {
 
 export type ScrollPickerProps = HTMLAttributes<HTMLDivElement>;
 
-export function ScrollPicker({ className, children, ...props }: ScrollPickerProps) {
+export function ScrollPicker({
+  className,
+  children,
+  ...props
+}: ScrollPickerProps) {
   return (
     <div className={cn("aviala-scroll-picker", className)} {...props}>
       {children}
@@ -111,9 +132,13 @@ export function ScrollPickerColumn<T = string>({
   const isProgrammaticScrollRef = useRef(false);
   /** When set, value-driven auto sync must not cancel an in-flight smooth scroll. */
   const smoothTargetValueRef = useRef<T | null>(null);
-  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const wheelAccumRef = useRef(0);
-  const wheelAccumIdleTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const wheelAccumIdleTimerRef = useRef<
+    ReturnType<typeof setTimeout> | undefined
+  >(undefined);
   const selectedValueRef = useRef(value);
   const reactId = useId();
 
@@ -142,7 +167,8 @@ export function ScrollPickerColumn<T = string>({
       ".aviala-scroll-picker-column__highlight"
     );
     const bandHeight = band?.offsetHeight || 26;
-    const offset = container.scrollTop + (container.clientHeight - bandHeight) / 2;
+    const offset =
+      container.scrollTop + (container.clientHeight - bandHeight) / 2;
     track.style.transform = `translate3d(0, ${-offset}px, 0)`;
   }, []);
 
@@ -155,7 +181,10 @@ export function ScrollPickerColumn<T = string>({
       if (!metrics) return;
 
       isProgrammaticScrollRef.current = true;
-      container.scrollTo({ top: scrollTopForIndex(container, metrics, index), behavior });
+      container.scrollTo({
+        top: scrollTopForIndex(container, metrics, index),
+        behavior,
+      });
       if (behavior === "auto") {
         syncClipTrack();
       } else {
@@ -179,7 +208,10 @@ export function ScrollPickerColumn<T = string>({
     }
 
     const lastIndex = values.length - 1;
-    const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+    const maxScroll = Math.max(
+      container.scrollHeight - container.clientHeight,
+      0
+    );
     let rawIndex = stickyRoundIndex(
       fractionalIndexAtScrollTop(metrics, container.scrollTop),
       WHEEL_STICKY_AMOUNT
@@ -205,7 +237,9 @@ export function ScrollPickerColumn<T = string>({
       ? recenterLoopIndex(rawIndex, values.length, MIDDLE_SECTION)
       : valueIndex;
     const targetTop = scrollTopForIndex(container, metrics, targetIndex);
-    const section = loop ? Math.floor(rawIndex / values.length) : MIDDLE_SECTION;
+    const section = loop
+      ? Math.floor(rawIndex / values.length)
+      : MIDDLE_SECTION;
     const needsLoopRecenter = loop && section !== MIDDLE_SECTION;
 
     if (wasProgrammatic) {
@@ -321,7 +355,10 @@ export function ScrollPickerColumn<T = string>({
       // A non-looping column that is already pinned to an end has nothing left
       // to consume — leave the event alone so the page keeps scrolling.
       if (!loop) {
-        const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+        const maxScroll = Math.max(
+          container.scrollHeight - container.clientHeight,
+          0
+        );
         const atStart = event.deltaY < 0 && container.scrollTop <= 1;
         const atEnd = event.deltaY > 0 && container.scrollTop >= maxScroll - 1;
         if (atStart || atEnd) {
@@ -370,7 +407,10 @@ export function ScrollPickerColumn<T = string>({
           MIDDLE_SECTION
         ).rawIndex;
       } else {
-        targetRaw = Math.min(Math.max(currentRaw + steps, 0), values.length - 1);
+        targetRaw = Math.min(
+          Math.max(currentRaw + steps, 0),
+          values.length - 1
+        );
         if (targetRaw === currentRaw) return;
       }
 
@@ -409,12 +449,24 @@ export function ScrollPickerColumn<T = string>({
     switch (event.key) {
       case "ArrowUp":
         targetRaw = loop
-          ? stepLoopRawIndex(currentRaw, -1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          ? stepLoopRawIndex(
+              currentRaw,
+              -1,
+              values.length,
+              LOOP_SECTIONS,
+              MIDDLE_SECTION
+            ).rawIndex
           : Math.max(currentRaw - 1, 0);
         break;
       case "ArrowDown":
         targetRaw = loop
-          ? stepLoopRawIndex(currentRaw, 1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          ? stepLoopRawIndex(
+              currentRaw,
+              1,
+              values.length,
+              LOOP_SECTIONS,
+              MIDDLE_SECTION
+            ).rawIndex
           : Math.min(currentRaw + 1, values.length - 1);
         break;
       case "Home":
@@ -424,7 +476,13 @@ export function ScrollPickerColumn<T = string>({
         break;
       case "End":
         targetRaw = loop
-          ? nearestLoopIndex(currentRaw, values.length - 1, values.length, LOOP_SECTIONS, 1)
+          ? nearestLoopIndex(
+              currentRaw,
+              values.length - 1,
+              values.length,
+              LOOP_SECTIONS,
+              1
+            )
           : values.length - 1;
         break;
       default:
@@ -460,13 +518,16 @@ export function ScrollPickerColumn<T = string>({
           <ul className="aviala-scroll-picker-column__list">
             {repeatedValues.map((itemValue, index) => {
               const isCommitted = Object.is(itemValue, value);
-              const valueIndex = loop ? normalizeWheelIndex(index, values.length) : index;
+              const valueIndex = loop
+                ? normalizeWheelIndex(index, values.length)
+                : index;
               const optionId = `${reactId}-${loop ? index : valueIndex}`;
               const key =
                 getValueKey?.(itemValue, index) ??
                 `${String(itemValue)}-${index}`;
               const useSelectedId =
-                isCommitted && (!loop || Math.floor(index / values.length) === MIDDLE_SECTION);
+                isCommitted &&
+                (!loop || Math.floor(index / values.length) === MIDDLE_SECTION);
 
               return (
                 <li key={key} className="contents">
@@ -490,7 +551,10 @@ export function ScrollPickerColumn<T = string>({
           </ul>
         </div>
         <div className="aviala-scroll-picker-column__clip" aria-hidden>
-          <div ref={clipTrackRef} className="aviala-scroll-picker-column__clip-track">
+          <div
+            ref={clipTrackRef}
+            className="aviala-scroll-picker-column__clip-track"
+          >
             <div className="aviala-scroll-picker-column__list">
               {repeatedValues.map((itemValue, index) => {
                 const key =

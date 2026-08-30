@@ -17,16 +17,21 @@
   --switch-checked-bg: var(--control-control-theme-background, #ff5532);
   --switch-checked-bg-hover: var(--button-primary-bg-hover, #e92d00);
   --switch-checked-bg-active: var(--button-primary-bg-active, #ff7b5b);
-  --switch-thumb-bg: var(--control-control-normal-background-whiteonly, #ffffff);
+  --switch-thumb-bg: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
   --switch-thumb-size-regular: 18px;
   --switch-thumb-size-small: 16px;
   --switch-padding: var(--padding-min, 2px);
   --switch-thumb-travel-regular: calc(
-    var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-regular)
+    var(--switch-width) - 2 * var(--switch-padding) -
+      var(--switch-thumb-size-regular)
   );
   --switch-thumb-travel-small: calc(
-    var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-small)
+    var(--switch-width) - 2 * var(--switch-padding) -
+      var(--switch-thumb-size-small)
   );
   /*
    * Fluid thumb: animate inset-inline-start/end with asymmetric easing so the
@@ -54,7 +59,8 @@
     var(--switch-thumb-size-small) * var(--switch-thumb-press-scale, 1.2)
   );
   --switch-thumb-press-expand-regular: calc(
-    var(--switch-thumb-size-regular) * (var(--switch-thumb-press-scale, 1.2) - 1)
+    var(--switch-thumb-size-regular) *
+      (var(--switch-thumb-press-scale, 1.2) - 1)
   );
   --switch-thumb-press-expand-small: calc(
     var(--switch-thumb-size-small) * (var(--switch-thumb-press-scale, 1.2) - 1)
@@ -62,13 +68,19 @@
   /* Segmentator thumb slide: longer settle with soft ease-out overshoot */
   --segmentator-transition-duration: 0.52s;
   --segmentator-transition-easing: cubic-bezier(0.22, 1.1, 0.36, 1);
-  --switch-checked-surface: linear-gradient(
+  --switch-checked-surface:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
       transparent 36%
     ),
-    linear-gradient(90deg, var(--switch-checked-bg) 0%, var(--switch-checked-bg) 100%);
-  --switch-checked-surface-hover: linear-gradient(
+    linear-gradient(
+      90deg,
+      var(--switch-checked-bg) 0%,
+      var(--switch-checked-bg) 100%
+    );
+  --switch-checked-surface-hover:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
       transparent 36%
@@ -78,7 +90,8 @@
       var(--switch-checked-bg-hover, #e92d00) 0%,
       var(--switch-checked-bg-hover, #e92d00) 100%
     );
-  --switch-checked-surface-active: linear-gradient(
+  --switch-checked-surface-active:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
       transparent 36%
@@ -97,17 +110,26 @@
 
   --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
   --segmentator-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
+  --segmentator-selected-bg: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --segmentator-selected-fg: var(--text-text-theme-primary-black, #bf2300);
   --segmentator-fg: var(--text-text-normal-text-black, #262525);
   --segmentator-tiled-bg: var(--box-box-theme-secondarybackground, #ffdad2);
   --segmentator-shadow-selected: 0 4px 8px rgba(0, 0, 0, 0.06);
   --segmentator-shadow-tiled: inset 0 -0.5px 0 rgba(0, 0, 0, 0.04);
   --segmentator-item-hover-bg: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --segmentator-item-active-bg: var(--aviala-interaction-filled-active, #d6d5d4);
+  --segmentator-item-active-bg: var(
+    --aviala-interaction-filled-active,
+    #d6d5d4
+  );
   --segmentator-press-scale: 0.98;
   --segmentator-press-height-scale: 0.88;
-  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.52s);
+  --segmentator-press-transition-duration: var(
+    --segmentator-transition-duration,
+    0.52s
+  );
   --segmentator-press-transition-easing: var(
     --segmentator-transition-easing,
     cubic-bezier(0.22, 1.1, 0.36, 1)
@@ -160,12 +182,16 @@
 }
 
 .aviala-link[data-mode="noBackground"]:active:not([data-disabled="true"]),
-.aviala-link[data-mode="noBackground"]:hover:active:not([data-disabled="true"]) {
+.aviala-link[data-mode="noBackground"]:hover:active:not(
+    [data-disabled="true"]
+  ) {
   background-color: var(--button-no-bg-active);
 }
 
 .aviala-link[data-mode="noBackgroundCustom"]:active:not([data-disabled="true"]),
-.aviala-link[data-mode="noBackgroundCustom"]:hover:active:not([data-disabled="true"]) {
+.aviala-link[data-mode="noBackgroundCustom"]:hover:active:not(
+    [data-disabled="true"]
+  ) {
   background-color: var(--button-no-bg-custom-active);
 }
 
@@ -322,7 +348,8 @@
   /* Resting width = thumb size via start/end insets (fluid stretch mid-travel). */
   inset-inline-start: var(--switch-padding, 2px);
   inset-inline-end: calc(
-    100% - var(--switch-padding, 2px) - var(--switch-thumb-size, var(--switch-thumb-size-regular))
+    100% - var(--switch-padding, 2px) -
+      var(--switch-thumb-size, var(--switch-thumb-size-regular))
   );
   width: auto;
   height: auto;
@@ -330,47 +357,53 @@
   background-color: var(--switch-thumb-bg);
   box-shadow: var(--switch-thumb-shadow);
   transition-property: inset-inline-start, inset-inline-end;
-  transition-duration: var(--switch-transition-duration, 0.26s),
+  transition-duration:
+    var(--switch-transition-duration, 0.26s),
     var(--switch-transition-duration, 0.26s);
   /* Turning off: inline-start leads, inline-end trails. */
-  transition-timing-function: var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+  transition-timing-function:
+    var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1)),
     var(--switch-thumb-trail-ease, cubic-bezier(0.35, 0, 0.15, 1));
 }
 
 .aviala-switch[data-state="checked"] .aviala-switch__thumb {
   inset-inline-start: calc(
-    100% - var(--switch-padding, 2px) - var(--switch-thumb-size, var(--switch-thumb-size-regular))
+    100% - var(--switch-padding, 2px) -
+      var(--switch-thumb-size, var(--switch-thumb-size-regular))
   );
   inset-inline-end: var(--switch-padding, 2px);
   /* Turning on: inline-end leads, inline-start trails → mid-travel pill stretch. */
-  transition-timing-function: var(--switch-thumb-trail-ease, cubic-bezier(0.35, 0, 0.15, 1)),
+  transition-timing-function:
+    var(--switch-thumb-trail-ease, cubic-bezier(0.35, 0, 0.15, 1)),
     var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 /* Press: grow toward the toggle direction (trailing edge stays put). */
-.aviala-switch[data-state="unchecked"]:active:not(:disabled) .aviala-switch__thumb {
+.aviala-switch[data-state="unchecked"]:active:not(:disabled)
+  .aviala-switch__thumb {
   inset-inline-end: calc(
-    100% - var(--switch-padding, 2px) - var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
+    100% - var(--switch-padding, 2px) -
+      var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
   );
-  transition-duration: var(--switch-press-transition-duration, 0.12s),
+  transition-duration:
+    var(--switch-press-transition-duration, 0.12s),
     var(--switch-press-transition-duration, 0.12s);
-  transition-timing-function: var(
-      --switch-press-transition-easing,
-      cubic-bezier(0.2, 0, 0.2, 1)
-    ),
+  transition-timing-function:
+    var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1)),
     var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
-.aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__thumb {
+.aviala-switch[data-state="checked"]:active:not(:disabled)
+  .aviala-switch__thumb {
   inset-inline-start: calc(
-    100% - var(--switch-padding, 2px) - var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
+    100% - var(--switch-padding, 2px) -
+      var(--switch-thumb-press-width, var(--switch-thumb-press-width-regular))
   );
-  transition-duration: var(--switch-press-transition-duration, 0.12s),
+  transition-duration:
+    var(--switch-press-transition-duration, 0.12s),
     var(--switch-press-transition-duration, 0.12s);
-  transition-timing-function: var(
-      --switch-press-transition-easing,
-      cubic-bezier(0.2, 0, 0.2, 1)
-    ),
+  transition-timing-function:
+    var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1)),
     var(--switch-press-transition-easing, cubic-bezier(0.2, 0, 0.2, 1));
 }
 
@@ -385,7 +418,8 @@
   .aviala-switch[data-state="unchecked"]:hover:not(:disabled) {
     background-color: var(--switch-hover-bg);
   }
-  .aviala-switch[data-state="checked"]:hover:not(:disabled) .aviala-switch__surface {
+  .aviala-switch[data-state="checked"]:hover:not(:disabled)
+    .aviala-switch__surface {
     background-color: var(--switch-checked-bg-hover);
   }
 }
@@ -393,7 +427,8 @@
 .aviala-switch[data-state="unchecked"]:active:not(:disabled) {
   background-color: var(--switch-press-bg);
 }
-.aviala-switch[data-state="checked"]:active:not(:disabled) .aviala-switch__surface {
+.aviala-switch[data-state="checked"]:active:not(:disabled)
+  .aviala-switch__surface {
   background-color: var(--switch-checked-bg-active);
 }
 
@@ -489,7 +524,9 @@
     touch-action: none;
   }
 
-  .aviala-segmentator-group[data-overflowing="true"]:not([data-direction="vertical"]) {
+  .aviala-segmentator-group[data-overflowing="true"]:not(
+      [data-direction="vertical"]
+    ) {
     touch-action: pan-x;
   }
 
@@ -537,7 +574,11 @@
   will-change: transform, width, height;
   --segmentator-thumb-scale: 1;
   --segmentator-thumb-scale-y: 1;
-  transform: translate3d(var(--segmentator-thumb-x, 0px), var(--segmentator-thumb-y, 0px), 0)
+  transform: translate3d(
+      var(--segmentator-thumb-x, 0px),
+      var(--segmentator-thumb-y, 0px),
+      0
+    )
     scale(var(--segmentator-thumb-scale), var(--segmentator-thumb-scale-y));
   transition:
     --segmentator-thumb-x var(--segmentator-transition-duration, 0.3s)
@@ -546,7 +587,8 @@
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
     --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
-    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
+    --segmentator-thumb-scale-y
+      var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
     width var(--segmentator-transition-duration, 0.3s)
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
@@ -564,7 +606,8 @@
   transition:
     --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
-    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
+    --segmentator-thumb-scale-y
+      var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
@@ -581,7 +624,8 @@
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
     --segmentator-thumb-scale var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
-    --segmentator-thumb-scale-y var(--segmentator-press-transition-duration, 0.3s)
+    --segmentator-thumb-scale-y
+      var(--segmentator-press-transition-duration, 0.3s)
       var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
     width var(--segmentator-transition-duration, 0.3s)
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1)),
@@ -636,7 +680,8 @@
     var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
-.aviala-segmentator-item[data-drag-preview="true"] .aviala-segmentator-item__content {
+.aviala-segmentator-item[data-drag-preview="true"]
+  .aviala-segmentator-item__content {
   transform: scale(var(--segmentator-press-scale, 0.98));
 }
 
@@ -647,8 +692,10 @@
       var(--segmentator-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
 
-.aviala-segmentator-group[data-dragging="true"] .aviala-segmentator-item__content,
-.aviala-segmentator-group[data-pressing="true"] .aviala-segmentator-item__content {
+.aviala-segmentator-group[data-dragging="true"]
+  .aviala-segmentator-item__content,
+.aviala-segmentator-group[data-pressing="true"]
+  .aviala-segmentator-item__content {
   transition: transform var(--segmentator-press-transition-duration, 0.3s)
     var(--segmentator-press-transition-easing, cubic-bezier(0.33, 1, 0.68, 1));
 }
@@ -671,14 +718,16 @@
 
 .aviala-segmentator-item[data-mode="nested"] {
   gap: var(--segmentator-item-gap);
-  padding: var(--segmentator-item-nested-padding-y) var(--segmentator-item-nested-padding-x);
+  padding: var(--segmentator-item-nested-padding-y)
+    var(--segmentator-item-nested-padding-x);
   /* Match sliding thumb radius (selected indicator), including hover/focus fills */
   border-radius: var(--segmentator-item-nested-radius);
 }
 
 .aviala-segmentator-item[data-mode="tiled"] {
   gap: var(--segmentator-item-gap);
-  padding: var(--segmentator-item-tiled-padding-y) var(--segmentator-item-tiled-padding-x);
+  padding: var(--segmentator-item-tiled-padding-y)
+    var(--segmentator-item-tiled-padding-x);
   border-radius: var(--segmentator-item-tiled-radius);
 }
 
@@ -720,9 +769,13 @@
 }
 
 .aviala-segmentator-group[data-pressing="true"]
-  .aviala-segmentator-item[data-selected="true"]:not([data-drag-preview="true"]),
+  .aviala-segmentator-item[data-selected="true"]:not(
+    [data-drag-preview="true"]
+  ),
 .aviala-segmentator-group[data-dragging="true"]
-  .aviala-segmentator-item[data-selected="true"]:not([data-drag-preview="true"]) {
+  .aviala-segmentator-item[data-selected="true"]:not(
+    [data-drag-preview="true"]
+  ) {
   color: var(--segmentator-fg);
 }
 

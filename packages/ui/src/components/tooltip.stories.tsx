@@ -74,9 +74,7 @@ export const WithoutArrow: Story = {
       <TooltipTrigger asChild>
         <Button mode="noBackground">No arrow</Button>
       </TooltipTrigger>
-      <TooltipContent showArrow={false}>
-        Tooltip without caret
-      </TooltipContent>
+      <TooltipContent showArrow={false}>Tooltip without caret</TooltipContent>
     </Tooltip>
   ),
 };
@@ -87,9 +85,7 @@ export const TextLevel: Story = {
       <TooltipTrigger asChild>
         <Button mode="default">Text level</Button>
       </TooltipTrigger>
-      <TooltipContent level="text">
-        Tooltip with text typography
-      </TooltipContent>
+      <TooltipContent level="text">Tooltip with text typography</TooltipContent>
     </Tooltip>
   ),
 };

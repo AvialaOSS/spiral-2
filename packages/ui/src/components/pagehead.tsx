@@ -1,8 +1,4 @@
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { Typeface } from "./typeface";
 
@@ -37,20 +33,28 @@ export const Pagehead = forwardRef<HTMLElement, PageheadProps>(
   ) => (
     <header ref={ref} className={cn("aviala-pagehead", className)} {...props}>
       <div className="aviala-pagehead__main">
-        {back != null ? <div className="aviala-pagehead__back">{back}</div> : null}
+        {back != null ? (
+          <div className="aviala-pagehead__back">{back}</div>
+        ) : null}
         <div className="aviala-pagehead__title-block">
           {breadcrumb != null ? (
             <div className="aviala-pagehead__breadcrumb">{breadcrumb}</div>
           ) : null}
           {title != null || description != null ? (
             <div className="aviala-pagehead__title">
-              <Typeface content="textCaption" primary={title} secondary={description} />
+              <Typeface
+                content="textCaption"
+                primary={title}
+                secondary={description}
+              />
             </div>
           ) : null}
           {children}
         </div>
       </div>
-      {actions != null ? <div className="aviala-pagehead__actions">{actions}</div> : null}
+      {actions != null ? (
+        <div className="aviala-pagehead__actions">{actions}</div>
+      ) : null}
     </header>
   )
 );

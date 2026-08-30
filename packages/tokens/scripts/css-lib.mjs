@@ -55,7 +55,8 @@ function buildNumberTokensBlock(root, selector, relativePath) {
   for (const [group, tokens] of Object.entries(json)) {
     if (group === "$extensions" || typeof tokens !== "object") continue;
     for (const [leaf, token] of Object.entries(tokens)) {
-      if (!token || typeof token !== "object" || token.$type !== "number") continue;
+      if (!token || typeof token !== "object" || token.$type !== "number")
+        continue;
       const value = token.$value;
       let cssValue;
       if (opacityGroups.has(group)) {

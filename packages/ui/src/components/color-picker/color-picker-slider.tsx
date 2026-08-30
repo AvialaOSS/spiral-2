@@ -5,7 +5,10 @@ import { useLocaleMessages } from "../../locale";
 import { Slider } from "../slider";
 import { hueGradientStops, solidHex, toRgbComponents } from "./color-utils";
 import { useOptionalColorPickerContext } from "./color-picker-context";
-import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
+import {
+  useColorPickerState,
+  type UseColorPickerStateOptions,
+} from "./use-color-picker-state";
 
 export type ColorPickerSliderKind = "hue" | "alpha";
 
@@ -34,8 +37,7 @@ export function ColorPickerSlider({
   const { value, hsva, setHsva } = ctx ?? local;
   const isDisabled = disabled ?? ctx?.disabled;
 
-  const sliderValue =
-    kind === "hue" ? [hsva.h] : [Math.round(hsva.a * 100)];
+  const sliderValue = kind === "hue" ? [hsva.h] : [Math.round(hsva.a * 100)];
 
   const handleValueChange = useCallback(
     (next: number[]) => {

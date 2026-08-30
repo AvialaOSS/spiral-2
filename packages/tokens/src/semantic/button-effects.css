@@ -28,28 +28,40 @@
   --button-tiny-padding-y: var(--padding-min, 2px);
   --button-tiny-radius: var(--border-radius-extra-small-2, 6px);
   --button-tiny-line-height: var(--line-height-small, 1rem);
-  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 0.875rem));
+  --button-tiny-icon-size: var(
+    --icon-size-caption-bigger,
+    var(--size-regular, 0.875rem)
+  );
   --button-tiny-icon-slot-height: var(--line-height-small, 1rem);
 
   --button-small-padding-x: var(--padding-small, 6px);
   --button-small-padding-y: var(--padding-min, 2px);
   --button-small-radius: var(--border-radius-extra-small-2, 6px);
   --button-small-line-height: var(--line-height-regular, 1.125rem);
-  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-small-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-small-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-regular-padding-x: var(--padding-middle, 10px);
   --button-regular-padding-y: var(--padding-small, 6px);
   --button-regular-radius: var(--border-radius-small, 8px);
   --button-regular-line-height: var(--line-height-regular, 1.125rem);
-  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-regular-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-regular-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-big-padding-x: var(--padding-big, 14px);
   --button-big-padding-y: var(--padding-default, 8px);
   --button-big-radius: var(--border-radius-small, 8px);
   --button-big-line-height: var(--line-height-regular, 1.125rem);
-  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-big-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-big-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-tiny-height: calc(
@@ -77,16 +89,22 @@
   );
   --button-shadow-basic:
     0 0 1px var(--special-effort-se-lineshadow-all, rgba(0, 0, 0, 0.12)),
-    inset 0 -1px 0 var(--special-effort-se-lineshadow-bottomdeep, rgba(0, 0, 0, 0.08));
+    inset 0 -1px 0
+      var(--special-effort-se-lineshadow-bottomdeep, rgba(0, 0, 0, 0.08));
   --button-shadow-light: inset 0 -0.5px 0
     var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
 
-  --switch-checked-surface: linear-gradient(
+  --switch-checked-surface:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color) 20%, transparent) 0%,
       transparent 36%
     ),
-    linear-gradient(90deg, var(--switch-checked-bg) 0%, var(--switch-checked-bg) 100%);
+    linear-gradient(
+      90deg,
+      var(--switch-checked-bg) 0%,
+      var(--switch-checked-bg) 100%
+    );
 }
 
 /* ---- Layout (padding + line-height; no fixed height) ---- */
@@ -149,7 +167,10 @@
 }
 
 .aviala-button .aviala-typography {
-  line-height: var(--button-label-line-height, var(--button-regular-line-height));
+  line-height: var(
+    --button-label-line-height,
+    var(--button-regular-line-height)
+  );
 }
 
 .aviala-button[data-size="tiny"] .aviala-typography {
@@ -193,8 +214,13 @@
 }
 
 .aviala-button--mode-destructive .aviala-button-surface {
-  background-image: var(--button-primary-gradient),
-    linear-gradient(90deg, var(--button-surface-bg) 0%, var(--button-surface-bg) 100%);
+  background-image:
+    var(--button-primary-gradient),
+    linear-gradient(
+      90deg,
+      var(--button-surface-bg) 0%,
+      var(--button-surface-bg) 100%
+    );
   box-shadow: var(--button-shadow-basic);
 }
 
@@ -238,7 +264,9 @@
 }
 
 .aviala-button--mode-default:hover:not(:disabled):not([aria-busy="true"]),
-.aviala-button--mode-defaultCustom:hover:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-defaultCustom:hover:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   --button-surface-bg: var(--button-default-bg-hover);
 }
 
@@ -258,17 +286,25 @@
   background-color: var(--button-no-bg-hover);
 }
 
-.aviala-button--mode-noBackgroundCustom:hover:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-noBackgroundCustom:hover:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-custom-hover);
 }
 
 .aviala-button--mode-noBackground:active:not(:disabled):not([aria-busy="true"]),
-.aviala-button--mode-noBackground:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-noBackground:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-active);
 }
 
-.aviala-button--mode-noBackgroundCustom:active:not(:disabled):not([aria-busy="true"]),
-.aviala-button--mode-noBackgroundCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-noBackgroundCustom:active:not(:disabled):not(
+    [aria-busy="true"]
+  ),
+.aviala-button--mode-noBackgroundCustom:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-custom-active);
 }
 
@@ -305,40 +341,58 @@
   background-color: var(--button-no-bg-hover);
 }
 
-.aviala-button--mode-outlineCustom:hover:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-outlineCustom:hover:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-custom-hover);
 }
 
 .aviala-button--mode-outline:active:not(:disabled):not([aria-busy="true"]),
-.aviala-button--mode-outline:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-outline:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-active);
 }
 
-.aviala-button--mode-outlineCustom:active:not(:disabled):not([aria-busy="true"]),
-.aviala-button--mode-outlineCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-outlineCustom:active:not(:disabled):not(
+    [aria-busy="true"]
+  ),
+.aviala-button--mode-outlineCustom:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   background-color: var(--button-no-bg-custom-active);
 }
 
 /* Pressed: token fill swaps (Figma matrix — no brightness filters) */
 .aviala-button--mode-primary:active:not(:disabled),
-.aviala-button--mode-primary:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-primary:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   --button-surface-bg: var(--button-primary-bg-active);
 }
 
 .aviala-button--mode-destructive:active:not(:disabled),
-.aviala-button--mode-destructive:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-destructive:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   --button-surface-bg: var(--button-destructive-bg-active);
 }
 
 .aviala-button--mode-second:active:not(:disabled),
-.aviala-button--mode-second:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-second:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   --button-surface-bg: var(--button-second-bg-active);
 }
 
 .aviala-button--mode-default:active:not(:disabled),
-.aviala-button--mode-default:hover:active:not(:disabled):not([aria-busy="true"]),
+.aviala-button--mode-default:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ),
 .aviala-button--mode-defaultCustom:active:not(:disabled),
-.aviala-button--mode-defaultCustom:hover:active:not(:disabled):not([aria-busy="true"]) {
+.aviala-button--mode-defaultCustom:hover:active:not(:disabled):not(
+    [aria-busy="true"]
+  ) {
   --button-surface-bg: var(--button-default-bg-active);
 }
 
@@ -390,17 +444,21 @@
 }
 
 .aviala-button--mode-defaultCustom .aviala-typography.aviala-typography--text,
-.aviala-button--mode-defaultCustom .aviala-typography.aviala-typography--caption {
+.aviala-button--mode-defaultCustom
+  .aviala-typography.aviala-typography--caption {
   color: var(--button-default-custom-fg);
 }
 
 .aviala-button--mode-noBackground .aviala-typography.aviala-typography--text,
-.aviala-button--mode-noBackground .aviala-typography.aviala-typography--caption {
+.aviala-button--mode-noBackground
+  .aviala-typography.aviala-typography--caption {
   color: var(--button-no-bg-fg);
 }
 
-.aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--text,
-.aviala-button--mode-noBackgroundCustom .aviala-typography.aviala-typography--caption {
+.aviala-button--mode-noBackgroundCustom
+  .aviala-typography.aviala-typography--text,
+.aviala-button--mode-noBackgroundCustom
+  .aviala-typography.aviala-typography--caption {
   color: var(--button-default-custom-fg);
 }
 
@@ -410,7 +468,8 @@
 }
 
 .aviala-button--mode-outlineCustom .aviala-typography.aviala-typography--text,
-.aviala-button--mode-outlineCustom .aviala-typography.aviala-typography--caption {
+.aviala-button--mode-outlineCustom
+  .aviala-typography.aviala-typography--caption {
   color: var(--button-outline-custom-fg);
 }
 

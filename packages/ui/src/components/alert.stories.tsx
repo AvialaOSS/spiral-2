@@ -13,7 +13,13 @@ const meta: Meta<typeof Alert> = {
   argTypes: {
     type: {
       control: "select",
-      options: ["info", "warning", "error", "success", "neutral"] satisfies AlertType[],
+      options: [
+        "info",
+        "warning",
+        "error",
+        "success",
+        "neutral",
+      ] satisfies AlertType[],
     },
     size: {
       control: "select",
@@ -156,7 +162,13 @@ export const NotDismissible: Story = {
   },
 };
 
-const semanticTypes: AlertType[] = ["info", "warning", "error", "success", "neutral"];
+const semanticTypes: AlertType[] = [
+  "info",
+  "warning",
+  "error",
+  "success",
+  "neutral",
+];
 
 export const TypeMatrixDefault: Story = {
   render: () => (
@@ -203,7 +215,12 @@ export const SizeComparison: Story = {
         description="Two-line typeface layout with icon and close"
       />
       <Alert type="info" size="small" appearance="default" title="Small size" />
-      <Alert type="info" size="small" appearance="light" title="Small light style" />
+      <Alert
+        type="info"
+        size="small"
+        appearance="light"
+        title="Small light style"
+      />
     </div>
   ),
 };

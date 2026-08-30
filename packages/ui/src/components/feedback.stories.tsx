@@ -108,16 +108,18 @@ export const TypeMatrixDefault: Story = {
 export const TypeMatrixPrimary: Story = {
   render: () => (
     <div className="flex w-[420px] flex-col gap-4">
-      {(["information", "warning", "wrong", "success"] as FeedbackType[]).map((type) => (
-        <Feedback
-          key={type}
-          type={type}
-          size="default"
-          mode="primary"
-          title={`${type.charAt(0).toUpperCase()}${type.slice(1)}`}
-          description="Secondary caption text"
-        />
-      ))}
+      {(["information", "warning", "wrong", "success"] as FeedbackType[]).map(
+        (type) => (
+          <Feedback
+            key={type}
+            type={type}
+            size="default"
+            mode="primary"
+            title={`${type.charAt(0).toUpperCase()}${type.slice(1)}`}
+            description="Secondary caption text"
+          />
+        )
+      )}
     </div>
   ),
 };
@@ -132,8 +134,18 @@ export const SizeComparison: Story = {
         title="Default size"
         description="Two-line typeface layout"
       />
-      <Feedback type="information" size="small" mode="default" title="Small pill" />
-      <Feedback type="information" size="small" mode="primary" title="Small primary pill" />
+      <Feedback
+        type="information"
+        size="small"
+        mode="default"
+        title="Small pill"
+      />
+      <Feedback
+        type="information"
+        size="small"
+        mode="primary"
+        title="Small primary pill"
+      />
     </div>
   ),
 };

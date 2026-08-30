@@ -32,22 +32,50 @@ export const Ring: Story = {
 export const FigmaMatrix: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
         <Progress shape="bar" size="default" type="default" value={75} />
         <Progress shape="bar" size="default" type="success" value={100} />
         <Progress shape="bar" size="default" type="fail" value={75} />
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
         <Progress shape="bar" size="big" type="default" value={75} />
         <Progress shape="bar" size="big" type="success" value={100} />
         <Progress shape="bar" size="big" type="fail" value={75} />
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
         <Progress shape="ring" size="big" type="default" value={75} />
         <Progress shape="ring" size="big" type="success" value={100} />
         <Progress shape="ring" size="big" type="fail" value={75} />
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
         <Progress shape="ring" size="default" type="default" value={75} />
         <Progress shape="ring" size="default" type="success" value={100} />
         <Progress shape="ring" size="default" type="fail" value={75} />

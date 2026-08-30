@@ -97,10 +97,7 @@ export function generatePaletteSteps(
   if (steps.length >= 10) {
     const step9 = steps[8]!;
     const step10 = steps[9]!;
-    steps.push(
-      { ...step9, step: 11 },
-      { ...step10, step: 12 }
-    );
+    steps.push({ ...step9, step: 11 }, { ...step10, step: 12 });
   }
 
   return steps;

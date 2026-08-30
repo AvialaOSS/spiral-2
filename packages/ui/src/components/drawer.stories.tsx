@@ -36,11 +36,21 @@ function DrawerDemo({
       <DrawerContent position={position}>
         <DrawerHeaderText
           showIcon
-          icon={<SymbolInformationCircle thickness="Regular" mode="fill" aria-hidden />}
+          icon={
+            <SymbolInformationCircle
+              thickness="Regular"
+              mode="fill"
+              aria-hidden
+            />
+          }
           title="Drawer title"
           description="Supporting caption in the header."
         />
-        <DrawerBody layout="text" title="Section title" description="Body copy for the drawer." />
+        <DrawerBody
+          layout="text"
+          title="Section title"
+          description="Body copy for the drawer."
+        />
         <DrawerFooter>
           <Button mode="second">Cancel</Button>
           <Button mode="primary">Confirm</Button>
@@ -94,8 +104,14 @@ export const WithoutFooter: Story = {
         <Button mode="noBackground">No footer</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeaderText title="Read only" description="Dismiss with the header close control." />
-        <DrawerBody layout="text" description="Informational drawer without action buttons." />
+        <DrawerHeaderText
+          title="Read only"
+          description="Dismiss with the header close control."
+        />
+        <DrawerBody
+          layout="text"
+          description="Informational drawer without action buttons."
+        />
       </DrawerContent>
     </Drawer>
   ),

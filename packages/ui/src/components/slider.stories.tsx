@@ -6,7 +6,7 @@ const meta: Meta<typeof Slider> = {
   title: "Information Collect/Slider",
   component: Slider,
   tags: ["autodocs"],
-    argTypes: {
+  argTypes: {
     size: { control: "select", options: ["default", "big"] },
     type: { control: "select", options: ["default", "range"] },
     orientation: { control: "select", options: ["horizontal", "vertical"] },
@@ -46,14 +46,26 @@ export const SizeMatrix: Story = {
         [
           ["Default", { size: "default" as const }],
           ["Big", { size: "big" as const }],
-          ["Range · Default", { type: "range" as const, defaultValue: [25, 65] }],
-          ["Range · Big", { size: "big" as const, type: "range" as const, defaultValue: [25, 65] }],
+          [
+            "Range · Default",
+            { type: "range" as const, defaultValue: [25, 65] },
+          ],
+          [
+            "Range · Big",
+            {
+              size: "big" as const,
+              type: "range" as const,
+              defaultValue: [25, 65],
+            },
+          ],
           ["Disabled · Default", { disabled: true }],
           ["Disabled · Big", { size: "big" as const, disabled: true }],
         ] as const
       ).map(([label, props]) => (
         <div key={label} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{label}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {label}
+          </span>
           <Slider defaultValue={[40]} {...props} />
         </div>
       ))}

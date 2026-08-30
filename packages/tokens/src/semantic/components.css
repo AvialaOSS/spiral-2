@@ -65,28 +65,40 @@
   --button-tiny-padding-y: var(--padding-min, 2px);
   --button-tiny-radius: var(--border-radius-extra-small-2, 6px);
   --button-tiny-line-height: var(--line-height-small, 1rem);
-  --button-tiny-icon-size: var(--icon-size-caption-bigger, var(--size-regular, 0.875rem));
+  --button-tiny-icon-size: var(
+    --icon-size-caption-bigger,
+    var(--size-regular, 0.875rem)
+  );
   --button-tiny-icon-slot-height: var(--line-height-small, 1rem);
 
   --button-small-padding-x: var(--padding-small, 6px);
   --button-small-padding-y: var(--padding-min, 2px);
   --button-small-radius: var(--border-radius-extra-small-2, 6px);
   --button-small-line-height: var(--line-height-regular, 1.125rem);
-  --button-small-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-small-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-small-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-regular-padding-x: var(--padding-middle, 10px);
   --button-regular-padding-y: var(--padding-small, 6px);
   --button-regular-radius: var(--border-radius-small, 8px);
   --button-regular-line-height: var(--line-height-regular, 1.125rem);
-  --button-regular-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-regular-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-regular-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   --button-big-padding-x: var(--padding-big, 14px);
   --button-big-padding-y: var(--padding-default, 8px);
   --button-big-radius: var(--border-radius-small, 8px);
   --button-big-line-height: var(--line-height-regular, 1.125rem);
-  --button-big-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --button-big-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --button-big-icon-slot-height: var(--line-height-regular, 1.125rem);
 
   /* Segmentator — padding / line-height (height is content-driven) */
@@ -121,7 +133,10 @@
 
   --input-bg-default: var(--aviala-interaction-filled-default, #f0efef);
   --input-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --input-bg-activated: var(--control-control-normal-background-whiteonly, #ffffff);
+  --input-bg-activated: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --input-border-activated: var(--border-border-theme-primary, var(--primary));
   --input-fg: var(--text-text-normal-text-black, var(--foreground));
   --input-placeholder-opacity: var(--transparency-placeholder, 0.6);
@@ -142,21 +157,36 @@
   --input-font-size: var(--typography-text-size);
   --input-line-height: var(--typography-text-line-height);
   --input-icon-slot-height: var(--input-line-height);
-  --input-slot-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --input-slot-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
 
   --textarea-min-height-regular: 70px;
   --textarea-min-height-big: 70px;
   --textarea-min-width: var(--button-min-width, 46px);
   --textarea-radius: var(--border-radius-small, 8px);
-  --textarea-controller-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --textarea-controller-bg: var(
+    --control-control-normal-lightbackground-1,
+    #f0efef
+  );
   --textarea-counter-fg: var(--text-text-normal-text-caption-black, #616060);
 
   --radio-size: var(--size-big, 1.25rem);
   --radio-indicator-size: 0.5rem;
-  --radio-bg-unchecked: var(--control-control-normal-background-whiteonly, #ffffff);
+  --radio-bg-unchecked: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --radio-border-unchecked: var(--border-border-normal-1, #e8e6e6);
-  --radio-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
-  --radio-indicator-bg: var(--control-control-normal-background-whiteonly, #ffffff);
+  --radio-checked-bg: var(
+    --control-control-theme-background,
+    var(--button-primary-bg)
+  );
+  --radio-indicator-bg: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --radio-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
   --radio-input-gap: var(--gap-component-space, 8px);
   --radio-group-gap: var(--gap-content-space, 10px);
@@ -191,7 +221,10 @@
   --select-item-gap: var(--gap-component-space, 8px);
   --select-item-px: var(--padding-default, 8px);
   --select-item-py: var(--padding-tiny, 4px);
-  --select-item-function-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --select-item-function-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --select-item-function-height: var(--line-height-regular, 1.125rem);
   --select-label-font-size: var(--typography-caption-size);
   --select-label-line-height: var(--typography-caption-line-height);
@@ -257,12 +290,27 @@
   --checkbox-check-duration: 300ms;
   --checkbox-check-easing: cubic-bezier(0.873, 0, 0, 1);
   --checkbox-surface-easing: ease;
-  --checkbox-bg-unchecked: var(--control-control-normal-background-whiteonly, #ffffff);
+  --checkbox-bg-unchecked: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --checkbox-border-unchecked: var(--border-border-normal-3, #d6d5d4);
-  --checkbox-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
-  --checkbox-checked-icon: var(--control-control-normal-background-whiteonly, #ffffff);
-  --checkbox-indeterminate-bg: var(--box-box-theme-secondarybackground, #ffdad2);
-  --checkbox-indeterminate-mark-bg: var(--box-box-theme-primarybackground, #ff5532);
+  --checkbox-checked-bg: var(
+    --control-control-theme-background,
+    var(--button-primary-bg)
+  );
+  --checkbox-checked-icon: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
+  --checkbox-indeterminate-bg: var(
+    --box-box-theme-secondarybackground,
+    #ffdad2
+  );
+  --checkbox-indeterminate-mark-bg: var(
+    --box-box-theme-primarybackground,
+    #ff5532
+  );
   --checkbox-input-gap: var(--gap-component-space, 8px);
   --checkbox-group-gap: var(--gap-content-space, 10px);
   --checkbox-label-fg: var(--text-text-normal-text-black, #262525);
@@ -274,24 +322,35 @@
   --switch-track-bg: var(--control-control-normal-background-3, #d6d5d4);
   --switch-hover-bg: var(--aviala-neutral-neutral-7, #c4c2c2);
   --switch-press-bg: var(--aviala-neutral-neutral-8, #afadad);
-  --switch-checked-bg: var(--control-control-theme-background, var(--button-primary-bg));
+  --switch-checked-bg: var(
+    --control-control-theme-background,
+    var(--button-primary-bg)
+  );
   --switch-checked-bg-hover: var(--button-primary-bg-hover);
   --switch-checked-bg-active: var(--button-primary-bg-active);
-  --switch-thumb-bg: var(--control-control-normal-background-whiteonly, #ffffff);
+  --switch-thumb-bg: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --switch-thumb-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.06);
   --switch-thumb-size-regular: 18px;
   --switch-thumb-size-small: 16px;
   --switch-padding: var(--padding-min, 2px);
   --switch-thumb-travel-regular: calc(
-    var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-regular)
+    var(--switch-width) - 2 * var(--switch-padding) -
+      var(--switch-thumb-size-regular)
   );
   --switch-thumb-travel-small: calc(
-    var(--switch-width) - 2 * var(--switch-padding) - var(--switch-thumb-size-small)
+    var(--switch-width) - 2 * var(--switch-padding) -
+      var(--switch-thumb-size-small)
   );
   --switch-transition-duration: 0.26s;
   --switch-thumb-lead-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --switch-thumb-trail-ease: cubic-bezier(0.35, 0, 0.15, 1);
-  --switch-transition-easing: var(--switch-thumb-lead-ease, cubic-bezier(0.16, 1, 0.3, 1));
+  --switch-transition-easing: var(
+    --switch-thumb-lead-ease,
+    cubic-bezier(0.16, 1, 0.3, 1)
+  );
   --switch-press-transition-duration: 0.12s;
   --switch-press-transition-easing: cubic-bezier(0.2, 0, 0.2, 1);
   --switch-track-transition-duration: 0.22s;
@@ -299,22 +358,43 @@
   --switch-disabled-opacity: 0.55;
 
   --link-fg-theme: var(--text-text-theme-primary-black, var(--button-no-bg-fg));
-  --link-fg-custom: var(--text-text-normal-text-black, var(--button-default-custom-fg));
+  --link-fg-custom: var(
+    --text-text-normal-text-black,
+    var(--button-default-custom-fg)
+  );
 
   --segmentator-bg: var(--control-control-normal-lightbackground-1, #f0efef);
   --segmentator-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --segmentator-selected-bg: var(--control-control-normal-background-whiteonly, #ffffff);
-  --segmentator-selected-fg: var(--text-text-theme-primary-black, var(--button-no-bg-fg));
-  --segmentator-fg: var(--text-text-normal-text-black, var(--button-default-custom-fg));
-  --segmentator-tiled-bg: var(--box-box-theme-secondarybackground, var(--button-second-bg));
+  --segmentator-selected-bg: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
+  --segmentator-selected-fg: var(
+    --text-text-theme-primary-black,
+    var(--button-no-bg-fg)
+  );
+  --segmentator-fg: var(
+    --text-text-normal-text-black,
+    var(--button-default-custom-fg)
+  );
+  --segmentator-tiled-bg: var(
+    --box-box-theme-secondarybackground,
+    var(--button-second-bg)
+  );
   --segmentator-shadow-selected: 0 4px 8px rgba(0, 0, 0, 0.06);
   --segmentator-shadow-tiled: inset 0 -0.5px 0
     var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
   --segmentator-item-hover-bg: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --segmentator-item-active-bg: var(--aviala-interaction-filled-active, #d6d5d4);
+  --segmentator-item-active-bg: var(
+    --aviala-interaction-filled-active,
+    #d6d5d4
+  );
   --segmentator-press-scale: 0.98;
   --segmentator-press-height-scale: 0.88;
-  --segmentator-press-transition-duration: var(--segmentator-transition-duration, 0.52s);
+  --segmentator-press-transition-duration: var(
+    --segmentator-transition-duration,
+    0.52s
+  );
   --segmentator-press-transition-easing: var(
     --segmentator-transition-easing,
     cubic-bezier(0.22, 1.1, 0.36, 1)
@@ -412,19 +492,29 @@
   --datepicker-row-gap: 2px;
   --datepicker-day-radius: var(--border-radius-small, 8px);
   --datepicker-day-fg: var(--select-item-fg);
-  --datepicker-day-fg-selected: var(--text-text-theme-primary-black, var(--select-item-selected-fg));
+  --datepicker-day-fg-selected: var(
+    --text-text-theme-primary-black,
+    var(--select-item-selected-fg)
+  );
   --datepicker-day-bg-hover: var(--select-item-highlight-bg);
   --datepicker-day-bg-in-range: var(--control-theme-lightbackground, #ffdad2);
   --datepicker-day-bg-selected: var(--control-theme-lightbackground, #ffdad2);
   --datepicker-day-today-dot: var(--text-text-theme-primary-black, #bf2300);
-  --datepicker-footer-bg: var(--control-control-normal-lightbackground-1, #f0efef);
+  --datepicker-footer-bg: var(
+    --control-control-normal-lightbackground-1,
+    #f0efef
+  );
   --datepicker-grid-rows: 6;
   --datepicker-day-height: calc(
-    var(--padding-min, 2px) * 2 + var(--line-height-line-height-regular, 1.125rem)
+    var(--padding-min, 2px) * 2 +
+      var(--line-height-line-height-regular, 1.125rem)
   );
   --datepicker-header-height: calc(
     var(--padding-tiny, 4px) * 3 +
-      var(--typography-subtitle-line-height, var(--line-height-middle, 1.375rem))
+      var(
+        --typography-subtitle-line-height,
+        var(--line-height-middle, 1.375rem)
+      )
   );
   --datepicker-grid-height: calc(
     var(--datepicker-grid-rows) * var(--datepicker-day-height) +
@@ -442,9 +532,12 @@
   --datepicker-time-wheel-item-height: 36px;
   --datepicker-time-wheel-visible-count: 5;
   --datepicker-time-wheel-height: calc(
-    var(--datepicker-time-wheel-item-height) * var(--datepicker-time-wheel-visible-count)
+    var(--datepicker-time-wheel-item-height) *
+      var(--datepicker-time-wheel-visible-count)
   );
-  --datepicker-time-wheel-fade-height: calc(var(--datepicker-time-wheel-item-height) * 1.5);
+  --datepicker-time-wheel-fade-height: calc(
+    var(--datepicker-time-wheel-item-height) * 1.5
+  );
 
   --popover-content-bg: var(--popover, var(--select-menu-bg));
   --popover-content-fg: var(--popover-foreground, var(--select-item-fg));
@@ -517,7 +610,10 @@
   --drawer-close-fg: var(--text-text-normal-text-caption-black, #616060);
   --drawer-description-fg: var(--text-text-normal-text-caption-black, #616060);
 
-  --tooltip-content-bg: var(--text-text-normal-text-black, var(--aviala-neutral-neutral-10, #262525));
+  --tooltip-content-bg: var(
+    --text-text-normal-text-black,
+    var(--aviala-neutral-neutral-10, #262525)
+  );
   --tooltip-content-fg: var(
     --control-control-normal-background-whiteonly,
     var(--aviala-neutral-neutral-2, #ffffff)
@@ -622,7 +718,10 @@
   /* Snappy ease-out: most travel happens early, then settles hard. */
   --navigation-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
   --navigation-icon-box: var(--line-height-regular, 1.125rem);
-  --navigation-icon-size: var(--icon-size-text-bigger, var(--size-middle, 1rem));
+  --navigation-icon-size: var(
+    --icon-size-text-bigger,
+    var(--size-middle, 1rem)
+  );
   --navigation-item-hover-bg: var(--button-no-bg-custom-hover);
   --navigation-actions-slot-gap: 2px;
 
@@ -639,7 +738,10 @@
     var(--button-no-bg-fg)
   );
   --loading-fg-black: var(--text-text-normal-text-black, #262525);
-  --loading-fg-white: var(--control-control-normal-background-whiteonly, #ffffff);
+  --loading-fg-white: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
 
   /* Feedback — Figma Response And Feedback → Feedback (553:58620) */
   --feedback-shadow: var(--aviala-shadow-level4-with-line);
@@ -654,31 +756,67 @@
   --feedback-close-icon-size-primary: var(--size-regular, 0.875rem);
   --feedback-content-max-width: 480px;
   --feedback-title-fg-default: var(--text-text-normal-text-black, #262525);
-  --feedback-description-fg-default: var(--text-text-normal-text-caption-black, #616060);
+  --feedback-description-fg-default: var(
+    --text-text-normal-text-caption-black,
+    #616060
+  );
   --feedback-title-fg-primary: var(--text-text-normal-text-white, #ffffff);
-  --feedback-description-fg-primary: var(--text-text-normal-text-caption-white, #ffffff);
+  --feedback-description-fg-primary: var(
+    --text-text-normal-text-caption-white,
+    #ffffff
+  );
   --feedback-close-fg: var(--text-text-normal-text-caption-black, #616060);
   --feedback-close-fg-on-primary: var(--text-text-normal-text-white, #ffffff);
   --feedback-icon-fg-primary: var(--text-text-normal-text-white, #ffffff);
-  --feedback-information-bg-default: var(--box-box-infomation-lightbackground, #fafbff);
-  --feedback-information-bg-primary: var(--box-box-infomation-primarybackground, #66b6fa);
-  --feedback-information-border: var(--border-border-infomation-primary, #66b6fa);
-  --feedback-warning-bg-default: var(--box-box-warning-lightbackground, #fff8f5);
-  --feedback-warning-bg-primary: var(--box-box-warning-primarybackground, #ec8b09);
+  --feedback-information-bg-default: var(
+    --box-box-infomation-lightbackground,
+    #fafbff
+  );
+  --feedback-information-bg-primary: var(
+    --box-box-infomation-primarybackground,
+    #66b6fa
+  );
+  --feedback-information-border: var(
+    --border-border-infomation-primary,
+    #66b6fa
+  );
+  --feedback-warning-bg-default: var(
+    --box-box-warning-lightbackground,
+    #fff8f5
+  );
+  --feedback-warning-bg-primary: var(
+    --box-box-warning-primarybackground,
+    #ec8b09
+  );
   --feedback-warning-border: var(--border-border-warning-primary, #ec8b09);
   --feedback-wrong-bg-default: var(--box-box-fail-lightbackground, #fff4f3);
   --feedback-wrong-bg-primary: var(--box-box-fail-primarybackground, #f41544);
   --feedback-wrong-border: var(--border-border-fail-primary, #f41544);
-  --feedback-success-bg-default: var(--box-box-success-lightbackground, #f4fde9);
-  --feedback-success-bg-primary: var(--box-box-success-primarybackground, #70b450);
+  --feedback-success-bg-default: var(
+    --box-box-success-lightbackground,
+    #f4fde9
+  );
+  --feedback-success-bg-primary: var(
+    --box-box-success-primarybackground,
+    #70b450
+  );
   --feedback-success-border: var(--border-border-success-primary, #70b450);
-  --feedback-normal-bg-default: var(--box-box-normal-background-whiteonly, #ffffff);
+  --feedback-normal-bg-default: var(
+    --box-box-normal-background-whiteonly,
+    #ffffff
+  );
   --feedback-normal-border: var(--border-border-normal-1, #f0efef);
-  --feedback-information-icon-fg: var(--text-text-infomation-primary-black, #3489c8);
+  --feedback-information-icon-fg: var(
+    --text-text-infomation-primary-black,
+    #3489c8
+  );
   --feedback-warning-icon-fg: var(--text-text-warning-primary-black, #ab6200);
   --feedback-wrong-icon-fg: var(--text-text-fail-primary-black, #960024);
   --feedback-success-icon-fg: var(--text-text-success-primary-black, #47842b);
-  --feedback-normal-icon-fg: var(--text-text-normal-text-caption-black, #616060);
+  --feedback-normal-icon-fg: var(
+    --text-text-normal-text-caption-black,
+    #616060
+  );
 
   /* Alert — Figma Response And Feedback → Alert (527:56855) */
   --alert-radius: var(--border-radius-small, 8px);
@@ -690,7 +828,10 @@
   --alert-title-fg: var(--text-text-normal-text-black, #262525);
   --alert-description-fg: var(--text-text-normal-text-caption-black, #616060);
   --alert-close-fg: var(--text-text-normal-text-caption-black, #616060);
-  --alert-secondary-action-fg: var(--text-text-normal-text-caption-black, #616060);
+  --alert-secondary-action-fg: var(
+    --text-text-normal-text-caption-black,
+    #616060
+  );
   --alert-actions-gap: var(--gap-component-space, 8px);
   --alert-actions-pl: 30px;
   --alert-actions-pr: var(--gap-content-space, 10px);
@@ -707,8 +848,14 @@
   --alert-success-bg-default: var(--box-box-success-lightbackground, #f4fde9);
   --alert-success-bg-light: var(--box-box-success-secondarybackground, #dff6ce);
   --alert-success-border: var(--border-border-success-primary, #70b450);
-  --alert-neutral-bg-default: var(--box-box-normal-background-whiteonly, #ffffff);
-  --alert-neutral-bg-light: var(--box-box-normal-lightbackground-white, #f9f8f8);
+  --alert-neutral-bg-default: var(
+    --box-box-normal-background-whiteonly,
+    #ffffff
+  );
+  --alert-neutral-bg-light: var(
+    --box-box-normal-lightbackground-white,
+    #f9f8f8
+  );
   --alert-neutral-border: var(--border-border-normal-1, #f0efef);
   --alert-info-icon-fg: var(--text-text-infomation-primary-black, #3489c8);
   --alert-warning-icon-fg: var(--text-text-warning-primary-black, #ab6200);
@@ -745,8 +892,7 @@
   --slider-thumb-bg: var(--box-box-normal-background-whiteonly, #ffffff);
   --slider-thumb-core: var(--box-box-theme-primarybackground, #ff5532);
   /* BasicShadow / BasicShadow-Level4WithLIne */
-  --slider-thumb-shadow:
-    var(--aviala-shadow-level4-with-line);
+  --slider-thumb-shadow: var(--aviala-shadow-level4-with-line);
   /* Availability Status=OFF */
   --slider-track-bg-disabled: var(--border-border-normal-1, #f0efef);
   --slider-range-bg-disabled: var(--box-box-theme-secondarybackground, #ffdad2);
@@ -763,7 +909,10 @@
   --upload-large-py: var(--padding-default, 8px);
   --upload-large-bg: var(--control-control-normal-lightbackground-1, #f0efef);
   --upload-large-fg: var(--text-text-normal-text-black, #262525);
-  --upload-large-caption-fg: var(--text-text-normal-text-caption-black, #616060);
+  --upload-large-caption-fg: var(
+    --text-text-normal-text-caption-black,
+    #616060
+  );
   --upload-drag-border: var(--border-border-theme-primary, #ff5532);
   --upload-drag-bg: var(--box-box-theme-secondarybackground, #ffdad2);
   --upload-disabled-opacity: var(--transparency-disable, 0.55);
@@ -782,8 +931,14 @@
   --scroll-picker-item-py: var(--padding-tiny, 4px);
   --scroll-picker-item-radius: var(--border-radius-extra-small-2, 6px);
   --scroll-picker-item-fg: var(--text-text-normal-text-black, #262525);
-  --scroll-picker-item-fg-selected: var(--text-text-theme-primary-black, #bf2300);
-  --scroll-picker-item-bg-selected: var(--control-control-theme-lightbackground, #ffdad2);
+  --scroll-picker-item-fg-selected: var(
+    --text-text-theme-primary-black,
+    #bf2300
+  );
+  --scroll-picker-item-bg-selected: var(
+    --control-control-theme-lightbackground,
+    #ffdad2
+  );
   --scroll-picker-item-opacity: var(--transparency-placeholder, 0.6);
   --scroll-picker-visible-count: 9;
 
@@ -828,7 +983,10 @@
   --steps-waiting-fg: var(--text-text-infomation-primary-black, #3489c8);
   --steps-in-progress-bg: var(--box-box-theme-primarybackground, #ff5532);
   --steps-in-progress-fg: var(--text-text-theme-primary-black, #bf2300);
-  --steps-in-progress-icon-fg: var(--text-text-normal-text-caption-white, #ffffff);
+  --steps-in-progress-icon-fg: var(
+    --text-text-normal-text-caption-white,
+    #ffffff
+  );
   --steps-default-bg: var(--box-box-normal-background-whiteonly, #ffffff);
   --steps-default-border: var(--border-border-normal-1, #f0efef);
   --steps-default-fg: var(--text-text-normal-text-caption-black, #616060);
@@ -843,7 +1001,10 @@
   --pagination-page-active-py: var(--padding-small, 6px);
   --pagination-page-radius: var(--border-radius-small, 8px);
   --pagination-page-fg: var(--text-text-normal-text-black, #262525);
-  --pagination-page-active-bg: var(--box-box-theme-secondarybackground, #ffdad2);
+  --pagination-page-active-bg: var(
+    --box-box-theme-secondarybackground,
+    #ffdad2
+  );
   --pagination-page-active-fg: var(--text-text-theme-primary-black, #bf2300);
   --pagination-jump-gap: 4px;
   --pagination-jump-input-width: 65px;
@@ -867,7 +1028,10 @@
   --video-width: 800px;
   --video-height: 450px;
   --video-radius: var(--border-radius-big, 12px);
-  --video-bg: var(--normal-background-theme, var(--box-box-normal-lightbackground-white, #f9f8f8));
+  --video-bg: var(
+    --normal-background-theme,
+    var(--box-box-normal-lightbackground-white, #f9f8f8)
+  );
   --video-border: var(--border-border-normal-1, #f9f8f8);
   --video-bar-height: 46px;
   --video-bar-padding: var(--padding-default, 8px);
@@ -882,7 +1046,11 @@
   --video-bar-light-blur: 24px;
   --video-bar-light-bg: color-mix(
     in srgb,
-    var(--video-bar-bg, var(--control-control-normal-lightbackground-1, #f0efef)) 72%,
+    var(
+        --video-bar-bg,
+        var(--control-control-normal-lightbackground-1, #f0efef)
+      )
+      72%,
     transparent
   );
   --video-settings-width: 200px;

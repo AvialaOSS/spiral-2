@@ -29,11 +29,21 @@ export const Default: Story = {
       <ModalContent>
         <ModalHeaderText
           showIcon
-          icon={<SymbolInformationCircle thickness="Regular" mode="fill" aria-hidden />}
+          icon={
+            <SymbolInformationCircle
+              thickness="Regular"
+              mode="fill"
+              aria-hidden
+            />
+          }
           title="Modal title"
           description="Supporting caption in the header."
         />
-        <ModalBody layout="text" title="Section title" description="Body copy for the dialog." />
+        <ModalBody
+          layout="text"
+          title="Section title"
+          description="Body copy for the dialog."
+        />
         <ModalFooter>
           <Button mode="second">Cancel</Button>
           <Button mode="primary">Confirm</Button>
@@ -50,7 +60,10 @@ export const Large: Story = {
         <Button mode="primary">Open large modal</Button>
       </ModalTrigger>
       <ModalContent size="large">
-        <ModalHeaderText title="Large modal" description="480px max content width." />
+        <ModalHeaderText
+          title="Large modal"
+          description="480px max content width."
+        />
         <ModalBody>
           <p>Use the large size for forms or richer content panels.</p>
         </ModalBody>
@@ -90,8 +103,14 @@ export const WithoutFooter: Story = {
         <Button mode="noBackground">No footer</Button>
       </ModalTrigger>
       <ModalContent>
-        <ModalHeaderText title="Read only" description="Dismiss with the header close control." />
-        <ModalBody layout="text" description="Informational modal without action buttons." />
+        <ModalHeaderText
+          title="Read only"
+          description="Dismiss with the header close control."
+        />
+        <ModalBody
+          layout="text"
+          description="Informational modal without action buttons."
+        />
       </ModalContent>
     </Modal>
   ),

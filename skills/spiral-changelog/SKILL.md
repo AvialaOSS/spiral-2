@@ -23,14 +23,14 @@ Also follow `skills/spiral-component` for component layout and exports.
 A user-visible change in `packages/ui` needs an entry in **both** places. They are
 not alternatives and neither one generates the other.
 
-| | `packages/ui/changelogs/{DisplayName}.md` | `.changeset/*.md` |
-|---|---|---|
-| Audience | Component consumers, on the docs site | Package consumers, on npm |
-| Granularity | One file per component (`Button`, `SegmentatorGroup`, …) | One file per change set, lists packages + bump type |
-| Language | Chinese bullets, English section titles | English summary |
-| Versioning | Written under `## [Unreleased]`; `pnpm version:packages` stamps the heading | `changeset version` picks the semver bump and writes `packages/ui/CHANGELOG.md` |
-| Consumed by | `pnpm --filter @aviala-design/spiral build` → `dist/component-changelogs.json` → avialaWebsite | Changesets CLI during release |
-| Lifetime | Permanent history, kept in git | Deleted by `changeset version` once consumed |
+|             | `packages/ui/changelogs/{DisplayName}.md`                                                      | `.changeset/*.md`                                                               |
+| ----------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Audience    | Component consumers, on the docs site                                                          | Package consumers, on npm                                                       |
+| Granularity | One file per component (`Button`, `SegmentatorGroup`, …)                                       | One file per change set, lists packages + bump type                             |
+| Language    | Chinese bullets, English section titles                                                        | English summary                                                                 |
+| Versioning  | Written under `## [Unreleased]`; `pnpm version:packages` stamps the heading                    | `changeset version` picks the semver bump and writes `packages/ui/CHANGELOG.md` |
+| Consumed by | `pnpm --filter @aviala-design/spiral build` → `dist/component-changelogs.json` → avialaWebsite | Changesets CLI during release                                                   |
+| Lifetime    | Permanent history, kept in git                                                                 | Deleted by `changeset version` once consumed                                    |
 
 Practical consequences:
 
@@ -62,9 +62,11 @@ hook.
 ## [Unreleased]
 
 ### Added
+
 - …
 
 ## 2.1.0
+
 …
 ```
 

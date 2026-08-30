@@ -25,7 +25,10 @@ import { Typography } from "./typography";
 
 /** Figma Components → Structure Navigation → Pagination (791:146366) */
 
-function buildPageList(page: number, pageCount: number): Array<number | "ellipsis"> {
+function buildPageList(
+  page: number,
+  pageCount: number
+): Array<number | "ellipsis"> {
   if (pageCount <= 7) {
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
@@ -65,7 +68,10 @@ function ellipsisRange(
   return range;
 }
 
-export type PaginationProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
+export type PaginationProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> & {
   page?: number;
   defaultPage?: number;
   pageCount: number;
@@ -109,9 +115,11 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
     const resolvedJumpLabel = jumpLabel ?? locale.jumpTo;
     const resolvedSizeLabel = sizeLabel ?? locale.pageSize;
     const resolvedSizeOptionLabel =
-      sizeOptionLabel ?? ((size: number) => interpolate(locale.items, { size }));
+      sizeOptionLabel ??
+      ((size: number) => interpolate(locale.items, { size }));
     const [uncontrolledPage, setUncontrolledPage] = useState(defaultPage);
-    const [uncontrolledPageSize, setUncontrolledPageSize] = useState(defaultPageSize);
+    const [uncontrolledPageSize, setUncontrolledPageSize] =
+      useState(defaultPageSize);
     const [jumpValue, setJumpValue] = useState("");
     const [openEllipsis, setOpenEllipsis] = useState<number | null>(null);
     const page = pageProp ?? uncontrolledPage;
@@ -168,7 +176,12 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                     <button
                       type="button"
                       data-size="regular"
-                      className={cn(buttonVariants({ mode: "noBackgroundCustom", compact: true }))}
+                      className={cn(
+                        buttonVariants({
+                          mode: "noBackgroundCustom",
+                          compact: true,
+                        })
+                      )}
                       aria-label={locale.morePages}
                       aria-haspopup="menu"
                     >
@@ -184,7 +197,12 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                           key={p}
                           type="button"
                           data-size="regular"
-                          className={cn(buttonVariants({ mode: "noBackgroundCustom", compact: true }))}
+                          className={cn(
+                            buttonVariants({
+                              mode: "noBackgroundCustom",
+                              compact: true,
+                            })
+                          )}
                           onClick={() => {
                             setPage(p);
                             setOpenEllipsis(null);
@@ -204,7 +222,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                   type="button"
                   data-size="regular"
                   className={cn(
-                    buttonVariants({ mode: "noBackgroundCustom", compact: true }),
+                    buttonVariants({
+                      mode: "noBackgroundCustom",
+                      compact: true,
+                    }),
                     "aviala-pagination__page"
                   )}
                   data-active={item === currentPage ? "true" : undefined}

@@ -75,11 +75,16 @@ export type BreadcrumbItemProps = ComponentPropsWithoutRef<"li"> & {
 };
 
 export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
-  ({ className, href, current = false, icon, onClick, children, ...props }, ref) => {
+  (
+    { className, href, current = false, icon, onClick, children, ...props },
+    ref
+  ) => {
     const size = useContext(BreadcrumbSizeContext);
     const label = (
       <>
-        {icon ? <span className="aviala-breadcrumb-item__icon">{icon}</span> : null}
+        {icon ? (
+          <span className="aviala-breadcrumb-item__icon">{icon}</span>
+        ) : null}
         {children != null ? (
           <Typography
             level={breadcrumbTypeLevel(size)}
@@ -136,24 +141,25 @@ export type BreadcrumbSeparatorProps = HTMLAttributes<HTMLLIElement> & {
   children?: ReactNode;
 };
 
-export const BreadcrumbSeparator = forwardRef<HTMLLIElement, BreadcrumbSeparatorProps>(
-  ({ className, children = "/", ...props }, ref) => {
-    const size = useContext(BreadcrumbSizeContext);
-    return (
-      <li
-        ref={ref}
-        role="presentation"
-        aria-hidden
-        className={cn("aviala-breadcrumb-separator", className)}
-        {...props}
-      >
-        <Typography level={breadcrumbTypeLevel(size)} as="span">
-          {children}
-        </Typography>
-      </li>
-    );
-  }
-);
+export const BreadcrumbSeparator = forwardRef<
+  HTMLLIElement,
+  BreadcrumbSeparatorProps
+>(({ className, children = "/", ...props }, ref) => {
+  const size = useContext(BreadcrumbSizeContext);
+  return (
+    <li
+      ref={ref}
+      role="presentation"
+      aria-hidden
+      className={cn("aviala-breadcrumb-separator", className)}
+      {...props}
+    >
+      <Typography level={breadcrumbTypeLevel(size)} as="span">
+        {children}
+      </Typography>
+    </li>
+  );
+});
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
 
 export type BreadcrumbEllipsisItemProps = Omit<
@@ -172,25 +178,27 @@ export const BreadcrumbEllipsisItem = forwardRef<
   BreadcrumbEllipsisItemProps
 >(
   (
-    {
-      className,
-      href,
-      onClick,
-      showChevron = true,
-      children,
-      ...props
-    },
+    { className, href, onClick, showChevron = true, children, ...props },
     ref
   ) => {
     const rtl = useRtl();
-    const ChevronIcon = rtl ? DirectionArrowLeftLight : DirectionArrowRightLight;
+    const ChevronIcon = rtl
+      ? DirectionArrowLeftLight
+      : DirectionArrowRightLight;
     const content = (
       <>
-        <Typography level="text" as="span" className="aviala-breadcrumb-ellipsis-item__label">
+        <Typography
+          level="text"
+          as="span"
+          className="aviala-breadcrumb-ellipsis-item__label"
+        >
           {children}
         </Typography>
         {showChevron ? (
-          <span className="aviala-breadcrumb-ellipsis-item__chevron" aria-hidden>
+          <span
+            className="aviala-breadcrumb-ellipsis-item__chevron"
+            aria-hidden
+          >
             <ChevronIcon width={14} height={14} thickness="Light" />
           </span>
         ) : null}
@@ -202,7 +210,10 @@ export const BreadcrumbEllipsisItem = forwardRef<
         <a
           ref={ref as Ref<HTMLAnchorElement>}
           href={href}
-          className={cn("aviala-breadcrumb-ellipsis-item aviala-focus-ring", className)}
+          className={cn(
+            "aviala-breadcrumb-ellipsis-item aviala-focus-ring",
+            className
+          )}
           onClick={onClick}
           {...props}
         >
@@ -215,7 +226,10 @@ export const BreadcrumbEllipsisItem = forwardRef<
       <button
         ref={ref as Ref<HTMLButtonElement>}
         type="button"
-        className={cn("aviala-breadcrumb-ellipsis-item aviala-focus-ring", className)}
+        className={cn(
+          "aviala-breadcrumb-ellipsis-item aviala-focus-ring",
+          className
+        )}
         onClick={onClick}
         {...(props as ComponentPropsWithoutRef<"button">)}
       >
@@ -226,7 +240,10 @@ export const BreadcrumbEllipsisItem = forwardRef<
 );
 BreadcrumbEllipsisItem.displayName = "BreadcrumbEllipsisItem";
 
-export type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<"button">, "type"> & {
+export type BreadcrumbEllipsisProps = Omit<
+  ComponentPropsWithoutRef<"button">,
+  "type"
+> & {
   className?: string;
   /**
    * Figma `activated` on Storage item button.
@@ -240,7 +257,10 @@ export type BreadcrumbEllipsisProps = Omit<ComponentPropsWithoutRef<"button">, "
 };
 
 /** Figma `Storage item button` — collapsed middle path */
-export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisProps>(
+export const BreadcrumbEllipsis = forwardRef<
+  HTMLLIElement,
+  BreadcrumbEllipsisProps
+>(
   (
     {
       className,
@@ -257,9 +277,12 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
   ) => {
     const locale = useLocaleMessages("Breadcrumb");
     const size = useContext(BreadcrumbSizeContext);
-    const [uncontrolledActivated, setUncontrolledActivated] = useState(defaultActivated);
+    const [uncontrolledActivated, setUncontrolledActivated] =
+      useState(defaultActivated);
     const isControlled = activatedProp !== undefined;
-    const activated = isControlled ? Boolean(activatedProp) : uncontrolledActivated;
+    const activated = isControlled
+      ? Boolean(activatedProp)
+      : uncontrolledActivated;
 
     const setActivated = useCallback(
       (next: boolean) => {
@@ -272,7 +295,12 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
     /* Figma Small Storage item button still uses 14px SymbolMore */
     const iconSize = 14;
     const icon = children ?? (
-      <SymbolMore width={iconSize} height={iconSize} thickness="Light" aria-hidden />
+      <SymbolMore
+        width={iconSize}
+        height={iconSize}
+        thickness="Light"
+        aria-hidden
+      />
     );
 
     const trigger = (
@@ -296,7 +324,10 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
     );
 
     return (
-      <li ref={ref} className={cn("aviala-breadcrumb-ellipsis-wrap", className)}>
+      <li
+        ref={ref}
+        className={cn("aviala-breadcrumb-ellipsis-wrap", className)}
+      >
         {menu != null ? (
           <Popover open={activated} onOpenChange={setActivated}>
             <PopoverTrigger asChild>{trigger}</PopoverTrigger>
@@ -308,7 +339,9 @@ export const BreadcrumbEllipsis = forwardRef<HTMLLIElement, BreadcrumbEllipsisPr
               showArrow={false}
               role="menu"
             >
-              <div className="aviala-breadcrumb-ellipsis-menu__items">{menu}</div>
+              <div className="aviala-breadcrumb-ellipsis-menu__items">
+                {menu}
+              </div>
             </PopoverContent>
           </Popover>
         ) : (

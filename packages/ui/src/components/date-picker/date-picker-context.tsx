@@ -18,7 +18,10 @@ export type DatePickerContextValue = {
   setViewMonth: (month: Date) => void;
   singleValue?: Date;
   rangeValue: DateRange;
-  selectDate: (date: Date, options?: { close?: boolean; switchToTime?: boolean }) => void;
+  selectDate: (
+    date: Date,
+    options?: { close?: boolean; switchToTime?: boolean }
+  ) => void;
   commitTypedValue: (text: string) => boolean;
   minDate?: Date;
   maxDate?: Date;
@@ -40,13 +43,19 @@ export function DatePickerProvider({
   value: DatePickerContextValue;
   children: ReactNode;
 }) {
-  return <DatePickerContext.Provider value={value}>{children}</DatePickerContext.Provider>;
+  return (
+    <DatePickerContext.Provider value={value}>
+      {children}
+    </DatePickerContext.Provider>
+  );
 }
 
 export function useDatePickerContext() {
   const context = useContext(DatePickerContext);
   if (!context) {
-    throw new Error("DatePicker compound components must be used within DatePicker.");
+    throw new Error(
+      "DatePicker compound components must be used within DatePicker."
+    );
   }
   return context;
 }

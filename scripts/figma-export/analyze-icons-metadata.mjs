@@ -5,7 +5,8 @@ const text = readFileSync(path, "utf8");
 const names = [...text.matchAll(/name="([^"]+)"/g)].map((m) => m[1]);
 
 const iconFrames = names.filter(
-  (n) => n.includes("&Standard") || n.includes("&Light") || /^[a-zA-Z0-9]+_/.test(n)
+  (n) =>
+    n.includes("&Standard") || n.includes("&Light") || /^[a-zA-Z0-9]+_/.test(n)
 );
 
 const categories = new Map();
@@ -24,10 +25,20 @@ for (const n of iconFrames) {
   else styles.other += 1;
 }
 
-console.log(JSON.stringify({
-  totalNameAttrs: names.length,
-  iconLikeFrames: iconFrames.length,
-  categories: Object.fromEntries([...categories.entries()].sort((a, b) => b[1] - a[1])),
-  weights: Object.fromEntries([...weights.entries()].sort((a, b) => b[1] - a[1])),
-  styles,
-}, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      totalNameAttrs: names.length,
+      iconLikeFrames: iconFrames.length,
+      categories: Object.fromEntries(
+        [...categories.entries()].sort((a, b) => b[1] - a[1])
+      ),
+      weights: Object.fromEntries(
+        [...weights.entries()].sort((a, b) => b[1] - a[1])
+      ),
+      styles,
+    },
+    null,
+    2
+  )
+);

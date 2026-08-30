@@ -58,14 +58,21 @@ function renderAlertIcon(node: ReactNode): ReactNode {
   if (!node) return null;
   const content =
     isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: ALERT_ICON_SIZE,
-          height: ALERT_ICON_SIZE,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: ALERT_ICON_SIZE,
+            height: ALERT_ICON_SIZE,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return (
@@ -76,7 +83,11 @@ function renderAlertIcon(node: ReactNode): ReactNode {
 }
 
 function defaultStatusIcon(type: AlertType): ReactNode {
-  const iconProps = { thickness: "Regular" as const, mode: "fill" as const, "aria-hidden": true };
+  const iconProps = {
+    thickness: "Regular" as const,
+    mode: "fill" as const,
+    "aria-hidden": true,
+  };
 
   switch (type) {
     case "info":
@@ -162,7 +173,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         {...props}
       >
         <div className="aviala-alert__body">
-          {showIcon ? renderAlertIcon(icon ?? defaultStatusIcon(resolvedType)) : null}
+          {showIcon
+            ? renderAlertIcon(icon ?? defaultStatusIcon(resolvedType))
+            : null}
 
           {isSmall ? (
             <Typography level="text" className="aviala-alert__title">

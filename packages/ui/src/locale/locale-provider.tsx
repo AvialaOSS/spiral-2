@@ -9,6 +9,11 @@ export type LocaleProviderProps = {
   locale?: Locale;
 };
 
-export function LocaleProvider({ children, locale = zhCN }: LocaleProviderProps) {
-  return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
+export function LocaleProvider({
+  children,
+  locale = zhCN,
+}: LocaleProviderProps) {
+  return (
+    <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>
+  );
 }

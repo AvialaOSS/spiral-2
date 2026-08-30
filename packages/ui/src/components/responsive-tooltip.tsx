@@ -14,11 +14,7 @@ import {
   TOOLTIP_DELAY_DURATION,
   type TooltipContentLevel,
 } from "./tooltip";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { useCoarsePointer } from "./use-coarse-pointer";
 
 /** Default hold duration before a touch tooltip opens. */

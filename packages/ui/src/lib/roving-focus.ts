@@ -101,8 +101,10 @@ export function focusRovingSibling<T extends HTMLElement = HTMLElement>(
   const items = collectRovingItems<T>(container, selector, filter);
   if (items.length === 0) return null;
 
-  const currentIndex = current instanceof HTMLElement ? items.indexOf(current as T) : -1;
-  const next = items[resolveRovingIndex(currentIndex, items.length, move, loop)];
+  const currentIndex =
+    current instanceof HTMLElement ? items.indexOf(current as T) : -1;
+  const next =
+    items[resolveRovingIndex(currentIndex, items.length, move, loop)];
   if (!next) return null;
 
   next.focus();

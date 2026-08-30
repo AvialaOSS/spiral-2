@@ -16,7 +16,7 @@ applyTheme(vars);
 
 <ThemeProvider defaultPresetId="default">
   <App />
-</ThemeProvider>
+</ThemeProvider>;
 ```
 
 ## Dynamic primary

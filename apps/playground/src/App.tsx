@@ -1,4 +1,8 @@
-import { DirectionArrowRight, GeneralSetting, iconCatalog } from "@aviala-design/icons";
+import {
+  DirectionArrowRight,
+  GeneralSetting,
+  iconCatalog,
+} from "@aviala-design/icons";
 import {
   Button,
   Checkbox,
@@ -51,7 +55,10 @@ import {
 } from "@aviala-design/spiral";
 import { FormField } from "@aviala-design/spiral/form";
 import { useId, useState } from "react";
-import { categoryCascaderOptions, regionCascaderOptions } from "./cascader-demo-data";
+import {
+  categoryCascaderOptions,
+  regionCascaderOptions,
+} from "./cascader-demo-data";
 import { FormValidationDemo } from "./FormValidationDemo";
 import { ModelManagementModalDemo } from "./ModelManagementModalDemo";
 
@@ -74,7 +81,9 @@ function ThemeSwitcher() {
       <h2 className="mb-3 text-lg font-semibold">Theme Switcher</h2>
       <Stack gap="component">
         <div>
-          <p className="mb-2 text-sm text-muted-foreground">Base numbers density</p>
+          <p className="mb-2 text-sm text-muted-foreground">
+            Base numbers density
+          </p>
           <div className="flex flex-wrap gap-2">
             {(
               [
@@ -119,8 +128,8 @@ function ThemeSwitcher() {
         </div>
         {isStaticTheme ? (
           <p className="text-xs text-muted-foreground">
-            Frozen ALD theme — colors come verbatim from the Figma token exports.
-            Pick another preset to enable palette generation.
+            Frozen ALD theme — colors come verbatim from the Figma token
+            exports. Pick another preset to enable palette generation.
           </p>
         ) : (
           <>
@@ -130,7 +139,9 @@ function ThemeSwitcher() {
                 <ColorPickerTrigger size="regular" className="w-[120px]" />
                 <ColorPickerContent />
               </ColorPicker>
-              <code className="text-xs text-muted-foreground">{primaryColor}</code>
+              <code className="text-xs text-muted-foreground">
+                {primaryColor}
+              </code>
             </label>
             <PaletteConfigPanel />
           </>
@@ -152,8 +163,13 @@ function PaletteConfigPanel() {
   };
 
   return (
-    <details className="rounded-md border border-border bg-background/60 p-3 text-sm" open>
-      <summary className="cursor-pointer font-medium">Color generation config</summary>
+    <details
+      className="rounded-md border border-border bg-background/60 p-3 text-sm"
+      open
+    >
+      <summary className="cursor-pointer font-medium">
+        Color generation config
+      </summary>
       <div className="mt-3 flex flex-col gap-4">
         <label className="flex flex-col gap-1">
           <span className="flex items-center justify-between">
@@ -168,7 +184,9 @@ function PaletteConfigPanel() {
             max={3}
             step={0.05}
             value={paletteConfig.curveGamma ?? 1}
-            onChange={(e) => setPaletteConfig({ curveGamma: Number(e.target.value) })}
+            onChange={(e) =>
+              setPaletteConfig({ curveGamma: Number(e.target.value) })
+            }
           />
         </label>
 
@@ -176,7 +194,9 @@ function PaletteConfigPanel() {
           <input
             type="checkbox"
             checked={paletteConfig.protectHues ?? true}
-            onChange={(e) => setPaletteConfig({ protectHues: e.target.checked })}
+            onChange={(e) =>
+              setPaletteConfig({ protectHues: e.target.checked })
+            }
           />
           <span>Protect hue families</span>
         </label>
@@ -237,13 +257,17 @@ function PaletteConfigPanel() {
             max={1}
             step={0.05}
             value={paletteConfig.mixRatio ?? 0}
-            onChange={(e) => setPaletteConfig({ mixRatio: Number(e.target.value) })}
+            onChange={(e) =>
+              setPaletteConfig({ mixRatio: Number(e.target.value) })
+            }
           />
           <input
             type="text"
             placeholder="Mix color e.g. #165DFF"
             value={paletteConfig.mixColor ?? ""}
-            onChange={(e) => setPaletteConfig({ mixColor: e.target.value || undefined })}
+            onChange={(e) =>
+              setPaletteConfig({ mixColor: e.target.value || undefined })
+            }
             className="rounded border border-border bg-card px-2 py-1 text-xs"
           />
         </label>
@@ -277,7 +301,10 @@ function ColorPalette() {
       <h2 className="mb-3 text-lg font-semibold">Color Palette</h2>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {swatches.map((token) => (
-          <div key={token} className="overflow-hidden rounded-md border border-border">
+          <div
+            key={token}
+            className="overflow-hidden rounded-md border border-border"
+          >
             <div className="h-12" style={{ background: `var(${token})` }} />
             <p className="p-2 font-mono text-xs">{token}</p>
           </div>
@@ -294,15 +321,25 @@ function IconGalleryPromo() {
         <div>
           <h2 className="text-lg font-semibold">Icon Gallery</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Browse all {iconCatalog.length} Aviala icons with category accordion, search, and
-            live thickness/mode preview.
+            Browse all {iconCatalog.length} Aviala icons with category
+            accordion, search, and live thickness/mode preview.
           </p>
         </div>
         <Stack direction="row" gap="component" className="flex-wrap">
-          <Link href="/icons" level="text" mode="noBackgroundCustom" rightIcon={<DirectionArrowRight aria-hidden />}>
+          <Link
+            href="/icons"
+            level="text"
+            mode="noBackgroundCustom"
+            rightIcon={<DirectionArrowRight aria-hidden />}
+          >
             Open Icon Gallery
           </Link>
-          <Link href="/icon-sync" level="text" mode="noBackgroundCustom" rightIcon={<DirectionArrowRight aria-hidden />}>
+          <Link
+            href="/icon-sync"
+            level="text"
+            mode="noBackgroundCustom"
+            rightIcon={<DirectionArrowRight aria-hidden />}
+          >
             Open Sync Console
           </Link>
         </Stack>
@@ -337,16 +374,39 @@ function ButtonDemo() {
         <div>
           <p className="mb-2 text-sm text-muted-foreground">Icon only</p>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="tiny" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="Settings" />
-            <Button size="small" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="Settings" />
-            <Button size="regular" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="Settings" />
-            <Button size="big" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="Settings" />
+            <Button
+              size="tiny"
+              iconOnly
+              leftIcon={<GeneralSetting aria-hidden />}
+              aria-label="Settings"
+            />
+            <Button
+              size="small"
+              iconOnly
+              leftIcon={<GeneralSetting aria-hidden />}
+              aria-label="Settings"
+            />
+            <Button
+              size="regular"
+              iconOnly
+              leftIcon={<GeneralSetting aria-hidden />}
+              aria-label="Settings"
+            />
+            <Button
+              size="big"
+              iconOnly
+              leftIcon={<GeneralSetting aria-hidden />}
+              aria-label="Settings"
+            />
           </div>
         </div>
         <div>
           <p className="mb-2 text-sm text-muted-foreground">States</p>
           <div className="flex flex-wrap gap-2">
-            <Button leftIcon={<DirectionArrowRight aria-hidden />} rightIcon={<DirectionArrowRight aria-hidden />}>
+            <Button
+              leftIcon={<DirectionArrowRight aria-hidden />}
+              rightIcon={<DirectionArrowRight aria-hidden />}
+            >
               With icons
             </Button>
             <Button allRound>All round</Button>
@@ -370,13 +430,28 @@ function BasicInputControlsDemo() {
         <div>
           <p className="mb-2 text-sm text-muted-foreground">Link</p>
           <div className="flex flex-wrap items-center gap-3">
-            <Link href="#" level="caption" leftIcon={<GeneralSetting aria-hidden />} rightIcon={<GeneralSetting aria-hidden />}>
+            <Link
+              href="#"
+              level="caption"
+              leftIcon={<GeneralSetting aria-hidden />}
+              rightIcon={<GeneralSetting aria-hidden />}
+            >
               Caption
             </Link>
-            <Link href="#" level="text" mode="noBackgroundCustom" leftIcon={<GeneralSetting aria-hidden />}>
+            <Link
+              href="#"
+              level="text"
+              mode="noBackgroundCustom"
+              leftIcon={<GeneralSetting aria-hidden />}
+            >
               Text custom
             </Link>
-            <Link href="#" iconOnly leftIcon={<GeneralSetting aria-hidden />} aria-label="Settings" />
+            <Link
+              href="#"
+              iconOnly
+              leftIcon={<GeneralSetting aria-hidden />}
+              aria-label="Settings"
+            />
           </div>
         </div>
         <div>
@@ -391,13 +466,22 @@ function BasicInputControlsDemo() {
           <p className="mb-2 text-sm text-muted-foreground">Segmentator</p>
           <Stack gap="content">
             <SegmentatorGroup value={segment} onValueChange={setSegment}>
-              <SegmentatorItem value="a" leftIcon={<GeneralSetting aria-hidden />}>
+              <SegmentatorItem
+                value="a"
+                leftIcon={<GeneralSetting aria-hidden />}
+              >
                 Option A
               </SegmentatorItem>
-              <SegmentatorItem value="b" leftIcon={<GeneralSetting aria-hidden />}>
+              <SegmentatorItem
+                value="b"
+                leftIcon={<GeneralSetting aria-hidden />}
+              >
                 Option B
               </SegmentatorItem>
-              <SegmentatorItem value="c" leftIcon={<GeneralSetting aria-hidden />}>
+              <SegmentatorItem
+                value="c"
+                leftIcon={<GeneralSetting aria-hidden />}
+              >
                 Option C
               </SegmentatorItem>
             </SegmentatorGroup>
@@ -428,7 +512,11 @@ function BasicInputDemo() {
     <section className="rounded-lg border border-border bg-card p-4">
       <h2 className="mb-3 text-lg font-semibold">Information Collect</h2>
       <Stack gap="block">
-        <FormField label="Email" htmlFor={`${id}-email`} description="We never share your email.">
+        <FormField
+          label="Email"
+          htmlFor={`${id}-email`}
+          description="We never share your email."
+        >
           <Input
             id={`${id}-email`}
             type="email"
@@ -548,13 +636,16 @@ function BasicInputDemo() {
         </div>
         <div>
           <p className="mb-2 text-sm text-muted-foreground">
-            Select menu item variants — trailing radio/checkbox show a checkmark only when
-            selected (no empty ring); form controls always show leading rings/boxes; action rows
-            show a trailing arrow only.
+            Select menu item variants — trailing radio/checkbox show a checkmark
+            only when selected (no empty ring); form controls always show
+            leading rings/boxes; action rows show a trailing arrow only.
           </p>
           <Stack gap="content">
             <Select defaultValue="radio-trail-a">
-              <SelectTrigger placeholder="Item function variants" className="w-full max-w-xs" />
+              <SelectTrigger
+                placeholder="Item function variants"
+                className="w-full max-w-xs"
+              />
               <SelectContent className="max-h-[480px]">
                 <SelectItemGroup label="Action (trailing arrow)">
                   <SelectItem value="action-a" itemFunction="action">
@@ -564,7 +655,10 @@ function BasicInputDemo() {
                     Navigate B
                   </SelectItem>
                 </SelectItemGroup>
-                <SelectItemGroup label="Trailing radio (checkmark when selected)" showDivider>
+                <SelectItemGroup
+                  label="Trailing radio (checkmark when selected)"
+                  showDivider
+                >
                   <SelectItem value="radio-trail-a" itemFunction="radio">
                     Selected — trailing checkmark
                   </SelectItem>
@@ -572,7 +666,10 @@ function BasicInputDemo() {
                     Unselected — no empty circle
                   </SelectItem>
                 </SelectItemGroup>
-                <SelectItemGroup label="Trailing checkbox (checkmark when selected)" showDivider>
+                <SelectItemGroup
+                  label="Trailing checkbox (checkmark when selected)"
+                  showDivider
+                >
                   <SelectItem value="checkbox-trail-a" itemFunction="checkbox">
                     Selected — trailing checkmark
                   </SelectItem>
@@ -580,7 +677,10 @@ function BasicInputDemo() {
                     Unselected — no empty box
                   </SelectItem>
                 </SelectItemGroup>
-                <SelectItemGroup label="Form radio (leading control always visible)" showDivider>
+                <SelectItemGroup
+                  label="Form radio (leading control always visible)"
+                  showDivider
+                >
                   <SelectItem value="form-radio-a" itemFunction="form-radio">
                     Selected — filled leading radio
                   </SelectItem>
@@ -588,21 +688,37 @@ function BasicInputDemo() {
                     Unselected — empty leading ring
                   </SelectItem>
                 </SelectItemGroup>
-                <SelectItemGroup label="Form checkbox (leading control always visible)" showDivider>
-                  <SelectItem value="form-checkbox-a" itemFunction="form-checkbox">
+                <SelectItemGroup
+                  label="Form checkbox (leading control always visible)"
+                  showDivider
+                >
+                  <SelectItem
+                    value="form-checkbox-a"
+                    itemFunction="form-checkbox"
+                  >
                     Selected — checked leading box
                   </SelectItem>
-                  <SelectItem value="form-checkbox-b" itemFunction="form-checkbox">
+                  <SelectItem
+                    value="form-checkbox-b"
+                    itemFunction="form-checkbox"
+                  >
                     Unselected — empty leading box
                   </SelectItem>
                 </SelectItemGroup>
               </SelectContent>
             </Select>
             <Select defaultValue="people-radio">
-              <SelectTrigger placeholder="People layout variants" className="w-full max-w-xs" />
+              <SelectTrigger
+                placeholder="People layout variants"
+                className="w-full max-w-xs"
+              />
               <SelectContent>
                 <SelectItemGroup>
-                  <SelectItemPeople value="people-radio" subtitle="Trailing radio" itemFunction="radio">
+                  <SelectItemPeople
+                    value="people-radio"
+                    subtitle="Trailing radio"
+                    itemFunction="radio"
+                  >
                     Alex Chen
                   </SelectItemPeople>
                   <SelectItemPeople
@@ -612,7 +728,11 @@ function BasicInputDemo() {
                   >
                     Sam Rivera
                   </SelectItemPeople>
-                  <SelectItemPeople value="people-action" subtitle="Action only" itemFunction="action">
+                  <SelectItemPeople
+                    value="people-action"
+                    subtitle="Action only"
+                    itemFunction="action"
+                  >
                     Jordan Lee
                   </SelectItemPeople>
                 </SelectItemGroup>
@@ -633,8 +753,8 @@ function BasicInputDemo() {
         </FormField>
         <div>
           <p className="mb-2 text-sm text-muted-foreground">
-            Cascader — region / location picker (6 countries, up to 4 levels; switch siblings to
-            preview path highlighting and column expand)
+            Cascader — region / location picker (6 countries, up to 4 levels;
+            switch siblings to preview path highlighting and column expand)
           </p>
           <Stack gap="content">
             <FormField label="Region">
@@ -661,8 +781,8 @@ function BasicInputDemo() {
         </div>
         <div>
           <p className="mb-2 text-sm text-muted-foreground">
-            Cascader — product categories (4 departments, many siblings, long labels for hug-width
-            columns)
+            Cascader — product categories (4 departments, many siblings, long
+            labels for hug-width columns)
           </p>
           <FormField label="Category">
             <CascaderField
@@ -752,7 +872,11 @@ function BasicInputDemo() {
           </InputGroup>
         </FormField>
         <div className="flex items-center gap-2">
-          <Checkbox id={`${id}-cb`} checked={checked} onCheckedChange={(v) => setChecked(v === true)} />
+          <Checkbox
+            id={`${id}-cb`}
+            checked={checked}
+            onCheckedChange={(v) => setChecked(v === true)}
+          />
           <Label htmlFor={`${id}-cb`}>Accept terms</Label>
         </div>
         <div className="flex items-center gap-2">
@@ -760,14 +884,32 @@ function BasicInputDemo() {
           <Label htmlFor={`${id}-sw`}>Notifications</Label>
         </div>
         <FormField label="Plan">
-          <RadioGroup defaultValue="pro" direction="vertical" className="w-full max-w-xs">
-            <RadioInput value="free" id={`${id}-free`} title="Free" description="Basic features" />
-            <RadioInput value="pro" id={`${id}-pro`} title="Pro" description="All features" />
+          <RadioGroup
+            defaultValue="pro"
+            direction="vertical"
+            className="w-full max-w-xs"
+          >
+            <RadioInput
+              value="free"
+              id={`${id}-free`}
+              title="Free"
+              description="Basic features"
+            />
+            <RadioInput
+              value="pro"
+              id={`${id}-pro`}
+              title="Pro"
+              description="All features"
+            />
           </RadioGroup>
         </FormField>
         <div>
           <p className="mb-2 text-sm text-muted-foreground">Radio card style</p>
-          <RadioGroup defaultValue="monthly" direction="vertical" className="w-full max-w-xs">
+          <RadioGroup
+            defaultValue="monthly"
+            direction="vertical"
+            className="w-full max-w-xs"
+          >
             <RadioInput
               value="monthly"
               id={`${id}-monthly`}
@@ -800,11 +942,18 @@ function LoadingDemo() {
             <Loading mode="theme" level="text" lineHeightFix={false} />
             <Loading mode="themeText" level="text" lineHeightFix={false} />
             <Loading mode="black" level="text" lineHeightFix={false} />
-            <Loading mode="white" level="text" lineHeightFix={false} className="rounded bg-neutral-800 p-2" />
+            <Loading
+              mode="white"
+              level="text"
+              lineHeightFix={false}
+              className="rounded bg-neutral-800 p-2"
+            />
           </div>
         </div>
         <div>
-          <p className="mb-2 text-sm text-muted-foreground">Levels (line-height fix)</p>
+          <p className="mb-2 text-sm text-muted-foreground">
+            Levels (line-height fix)
+          </p>
           <div className="flex flex-wrap items-end gap-4">
             <Loading mode="theme" level="display" />
             <Loading mode="theme" level="headline1" />
@@ -832,7 +981,8 @@ function OverlayDemo() {
               <Button mode="default">Open popover</Button>
             </PopoverTrigger>
             <PopoverContent showArrow className="max-w-xs">
-              Rich content panel — same surface as Select menu (white bg, border, shadow).
+              Rich content panel — same surface as Select menu (white bg,
+              border, shadow).
             </PopoverContent>
           </Popover>
         </div>
@@ -845,7 +995,9 @@ function OverlayDemo() {
                   Hover for hint
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Caption-sized hint text on inverted neutral surface</TooltipContent>
+              <TooltipContent>
+                Caption-sized hint text on inverted neutral surface
+              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -857,7 +1009,9 @@ function OverlayDemo() {
 function ListDemo() {
   return (
     <section className="rounded-lg border border-border bg-card p-4">
-      <h2 className="mb-3 text-lg font-semibold">Structure Navigation — List</h2>
+      <h2 className="mb-3 text-lg font-semibold">
+        Structure Navigation — List
+      </h2>
       <List title="Settings" className="max-w-md">
         <ListItem
           itemType="select"
@@ -882,7 +1036,12 @@ function ListDemo() {
             </Select>
           }
         />
-        <ListItem itemType="action" leading="default" title="Manage account" subtitle="Profile and security" />
+        <ListItem
+          itemType="action"
+          leading="default"
+          title="Manage account"
+          subtitle="Profile and security"
+        />
         <ListItem
           itemType="switch"
           leading="none"
@@ -921,7 +1080,9 @@ export function App() {
         <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-bold">Spiral 2 Playground</h1>
-            <p className="text-sm text-muted-foreground">Aviala Design · React Component Library</p>
+            <p className="text-sm text-muted-foreground">
+              Aviala Design · React Component Library
+            </p>
           </div>
           <Stack direction="row" gap="component" className="items-center">
             <Link href="/icons" level="text" mode="noBackgroundCustom">

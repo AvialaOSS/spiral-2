@@ -18,8 +18,12 @@
   border: 1px solid var(--color-picker-panel-border, #f0efef);
   border-radius: var(--color-picker-panel-radius, 10px);
   background-color: var(--color-picker-panel-bg, #ffffff);
-  box-shadow: var(--color-picker-panel-shadow, var(--aviala-shadow-level4-with-line));
-  padding: var(--padding-none, 0) var(--padding-none, 0) var(--color-picker-panel-px, 8px);
+  box-shadow: var(
+    --color-picker-panel-shadow,
+    var(--aviala-shadow-level4-with-line)
+  );
+  padding: var(--padding-none, 0) var(--padding-none, 0)
+    var(--color-picker-panel-px, 8px);
 }
 
 .aviala-color-picker-area {
@@ -97,7 +101,9 @@
       #c8c6c6 180deg 270deg,
       #ffffff 270deg
     );
-  background-size: 100% 100%, 8px 8px;
+  background-size:
+    100% 100%,
+    8px 8px;
   background-repeat: no-repeat, repeat;
 }
 
@@ -181,8 +187,13 @@
   opacity: var(--input-disabled-opacity, 0.55);
 }
 
-.aviala-color-picker-field:focus-within .aviala-color-picker-field__input::selection {
-  background-color: color-mix(in srgb, var(--input-border-activated, var(--primary)) 25%, transparent);
+.aviala-color-picker-field:focus-within
+  .aviala-color-picker-field__input::selection {
+  background-color: color-mix(
+    in srgb,
+    var(--input-border-activated, var(--primary)) 25%,
+    transparent
+  );
 }
 
 .aviala-color-picker-format-select {
@@ -241,7 +252,10 @@
   border: 0;
   border-radius: var(--input-radius, 8px);
   background-color: var(--input-bg-default, #f0efef);
-  box-shadow: var(--input-shell-shadow, var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04)));
+  box-shadow: var(
+    --input-shell-shadow,
+    var(--input-surface-shadow, inset 0 -0.5px 0 rgba(0, 0, 0, 0.04))
+  );
   padding: 0 var(--input-shell-px, var(--input-px-regular, 10px));
   gap: var(--input-shell-gap, var(--input-gap-regular, 6px));
   font-family: inherit;
@@ -295,7 +309,9 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .aviala-color-picker-trigger:hover:not(:focus-visible):not([data-open="true"]):not([data-disabled="true"]):not(:disabled) {
+  .aviala-color-picker-trigger:hover:not(:focus-visible):not(
+      [data-open="true"]
+    ):not([data-disabled="true"]):not(:disabled) {
     background-color: var(--input-bg-hover, #e5e4e3);
   }
 }

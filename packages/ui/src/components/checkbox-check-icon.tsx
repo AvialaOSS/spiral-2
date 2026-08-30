@@ -9,7 +9,10 @@ type CheckboxCheckIconProps = Omit<SVGProps<SVGSVGElement>, "children">;
  * (interruptible; `vector-effect: non-scaling-stroke` keeps stroke weight stable).
  * No clipPath — round caps must not be cropped at Default/Huge stroke widths.
  */
-export function CheckboxCheckIcon({ className, ...props }: CheckboxCheckIconProps) {
+export function CheckboxCheckIcon({
+  className,
+  ...props
+}: CheckboxCheckIconProps) {
   return (
     <svg
       className={cn("aviala-checkbox__check-icon", className)}

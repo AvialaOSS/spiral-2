@@ -1,0 +1,29 @@
+node_modules
+dist
+.turbo
+storybook-static
+coverage
+pnpm-lock.yaml
+
+# SVGR output and its generated barrels — rewritten by `pnpm icons:build`.
+packages/icons/raw
+packages/icons/src/components
+packages/icons/src/catalog.ts
+packages/icons/src/index.ts
+
+# Synced from the external ALD token source.
+packages/tokens/source
+
+# Stray tsc emit next to sources (see .gitignore).
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+
+# Changesets owns these; reformatting fights the generator.
+.changeset
+**/CHANGELOG.md
+
+# Hand-authored changelogs parsed by scripts/stamp-unreleased.mjs.
+packages/ui/changelogs
+
+# Delivered SVG animation payload (97KB of escaped markup strings).
+packages/ui/src/components/video/video-animated-icon-markup.ts

@@ -14,11 +14,15 @@
      for side + arrow position) — enter scale grows from the invocation point */
   transform-origin: var(--radix-popover-content-transform-origin, 50% 50%);
   max-width: var(--popover-content-max-width, 320px);
-  border: 1px solid var(--popover-content-border, var(--select-menu-border, #f0efef));
+  border: 1px solid
+    var(--popover-content-border, var(--select-menu-border, #f0efef));
   border-radius: var(--popover-content-radius, var(--select-menu-radius, 10px));
   background-color: var(--popover-content-bg, var(--select-menu-bg, #ffffff));
   color: var(--popover-content-fg, var(--select-item-fg, #262525));
-  box-shadow: var(--popover-content-shadow, var(--select-menu-shadow, var(--aviala-shadow-level4-with-line)));
+  box-shadow: var(
+    --popover-content-shadow,
+    var(--select-menu-shadow, var(--aviala-shadow-level4-with-line))
+  );
   padding: var(--popover-content-py, 8px) var(--popover-content-px, 8px);
 }
 
@@ -30,7 +34,8 @@
    page bg. Host sizing, junction clip/fill-nudge and per-side nudges below are default-only:
    they compensate for the 1px border. The borderless tooltip/primary appearances use a solid
    14×5 caret and carry their own rules further down. */
-.aviala-popover-content[data-appearance="default"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"]
+  > span:has(> .aviala-popover-content__arrow) {
   z-index: 2;
   pointer-events: none;
   overflow: visible;
@@ -39,24 +44,31 @@
 }
 
 /* Nudge host toward panel — flat edge is y=0 in SVG; Radix rotates the host per side */
-.aviala-popover-content[data-appearance="default"][data-side="bottom"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="bottom"]
+  > span:has(> .aviala-popover-content__arrow) {
   margin-top: 1px;
 }
 
-.aviala-popover-content[data-appearance="default"][data-side="top"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="top"]
+  > span:has(> .aviala-popover-content__arrow) {
   margin-bottom: 1px;
 }
 
-.aviala-popover-content[data-appearance="default"][data-side="left"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="left"]
+  > span:has(> .aviala-popover-content__arrow) {
   margin-right: 1px;
 }
 
-.aviala-popover-content[data-appearance="default"][data-side="right"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="default"][data-side="right"]
+  > span:has(> .aviala-popover-content__arrow) {
   margin-left: 1px;
 }
 
-.aviala-popover-content[data-appearance="default"] .aviala-popover-content__arrow,
-.aviala-popover-content[data-appearance="default"] .aviala-popover-content__arrow svg {
+.aviala-popover-content[data-appearance="default"]
+  .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="default"]
+  .aviala-popover-content__arrow
+  svg {
   display: block;
   overflow: visible;
   flex-shrink: 0;
@@ -69,7 +81,10 @@
 
 .aviala-popover-content__arrow-outline {
   /* fill: none; — keep fill so the caret body matches the panel (outline stroke still draws) */
-  stroke: var(--popover-content-arrow-stroke, var(--border-border-normal-1, #f0efef));
+  stroke: var(
+    --popover-content-arrow-stroke,
+    var(--border-border-normal-1, #f0efef)
+  );
   stroke-width: 1;
   stroke-linejoin: round;
 }
@@ -79,11 +94,17 @@
 }
 
 /* Flat edge is y=0 in SVG coords — clip junction stroke; nudge fill toward panel via local Y */
-.aviala-popover-content[data-appearance="default"]:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-outline {
+.aviala-popover-content[data-appearance="default"]:has(
+    > span > .aviala-popover-content__arrow
+  )
+  .aviala-popover-content__arrow-outline {
   clip-path: inset(1px 0 0 0);
 }
 
-.aviala-popover-content[data-appearance="default"]:has(> span > .aviala-popover-content__arrow) .aviala-popover-content__arrow-fill {
+.aviala-popover-content[data-appearance="default"]:has(
+    > span > .aviala-popover-content__arrow
+  )
+  .aviala-popover-content__arrow-fill {
   transform: translateY(-1px);
 }
 
@@ -169,7 +190,8 @@
    --tooltip-content-* tokens so a touch ResponsiveTooltip (Popover under the hood) stays
    pixel-identical to a desktop Tooltip from a single token source. Borderless, caption text
    (set on the surface class in TSX), solid 14×5 caret. */
-.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__surface {
+.aviala-popover-content[data-appearance="tooltip"]
+  .aviala-popover-content__surface {
   max-width: var(--tooltip-content-max-width, 240px);
   border: none;
   border-radius: var(--tooltip-content-radius, 8px);
@@ -181,7 +203,8 @@
 
 /* Primary appearance — brand primary surface, white text (same tokens as the primary button).
    Borderless, text typography, solid caret filled with the primary bg. */
-.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__surface {
+.aviala-popover-content[data-appearance="primary"]
+  .aviala-popover-content__surface {
   border: none;
   background-color: var(--button-primary-bg, #ff856b);
   color: var(--button-primary-fg, #ffffff);
@@ -190,8 +213,10 @@
 /* Tooltip / primary caret — solid 14×5 (TOOLTIP_POINTER, single path, no outline). Host sizing
    mirrors the default rules but at 14×5; no junction clip/nudge since these surfaces have no
    border. Fill tracks each surface bg so the caret blends into the panel. */
-.aviala-popover-content[data-appearance="tooltip"] > span:has(> .aviala-popover-content__arrow),
-.aviala-popover-content[data-appearance="primary"] > span:has(> .aviala-popover-content__arrow) {
+.aviala-popover-content[data-appearance="tooltip"]
+  > span:has(> .aviala-popover-content__arrow),
+.aviala-popover-content[data-appearance="primary"]
+  > span:has(> .aviala-popover-content__arrow) {
   z-index: 2;
   pointer-events: none;
   overflow: visible;
@@ -199,8 +224,11 @@
   min-height: 5px;
 }
 
-.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__arrow,
-.aviala-popover-content[data-appearance="tooltip"] .aviala-popover-content__arrow svg {
+.aviala-popover-content[data-appearance="tooltip"]
+  .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="tooltip"]
+  .aviala-popover-content__arrow
+  svg {
   display: block;
   overflow: visible;
   flex-shrink: 0;
@@ -211,8 +239,11 @@
   color: var(--tooltip-content-bg, #262525);
 }
 
-.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow,
-.aviala-popover-content[data-appearance="primary"] .aviala-popover-content__arrow svg {
+.aviala-popover-content[data-appearance="primary"]
+  .aviala-popover-content__arrow,
+.aviala-popover-content[data-appearance="primary"]
+  .aviala-popover-content__arrow
+  svg {
   display: block;
   overflow: visible;
   flex-shrink: 0;

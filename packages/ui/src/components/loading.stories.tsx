@@ -54,9 +54,16 @@ export const ModeMatrixLineHeightFix: Story = {
     <div className="flex gap-10">
       {modes.map((mode) => (
         <div key={mode} className="flex flex-col items-center gap-3">
-          <span className="font-mono text-xs text-muted-foreground">{mode}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {mode}
+          </span>
           {levels.map((level) => (
-            <Loading key={`${mode}-${level}`} level={level} mode={mode} lineHeightFix />
+            <Loading
+              key={`${mode}-${level}`}
+              level={level}
+              mode={mode}
+              lineHeightFix
+            />
           ))}
         </div>
       ))}
@@ -69,7 +76,9 @@ export const ModeMatrixCompact: Story = {
     <div className="flex gap-10">
       {modes.map((mode) => (
         <div key={mode} className="flex flex-col items-center gap-3">
-          <span className="font-mono text-xs text-muted-foreground">{mode}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {mode}
+          </span>
           {levels.map((level) => (
             <Loading
               key={`${mode}-${level}-compact`}

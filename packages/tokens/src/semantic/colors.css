@@ -1,7 +1,10 @@
 :root {
   /* ALD semantic colors → runtime aviala palette steps (set by generateTheme / applyTheme) */
   --control-control-theme-background: var(--aviala-primary-primary-8, #ff5532);
-  --control-control-theme-lightbackground: var(--aviala-primary-primary-2, #ffe9e3);
+  --control-control-theme-lightbackground: var(
+    --aviala-primary-primary-2,
+    #ffe9e3
+  );
   --box-box-theme-secondarybackground: var(--aviala-primary-primary-4, #ffc6b6);
   --box-box-theme-lightbackground: var(--aviala-primary-primary-2, #ffe9e3);
   --text-text-theme-primary-black: var(--aviala-primary-primary-10, #cd3923);
@@ -30,8 +33,7 @@
 
   /* Shared elevation — BasicShadow-Level4WithLine */
   --aviala-shadow-level4-with-line:
-    0 0 1px 0 rgb(0 0 0 / 18%),
-    0 6px 18px 0 rgba(0, 0, 0, 0.08);
+    0 0 1px 0 rgb(0 0 0 / 18%), 0 6px 18px 0 rgba(0, 0, 0, 0.08);
 
   /* Shared elevation — BasicShadow-Level5 */
   --aviala-shadow-level5: 0 8px 24px 2px rgba(0, 0, 0, 0.06);

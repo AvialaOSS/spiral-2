@@ -28,7 +28,10 @@ export const Anchor = forwardRef<HTMLElement, AnchorProps>(
 );
 Anchor.displayName = "Anchor";
 
-export type AnchorItemProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children"> & {
+export type AnchorItemProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "children"
+> & {
   activated?: boolean;
   indentLevel?: AnchorIndentLevel;
   asChild?: boolean;
@@ -59,7 +62,11 @@ export const AnchorItem = forwardRef<HTMLAnchorElement, AnchorItemProps>(
       >
         <span className="aviala-anchor-item__rail" aria-hidden />
         <span className="aviala-anchor-item__content">
-          <Typography level="text" as="span" className="aviala-anchor-item__label">
+          <Typography
+            level="text"
+            as="span"
+            className="aviala-anchor-item__label"
+          >
             {children}
           </Typography>
         </span>

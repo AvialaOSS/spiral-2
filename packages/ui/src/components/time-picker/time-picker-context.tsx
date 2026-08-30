@@ -25,13 +25,19 @@ export function TimePickerProvider({
   value: TimePickerContextValue;
   children: ReactNode;
 }) {
-  return <TimePickerContext.Provider value={value}>{children}</TimePickerContext.Provider>;
+  return (
+    <TimePickerContext.Provider value={value}>
+      {children}
+    </TimePickerContext.Provider>
+  );
 }
 
 export function useTimePickerContext() {
   const context = useContext(TimePickerContext);
   if (!context) {
-    throw new Error("TimePicker compound components must be used within TimePicker.");
+    throw new Error(
+      "TimePicker compound components must be used within TimePicker."
+    );
   }
   return context;
 }

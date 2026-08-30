@@ -169,12 +169,19 @@
     background-color 250ms ease;
 }
 
-.aviala-tab-item__control.aviala-button--mode-second:hover:not(:disabled)::before {
+.aviala-tab-item__control.aviala-button--mode-second:hover:not(
+    :disabled
+  )::before {
   background-color: var(--button-second-bg-hover, var(--button-second-bg));
 }
 
-.aviala-tab-item__control.aviala-button--mode-second:active:not(:disabled)::before {
-  background-color: var(--button-second-bg-active, var(--button-second-bg-hover));
+.aviala-tab-item__control.aviala-button--mode-second:active:not(
+    :disabled
+  )::before {
+  background-color: var(
+    --button-second-bg-active,
+    var(--button-second-bg-hover)
+  );
 }
 
 /*
@@ -186,7 +193,8 @@
   .aviala-tab-item__control.aviala-button {
   overflow: visible;
   background-color: var(--tab-card-active-bg);
-  border-radius: var(--tab-item-control-radius) var(--tab-item-control-radius) 0 0;
+  border-radius: var(--tab-item-control-radius) var(--tab-item-control-radius) 0
+    0;
 }
 
 .aviala-tab[data-style="card"]

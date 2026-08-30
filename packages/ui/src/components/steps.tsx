@@ -1,26 +1,13 @@
-import {
-  SymbolRight,
-  SymbolWarning,
-  SymbolWrong,
-} from "@aviala-design/icons";
+import { SymbolRight, SymbolWarning, SymbolWrong } from "@aviala-design/icons";
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { Typography } from "./typography";
 
 /** Figma Components → Structure Navigation → Steps (791:143425) */
 export type StepsDirection = "horizontal" | "vertical";
 export type StepsState =
-  | "done"
-  | "fail"
-  | "warning"
-  | "waiting"
-  | "inProgress"
-  | "default";
+  "done" | "fail" | "warning" | "waiting" | "inProgress" | "default";
 
 const stepsVariants = cva("aviala-steps", {
   variants: {
@@ -61,17 +48,27 @@ export type StepsIconProps = HTMLAttributes<HTMLSpanElement> & {
 function defaultStepsIconContent(state: StepsState, index?: number): ReactNode {
   switch (state) {
     case "done":
-      return <SymbolRight width={12} height={12} thickness="Bold" aria-hidden />;
+      return (
+        <SymbolRight width={12} height={12} thickness="Bold" aria-hidden />
+      );
     case "fail":
-      return <SymbolWrong width={12} height={12} thickness="Bold" aria-hidden />;
+      return (
+        <SymbolWrong width={12} height={12} thickness="Bold" aria-hidden />
+      );
     case "warning":
-      return <SymbolWarning width={12} height={12} thickness="Bold" aria-hidden />;
+      return (
+        <SymbolWarning width={12} height={12} thickness="Bold" aria-hidden />
+      );
     case "waiting":
     case "inProgress":
     case "default":
     default:
       return index != null ? (
-        <Typography level="caption" as="span" className="aviala-steps-icon__index">
+        <Typography
+          level="caption"
+          as="span"
+          className="aviala-steps-icon__index"
+        >
           {index}
         </Typography>
       ) : null;

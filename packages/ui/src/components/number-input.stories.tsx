@@ -129,10 +129,14 @@ export const SizeMatrix: Story = {
     <div className="flex w-full max-w-md flex-col gap-6">
       {styles.map((inputStyle) => (
         <div key={inputStyle} className="flex flex-col gap-3">
-          <span className="font-mono text-xs text-muted-foreground">{inputStyle}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {inputStyle}
+          </span>
           {sizes.map((size) => (
             <div key={`${inputStyle}-${size}`} className="flex flex-col gap-2">
-              <span className="font-mono text-xs text-muted-foreground">{size}</span>
+              <span className="font-mono text-xs text-muted-foreground">
+                {size}
+              </span>
               <NumberInput
                 size={size}
                 inputStyle={inputStyle}

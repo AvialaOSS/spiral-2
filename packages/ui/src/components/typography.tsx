@@ -40,7 +40,8 @@ export type TypographyProps = HTMLAttributes<HTMLElement> &
     /** Figma `White` — light text on dark surfaces */
     tone?: TypographyTone;
     asChild?: boolean;
-    as?: "p" | "span" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "label";
+    as?:
+      "p" | "span" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "label";
   };
 
 export const Typography = forwardRef<HTMLSpanElement, TypographyProps>(

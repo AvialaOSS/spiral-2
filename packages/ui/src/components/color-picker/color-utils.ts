@@ -55,7 +55,12 @@ export function toRgbComponents(value: string) {
   return { r, g, b };
 }
 
-export function fromRgbComponents(r: number, g: number, b: number, alpha = 1): string {
+export function fromRgbComponents(
+  r: number,
+  g: number,
+  b: number,
+  alpha = 1
+): string {
   return colord({ r, g, b, a: alpha }).toHex();
 }
 
@@ -64,7 +69,12 @@ export function toHslComponents(value: string) {
   return { h: Math.round(h), s: Math.round(s), l: Math.round(l) };
 }
 
-export function fromHslComponents(h: number, s: number, l: number, alpha = 1): string {
+export function fromHslComponents(
+  h: number,
+  s: number,
+  l: number,
+  alpha = 1
+): string {
   return colord({ h, s, l, a: alpha }).toHex();
 }
 

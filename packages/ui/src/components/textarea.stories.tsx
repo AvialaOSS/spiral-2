@@ -78,7 +78,9 @@ export const SizeMatrix: Story = {
     <div className="flex w-full max-w-sm flex-col gap-4">
       {sizes.map((size) => (
         <div key={size} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{size}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {size}
+          </span>
           <Textarea
             size={size}
             placeholder="Empty"

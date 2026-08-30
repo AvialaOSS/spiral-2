@@ -1,6 +1,10 @@
 import type { ComponentType } from "react";
 import { applyAvialaIconProps } from "./icon-size";
-import { DEFAULT_ICON_MODE, DEFAULT_ICON_THICKNESS, type AvialaIconProps } from "./types";
+import {
+  DEFAULT_ICON_MODE,
+  DEFAULT_ICON_THICKNESS,
+  type AvialaIconProps,
+} from "./types";
 
 export type IconProps = AvialaIconProps & {
   icon: ComponentType<AvialaIconProps>;
@@ -29,7 +33,9 @@ export function Icon({
   const svgProps = applyAvialaIconProps({
     biggerSize,
     level,
-    size: level ? size : (size ?? "var(--icon-size-text, var(--size-regular, 0.875rem))"),
+    size: level
+      ? size
+      : (size ?? "var(--icon-size-text, var(--size-regular, 0.875rem))"),
     width,
     height,
     className,
@@ -46,4 +52,9 @@ export function Icon({
   );
 }
 
-export type { AvialaIconProps, IconLevel, IconMode, IconThickness } from "./types";
+export type {
+  AvialaIconProps,
+  IconLevel,
+  IconMode,
+  IconThickness,
+} from "./types";

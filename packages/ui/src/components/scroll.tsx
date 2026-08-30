@@ -46,7 +46,10 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     <div
       ref={ref}
       className={cn(
-        scrollVariants({ size: size ?? "default", orientation: orientation ?? "vertical" }),
+        scrollVariants({
+          size: size ?? "default",
+          orientation: orientation ?? "vertical",
+        }),
         className
       )}
       data-size={size ?? "default"}

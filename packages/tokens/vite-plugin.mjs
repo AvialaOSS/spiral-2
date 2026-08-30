@@ -61,7 +61,10 @@ export default function avialaTokensCss(options = {}) {
 
   function generateAll() {
     mkdirSync(cacheDir, { recursive: true });
-    writeFileSync(join(cacheDir, "ald-theme.css"), buildAldThemeCss(tokensRoot));
+    writeFileSync(
+      join(cacheDir, "ald-theme.css"),
+      buildAldThemeCss(tokensRoot)
+    );
     const combined = buildCombinedStylesCss(tokensRoot);
     writeFileSync(join(cacheDir, "tokens-styles.css"), combined);
     writeFileSync(

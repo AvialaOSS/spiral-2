@@ -7,11 +7,11 @@ description: Aviala Design system conventions for Spiral 2 — tokens, Figma fil
 
 ## Figma sources
 
-| File | Key | URL |
-|---|---|---|
+| File              | Key                      | URL                                                                   |
+| ----------------- | ------------------------ | --------------------------------------------------------------------- |
 | Colour For Design | `RbhKI6PNBWXMUmFijJ6Zuz` | https://www.figma.com/design/RbhKI6PNBWXMUmFijJ6Zuz/Colour-For-Design |
-| Components | `aykyMmGyzVPkAsf8oRBZg0` | https://www.figma.com/design/aykyMmGyzVPkAsf8oRBZg0/Components |
-| Icons | `kLrxJHsDob2VoX7PfkD5PW` | https://www.figma.com/design/kLrxJHsDob2VoX7PfkD5PW/Icons |
+| Components        | `aykyMmGyzVPkAsf8oRBZg0` | https://www.figma.com/design/aykyMmGyzVPkAsf8oRBZg0/Components        |
+| Icons             | `kLrxJHsDob2VoX7PfkD5PW` | https://www.figma.com/design/kLrxJHsDob2VoX7PfkD5PW/Icons             |
 
 ## ALD tokens
 
@@ -19,6 +19,7 @@ Local export: `packages/tokens/source/ald/` (sync via `pnpm sync:ald`).
 `control/*` lives in `Components/token-colors/` (no separate control collection).
 
 Semantic step mapping (designer-defined):
+
 - Primary backgrounds/borders → step **8**
 - Text primary → step **10**, secondary → **7**, light → **5**
 - Secondary backgrounds → **4**, light → **2**

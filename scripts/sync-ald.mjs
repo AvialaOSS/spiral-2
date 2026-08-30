@@ -4,7 +4,10 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const aldSource = join(process.env.ALD_PATH || "C:/Users/kailunlark/Documents/ALD", ".");
+const aldSource = join(
+  process.env.ALD_PATH || "C:/Users/kailunlark/Documents/ALD",
+  "."
+);
 const aldDest = join(root, "packages/tokens/source/ald");
 
 if (!existsSync(aldSource)) {

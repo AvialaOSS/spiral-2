@@ -8,7 +8,14 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     style: {
       control: "select",
-      options: ["theme", "info", "fail", "warning", "success", "normal"] satisfies BadgeStyle[],
+      options: [
+        "theme",
+        "info",
+        "fail",
+        "warning",
+        "success",
+        "normal",
+      ] satisfies BadgeStyle[],
     },
     level: {
       control: "select",
@@ -33,11 +40,13 @@ export const Primary: Story = {
 export const Styles: Story = {
   render: () => (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-      {(["theme", "info", "fail", "warning", "success", "normal"] as const).map((style) => (
-        <Badge key={style} style={style}>
-          {style}
-        </Badge>
-      ))}
+      {(["theme", "info", "fail", "warning", "success", "normal"] as const).map(
+        (style) => (
+          <Badge key={style} style={style}>
+            {style}
+          </Badge>
+        )
+      )}
     </div>
   ),
 };

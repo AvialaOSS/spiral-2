@@ -161,7 +161,10 @@
 .aviala-scroll {
   overflow: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--scroll-thumb-bg, var(--control-control-normal-background-3, #d6d5d4))
+  scrollbar-color: var(
+      --scroll-thumb-bg,
+      var(--control-control-normal-background-3, #d6d5d4)
+    )
     transparent;
 }
 
@@ -191,7 +194,10 @@
 }
 
 .aviala-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--scroll-thumb-bg, var(--control-control-normal-background-3, #d6d5d4));
+  background-color: var(
+    --scroll-thumb-bg,
+    var(--control-control-normal-background-3, #d6d5d4)
+  );
   border-radius: var(--border-radius-allround, 99px);
   border: var(--scroll-thumb-inset, 2px) solid transparent;
   background-clip: content-box;

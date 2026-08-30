@@ -324,7 +324,10 @@ export const categoryCascaderOptions: CascaderOption[] = [
         value: "decor",
         label: "Home Décor (家居装饰)",
         children: [
-          { value: "lighting-decor", label: "Lamps, Candles & Ambient Lighting" },
+          {
+            value: "lighting-decor",
+            label: "Lamps, Candles & Ambient Lighting",
+          },
           { value: "textiles", label: "Curtains, Rugs & Cushions" },
         ],
       },

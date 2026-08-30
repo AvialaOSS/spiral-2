@@ -18,7 +18,9 @@ export function SwatchGrid({ steps, format }: SwatchGridProps) {
             title={formatColor(step.color, format)}
           />
           <div className="colorcat-swatch__meta">
-            <span className="colorcat-swatch__value">{formatColor(step.color, format)}</span>
+            <span className="colorcat-swatch__value">
+              {formatColor(step.color, format)}
+            </span>
             <span className="colorcat-swatch__tc">
               T {step.tone.toFixed(2)} C {step.chroma.toFixed(2)}
             </span>

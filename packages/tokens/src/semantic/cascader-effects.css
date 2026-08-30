@@ -138,7 +138,10 @@
   z-index: 60;
   pointer-events: auto;
   width: max-content;
-  max-width: var(--cascader-menu-max-width, min(var(--radix-popover-content-available-width, 100vw), calc(100vw - 16px)));
+  max-width: var(
+    --cascader-menu-max-width,
+    min(var(--radix-popover-content-available-width, 100vw), calc(100vw - 16px))
+  );
   overflow: hidden;
   border: 1px solid var(--cascader-menu-border, var(--select-menu-border));
   border-radius: var(--cascader-menu-radius, var(--select-menu-radius));
@@ -218,8 +221,10 @@
   animation-name: aviala-cascader-column-out-rtl;
 }
 
-.aviala-cascader-column:not([data-animate="exit"]) + .aviala-cascader-column:not([data-animate="exit"]) {
-  border-inline-start: 1px solid var(--cascader-menu-border, var(--select-menu-border));
+.aviala-cascader-column:not([data-animate="exit"])
+  + .aviala-cascader-column:not([data-animate="exit"]) {
+  border-inline-start: 1px solid
+    var(--cascader-menu-border, var(--select-menu-border));
 }
 
 .aviala-cascader-group {
@@ -231,7 +236,9 @@
 }
 
 /* Figma Cascader Menu (`348:13915`) — last group in a column hides dividing line */
-.aviala-cascader-column__surface > .aviala-cascader-group:last-child > .aviala-cascader-separator {
+.aviala-cascader-column__surface
+  > .aviala-cascader-group:last-child
+  > .aviala-cascader-separator {
   display: none;
 }
 
@@ -257,7 +264,10 @@
   align-items: center;
   gap: var(--cascader-item-gap, var(--select-item-gap));
   border: 0;
-  border-radius: var(--cascader-item-radius, var(--border-radius-extra-small-2, 6px));
+  border-radius: var(
+    --cascader-item-radius,
+    var(--border-radius-extra-small-2, 6px)
+  );
   background: transparent;
   padding: var(--cascader-item-py, var(--select-item-py))
     var(--cascader-item-px, var(--select-item-px));
@@ -279,7 +289,10 @@
   padding-bottom: var(--cascader-label-pb, var(--select-label-pb));
   color: var(--cascader-label-fg, var(--select-label-fg));
   font-size: var(--cascader-label-font-size, var(--select-label-font-size));
-  line-height: var(--cascader-label-line-height, var(--select-label-line-height));
+  line-height: var(
+    --cascader-label-line-height,
+    var(--select-label-line-height)
+  );
 }
 
 .aviala-cascader-item[data-layout="title"]:hover,
@@ -287,13 +300,23 @@
   background: transparent;
 }
 
-.aviala-cascader-item:not([data-layout="title"]):not([data-selected="true"]):hover,
-.aviala-cascader-item[data-highlighted="true"]:not([data-layout="title"]):not([data-selected="true"]) {
-  background-color: var(--cascader-item-highlight-bg, var(--select-item-highlight-bg));
+.aviala-cascader-item:not([data-layout="title"]):not(
+    [data-selected="true"]
+  ):hover,
+.aviala-cascader-item[data-highlighted="true"]:not([data-layout="title"]):not(
+    [data-selected="true"]
+  ) {
+  background-color: var(
+    --cascader-item-highlight-bg,
+    var(--select-item-highlight-bg)
+  );
 }
 
 .aviala-cascader-item[data-selected="true"]:not([data-layout="title"]) {
-  background-color: var(--cascader-item-selected-bg, var(--select-item-selected-bg));
+  background-color: var(
+    --cascader-item-selected-bg,
+    var(--select-item-selected-bg)
+  );
   color: var(--cascader-item-selected-fg, var(--select-item-selected-fg));
   box-shadow: var(--cascader-item-selected-shadow, var(--input-surface-shadow));
 }
@@ -343,7 +366,10 @@
 
 .aviala-cascader-item__function {
   display: inline-flex;
-  height: var(--cascader-item-function-height, var(--select-item-function-height, var(--line-height-regular, 1.125rem)));
+  height: var(
+    --cascader-item-function-height,
+    var(--select-item-function-height, var(--line-height-regular, 1.125rem))
+  );
   flex-shrink: 0;
   align-items: center;
   margin-inline-start: auto;
@@ -353,16 +379,28 @@
 }
 
 .aviala-cascader-item__function svg {
-  width: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 0.875rem)));
-  height: var(--cascader-item-function-icon-size, var(--select-item-function-icon-size, var(--size-regular, 0.875rem)));
+  width: var(
+    --cascader-item-function-icon-size,
+    var(--select-item-function-icon-size, var(--size-regular, 0.875rem))
+  );
+  height: var(
+    --cascader-item-function-icon-size,
+    var(--select-item-function-icon-size, var(--size-regular, 0.875rem))
+  );
 }
 
 /* Leading form radio — Figma Form-Radio (circular 20px control) */
 .aviala-cascader-item__form-radio {
   position: relative;
   display: inline-flex;
-  width: var(--cascader-item-form-control-size, var(--select-item-form-control-size));
-  height: var(--cascader-item-form-control-size, var(--select-item-form-control-size));
+  width: var(
+    --cascader-item-form-control-size,
+    var(--select-item-form-control-size)
+  );
+  height: var(
+    --cascader-item-form-control-size,
+    var(--select-item-form-control-size)
+  );
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -392,16 +430,19 @@
   transition: transform 0.15s ease;
 }
 
-.aviala-cascader-item[data-selected="true"] .aviala-cascader-item__form-radio-surface {
+.aviala-cascader-item[data-selected="true"]
+  .aviala-cascader-item__form-radio-surface {
   border-color: transparent;
   opacity: 0;
 }
 
-.aviala-cascader-item[data-selected="true"] .aviala-cascader-item__form-radio-indicator {
+.aviala-cascader-item[data-selected="true"]
+  .aviala-cascader-item__form-radio-indicator {
   transform: scale(1);
 }
 
-.aviala-cascader-item[data-selected="true"] .aviala-cascader-item__form-radio::before {
+.aviala-cascader-item[data-selected="true"]
+  .aviala-cascader-item__form-radio::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -413,8 +454,14 @@
 .aviala-cascader-item__form-checkbox {
   position: relative;
   display: inline-flex;
-  width: var(--cascader-item-form-control-size, var(--select-item-form-control-size));
-  height: var(--cascader-item-form-control-size, var(--select-item-form-control-size));
+  width: var(
+    --cascader-item-form-control-size,
+    var(--select-item-form-control-size)
+  );
+  height: var(
+    --cascader-item-form-control-size,
+    var(--select-item-form-control-size)
+  );
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -428,12 +475,14 @@
   color: var(--checkbox-checked-icon);
 }
 
-.aviala-cascader-item[data-selected="true"] .aviala-cascader-item__form-checkbox {
+.aviala-cascader-item[data-selected="true"]
+  .aviala-cascader-item__form-checkbox {
   border-color: transparent;
   background-color: var(--checkbox-checked-bg);
 }
 
-.aviala-cascader-item[data-selected="true"] .aviala-cascader-item__form-checkbox-icon {
+.aviala-cascader-item[data-selected="true"]
+  .aviala-cascader-item__form-checkbox-icon {
   opacity: 1;
 }
 

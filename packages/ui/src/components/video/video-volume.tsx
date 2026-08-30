@@ -1,9 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Slider } from "../slider";
 import { Typography } from "../typography";
 

@@ -37,7 +37,14 @@ export type PaletteConfig = {
 
 /** Default config = Aviala design-spec colorful palette (8 hues protected, strength 2). */
 export const DEFAULT_PALETTE_CONFIG: Required<
-  Pick<PaletteConfig, "curveGamma" | "protectHues" | "protectHueFamilies" | "protectHueStrength" | "mixRatio">
+  Pick<
+    PaletteConfig,
+    | "curveGamma"
+    | "protectHues"
+    | "protectHueFamilies"
+    | "protectHueStrength"
+    | "mixRatio"
+  >
 > = {
   curveGamma: 1,
   protectHues: true,
@@ -115,7 +122,10 @@ export const SHADCN_LITERAL: Record<string, string> = {
 };
 
 /** ALD neutral ramp (Aviala Design Colors) — used by generateTheme for --aviala-neutral-*. */
-export const ALD_NEUTRAL_RAMP: Record<"light" | "dark", Record<number, string>> = {
+export const ALD_NEUTRAL_RAMP: Record<
+  "light" | "dark",
+  Record<number, string>
+> = {
   light: {
     1: "#FFFFFF",
     2: "#FEFDFD",

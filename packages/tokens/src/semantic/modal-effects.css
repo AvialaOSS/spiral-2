@@ -22,13 +22,19 @@
   z-index: 51;
   display: flex;
   max-height: calc(100vh - 32px);
-  width: min(var(--modal-content-width, 260px), var(--modal-content-max-width, calc(100vw - 32px)));
+  width: min(
+    var(--modal-content-width, 260px),
+    var(--modal-content-max-width, calc(100vw - 32px))
+  );
   transform: translate(-50%, -50%);
   outline: none;
 }
 
 .aviala-modal-content--size-large {
-  width: min(var(--modal-content-width-large, 480px), var(--modal-content-max-width, calc(100vw - 32px)));
+  width: min(
+    var(--modal-content-width-large, 480px),
+    var(--modal-content-max-width, calc(100vw - 32px))
+  );
 }
 
 .aviala-modal-content__surface {
@@ -36,9 +42,13 @@
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  border: 1px solid var(--modal-content-border, var(--border-border-normal-1, #f0efef));
+  border: 1px solid
+    var(--modal-content-border, var(--border-border-normal-1, #f0efef));
   border-radius: var(--modal-content-radius, var(--border-radius-big, 12px));
-  background-color: var(--modal-content-bg, var(--box-box-normal-background-whiteonly, #ffffff));
+  background-color: var(
+    --modal-content-bg,
+    var(--box-box-normal-background-whiteonly, #ffffff)
+  );
   color: var(--modal-content-fg, var(--text-text-normal-text-black, #262525));
   box-shadow: var(--modal-content-shadow, 0 8px 24px 2px rgba(0, 0, 0, 0.06));
 }
@@ -85,7 +95,10 @@
   width: var(--modal-icon-slot-width, var(--modal-icon-slot-height, 1.375rem));
   height: var(--modal-icon-slot-height, 1.375rem);
   padding-block: var(--modal-icon-py, var(--padding-min, 2px));
-  color: var(--modal-icon-fg, var(--text-text-infomation-primary-black, #3489c8));
+  color: var(
+    --modal-icon-fg,
+    var(--text-text-infomation-primary-black, #3489c8)
+  );
 }
 
 .aviala-modal__icon svg {
@@ -107,13 +120,19 @@
 }
 
 .aviala-modal__description {
-  color: var(--modal-description-fg, var(--text-text-normal-text-caption-black, #616060));
+  color: var(
+    --modal-description-fg,
+    var(--text-text-normal-text-caption-black, #616060)
+  );
 }
 
 .aviala-modal__close {
   flex-shrink: 0;
   align-self: center;
-  color: var(--modal-close-fg, var(--text-text-normal-text-caption-black, #616060));
+  color: var(
+    --modal-close-fg,
+    var(--text-text-normal-text-caption-black, #616060)
+  );
 }
 
 .aviala-modal__close svg {
@@ -125,13 +144,16 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
-  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-1, #f0efef));
+  border-top: 1px solid
+    var(--modal-section-border, var(--border-border-normal-1, #f0efef));
   background-color: var(--modal-body-bg, var(--modal-content-bg, #ffffff));
   padding: var(--modal-section-py, var(--padding-default, 8px))
     var(--modal-section-px, var(--padding-big, 14px));
 }
 
-.aviala-modal__body-typeface .aviala-typeface__line:first-child .aviala-typography {
+.aviala-modal__body-typeface
+  .aviala-typeface__line:first-child
+  .aviala-typography {
   font-weight: var(--font-weight-semibold, 600);
 }
 
@@ -141,7 +163,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--modal-footer-actions-gap, var(--gap-component-space, 8px));
-  border-top: 1px solid var(--modal-section-border, var(--border-border-normal-1, #f0efef));
+  border-top: 1px solid
+    var(--modal-section-border, var(--border-border-normal-1, #f0efef));
   background-color: var(--modal-footer-bg, var(--modal-content-bg, #ffffff));
   padding: var(--modal-section-py, var(--padding-default, 8px))
     var(--modal-section-px, var(--padding-big, 14px));

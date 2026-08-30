@@ -61,7 +61,9 @@ function CatalogGate({
   const state = useIconCatalog();
 
   if (state.status === "loading") {
-    return <p className="text-sm text-muted-foreground">Loading icon catalog…</p>;
+    return (
+      <p className="text-sm text-muted-foreground">Loading icon catalog…</p>
+    );
   }
   if (state.status === "error") {
     return (
@@ -71,13 +73,19 @@ function CatalogGate({
     );
   }
   if (state.icons.length === 0) {
-    return <p className="text-sm text-muted-foreground">No icons exported yet. Run pnpm icons:sync.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">
+        No icons exported yet. Run pnpm icons:sync.
+      </p>
+    );
   }
   return <>{children(state.icons)}</>;
 }
 
 /** First icon with more than one variant — used by the variant demos. */
-function pickVariantIcon(icons: readonly IconCatalogEntry[]): IconCatalogEntry | undefined {
+function pickVariantIcon(
+  icons: readonly IconCatalogEntry[]
+): IconCatalogEntry | undefined {
   return icons.find((item) => !item.legacy && item.thicknesses.length > 0);
 }
 
@@ -114,8 +122,8 @@ function IconGallery({
 
   const categories = useMemo(
     () =>
-      [...new Set(icons.map((entry) => entry.category ?? "other"))].sort((a, b) =>
-        a.localeCompare(b)
+      [...new Set(icons.map((entry) => entry.category ?? "other"))].sort(
+        (a, b) => a.localeCompare(b)
       ),
     [icons]
   );
@@ -123,7 +131,8 @@ function IconGallery({
   const matches = useMemo(() => {
     const needle = search.trim().toLowerCase();
     return icons.filter((entry) => {
-      if (category !== "all" && (entry.category ?? "other") !== category) return false;
+      if (category !== "all" && (entry.category ?? "other") !== category)
+        return false;
       if (!needle) return true;
       return (
         entry.name.toLowerCase().includes(needle) ||
@@ -202,7 +211,9 @@ function IconGallery({
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No icons match this filter.</p>
+        <p className="text-sm text-muted-foreground">
+          No icons match this filter.
+        </p>
       ) : (
         <div className="grid grid-cols-4 gap-4 sm:grid-cols-6">
           {visible.map(({ name, component }) => (
@@ -211,7 +222,10 @@ function IconGallery({
               className="flex flex-col items-center gap-2 rounded-md border border-border p-3"
             >
               <Icon icon={component} level={level} className="text-primary" />
-              <code className="w-full truncate text-center text-xs" title={name}>
+              <code
+                className="w-full truncate text-center text-xs"
+                title={name}
+              >
                 {name}
               </code>
             </div>
@@ -234,7 +248,9 @@ export const Gallery: StoryObj<GalleryArgs> = {
     level: { control: "select", options: ICON_LEVELS },
   },
   render: (args) => (
-    <CatalogGate>{(icons) => <IconGallery {...args} icons={icons} />}</CatalogGate>
+    <CatalogGate>
+      {(icons) => <IconGallery {...args} icons={icons} />}
+    </CatalogGate>
   ),
 };
 
@@ -249,7 +265,12 @@ function BiggerSizeDemo({ entry }: { entry: IconCatalogEntry }) {
           <span className="text-xs text-muted-foreground">default</span>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <Icon icon={entry.component} level={level} biggerSize className="text-primary" />
+          <Icon
+            icon={entry.component}
+            level={level}
+            biggerSize
+            className="text-primary"
+          />
           <span className="text-xs text-muted-foreground">biggerSize</span>
         </div>
       </div>
@@ -277,7 +298,10 @@ export const BiggerSize: Story = {
     <CatalogGate>
       {(icons) => {
         const entry = pickVariantIcon(icons);
-        if (!entry) return <p>No multi-variant icons exported yet. Run pnpm icons:sync.</p>;
+        if (!entry)
+          return (
+            <p>No multi-variant icons exported yet. Run pnpm icons:sync.</p>
+          );
         return <BiggerSizeDemo entry={entry} />;
       }}
     </CatalogGate>
@@ -291,12 +315,20 @@ function VariantSwitchingDemo({ entry }: { entry: IconCatalogEntry }) {
       : (entry.thicknesses[0] ?? DEFAULT_ICON_THICKNESS)
   );
   const [mode, setMode] = useState(
-    entry.modes.includes(DEFAULT_ICON_MODE) ? DEFAULT_ICON_MODE : (entry.modes[0] ?? DEFAULT_ICON_MODE)
+    entry.modes.includes(DEFAULT_ICON_MODE)
+      ? DEFAULT_ICON_MODE
+      : (entry.modes[0] ?? DEFAULT_ICON_MODE)
   );
 
   return (
     <div className="flex max-w-sm flex-col gap-4">
-      <Icon icon={entry.component} size={48} className="text-primary" thickness={thickness} mode={mode} />
+      <Icon
+        icon={entry.component}
+        size={48}
+        className="text-primary"
+        thickness={thickness}
+        mode={mode}
+      />
       <code className="text-sm">{entry.name}</code>
       <label className="flex flex-col gap-1 text-sm">
         thickness
@@ -305,7 +337,10 @@ function VariantSwitchingDemo({ entry }: { entry: IconCatalogEntry }) {
           onChange={(e) => setThickness(e.target.value as typeof thickness)}
           className={selectClassName}
         >
-          {(entry.thicknesses.length ? entry.thicknesses : ICON_THICKNESSES).map((value) => (
+          {(entry.thicknesses.length
+            ? entry.thicknesses
+            : ICON_THICKNESSES
+          ).map((value) => (
             <option key={value} value={value}>
               {value}
             </option>
@@ -335,7 +370,10 @@ export const VariantSwitching: Story = {
     <CatalogGate>
       {(icons) => {
         const entry = pickVariantIcon(icons);
-        if (!entry) return <p>No multi-variant icons exported yet. Run pnpm icons:sync.</p>;
+        if (!entry)
+          return (
+            <p>No multi-variant icons exported yet. Run pnpm icons:sync.</p>
+          );
         return <VariantSwitchingDemo entry={entry} />;
       }}
     </CatalogGate>

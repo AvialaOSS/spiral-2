@@ -57,13 +57,18 @@ export function useCloseSuppression({
       pointerDownCloseRef.current = true;
     };
     document.addEventListener("pointerdown", markPointerDown, true);
-    return () => document.removeEventListener("pointerdown", markPointerDown, true);
+    return () =>
+      document.removeEventListener("pointerdown", markPointerDown, true);
   }, [keepPointerDownFlagAfterClose, open]);
 
   const shouldCommitOpenChange = useCallback(
     (nextOpen: boolean) => {
       if (disabled && nextOpen) return false;
-      if (!nextOpen && windowBlurCloseRef.current && !pointerDownCloseRef.current) {
+      if (
+        !nextOpen &&
+        windowBlurCloseRef.current &&
+        !pointerDownCloseRef.current
+      ) {
         windowBlurCloseRef.current = false;
         return false;
       }

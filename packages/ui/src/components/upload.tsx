@@ -30,7 +30,10 @@ const uploadVariants = cva("aviala-upload aviala-focus-ring", {
   },
 });
 
-export type UploadProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "style"> &
+export type UploadProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange" | "style"
+> &
   VariantProps<typeof uploadVariants> & {
     /** Primary line — Large style */
     title?: ReactNode;

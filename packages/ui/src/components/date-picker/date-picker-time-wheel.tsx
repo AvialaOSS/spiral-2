@@ -61,7 +61,9 @@ function getValueIndex(values: readonly number[], value: number): number {
 }
 
 function readItemHeight(container: HTMLElement): number {
-  const item = container.querySelector<HTMLElement>(".aviala-datepicker-time__wheel-item");
+  const item = container.querySelector<HTMLElement>(
+    ".aviala-datepicker-time__wheel-item"
+  );
   if (item) {
     // Prefer offsetHeight — getBoundingClientRect is skewed by ancestor
     // transforms (e.g. date ↔ month view enter scale animation).
@@ -70,7 +72,9 @@ function readItemHeight(container: HTMLElement): number {
   }
 
   const style = getComputedStyle(container);
-  const token = style.getPropertyValue("--datepicker-time-wheel-item-height").trim();
+  const token = style
+    .getPropertyValue("--datepicker-time-wheel-item-height")
+    .trim();
   const parsed = parseFloat(token);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 36;
 }
@@ -92,9 +96,13 @@ export function DatePickerTimeWheelColumn({
   const isProgrammaticScrollRef = useRef(false);
   /** When set, value-driven auto sync must not cancel an in-flight smooth scroll. */
   const smoothTargetValueRef = useRef<number | null>(null);
-  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const wheelAccumRef = useRef(0);
-  const wheelAccumIdleTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const wheelAccumIdleTimerRef = useRef<
+    ReturnType<typeof setTimeout> | undefined
+  >(undefined);
   const selectedValueRef = useRef(value);
 
   selectedValueRef.current = value;
@@ -104,9 +112,12 @@ export function DatePickerTimeWheelColumn({
     return Array.from({ length: LOOP_SECTIONS }, () => values).flat();
   }, [loop, values]);
 
-  const readRawIndex = useCallback((container: HTMLElement, itemHeight: number) => {
-    return Math.round(container.scrollTop / itemHeight);
-  }, []);
+  const readRawIndex = useCallback(
+    (container: HTMLElement, itemHeight: number) => {
+      return Math.round(container.scrollTop / itemHeight);
+    },
+    []
+  );
 
   const syncClipTrack = useCallback(() => {
     const container = scrollRef.current;
@@ -165,7 +176,12 @@ export function DatePickerTimeWheelColumn({
       }
 
       const targetIndex = loop
-        ? nearestLoopIndex(currentIndex, valueIndex, values.length, LOOP_SECTIONS)
+        ? nearestLoopIndex(
+            currentIndex,
+            valueIndex,
+            values.length,
+            LOOP_SECTIONS
+          )
         : valueIndex;
       scrollToIndex(targetIndex, behavior);
     },
@@ -186,7 +202,10 @@ export function DatePickerTimeWheelColumn({
     }
 
     const lastIndex = values.length - 1;
-    const maxScroll = Math.max(container.scrollHeight - container.clientHeight, 0);
+    const maxScroll = Math.max(
+      container.scrollHeight - container.clientHeight,
+      0
+    );
     const fractionalIndex = container.scrollTop / itemHeight;
     let rawIndex = stickyRoundIndex(fractionalIndex, WHEEL_STICKY_AMOUNT);
 
@@ -208,7 +227,9 @@ export function DatePickerTimeWheelColumn({
       ? recenterLoopIndex(rawIndex, values.length, MIDDLE_SECTION)
       : valueIndex;
     const targetTop = targetIndex * itemHeight;
-    const section = loop ? Math.floor(rawIndex / values.length) : MIDDLE_SECTION;
+    const section = loop
+      ? Math.floor(rawIndex / values.length)
+      : MIDDLE_SECTION;
     const needsLoopRecenter = loop && section !== MIDDLE_SECTION;
 
     if (wasProgrammatic) {
@@ -327,7 +348,8 @@ export function DatePickerTimeWheelColumn({
         if (Math.floor(currentRaw / values.length) !== MIDDLE_SECTION) {
           isProgrammaticScrollRef.current = true;
           container.scrollTop =
-            recenterLoopIndex(currentRaw, values.length, MIDDLE_SECTION) * itemHeight;
+            recenterLoopIndex(currentRaw, values.length, MIDDLE_SECTION) *
+            itemHeight;
         }
         targetRaw = stepLoopRawIndex(
           readRawIndex(container, itemHeight),
@@ -337,7 +359,10 @@ export function DatePickerTimeWheelColumn({
           MIDDLE_SECTION
         ).rawIndex;
       } else {
-        targetRaw = Math.min(Math.max(currentRaw + steps, 0), values.length - 1);
+        targetRaw = Math.min(
+          Math.max(currentRaw + steps, 0),
+          values.length - 1
+        );
         if (targetRaw === currentRaw) return;
       }
 
@@ -378,13 +403,25 @@ export function DatePickerTimeWheelColumn({
       case "ArrowUp":
         preferDelta = -1;
         targetRaw = loop
-          ? stepLoopRawIndex(currentRaw, -1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          ? stepLoopRawIndex(
+              currentRaw,
+              -1,
+              values.length,
+              LOOP_SECTIONS,
+              MIDDLE_SECTION
+            ).rawIndex
           : Math.max(currentRaw - 1, 0);
         break;
       case "ArrowDown":
         preferDelta = 1;
         targetRaw = loop
-          ? stepLoopRawIndex(currentRaw, 1, values.length, LOOP_SECTIONS, MIDDLE_SECTION).rawIndex
+          ? stepLoopRawIndex(
+              currentRaw,
+              1,
+              values.length,
+              LOOP_SECTIONS,
+              MIDDLE_SECTION
+            ).rawIndex
           : Math.min(currentRaw + 1, values.length - 1);
         break;
       case "Home":
@@ -394,7 +431,13 @@ export function DatePickerTimeWheelColumn({
         break;
       case "End":
         targetRaw = loop
-          ? nearestLoopIndex(currentRaw, values.length - 1, values.length, LOOP_SECTIONS, 1)
+          ? nearestLoopIndex(
+              currentRaw,
+              values.length - 1,
+              values.length,
+              LOOP_SECTIONS,
+              1
+            )
           : values.length - 1;
         break;
       default:
@@ -442,13 +485,17 @@ export function DatePickerTimeWheelColumn({
         <ul className="aviala-datepicker-time__wheel-list">
           {repeatedValues.map((itemValue, index) => {
             const isCommitted = itemValue === value;
-            const optionId = loop ? `${ariaLabel}-${itemValue}-${index}` : `${ariaLabel}-${itemValue}`;
+            const optionId = loop
+              ? `${ariaLabel}-${itemValue}-${index}`
+              : `${ariaLabel}-${itemValue}`;
 
             return (
               <li
                 key={optionId}
                 id={
-                  loop && isCommitted && Math.floor(index / values.length) === MIDDLE_SECTION
+                  loop &&
+                  isCommitted &&
+                  Math.floor(index / values.length) === MIDDLE_SECTION
                     ? selectedOptionId
                     : optionId
                 }
@@ -481,7 +528,10 @@ export function DatePickerTimeWheelColumn({
         </ul>
       </div>
       <div className="aviala-datepicker-time__wheel-clip" aria-hidden>
-        <div ref={clipTrackRef} className="aviala-datepicker-time__wheel-clip-track">
+        <div
+          ref={clipTrackRef}
+          className="aviala-datepicker-time__wheel-clip-track"
+        >
           {repeatedValues.map((itemValue, index) => (
             <div
               key={`clip-${loop ? `${itemValue}-${index}` : itemValue}`}

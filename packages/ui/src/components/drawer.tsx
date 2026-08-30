@@ -51,14 +51,21 @@ function renderDrawerIcon(node: ReactNode): ReactNode {
   if (!node) return null;
   const content =
     isValidElement(node) && typeof node.type !== "string"
-      ? cloneElement(node as ReactElement<{ width?: number; height?: number; className?: string }>, {
-          width: DRAWER_ICON_SIZE,
-          height: DRAWER_ICON_SIZE,
-          className: cn(
-            (node as ReactElement<{ className?: string }>).props.className,
-            "shrink-0"
-          ),
-        })
+      ? cloneElement(
+          node as ReactElement<{
+            width?: number;
+            height?: number;
+            className?: string;
+          }>,
+          {
+            width: DRAWER_ICON_SIZE,
+            height: DRAWER_ICON_SIZE,
+            className: cn(
+              (node as ReactElement<{ className?: string }>).props.className,
+              "shrink-0"
+            ),
+          }
+        )
       : node;
 
   return (
@@ -78,7 +85,9 @@ export const DrawerPortal = DialogPrimitive.Portal;
 
 export const DrawerClose = DialogPrimitive.Close;
 
-export type DrawerOverlayProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>;
+export type DrawerOverlayProps = ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Overlay
+>;
 
 export const DrawerOverlay = forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -92,7 +101,9 @@ export const DrawerOverlay = forwardRef<
 ));
 DrawerOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-export type DrawerContentProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Content> &
+export type DrawerContentProps = ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Content
+> &
   VariantProps<typeof drawerContentVariants> & {
     /** Render without Portal — use inside nested overlays. */
     portalled?: boolean;
@@ -184,7 +195,11 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
     const resolvedCloseLabel = closeLabel ?? locale.close;
 
     return (
-      <div ref={ref} className={cn("aviala-drawer__header", className)} {...props}>
+      <div
+        ref={ref}
+        className={cn("aviala-drawer__header", className)}
+        {...props}
+      >
         <div className="aviala-drawer__header-row">
           {showIcon ? renderDrawerIcon(icon) : null}
           <div className="aviala-drawer__header-main">{children}</div>
@@ -207,7 +222,9 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
 );
 DrawerHeader.displayName = "DrawerHeader";
 
-export type DrawerTitleProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Title>;
+export type DrawerTitleProps = ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Title
+>;
 
 export const DrawerTitle = forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
@@ -221,14 +238,19 @@ export const DrawerTitle = forwardRef<
 ));
 DrawerTitle.displayName = DialogPrimitive.Title.displayName;
 
-export type DrawerDescriptionProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Description>;
+export type DrawerDescriptionProps = ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Description
+>;
 
 export const DrawerDescription = forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   DrawerDescriptionProps
 >(({ className, children, ...props }, ref) => (
   <DialogPrimitive.Description ref={ref} asChild {...props}>
-    <Typography level="caption" className={cn("aviala-drawer__description", className)}>
+    <Typography
+      level="caption"
+      className={cn("aviala-drawer__description", className)}
+    >
       {children}
     </Typography>
   </DialogPrimitive.Description>
@@ -250,7 +272,9 @@ export function DrawerHeaderText({
     <DrawerHeader {...props}>
       <div className="aviala-drawer__header-typeface">
         <DrawerTitle>{title}</DrawerTitle>
-        {description ? <DrawerDescription>{description}</DrawerDescription> : null}
+        {description ? (
+          <DrawerDescription>{description}</DrawerDescription>
+        ) : null}
       </div>
     </DrawerHeader>
   );
@@ -264,7 +288,10 @@ export type DrawerBodyProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 export const DrawerBody = forwardRef<HTMLDivElement, DrawerBodyProps>(
-  ({ className, children, layout = "default", title, description, ...props }, ref) => (
+  (
+    { className, children, layout = "default", title, description, ...props },
+    ref
+  ) => (
     <div ref={ref} className={cn("aviala-drawer__body", className)} {...props}>
       {layout === "text" ? (
         <Typeface
@@ -285,7 +312,11 @@ export type DrawerFooterProps = HTMLAttributes<HTMLDivElement>;
 
 export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("aviala-drawer__footer", className)} {...props} />
+    <div
+      ref={ref}
+      className={cn("aviala-drawer__footer", className)}
+      {...props}
+    />
   )
 );
 DrawerFooter.displayName = "DrawerFooter";

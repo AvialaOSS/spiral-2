@@ -27,7 +27,10 @@ import {
   type ColorFormat,
 } from "./color-utils";
 import { useOptionalColorPickerContext } from "./color-picker-context";
-import { useColorPickerState, type UseColorPickerStateOptions } from "./use-color-picker-state";
+import {
+  useColorPickerState,
+  type UseColorPickerStateOptions,
+} from "./use-color-picker-state";
 
 declare global {
   interface Window {
@@ -39,7 +42,10 @@ export type ColorPickerInputsProps = {
   className?: string;
   disabled?: boolean;
   showEyedropper?: boolean;
-} & Pick<UseColorPickerStateOptions, "value" | "defaultValue" | "onChange" | "format" | "onFormatChange">;
+} & Pick<
+  UseColorPickerStateOptions,
+  "value" | "defaultValue" | "onChange" | "format" | "onFormatChange"
+>;
 
 export function ColorPickerInputs({
   className,
@@ -63,11 +69,16 @@ export function ColorPickerInputs({
 
   const { value, setValue, format, setFormat, hsva } = ctx ?? local;
   const isDisabled = disabled ?? ctx?.disabled;
-  const eyeDropperSupported = typeof window !== "undefined" && "EyeDropper" in window;
+  const eyeDropperSupported =
+    typeof window !== "undefined" && "EyeDropper" in window;
 
   const [hexDraft, setHexDraft] = useState(() => toHexInput(value));
-  const [alphaDraft, setAlphaDraft] = useState(() => String(alphaPercent(value)));
-  const [componentDraft, setComponentDraft] = useState(() => buildComponentDraft(value, format));
+  const [alphaDraft, setAlphaDraft] = useState(() =>
+    String(alphaPercent(value))
+  );
+  const [componentDraft, setComponentDraft] = useState(() =>
+    buildComponentDraft(value, format)
+  );
 
   useEffect(() => {
     setHexDraft(toHexInput(value));
@@ -86,16 +97,25 @@ export function ColorPickerInputs({
   }, [alphaDraft, setValue, value]);
 
   const commitComponents = useCallback(() => {
-    const parts = componentDraft.split(/[\s,]+/).filter(Boolean).map(Number);
+    const parts = componentDraft
+      .split(/[\s,]+/)
+      .filter(Boolean)
+      .map(Number);
     if (parts.some((n) => Number.isNaN(n))) return;
     if (format === "rgb") {
-      setValue(fromRgbComponents(parts[0] ?? 0, parts[1] ?? 0, parts[2] ?? 0, hsva.a), {
-        source: "rgb-input",
-      });
+      setValue(
+        fromRgbComponents(parts[0] ?? 0, parts[1] ?? 0, parts[2] ?? 0, hsva.a),
+        {
+          source: "rgb-input",
+        }
+      );
     } else if (format === "hsl") {
-      setValue(fromHslComponents(parts[0] ?? 0, parts[1] ?? 0, parts[2] ?? 0, hsva.a), {
-        source: "hsl-input",
-      });
+      setValue(
+        fromHslComponents(parts[0] ?? 0, parts[1] ?? 0, parts[2] ?? 0, hsva.a),
+        {
+          source: "hsl-input",
+        }
+      );
     }
   }, [componentDraft, format, hsva.a, setValue]);
 
@@ -111,7 +131,10 @@ export function ColorPickerInputs({
   }, [eyeDropperSupported, isDisabled, setValue]);
 
   return (
-    <div className={cn("aviala-color-picker-inputs", className)} {...spiralDebugId("color-picker.content.inputs")}>
+    <div
+      className={cn("aviala-color-picker-inputs", className)}
+      {...spiralDebugId("color-picker.content.inputs")}
+    >
       {showEyedropper ? (
         <Button
           type="button"
@@ -138,7 +161,10 @@ export function ColorPickerInputs({
             <Badge style="normal">#</Badge>
           </span>
           <input
-            className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
+            className={cn(
+              "aviala-color-picker-field__input",
+              typographyVariants({ level: "text" })
+            )}
             value={hexDraft}
             disabled={isDisabled}
             aria-label={locale.hex}
@@ -150,7 +176,10 @@ export function ColorPickerInputs({
       ) : (
         <div className="aviala-color-picker-field">
           <input
-            className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
+            className={cn(
+              "aviala-color-picker-field__input",
+              typographyVariants({ level: "text" })
+            )}
             value={componentDraft}
             disabled={isDisabled}
             aria-label={format === "rgb" ? locale.rgb : locale.hsl}
@@ -163,7 +192,10 @@ export function ColorPickerInputs({
 
       <div className="aviala-color-picker-field aviala-color-picker-field--alpha">
         <input
-          className={cn("aviala-color-picker-field__input", typographyVariants({ level: "text" }))}
+          className={cn(
+            "aviala-color-picker-field__input",
+            typographyVariants({ level: "text" })
+          )}
           value={alphaDraft}
           disabled={isDisabled}
           aria-label={locale.opacityPercent}
@@ -182,7 +214,10 @@ export function ColorPickerInputs({
         onValueChange={(next) => setFormat(next as ColorFormat)}
         disabled={isDisabled}
       >
-        <SelectTrigger className="aviala-color-picker-format-select w-[76px] shrink-0" size="regular">
+        <SelectTrigger
+          className="aviala-color-picker-format-select w-[76px] shrink-0"
+          size="regular"
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectContent onCloseAutoFocus={(event) => event.preventDefault()}>

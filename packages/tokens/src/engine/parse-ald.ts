@@ -75,7 +75,9 @@ export function resolveTokenHex(
   return undefined;
 }
 
-export function resolveTokenNumber(token: RawToken): number | string | undefined {
+export function resolveTokenNumber(
+  token: RawToken
+): number | string | undefined {
   if (typeof token.$value === "number") return token.$value;
   if (typeof token.$value === "string") return token.$value;
   return undefined;

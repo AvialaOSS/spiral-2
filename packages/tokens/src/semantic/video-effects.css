@@ -12,7 +12,10 @@
   border-radius: var(--video-radius, var(--border-radius-big, 12px));
   background-color: var(
     --video-bg,
-    var(--normal-background-theme, var(--box-box-normal-lightbackground-white, #f9f8f8))
+    var(
+      --normal-background-theme,
+      var(--box-box-normal-lightbackground-white, #f9f8f8)
+    )
   );
   box-sizing: border-box;
 }
@@ -23,7 +26,10 @@
   min-height: 0;
   width: 100%;
   overflow: hidden;
-  background-color: var(--video-stage-bg, var(--box-box-normal-background-blackonly, #000000));
+  background-color: var(
+    --video-stage-bg,
+    var(--box-box-normal-background-blackonly, #000000)
+  );
 }
 
 .aviala-video__media {
@@ -31,7 +37,10 @@
   width: 100%;
   height: 100%;
   object-fit: var(--video-object-fit, contain);
-  background-color: var(--video-stage-bg, var(--box-box-normal-background-blackonly, #000000));
+  background-color: var(
+    --video-stage-bg,
+    var(--box-box-normal-background-blackonly, #000000)
+  );
 }
 
 .aviala-video__animated-icon {
@@ -73,7 +82,8 @@
   transform: scaleX(-1);
 }
 
-.aviala-video__animated-icon[data-mirror-motion="true"] .aviala-video__animated-icon-layer {
+.aviala-video__animated-icon[data-mirror-motion="true"]
+  .aviala-video__animated-icon-layer {
   transform: scaleX(-1);
 }
 
@@ -106,7 +116,10 @@
 .aviala-video__bar-bg {
   position: absolute;
   inset: 0;
-  background-color: var(--video-bar-bg, var(--control-control-normal-lightbackground-1, #f0efef));
+  background-color: var(
+    --video-bar-bg,
+    var(--control-control-normal-lightbackground-1, #f0efef)
+  );
   pointer-events: none;
 }
 
@@ -283,25 +296,39 @@
     --video-bar-light-bg,
     color-mix(
       in srgb,
-      var(--video-bar-bg, var(--control-control-normal-lightbackground-1, #f0efef)) 72%,
+      var(
+          --video-bar-bg,
+          var(--control-control-normal-lightbackground-1, #f0efef)
+        )
+        72%,
       transparent
     )
   );
-  border-radius: var(--video-bar-light-radius, var(--border-radius-allround, 99px));
-  box-shadow: var(--video-bar-light-shadow, var(--aviala-shadow-level4-with-line));
+  border-radius: var(
+    --video-bar-light-radius,
+    var(--border-radius-allround, 99px)
+  );
+  box-shadow: var(
+    --video-bar-light-shadow,
+    var(--aviala-shadow-level4-with-line)
+  );
   -webkit-backdrop-filter: blur(var(--video-bar-light-blur, 24px)) saturate(1.4);
   backdrop-filter: blur(var(--video-bar-light-blur, 24px)) saturate(1.4);
 }
 
 /* Overlay the Default bar when auto-hide is on so slide-out does not leave a hole. */
-.aviala-video[data-auto-hide-controls="true"]:not(.aviala-video--appearance-light)
+.aviala-video[data-auto-hide-controls="true"]:not(
+    .aviala-video--appearance-light
+  )
   .aviala-video__stage {
   position: absolute;
   inset: 0;
   flex: none;
 }
 
-.aviala-video[data-auto-hide-controls="true"]:not(.aviala-video--appearance-light)
+.aviala-video[data-auto-hide-controls="true"]:not(
+    .aviala-video--appearance-light
+  )
   .aviala-video__controls {
   position: absolute;
   inset-inline: 0;
@@ -350,6 +377,7 @@
 }
 
 .aviala-video:fullscreen.aviala-video--appearance-light .aviala-video__controls,
-.aviala-video:-webkit-full-screen.aviala-video--appearance-light .aviala-video__controls {
+.aviala-video:-webkit-full-screen.aviala-video--appearance-light
+  .aviala-video__controls {
   align-items: center;
 }

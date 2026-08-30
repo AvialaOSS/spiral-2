@@ -2,29 +2,39 @@
 :root {
   --input-bg-default: var(--aviala-interaction-filled-default, #f0efef);
   --input-bg-hover: var(--aviala-interaction-filled-hover, #e5e4e3);
-  --input-bg-activated: var(--control-control-normal-background-whiteonly, #ffffff);
+  --input-bg-activated: var(
+    --control-control-normal-background-whiteonly,
+    #ffffff
+  );
   --input-border-activated: var(--border-border-theme-primary, #ff5532);
   --input-fg: var(--text-text-normal-text-black, #262525);
   --input-surface-shadow: inset 0 -0.5px 0
     var(--special-effort-se-lineshadow-bottom, rgba(0, 0, 0, 0.04));
   --input-shell-ring-shadow: inset 0 0 0 1px transparent;
-  --input-shell-shadow: var(--input-shell-ring-shadow), var(--input-surface-shadow);
-  --input-shell-focus-shadow: inset 0 0 0 1px var(--input-border-activated),
-    var(--input-surface-shadow);
-  --input-shell-error-shadow: inset 0 0 0 1px var(--destructive, #ff646f),
-    var(--input-surface-shadow);
+  --input-shell-shadow:
+    var(--input-shell-ring-shadow), var(--input-surface-shadow);
+  --input-shell-focus-shadow:
+    inset 0 0 0 1px var(--input-border-activated), var(--input-surface-shadow);
+  --input-shell-error-shadow:
+    inset 0 0 0 1px var(--destructive, #ff646f), var(--input-surface-shadow);
 
   --radio-card-hover-bg: var(--aviala-interaction-filled-hover, #e5e4e3);
   --radio-card-press-bg: var(--aviala-interaction-filled-active, #d6d5d4);
 
-  --radio-checked-surface: linear-gradient(
+  --radio-checked-surface:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
       transparent 36%
     ),
-    linear-gradient(90deg, var(--radio-checked-bg, #ff5532) 0%, var(--radio-checked-bg, #ff5532) 100%);
+    linear-gradient(
+      90deg,
+      var(--radio-checked-bg, #ff5532) 0%,
+      var(--radio-checked-bg, #ff5532) 100%
+    );
 
-  --checkbox-checked-surface: linear-gradient(
+  --checkbox-checked-surface:
+    linear-gradient(
       180deg,
       color-mix(in srgb, var(--button-gloss-color, #ffe9e5) 20%, transparent) 0%,
       transparent 36%
@@ -35,7 +45,8 @@
       var(--checkbox-checked-bg, #ff5532) 100%
     );
 
-  --checkbox-unchecked-surface: linear-gradient(
+  --checkbox-unchecked-surface:
+    linear-gradient(
       90deg,
       var(--control-control-normal-lightbackground-1, #f0efef) 0%,
       var(--control-control-normal-lightbackground-1, #f0efef) 100%
@@ -109,7 +120,9 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .aviala-input:hover:not(:focus-within):not([data-disabled="true"]):not(:has(input:disabled)) {
+  .aviala-input:hover:not(:focus-within):not([data-disabled="true"]):not(
+      :has(input:disabled)
+    ) {
     background-color: var(--input-bg-hover);
   }
 }
@@ -147,7 +160,8 @@
 }
 
 /* Empty — Figma Input State=Empty: Typography wrapper at transparency-placeholder (60%) */
-.aviala-input[data-input-state="empty"]:not([data-disabled="true"]) > .aviala-input__field {
+.aviala-input[data-input-state="empty"]:not([data-disabled="true"])
+  > .aviala-input__field {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -158,7 +172,10 @@
 }
 
 /* Fallback when data-input-state is not set (native placeholder-shown) */
-.aviala-input:not([data-input-state]):has(input:placeholder-shown:not(:disabled)) > .aviala-input__field {
+.aviala-input:not([data-input-state]):has(
+    input:placeholder-shown:not(:disabled)
+  )
+  > .aviala-input__field {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -175,8 +192,12 @@
 }
 
 /* Disabled + empty — nested Typography opacity (55% × 60% ≈ 33%) */
-.aviala-input[data-disabled="true"][data-input-state="empty"] > .aviala-input__field input::placeholder,
-.aviala-input:has(input:disabled:placeholder-shown) .aviala-input__field input::placeholder {
+.aviala-input[data-disabled="true"][data-input-state="empty"]
+  > .aviala-input__field
+  input::placeholder,
+.aviala-input:has(input:disabled:placeholder-shown)
+  .aviala-input__field
+  input::placeholder {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -191,7 +212,11 @@
 }
 
 .aviala-input:focus-within .aviala-input__field input::selection {
-  background-color: color-mix(in srgb, var(--input-border-activated, var(--primary)) 25%, transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--input-border-activated, var(--primary)) 25%,
+    transparent
+  );
 }
 
 /* NumberInput — Figma Information Collect → NumberInput (197:3237) */
@@ -366,7 +391,8 @@
   height: var(--input-slot-icon-size, var(--size-regular, 0.875rem));
 }
 
-.aviala-textarea[data-input-state="empty"]:not([data-disabled="true"]) .aviala-textarea__field {
+.aviala-textarea[data-input-state="empty"]:not([data-disabled="true"])
+  .aviala-textarea__field {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -375,7 +401,10 @@
   opacity: 1;
 }
 
-.aviala-textarea:not([data-input-state]):has(textarea:placeholder-shown:not(:disabled)) .aviala-textarea__field {
+.aviala-textarea:not([data-input-state]):has(
+    textarea:placeholder-shown:not(:disabled)
+  )
+  .aviala-textarea__field {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -410,7 +439,8 @@
   padding-bottom: calc(var(--input-field-py-regular, 6px) + 22px);
 }
 
-.aviala-textarea[data-size="big"][data-has-controller="true"] .aviala-textarea__field {
+.aviala-textarea[data-size="big"][data-has-controller="true"]
+  .aviala-textarea__field {
   padding-bottom: calc(var(--padding-middle, 10px) + 22px);
 }
 
@@ -431,7 +461,8 @@
   color: var(--input-fg);
 }
 
-.aviala-textarea[data-disabled="true"][data-input-state="empty"] .aviala-textarea__input::placeholder {
+.aviala-textarea[data-disabled="true"][data-input-state="empty"]
+  .aviala-textarea__input::placeholder {
   opacity: var(--input-placeholder-opacity, 0.6);
 }
 
@@ -591,20 +622,28 @@
   border: 1px solid transparent;
   border-radius: var(--border-radius-small, 8px);
   padding: var(--padding-default, 8px);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
-.aviala-radio-input[data-style="card"]:has(.aviala-radio[data-state="checked"]) {
+.aviala-radio-input[data-style="card"]:has(
+    .aviala-radio[data-state="checked"]
+  ) {
   border-color: var(--radio-card-border-selected);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .aviala-radio-input[data-style="card"]:hover:not([data-disabled="true"]):not(:has(.aviala-radio[data-state="checked"])) {
+  .aviala-radio-input[data-style="card"]:hover:not([data-disabled="true"]):not(
+      :has(.aviala-radio[data-state="checked"])
+    ) {
     background-color: var(--radio-card-hover-bg);
   }
 }
 
-.aviala-radio-input[data-style="card"]:active:not([data-disabled="true"]):not(:has(.aviala-radio[data-state="checked"])) {
+.aviala-radio-input[data-style="card"]:active:not([data-disabled="true"]):not(
+    :has(.aviala-radio[data-state="checked"])
+  ) {
   background-color: var(--radio-card-press-bg);
 }
 
@@ -796,7 +835,8 @@
   opacity: 0;
 }
 
-.aviala-checkbox[data-size="huge"][data-state="indeterminate"] .aviala-checkbox__check-path {
+.aviala-checkbox[data-size="huge"][data-state="indeterminate"]
+  .aviala-checkbox__check-path {
   stroke-dashoffset: calc(var(--checkbox-icon-size-huge, 0.875rem) / 12);
 }
 
@@ -809,12 +849,14 @@
   display: none;
 }
 
-.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--indeterminate {
+.aviala-checkbox[data-state="indeterminate"]
+  .aviala-checkbox__indicator-icon--indeterminate {
   display: inline-flex;
 }
 
 /* Check SVG stays in the flex row at opacity 0 and offsets the mark — hide it while indeterminate */
-.aviala-checkbox[data-state="indeterminate"] .aviala-checkbox__indicator-icon--check {
+.aviala-checkbox[data-state="indeterminate"]
+  .aviala-checkbox__indicator-icon--check {
   display: none;
 }
 
@@ -933,7 +975,9 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .aviala-select-trigger:hover:not([data-state="open"]):not(:focus-visible):not(:disabled) {
+  .aviala-select-trigger:hover:not([data-state="open"]):not(:focus-visible):not(
+      :disabled
+    ) {
     background-color: var(--input-bg-hover);
   }
 }
@@ -1105,12 +1149,16 @@
   color: var(--select-label-fg);
 }
 
-.aviala-select-item:not([data-layout="title"]):not([data-state="checked"]):not([data-disabled]):hover,
+.aviala-select-item:not([data-layout="title"]):not([data-state="checked"]):not(
+    [data-disabled]
+  ):hover,
 .aviala-select-item[data-highlighted]:not([data-state="checked"]) {
   background-color: var(--select-item-highlight-bg);
 }
 
-.aviala-select-item:not([data-layout="title"]):not([data-state="checked"]):not([data-disabled]):active {
+.aviala-select-item:not([data-layout="title"]):not([data-state="checked"]):not(
+    [data-disabled]
+  ):active {
   background-color: var(--aviala-interaction-filled-active, #d6d5d4);
 }
 
@@ -1126,7 +1174,8 @@
   box-shadow: none;
 }
 
-.aviala-select-item[data-layout="checked"][data-state="checked"] .aviala-select-item__function {
+.aviala-select-item[data-layout="checked"][data-state="checked"]
+  .aviala-select-item__function {
   display: none;
 }
 
@@ -1216,7 +1265,10 @@
 
 .aviala-select-item__function {
   display: inline-flex;
-  height: var(--select-item-function-height, var(--line-height-regular, 1.125rem));
+  height: var(
+    --select-item-function-height,
+    var(--line-height-regular, 1.125rem)
+  );
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -1229,7 +1281,8 @@
   height: var(--select-item-function-icon-size, var(--size-regular, 0.875rem));
 }
 
-.aviala-select-item:not(:has(.aviala-select-item__more)) .aviala-select-item__function {
+.aviala-select-item:not(:has(.aviala-select-item__more))
+  .aviala-select-item__function {
   margin-inline-start: auto;
 }
 
@@ -1268,16 +1321,19 @@
   transition: transform 0.15s ease;
 }
 
-.aviala-select-item[data-state="checked"] .aviala-select-item__form-radio-surface {
+.aviala-select-item[data-state="checked"]
+  .aviala-select-item__form-radio-surface {
   border-color: transparent;
   opacity: 0;
 }
 
-.aviala-select-item[data-state="checked"] .aviala-select-item__form-radio-indicator {
+.aviala-select-item[data-state="checked"]
+  .aviala-select-item__form-radio-indicator {
   transform: scale(1);
 }
 
-.aviala-select-item[data-state="checked"] .aviala-select-item__form-radio::before {
+.aviala-select-item[data-state="checked"]
+  .aviala-select-item__form-radio::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1315,7 +1371,8 @@
   box-shadow: var(--input-surface-shadow);
 }
 
-.aviala-select-item[data-state="checked"] .aviala-select-item__form-checkbox-icon {
+.aviala-select-item[data-state="checked"]
+  .aviala-select-item__form-checkbox-icon {
   opacity: 1;
 }
 

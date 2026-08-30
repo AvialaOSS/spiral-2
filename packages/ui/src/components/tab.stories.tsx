@@ -1,4 +1,8 @@
-import { DirectionArrowLeft, DirectionArrowRight, GeneralSetting } from "@aviala-design/icons";
+import {
+  DirectionArrowLeft,
+  DirectionArrowRight,
+  GeneralSetting,
+} from "@aviala-design/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "./button";
@@ -118,7 +122,9 @@ export const StyleMatrix: Story = {
     <div className="flex flex-col gap-8">
       {(["default", "tiled", "card"] as TabStyle[]).map((style) => (
         <div key={style} className="flex flex-col gap-2">
-          <span className="font-mono text-xs text-muted-foreground">{style}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {style}
+          </span>
           <div
             className={
               // Demo fixture: hex is only a story backdrop fallback, not a component style.

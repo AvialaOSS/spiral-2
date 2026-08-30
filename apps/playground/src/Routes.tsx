@@ -13,7 +13,13 @@ export function Routes() {
 
   return (
     <ThemeProvider defaultMode="light" defaultPresetId="ald">
-      {path === "/icons" ? <IconGalleryPage /> : path === "/icon-sync" ? <IconSyncPage /> : <App />}
+      {path === "/icons" ? (
+        <IconGalleryPage />
+      ) : path === "/icon-sync" ? (
+        <IconSyncPage />
+      ) : (
+        <App />
+      )}
     </ThemeProvider>
   );
 }

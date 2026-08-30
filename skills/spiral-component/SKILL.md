@@ -44,9 +44,11 @@ Prefer the bracketed heading. Legacy `## Unreleased` (no brackets) is still stam
 ## [Unreleased]
 
 ### Added
+
 - …
 
 ## 2.1.0
+
 …
 ```
 
