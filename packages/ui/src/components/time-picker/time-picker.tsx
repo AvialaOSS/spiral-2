@@ -17,7 +17,7 @@ import { renderSlotIcon } from "../../lib/render-slot-icon";
 import { useLocaleMessages } from "../../locale";
 import { formatTimeValue } from "../date-picker/date-utils";
 import { typographyVariants } from "../typography";
-import { useResolvedControlError } from "../form-field";
+import { useResolvedControlError } from "../form-field-context";
 import {
   TimePickerProvider,
   useTimePickerContext,

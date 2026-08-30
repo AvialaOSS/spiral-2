@@ -11,7 +11,7 @@ import { cn } from "../lib/utils";
 import { spiralDebugId } from "../lib/spiral-debug";
 import { typographyVariants } from "./typography";
 import { Badge } from "./badge";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → BaseInput */
 export type InputSize = "regular" | "big";

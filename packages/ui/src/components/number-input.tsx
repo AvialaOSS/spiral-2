@@ -24,7 +24,7 @@ import {
   type InputSize,
   type InputState,
 } from "./input";
-import { useResolvedControlError } from "./form-field";
+import { useResolvedControlError } from "./form-field-context";
 
 /** Figma Components → Information Collect → NumberInput (197:3237) */
 export type NumberInputStyle = "default" | "monospaced";
