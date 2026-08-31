@@ -1,6 +1,6 @@
 # Select
 
-## [Unreleased]
+## 3.0.0
 
 ### Added
 - `SelectSubItem`：焦点在子菜单行上时可用 Up / Down / Home / End 在同层菜单项之间移动；展开方向键（RTL 下镜像）打开子菜单并把焦点送入首项，收起方向键或 Esc 关闭并把焦点送回该行

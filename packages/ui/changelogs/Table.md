@@ -1,6 +1,6 @@
 # Table
 
-## [Unreleased]
+## 3.0.0
 
 ### Changed
 - `TableCell` `content="people"` 未传 `people` 时，默认头像改用 `users_user` 图标，不再显示 `A` 占位字母

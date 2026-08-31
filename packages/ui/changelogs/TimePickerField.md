@@ -1,6 +1,6 @@
 # TimePickerField
 
-## [Unreleased]
+## 3.0.0
 
 ### Fixed
 - 时间面板不再使用 `role="application"`，改为 `role="group"`；面板内的时 / 分列仍是可 Tab 到达的 listbox，支持 Up / Down / Home / End

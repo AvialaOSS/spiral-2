@@ -1,6 +1,6 @@
 # SegmentatorGroup
 
-## [Unreleased]
+## 3.0.0
 
 ### Added
 - 键盘操作对齐 radiogroup 规范：方向键（horizontal 用 Left/Right，vertical 用 Up/Down，RTL 自动镜像）在项之间移动并同步选中，Home/End 跳到首尾

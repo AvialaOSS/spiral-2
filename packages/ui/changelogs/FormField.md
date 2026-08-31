@@ -1,6 +1,6 @@
 # FormField
 
-## [Unreleased]
+## 3.0.0
 
 ### Changed
 - **BREAKING** `FormField` 从主入口移至 `@aviala-design/spiral/form`（layout 模式与 react-hook-form 模式均在此入口）。迁移方式：`import { FormField } from "@aviala-design/spiral/form";`。
